@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl8ct7vpm73vm"]
+
+[ext_resource type="Theme" uid="uid://dpxwceaf3f35h" path="res://themes/menubuttontheme.tres" id="1_i5wud"]
+[ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 128.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wc6th")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(6.73831e-07, 0.467541, 0.546514, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -296.5
+offset_top = 10.0
+offset_right = 296.5
+offset_bottom = 83.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Holo Card Fan Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ServerStatus" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 650.0
+offset_right = 137.0
+offset_bottom = 690.0
+
+[node name="ServerStatusLabel" type="Label" parent="ServerStatus"]
+layout_mode = 2
+text = "Uninitialized"
+
+[node name="MainButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -20.0
+offset_right = 73.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PlayAIButton" type="Button" parent="MainButtons"]
+layout_mode = 2
+theme = ExtResource("1_i5wud")
+disabled = true
+text = "Play vs AI"
+
+[node name="ServerConnectButton" type="Button" parent="MainButtons"]
+layout_mode = 2
+theme = ExtResource("1_i5wud")
+disabled = true
+text = "Connect to Server"
+
+[node name="JoinQueueButton" type="Button" parent="MainButtons"]
+layout_mode = 2
+theme = ExtResource("1_i5wud")
+disabled = true
+text = "Join Queue"
+
+[node name="JoinMatchButton" type="Button" parent="MainButtons"]
+layout_mode = 2
+theme = ExtResource("1_i5wud")
+disabled = true
+text = "Join Match"
+
+[node name="LeaveQueueButton" type="Button" parent="MainButtons"]
+layout_mode = 2
+theme = ExtResource("1_i5wud")
+disabled = true
+text = "Leave Queue"
+
+[node name="ServerInfoList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 930.0
+offset_top = 226.0
+offset_right = 1242.0
+offset_bottom = 647.0
+item_count = 2
+item_0/text = "disconnected"
