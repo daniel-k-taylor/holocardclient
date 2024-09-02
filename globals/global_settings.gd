@@ -4,6 +4,8 @@ const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server.
 const ClientVersionString : String = "240804.1135" # YYMMDD.HHMM
 
+var LoggingEnabled : bool = true
+
 func get_client_version() -> String:
 	var prepend = ""
 	if OS.is_debug_build():
@@ -20,9 +22,14 @@ func get_server_url() -> String:
 		return local_url
 
 func is_logging_enabled() -> bool:
+	if not LoggingEnabled:
+		return false
 	if ReleaseLoggingEnabled:
 		return true
 	return OS.is_debug_build()
 
 func load_persistent_settings() -> bool:
 	return true
+
+func toggle_logging(toggle_on : bool) -> void:
+	LoggingEnabled = toggle_on

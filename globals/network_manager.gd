@@ -3,6 +3,8 @@ extends Node
 signal disconnected_from_server
 signal connected_to_server
 signal server_info(queue_info)
+signal join_operation_failed()
+signal game_event(event_type, event_data)
 
 enum NetworkState {
 	NetworkState_NotConnected,
@@ -17,12 +19,20 @@ var cached_matches = []
 var cached_match_available : bool = false
 
 var connection_start_time = 0
+var first_connection = false
+
+const ServerMessageType_GameEvent = "game_event"
+const ServerMessageType_Error = "error"
+const ServerMessageType_ServerInfo = "server_info"
+
+const ServerError_JoinInvalidDeck = "joinmatch_invaliddeck"
 
 func is_server_connected() -> bool:
 	return _socket != null
 
 func connect_to_server():
 	if _socket != null: return
+	first_connection = true
 	_socket = WebSocketPeer.new()
 	var server_url = GlobalSettings.get_server_url()
 	_socket.connect_to_url(server_url)
@@ -71,23 +81,73 @@ func _handle_server_response(data):
 	var data_obj = parser.get_data()
 	var message_type = data_obj["message_type"]
 	match message_type:
-		"server_info":
+		ServerMessageType_ServerInfo:
 			_handle_server_info(data_obj)
+		ServerMessageType_Error:
+			_handle_server_error(data_obj)
+		ServerMessageType_GameEvent:
+			_handle_game_event(data_obj)
+		_:
+			Logger.log(Logger.LogArea_Network, "Unhandled message type: %s" % message_type)
 
 func _handle_server_info(message):
 	var queue_info = message["queue_info"]
-	Logger.log(Logger.LogArea_Network, "Connected to server!")
-	connected_to_server.emit()
+	if first_connection:
+		Logger.log(Logger.LogArea_Network, "Connected to server!")
+		connected_to_server.emit()
+		first_connection = false
 	server_info.emit(queue_info)
+
+func _handle_server_error(message):
+	Logger.log(Logger.LogArea_Network, "ERROR: %s - %s" % [message["error_id"], message["error_message"]])
+	
+	match message["error_id"]:
+		ServerError_JoinInvalidDeck:
+			join_operation_failed.emit()
+		_:
+			# No special error handling.
+			pass
+
+func _handle_game_event(message):
+	var event_type = message["event_data"]["event_type"]
+	#Logger.log(Logger.LogArea_Network, "Game event (%s): %s" % [event_type, message["event_data"]])
+	game_event.emit(event_type, message["event_data"])
 
 func _send_join_server():
 	var message = {
 		"message_type": "join_server",
 	}
+	_send_message(message)
+
+func _send_message(message):
 	var json = JSON.stringify(message)
 	_socket.send_text(json)
 
 ### Commands ###
+
+func join_match_queue(queue_name, oshi_id, deck, cheer_deck):
+	var message = {
+		"message_type": "join_matchmaking_queue",
+		"custom_game": false,
+		"queue_name": queue_name,
+		"game_type": "versus",
+		"oshi_id": oshi_id,
+		"deck": deck,
+		"cheer_deck": cheer_deck,
+	}
+	_send_message(message)
+
+func leave_match_queue():
+	var message = {
+		"message_type": "leave_matchmaking_queue",
+	}
+	_send_message(message)
+
+func leave_game():
+	var message = {
+		"message_type": "leave_game",
+	}
+	_send_message(message)
 
 func submit_game_message(message):
 	if not _socket: return
