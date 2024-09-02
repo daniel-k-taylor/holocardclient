@@ -6,7 +6,7 @@ signal returning_from_game
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	NetworkManager.connect("disconnected_from_server", _on_disconnected)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -22,6 +22,9 @@ func handle_game_event(event_type, _event_data):
 func _on_exit_game_button_pressed() -> void:
 	NetworkManager.leave_game()
 	returning_from_game.emit()
+
+func _on_disconnected():
+	_append_to_messages("disconnected")
 
 func _append_to_messages(message):
 	message_box.text += "\n" + message

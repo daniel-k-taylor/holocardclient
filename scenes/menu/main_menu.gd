@@ -65,7 +65,11 @@ func _update_buttons() -> void:
 			pass
 
 func returned_from_game():
-	pass
+	if NetworkManager.is_server_connected():
+		menu_state = MenuState.MenuState_Connected_Default
+	else:
+		menu_state = MenuState.MenuState_Disconnected
+	_update_buttons()
 
 func settings_loaded():
 	pass

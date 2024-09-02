@@ -121,7 +121,8 @@ func _send_join_server():
 
 func _send_message(message):
 	var json = JSON.stringify(message)
-	_socket.send_text(json)
+	if _socket:
+		_socket.send_text(json)
 
 ### Commands ###
 
