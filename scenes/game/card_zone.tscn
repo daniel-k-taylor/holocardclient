@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5yajeq6o3fln"]
+
+[ext_resource type="Script" path="res://scenes/game/card_zone.gd" id="1_va8gc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj4gp"]
+bg_color = Color(6.257e-07, 0.345685, 0.464665, 1)
+
+[node name="CardZone" type="PanelContainer"]
+custom_minimum_size = Vector2(250, 350)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bj4gp")
+script = ExtResource("1_va8gc")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 5
+
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="ZoneName" type="Label" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "ZoneName"
+
+[node name="ZoneContents" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 15

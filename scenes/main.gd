@@ -23,12 +23,12 @@ func _on_return_from_game():
 	main_menu.returned_from_game()
 
 func _on_game_event(event_type:String, event_data:Dictionary):
-	if event_type == Enums.EventType_GameStart:
+	if event_type == Enums.EventType_GameStartInfo:
 		# Start the game!
 		game = GameScene.instantiate()
-		game.connect("returning_from_game", _on_return_from_game)
-		game.begin_remote_game(event_data)
 		add_child(game)
+		game.connect("returning_from_game", _on_return_from_game)
+		game.begin_remote_game(event_type, event_data)
 	elif game:
 		# Pass along events to the game.
 		game.handle_game_event(event_type, event_data)

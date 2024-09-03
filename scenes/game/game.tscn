@@ -1,6 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://ds6ostisut8ij"]
+[gd_scene load_steps=13 format=3 uid="uid://ds6ostisut8ij"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_mkj14"]
+[ext_resource type="Texture2D" uid="uid://d2najgbir1uge" path="res://assets/icons/cards.png" id="2_a7aoc"]
+[ext_resource type="Texture2D" uid="uid://bcdguxmk5g843" path="res://assets/icons/x.png" id="3_0bcgo"]
+[ext_resource type="Theme" uid="uid://dcbb71xa6dfxt" path="res://themes/indicatorlabeltheme.tres" id="4_hlo7k"]
+[ext_resource type="Texture2D" uid="uid://crdv1s7ufy186" path="res://assets/icons/deck.png" id="5_c0inh"]
+[ext_resource type="Texture2D" uid="uid://dtc5nr8kbr1ac" path="res://assets/icons/heart.png" id="6_enxv4"]
+[ext_resource type="Texture2D" uid="uid://w17s6bfu7yij" path="res://assets/icons/battery-charging.svg" id="7_5hjwc"]
+[ext_resource type="Texture2D" uid="uid://cok5jfveer20n" path="res://assets/icons/discard.png" id="8_yayi5"]
+[ext_resource type="Texture2D" uid="uid://holdacy85lsj" path="res://assets/icons/volume.png" id="9_paygv"]
+[ext_resource type="PackedScene" uid="uid://b5yajeq6o3fln" path="res://scenes/game/card_zone.tscn" id="10_bk3r3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv8ov"]
 
@@ -15,22 +24,298 @@ offset_bottom = 720.0
 color = Color(0.230315, 0.230315, 0.230315, 1)
 
 [node name="ExitGameButton" type="Button" parent="."]
-offset_left = 11.0
-offset_top = 677.0
-offset_right = 98.0
-offset_bottom = 708.0
+offset_left = 1174.0
+offset_top = 672.0
+offset_right = 1261.0
+offset_bottom = 703.0
 text = "Exit Game"
 
 [node name="MessageHistory" type="TextEdit" parent="."]
-offset_left = 15.0
-offset_top = 22.0
-offset_right = 225.0
-offset_bottom = 288.0
+offset_left = 1051.0
+offset_top = 171.0
+offset_right = 1261.0
+offset_bottom = 437.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_lv8ov")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_d442n")
 editable = false
 context_menu_enabled = false
 shortcut_keys_enabled = false
 wrap_mode = 1
+
+[node name="OpponentStatsGroup" type="GridContainer" parent="."]
+offset_left = 1043.0
+offset_top = 12.0
+offset_right = 1263.0
+offset_bottom = 171.0
+theme_override_constants/h_separation = 10
+columns = 2
+
+[node name="HandIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/HandIndicator"]
+layout_mode = 2
+texture = ExtResource("2_a7aoc")
+expand_mode = 2
+
+[node name="x" type="TextureRect" parent="OpponentStatsGroup/HandIndicator"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_0bcgo")
+expand_mode = 1
+
+[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/HandIndicator"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+
+[node name="HandCount" type="Label" parent="OpponentStatsGroup/HandIndicator"]
+layout_mode = 2
+theme = ExtResource("4_hlo7k")
+text = "7"
+
+[node name="DeckIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/DeckIndicator"]
+layout_mode = 2
+texture = ExtResource("5_c0inh")
+expand_mode = 2
+
+[node name="x" type="TextureRect" parent="OpponentStatsGroup/DeckIndicator"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_0bcgo")
+expand_mode = 1
+
+[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/DeckIndicator"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+
+[node name="DeckCount" type="Label" parent="OpponentStatsGroup/DeckIndicator"]
+layout_mode = 2
+theme = ExtResource("4_hlo7k")
+text = "7"
+
+[node name="LifeIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/LifeIndicator"]
+layout_mode = 2
+texture = ExtResource("6_enxv4")
+expand_mode = 2
+
+[node name="x" type="TextureRect" parent="OpponentStatsGroup/LifeIndicator"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_0bcgo")
+expand_mode = 1
+
+[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/LifeIndicator"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+
+[node name="LifeCount" type="Label" parent="OpponentStatsGroup/LifeIndicator"]
+layout_mode = 2
+theme = ExtResource("4_hlo7k")
+text = "7"
+
+[node name="HolopowerIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/HolopowerIndicator"]
+layout_mode = 2
+texture = ExtResource("7_5hjwc")
+expand_mode = 2
+
+[node name="x" type="TextureRect" parent="OpponentStatsGroup/HolopowerIndicator"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_0bcgo")
+expand_mode = 1
+
+[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/HolopowerIndicator"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+
+[node name="HolopowerCount" type="Label" parent="OpponentStatsGroup/HolopowerIndicator"]
+layout_mode = 2
+theme = ExtResource("4_hlo7k")
+text = "7"
+
+[node name="ArchiveIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/ArchiveIndicator"]
+layout_mode = 2
+texture = ExtResource("8_yayi5")
+expand_mode = 2
+
+[node name="x" type="TextureRect" parent="OpponentStatsGroup/ArchiveIndicator"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_0bcgo")
+expand_mode = 1
+
+[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/ArchiveIndicator"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+
+[node name="ArchiveCount" type="Label" parent="OpponentStatsGroup/ArchiveIndicator"]
+layout_mode = 2
+theme = ExtResource("4_hlo7k")
+text = "7"
+
+[node name="CheerIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/CheerIndicator"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("9_paygv")
+expand_mode = 2
+
+[node name="x" type="TextureRect" parent="OpponentStatsGroup/CheerIndicator"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_0bcgo")
+expand_mode = 1
+
+[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/CheerIndicator"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+
+[node name="CheerCount" type="Label" parent="OpponentStatsGroup/CheerIndicator"]
+layout_mode = 2
+theme = ExtResource("4_hlo7k")
+text = "7"
+
+[node name="MeCollab" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 293.0
+offset_top = 354.0
+offset_right = 543.0
+offset_bottom = 704.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Collab"
+
+[node name="MeBackstage" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 561.0
+offset_right = 270.0
+offset_bottom = 911.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Back"
+
+[node name="MeCenter" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 503.0
+offset_top = 355.0
+offset_right = 753.0
+offset_bottom = 705.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Center"
+
+[node name="MeOshi" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 746.0
+offset_top = 353.0
+offset_right = 996.0
+offset_bottom = 703.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Oshi"
+
+[node name="MeHand" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 623.0
+offset_top = 510.0
+offset_right = 873.0
+offset_bottom = 860.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Hand"
+
+[node name="OpponentCollab" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 293.0
+offset_top = 200.0
+offset_right = 543.0
+offset_bottom = 550.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Collab"
+
+[node name="OpponentBackstage" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 25.0
+offset_top = 18.0
+offset_right = 275.0
+offset_bottom = 368.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Back"
+
+[node name="OpponentCenter" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 503.0
+offset_top = 201.0
+offset_right = 753.0
+offset_bottom = 551.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Center"
+
+[node name="OpponentOshi" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 746.0
+offset_top = 203.0
+offset_right = 996.0
+offset_bottom = 553.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Oshi"
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

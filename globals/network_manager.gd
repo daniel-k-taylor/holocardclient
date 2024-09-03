@@ -27,6 +27,12 @@ const ServerMessageType_ServerInfo = "server_info"
 
 const ServerError_JoinInvalidDeck = "joinmatch_invaliddeck"
 
+const ClientMessage_GameAction = "game_action"
+const ClientMessage_LeaveGame = "leave_game"
+const ClientMessage_LeaveMatchmakingQueue = "leave_matchmaking_queue"
+const ClientMessage_JoinMatchmakingQueue = "join_matchmaking_queue"
+const ClientMessage_JoinServer = "join_server"
+
 func is_server_connected() -> bool:
 	return _socket != null
 
@@ -115,7 +121,7 @@ func _handle_game_event(message):
 
 func _send_join_server():
 	var message = {
-		"message_type": "join_server",
+		"message_type": ClientMessage_JoinServer,
 	}
 	_send_message(message)
 
@@ -128,7 +134,7 @@ func _send_message(message):
 
 func join_match_queue(queue_name, oshi_id, deck, cheer_deck):
 	var message = {
-		"message_type": "join_matchmaking_queue",
+		"message_type": ClientMessage_JoinMatchmakingQueue,
 		"custom_game": false,
 		"queue_name": queue_name,
 		"game_type": "versus",
@@ -140,21 +146,23 @@ func join_match_queue(queue_name, oshi_id, deck, cheer_deck):
 
 func leave_match_queue():
 	var message = {
-		"message_type": "leave_matchmaking_queue",
+		"message_type": ClientMessage_LeaveMatchmakingQueue,
 	}
 	_send_message(message)
 
 func leave_game():
 	var message = {
-		"message_type": "leave_game",
+		"message_type": ClientMessage_LeaveGame,
 	}
 	_send_message(message)
 
-func submit_game_message(message):
-	if not _socket: return
-	message['type'] = "game_message"
-	var json = JSON.stringify(message)
-	_socket.send_text(json)
+func send_game_message(action_type:String, action_data :Dictionary):
+	var message = {
+		"message_type": ClientMessage_GameAction,
+		"action_type": action_type,
+		"action_data": action_data,
+	}
+	_send_message(message)
 
 func get_player_list():
 	return cached_players

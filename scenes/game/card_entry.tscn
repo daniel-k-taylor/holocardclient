@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cysjirsifcagk"]
+
+[ext_resource type="Script" path="res://scenes/game/card_entry.gd" id="1_8xm2p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k00cn"]
+bg_color = Color(0.266575, 0.266575, 0.266575, 1)
+
+[node name="EntryPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 300)
+theme_override_styles/panel = SubResource("StyleBoxFlat_k00cn")
+script = ExtResource("1_8xm2p")
+
+[node name="EntryContents" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="EntryLabel" type="Label" parent="EntryContents"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "ZoneContents
+"
