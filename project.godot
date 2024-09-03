@@ -21,6 +21,8 @@ NetworkManager="*res://globals/network_manager.gd"
 GlobalSettings="*res://globals/global_settings.gd"
 Logger="*res://globals/logger.gd"
 Enums="*res://globals/enums.gd"
+Strings="*res://globals/strings.gd"
+CardDatabase="*res://globals/card_database.gd"
 
 [display]
 

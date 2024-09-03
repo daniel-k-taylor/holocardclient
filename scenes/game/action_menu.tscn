@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://db711yiboenfu"]
+
+[ext_resource type="Script" path="res://scenes/game/action_menu.gd" id="1_bxj4n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2exqa"]
+bg_color = Color(0.235294, 0.235294, 0.235294, 0.882353)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5ihf"]
+
+[node name="ActionMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -849.0
+offset_bottom = -672.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2exqa")
+script = ExtResource("1_bxj4n")
+
+[node name="OuterMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MainVBox" type="VBoxContainer" parent="OuterMargin"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="OuterMargin/MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_l5ihf")
+
+[node name="InstructionsHBox" type="HBoxContainer" parent="OuterMargin/MainVBox/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="InstructionsLabel" type="RichTextLabel" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "Instructions go here to tell you what to do:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="ChoiceButtons" type="GridContainer" parent="OuterMargin/MainVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2

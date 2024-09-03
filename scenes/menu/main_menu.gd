@@ -21,7 +21,7 @@ enum MenuState {
 
 var menu_state : MenuState = MenuState.MenuState_ConnectingToServer
 
-var match_queues : Array[String] = []
+var match_queues : Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

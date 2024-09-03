@@ -1,15 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ds6ostisut8ij"]
+[gd_scene load_steps=8 format=3 uid="uid://ds6ostisut8ij"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_mkj14"]
-[ext_resource type="Texture2D" uid="uid://d2najgbir1uge" path="res://assets/icons/cards.png" id="2_a7aoc"]
-[ext_resource type="Texture2D" uid="uid://bcdguxmk5g843" path="res://assets/icons/x.png" id="3_0bcgo"]
-[ext_resource type="Theme" uid="uid://dcbb71xa6dfxt" path="res://themes/indicatorlabeltheme.tres" id="4_hlo7k"]
-[ext_resource type="Texture2D" uid="uid://crdv1s7ufy186" path="res://assets/icons/deck.png" id="5_c0inh"]
-[ext_resource type="Texture2D" uid="uid://dtc5nr8kbr1ac" path="res://assets/icons/heart.png" id="6_enxv4"]
-[ext_resource type="Texture2D" uid="uid://w17s6bfu7yij" path="res://assets/icons/battery-charging.svg" id="7_5hjwc"]
-[ext_resource type="Texture2D" uid="uid://cok5jfveer20n" path="res://assets/icons/discard.png" id="8_yayi5"]
-[ext_resource type="Texture2D" uid="uid://holdacy85lsj" path="res://assets/icons/volume.png" id="9_paygv"]
+[ext_resource type="PackedScene" uid="uid://nn3fa22gm0m0" path="res://scenes/game/stats_group.tscn" id="2_yswsg"]
 [ext_resource type="PackedScene" uid="uid://b5yajeq6o3fln" path="res://scenes/game/card_zone.tscn" id="10_bk3r3"]
+[ext_resource type="PackedScene" uid="uid://db711yiboenfu" path="res://scenes/game/action_menu.tscn" id="11_cx0xb"]
+[ext_resource type="Texture2D" uid="uid://bsyfgok3mshy8" path="res://assets/icons/donut.png" id="12_j6jby"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv8ov"]
 
@@ -21,20 +16,20 @@ script = ExtResource("1_mkj14")
 [node name="Background" type="ColorRect" parent="."]
 offset_right = 1280.0
 offset_bottom = 720.0
-color = Color(0.230315, 0.230315, 0.230315, 1)
+color = Color(0.31802, 0.31802, 0.31802, 1)
 
 [node name="ExitGameButton" type="Button" parent="."]
-offset_left = 1174.0
-offset_top = 672.0
-offset_right = 1261.0
-offset_bottom = 703.0
+offset_left = 1177.0
+offset_top = 174.0
+offset_right = 1264.0
+offset_bottom = 205.0
 text = "Exit Game"
 
 [node name="MessageHistory" type="TextEdit" parent="."]
-offset_left = 1051.0
-offset_top = 171.0
-offset_right = 1261.0
-offset_bottom = 437.0
+offset_left = 17.0
+offset_top = 217.0
+offset_right = 227.0
+offset_bottom = 483.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_lv8ov")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_d442n")
 editable = false
@@ -42,177 +37,30 @@ context_menu_enabled = false
 shortcut_keys_enabled = false
 wrap_mode = 1
 
-[node name="OpponentStatsGroup" type="GridContainer" parent="."]
-offset_left = 1043.0
-offset_top = 12.0
-offset_right = 1263.0
-offset_bottom = 171.0
-theme_override_constants/h_separation = 10
-columns = 2
+[node name="OpponentStatsGroup" parent="." instance=ExtResource("2_yswsg")]
+offset_left = 1030.0
+offset_top = 16.0
+offset_right = 1244.0
+offset_bottom = 159.0
 
-[node name="HandIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
-layout_mode = 2
+[node name="MeStatsGroup" parent="." instance=ExtResource("2_yswsg")]
+offset_left = 1030.0
+offset_top = 562.0
+offset_right = 1244.0
+offset_bottom = 705.0
 
-[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/HandIndicator"]
-layout_mode = 2
-texture = ExtResource("2_a7aoc")
-expand_mode = 2
-
-[node name="x" type="TextureRect" parent="OpponentStatsGroup/HandIndicator"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_0bcgo")
-expand_mode = 1
-
-[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/HandIndicator"]
-layout_mode = 2
-theme_override_constants/margin_left = 3
-
-[node name="HandCount" type="Label" parent="OpponentStatsGroup/HandIndicator"]
-layout_mode = 2
-theme = ExtResource("4_hlo7k")
-text = "7"
-
-[node name="DeckIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
-layout_mode = 2
-
-[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/DeckIndicator"]
-layout_mode = 2
-texture = ExtResource("5_c0inh")
-expand_mode = 2
-
-[node name="x" type="TextureRect" parent="OpponentStatsGroup/DeckIndicator"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_0bcgo")
-expand_mode = 1
-
-[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/DeckIndicator"]
-layout_mode = 2
-theme_override_constants/margin_left = 3
-
-[node name="DeckCount" type="Label" parent="OpponentStatsGroup/DeckIndicator"]
-layout_mode = 2
-theme = ExtResource("4_hlo7k")
-text = "7"
-
-[node name="LifeIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
-layout_mode = 2
-
-[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/LifeIndicator"]
-layout_mode = 2
-texture = ExtResource("6_enxv4")
-expand_mode = 2
-
-[node name="x" type="TextureRect" parent="OpponentStatsGroup/LifeIndicator"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_0bcgo")
-expand_mode = 1
-
-[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/LifeIndicator"]
-layout_mode = 2
-theme_override_constants/margin_left = 3
-
-[node name="LifeCount" type="Label" parent="OpponentStatsGroup/LifeIndicator"]
-layout_mode = 2
-theme = ExtResource("4_hlo7k")
-text = "7"
-
-[node name="HolopowerIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
-layout_mode = 2
-
-[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/HolopowerIndicator"]
-layout_mode = 2
-texture = ExtResource("7_5hjwc")
-expand_mode = 2
-
-[node name="x" type="TextureRect" parent="OpponentStatsGroup/HolopowerIndicator"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_0bcgo")
-expand_mode = 1
-
-[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/HolopowerIndicator"]
-layout_mode = 2
-theme_override_constants/margin_left = 3
-
-[node name="HolopowerCount" type="Label" parent="OpponentStatsGroup/HolopowerIndicator"]
-layout_mode = 2
-theme = ExtResource("4_hlo7k")
-text = "7"
-
-[node name="ArchiveIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
-layout_mode = 2
-
-[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/ArchiveIndicator"]
-layout_mode = 2
-texture = ExtResource("8_yayi5")
-expand_mode = 2
-
-[node name="x" type="TextureRect" parent="OpponentStatsGroup/ArchiveIndicator"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_0bcgo")
-expand_mode = 1
-
-[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/ArchiveIndicator"]
-layout_mode = 2
-theme_override_constants/margin_left = 3
-
-[node name="ArchiveCount" type="Label" parent="OpponentStatsGroup/ArchiveIndicator"]
-layout_mode = 2
-theme = ExtResource("4_hlo7k")
-text = "7"
-
-[node name="CheerIndicator" type="HBoxContainer" parent="OpponentStatsGroup"]
-layout_mode = 2
-
-[node name="Icon" type="TextureRect" parent="OpponentStatsGroup/CheerIndicator"]
-modulate = Color(0, 0, 0, 1)
-layout_mode = 2
-texture = ExtResource("9_paygv")
-expand_mode = 2
-
-[node name="x" type="TextureRect" parent="OpponentStatsGroup/CheerIndicator"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("3_0bcgo")
-expand_mode = 1
-
-[node name="spacing" type="MarginContainer" parent="OpponentStatsGroup/CheerIndicator"]
-layout_mode = 2
-theme_override_constants/margin_left = 3
-
-[node name="CheerCount" type="Label" parent="OpponentStatsGroup/CheerIndicator"]
-layout_mode = 2
-theme = ExtResource("4_hlo7k")
-text = "7"
-
-[node name="MeCollab" parent="." instance=ExtResource("10_bk3r3")]
+[node name="MeArchive" parent="." instance=ExtResource("10_bk3r3")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 293.0
-offset_top = 354.0
-offset_right = 543.0
-offset_bottom = 704.0
+offset_left = 1118.0
+offset_top = 392.0
+offset_right = 1368.0
+offset_bottom = 742.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.4, 0.4)
-ZoneName = "Collab"
+ZoneName = "Archive"
 
 [node name="MeBackstage" parent="." instance=ExtResource("10_bk3r3")]
 anchors_preset = 0
@@ -231,23 +79,36 @@ ZoneName = "Back"
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 503.0
-offset_top = 355.0
-offset_right = 753.0
-offset_bottom = 705.0
+offset_left = 624.0
+offset_top = 353.0
+offset_right = 874.0
+offset_bottom = 703.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Center"
 
+[node name="MeCollab" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 486.0
+offset_top = 356.0
+offset_right = 736.0
+offset_bottom = 706.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Collab"
+
 [node name="MeOshi" parent="." instance=ExtResource("10_bk3r3")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 746.0
-offset_top = 353.0
-offset_right = 996.0
-offset_bottom = 703.0
+offset_left = 982.0
+offset_top = 396.0
+offset_right = 1232.0
+offset_bottom = 746.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.4, 0.4)
@@ -257,27 +118,27 @@ ZoneName = "Oshi"
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 623.0
-offset_top = 510.0
-offset_right = 873.0
-offset_bottom = 860.0
+offset_left = 445.0
+offset_top = 554.0
+offset_right = 695.0
+offset_bottom = 904.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Hand"
 
-[node name="OpponentCollab" parent="." instance=ExtResource("10_bk3r3")]
+[node name="OpponentArchive" parent="." instance=ExtResource("10_bk3r3")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 293.0
-offset_top = 200.0
-offset_right = 543.0
-offset_bottom = 550.0
+offset_left = 1119.0
+offset_top = 220.0
+offset_right = 1369.0
+offset_bottom = 570.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.4, 0.4)
-ZoneName = "Collab"
+ZoneName = "Archive"
 
 [node name="OpponentBackstage" parent="." instance=ExtResource("10_bk3r3")]
 anchors_preset = 0
@@ -296,26 +157,61 @@ ZoneName = "Back"
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 503.0
-offset_top = 201.0
-offset_right = 753.0
-offset_bottom = 551.0
+offset_left = 622.0
+offset_top = 199.0
+offset_right = 872.0
+offset_bottom = 549.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Center"
 
+[node name="OpponentCollab" parent="." instance=ExtResource("10_bk3r3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 485.0
+offset_top = 198.0
+offset_right = 735.0
+offset_bottom = 548.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.4, 0.4)
+ZoneName = "Collab"
+
 [node name="OpponentOshi" parent="." instance=ExtResource("10_bk3r3")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 746.0
-offset_top = 203.0
-offset_right = 996.0
-offset_bottom = 553.0
+offset_left = 984.0
+offset_top = 222.0
+offset_right = 1234.0
+offset_bottom = 572.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Oshi"
+
+[node name="AllCards" type="Node2D" parent="."]
+
+[node name="ActionMenu" parent="." instance=ExtResource("11_cx0xb")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 355.0
+offset_top = 5.0
+offset_right = 786.0
+offset_bottom = 55.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="ThinkingSpinner" type="TextureProgressBar" parent="."]
+offset_left = 944.0
+offset_top = 47.0
+offset_right = 1008.0
+offset_bottom = 111.0
+value = 30.0
+fill_mode = 4
+texture_progress = ExtResource("12_j6jby")
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

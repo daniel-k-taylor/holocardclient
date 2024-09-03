@@ -41,62 +41,62 @@ const EventType_TurnStart = "turn_start"
 const GameAction_Mulligan = "mulligan"
 #"do_mulligan": bool,
 
-const InitialPlacement = "initial_placement"
+const GameAction_InitialPlacement = "initial_placement"
 #"center_holomem_card_id": str,
 #"backstage_holomem_card_ids": List[str],
 
-const ChooseNewCenter = "choose_new_center"
+const GameAction_ChooseNewCenter = "choose_new_center"
 #"new_center_card_id": str,
 
-const PlaceCheer = "place_cheer"
+const GameAction_PlaceCheer = "place_cheer"
 #"placements": Dict[str, str],
 
-const MainStepPlaceHolomem = "mainstep_place_holomem"
+const GameAction_MainStepPlaceHolomem = "mainstep_place_holomem"
 #"card_id": str,
 
-const MainStepBloom = "mainstep_bloom"
+const GameAction_MainStepBloom = "mainstep_bloom"
 #"card_id": str,
 #"target_id": str,
 
-const MainStepCollab = "mainstep_collab"
+const GameAction_MainStepCollab = "mainstep_collab"
 #"card_id": str,
 
-const MainStepOshiSkill = "mainstep_oshi_skill"
+const GameAction_MainStepOshiSkill = "mainstep_oshi_skill"
 #"skill_id": str,
 
-const MainStepPlaySupport = "mainstep_play_support"
+const GameAction_MainStepPlaySupport = "mainstep_play_support"
 #"card_id": str,
 
-const MainStepBatonPass = "mainstep_baton_pass"
+const GameAction_MainStepBatonPass = "mainstep_baton_pass"
 #"card_id": str,
 
-const MainStepBeginPerformance = "mainstep_begin_performance"
+const GameAction_MainStepBeginPerformance = "mainstep_begin_performance"
 #
 
-const MainStepEndTurn = "mainstep_end_turn"
+const GameAction_MainStepEndTurn = "mainstep_end_turn"
 #
 
-const PerformanceStepUseArt = "performance_step_use_art"
+const GameAction_PerformanceStepUseArt = "performance_step_use_art"
 #"performer_id": str,
 #"art_id": str,
 #"target_id": str,
 
-const PerformanceStepEndTurn = "performance_step_end_turn"
+const GameAction_PerformanceStepEndTurn = "performance_step_end_turn"
 #
 
-const EffectResolution_MoveCheerBetweenHolomems = "effect_resolution_move_cheer_between_holomems"
+const GameAction_EffectResolution_MoveCheerBetweenHolomems = "effect_resolution_move_cheer_between_holomems"
 #"placements": Dict[str, str],
 
-const EffectResolution_ChooseCardsForEffect = "effect_resolution_choose_card_for_effect"
+const GameAction_EffectResolution_ChooseCardsForEffect = "effect_resolution_choose_card_for_effect"
 #"card_ids": List[str],
 
-const EffectResolution_MakeChoice = "effect_resolution_make_choice"
+const GameAction_EffectResolution_MakeChoice = "effect_resolution_make_choice"
 #"choice_index": int,
 
-const EffectResolution_OrderCards = "effect_resolution_order_cards"
+const GameAction_EffectResolution_OrderCards = "effect_resolution_order_cards"
 #"card_ids": List[str],
 
-const Resign = "resign"
+const GameAction_Resign = "resign"
 #
 
 const UNKNOWN_CARD_ID = "HIDDEN"

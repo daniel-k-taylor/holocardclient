@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://c86ockf3l38eh"]
+
+[ext_resource type="Script" path="res://scenes/game/multichoicebutton.gd" id="1_icnax"]
+
+[node name="MultiChoiceButton" type="MarginContainer"]
+script = ExtResource("1_icnax")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="RichTextLabel" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "Choice 0"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
