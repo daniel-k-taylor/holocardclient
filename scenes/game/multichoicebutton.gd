@@ -1,3 +1,4 @@
+class_name MultiChoiceButton
 extends MarginContainer
 
 signal button_pressed(value)

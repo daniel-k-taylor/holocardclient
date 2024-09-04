@@ -1,16 +1,11 @@
+class_name Game
 extends Node2D
 
 signal returning_from_game
 
-const CardZone = preload("res://scenes/game/card_zone.gd")
-const ActionMenu = preload("res://scenes/game/action_menu.gd")
-
-const CardBase = preload("res://scenes/game/card_base.gd")
 const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 
-const StatsGroup = preload("res://scenes/game/stats_group.gd")
-
-@onready var message_box = $MessageHistory
+@onready var message_box : RichTextLabel = $MessageHistory
 @onready var action_menu : ActionMenu = $ActionMenu
 @onready var all_cards : Node2D = $AllCards
 
@@ -301,12 +296,18 @@ func _on_disconnected():
 
 func _append_to_messages(message):
 	message_box.text += "\n" + message
+	
 
 func _get_card_definition_id(card_id):
 	for key in all_cards_map:
 		if key == card_id:
 			return all_cards_map[key]
 	return null
+	
+func _get_card_colors(card_id):
+	var definition_id = _get_card_definition_id(card_id)
+	var card = CardDatabase.get_card(definition_id)
+	return card["colors"]
 
 func _update_player_stats(player, stats_group):
 	var stats_info = {
@@ -335,17 +336,22 @@ func _begin_game(event_data):
 func create_card(card_id : String, definition_id_for_oshi : String = "") -> CardBase:
 	assert(card_id != "HIDDEN")
 	var definition_id = definition_id_for_oshi
-	if not definition_id:
+	var card_type = "oshi"
+	if definition_id_for_oshi:
+		definition_id = "oshi"
+	else:
 		definition_id = _get_card_definition_id(card_id)
+		var definition = CardDatabase.get_card(definition_id)
+		card_type = definition["card_type"]
 	var new_card : CardBase = CardBaseScene.instantiate()
-	new_card.create_card(definition_id, card_id)
+	new_card.create_card(definition_id, card_id, card_type)
 	all_cards.add_child(new_card)
 	return new_card
 
 func destroy_card(card : CardBase) -> void:
 	all_cards.remove_child(card)
 
-func find_card_on_board(card_id : String):
+func find_card_on_board(card_id : String) -> CardBase:
 	for card in all_cards.get_children():
 		if card._card_id == card_id:
 			return card
@@ -452,7 +458,7 @@ func _on_initial_placement_begin(event_data):
 			# Pressed ok and a mem is selected.
 			# Next select backstagers.
 			initial_placement_state["center"] = selected_cards[0]._card_id
-			do_move_cards(me, "hand", "center", [selected_cards[0]._card_id])
+			do_move_cards(me, "hand", "center", "", [selected_cards[0]._card_id])
 			var backstage_options = me.get_card_ids_in_hand(["holomem_debut", "holomem_spot"])
 			backstage_options.erase(initial_placement_state["center"])
 			_begin_card_selection(backstage_options, 0, 5)
@@ -466,7 +472,7 @@ func _on_initial_placement_begin(event_data):
 				for card in selected_cards:
 					initial_placement_state["backstage"].append(card._card_id)
 				submit_initial_placement(initial_placement_state)
-				do_move_cards(me, "hand", "backstage", initial_placement_state["backstage"])
+				do_move_cards(me, "hand", "backstage", "", initial_placement_state["backstage"])
 				_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 			)
 		)
@@ -496,15 +502,23 @@ func _on_initial_placement_revealed(event_data):
 	for info in placement_info:
 		var active_player = get_player(info["player_id"])
 		var oshi_id = info["oshi_id"]
-		#center_card_id
-		#backstage_card_ids
-		#hand_count
+		var center_card_id = info["center_card_id"]
+		var backstage_card_ids = info["backstage_card_ids"]
+		var hand_count = info["hand_count"]
 		var cheer_deck_count = info["cheer_deck_count"]
 		var life_count = info["life_count"]
 		
+		if not active_player.is_me():
+			# Local player is done on initial placement
+			do_move_cards(active_player, "hand", "center", "", [center_card_id])
+			do_move_cards(active_player, "hand", "backstage", "", backstage_card_ids)
+			# TODO: Fix later, but hand count was updated in placement
+			active_player.hand_count += (1 + len(backstage_card_ids))
 		active_player.set_oshi(oshi_id)
 		active_player.set_starting_cheer(cheer_deck_count)
 		active_player.set_starting_life(life_count)
+		print("Mine: %s  Info: %s" % [active_player.hand_count, hand_count])
+		assert(active_player.hand_count == hand_count)
 
 
 func _on_move_card_event(event_data):
@@ -512,13 +526,13 @@ func _on_move_card_event(event_data):
 	var from_zone = event_data["from_zone"]
 	var to_zone = event_data["to_zone"]
 	var zone_card_id = ""
-	if zone_card_id in event_data:
+	if "zone_card_id" in event_data:
 		zone_card_id = event_data["zone_card_id"]
 	var card_id = event_data["card_id"]
 	
-	do_move_cards(active_player, from_zone, to_zone, [card_id])
+	do_move_cards(active_player, from_zone, to_zone, zone_card_id, [card_id])
 
-func do_move_cards(player, from, to, card_ids):
+func do_move_cards(player, from, to, zone_card_id, card_ids):
 	var visible_to_zone = player.is_zone_visible(to)
 	for card_id in card_ids:
 		match from:
@@ -554,15 +568,20 @@ func do_move_cards(player, from, to, card_ids):
 				player.add_backstage(card)
 			"center":
 				player.add_center(card)
+			"cheer_deck":
+				player.add_card_to_cheer_deck(card)
 			"collab":
 				# TODO:
 				assert(false)
-			"hand":
-				player.add_card_to_hand(card)
 			"deck":
 				player.add_card_to_deck(card)
-			"cheer_deck":
-				player.add_card_to_cheer_deck(card)
+			"holomem":
+				var holomem_card = find_card_on_board(zone_card_id)
+				var cheer_colors = _get_card_colors(card_id)
+				holomem_card.attach_cheer(card_id, cheer_colors)
+				destroy_card(card)
+			"hand":
+				player.add_card_to_hand(card)
 			_:
 				Logger.log_game("Unimplemented MoveCard from zone")
 				assert(false)

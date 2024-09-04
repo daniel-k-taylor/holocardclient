@@ -106,6 +106,7 @@ offset_right = 44.0
 offset_bottom = 24.0
 button_pressed = true
 
+[connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
 [connection signal="pressed" from="MainButtons/JoinQueueButton" to="." method="_on_join_queue_button_pressed"]
 [connection signal="pressed" from="MainButtons/LeaveQueueButton" to="." method="_on_leave_queue_button_pressed"]

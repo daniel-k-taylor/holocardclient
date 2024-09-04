@@ -1,6 +1,6 @@
+class_name ActionMenu
 extends PanelContainer
 
-const MultiChoiceButton = preload("res://scenes/game/multichoicebutton.gd")
 const MultiChoiceButtonScene = preload("res://scenes/game/multichoicebutton.tscn")
 
 @onready var instruction_label : RichTextLabel = $OuterMargin/MainVBox/PanelContainer/InstructionsHBox/InstructionsLabel

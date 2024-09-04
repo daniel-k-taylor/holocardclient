@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ds6ostisut8ij"]
+[gd_scene load_steps=7 format=3 uid="uid://ds6ostisut8ij"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_mkj14"]
 [ext_resource type="PackedScene" uid="uid://nn3fa22gm0m0" path="res://scenes/game/stats_group.tscn" id="2_yswsg"]
@@ -7,8 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bsyfgok3mshy8" path="res://assets/icons/donut.png" id="12_j6jby"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv8ov"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d442n"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_mkj14")
@@ -25,17 +23,15 @@ offset_right = 1264.0
 offset_bottom = 205.0
 text = "Exit Game"
 
-[node name="MessageHistory" type="TextEdit" parent="."]
+[node name="MessageHistory" type="RichTextLabel" parent="."]
 offset_left = 17.0
 offset_top = 217.0
 offset_right = 227.0
 offset_bottom = 483.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_lv8ov")
-theme_override_styles/read_only = SubResource("StyleBoxEmpty_d442n")
-editable = false
-context_menu_enabled = false
+bbcode_enabled = true
+scroll_following = true
 shortcut_keys_enabled = false
-wrap_mode = 1
 
 [node name="OpponentStatsGroup" parent="." instance=ExtResource("2_yswsg")]
 offset_left = 1030.0

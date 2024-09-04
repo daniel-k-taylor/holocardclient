@@ -1,10 +1,10 @@
+class_name CardZone
 extends PanelContainer
 
 signal on_card_pressed(card_id, card_graphic)
 
 @export var ZoneName = "Unset"
 
-const CardEntry = preload("res://scenes/game/card_entry.gd")
 const CardEntryScene = preload("res://scenes/game/card_entry.tscn")
 
 @onready var zone_contents = $Margin/Layout/ZoneContents

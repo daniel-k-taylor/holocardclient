@@ -1,3 +1,4 @@
+class_name StatsGroup
 extends GridContainer
 
 @onready var hand = $HandIndicator/HandCount
