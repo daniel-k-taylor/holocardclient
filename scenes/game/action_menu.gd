@@ -34,7 +34,7 @@ func show_choices(instructions : String, choice_info : Dictionary, callback : Ca
 		button.set_enabled(choice_enabled[i])
 
 	if choice_count <= 3:
-		choice_grid.columns = choice_count
+		choice_grid.columns = max(1, choice_count)
 	elif choice_count == 4:
 		choice_grid.columns = 2
 	else:
@@ -42,6 +42,10 @@ func show_choices(instructions : String, choice_info : Dictionary, callback : Ca
 
 	visible = true
 	reset_size()
+
+func hide_menu():
+	visible = false
+	
 
 func update_buttons_enabled(enabled_states : Array):
 	for i in range(len(enabled_states)):

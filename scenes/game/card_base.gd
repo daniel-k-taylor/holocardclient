@@ -54,11 +54,11 @@ func get_cheer_counts():
 	for cheer_id in self._cheer:
 		var colors = _cheer[cheer_id]
 		if "blue" in colors:
-			white += 1
+			blue += 1
 		if "green" in colors:
-			white += 1
+			green += 1
 		if "red" in colors:
-			white += 1
+			red += 1
 		if "white" in colors:
 			white += 1
 	return {

@@ -188,6 +188,7 @@ var selection_max : int = 0
 var selected_cards = []
 var selection_current_choice_info = {}
 var select_destination_card_remaining = []
+var select_destination_card_decisions = {}
 var initial_placement_state = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -209,7 +210,7 @@ func begin_remote_game(event_type, event_data):
 	handle_game_event(event_type, event_data)
 	
 func handle_game_event(event_type, event_data):
-	Logger.log_game("Received game event: %s" % event_type)
+	Logger.log_game("Received game event: %s\n%s" % [event_type, event_data])
 	_append_to_messages(event_type)
 	
 	match event_type:
@@ -228,7 +229,7 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_Decision_ChooseCards:
 			pass
 		Enums.EventType_Decision_MainStep:
-			pass
+			_on_main_step_decision(event_data)
 		Enums.EventType_Decision_MoveCheerChoice:
 			pass
 		Enums.EventType_Decision_OrderCards:
@@ -258,11 +259,11 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_InitialPlacementReveal:
 			_on_initial_placement_revealed(event_data)
 		Enums.EventType_MainStepStart:
-			pass
+			_on_main_step_start(event_data)
 		Enums.EventType_MoveCard:
 			_on_move_card_event(event_data)
 		Enums.EventType_MoveCheer:
-			pass
+			_on_move_cheer_event(event_data)
 		Enums.EventType_MulliganDecision:
 			_on_mulligan_decision_event(event_data)
 		Enums.EventType_MulliganReveal:
@@ -351,7 +352,8 @@ func create_card(card_id : String, definition_id_for_oshi : String = "") -> Card
 	return new_card
 
 func destroy_card(card : CardBase) -> void:
-	all_cards.remove_child(card)
+	if card:
+		all_cards.remove_child(card)
 
 func find_card_on_board(card_id : String) -> CardBase:
 	for card in all_cards.get_children():
@@ -426,7 +428,7 @@ func _allowed():
 #
 
 func _on_cheer_step(event_data):
-	var active_player = get_player(event_data["drawing_player_id"])
+	var active_player = get_player(event_data["active_player"])
 	# TODO: Animation for Cheer Step
 	if active_player.is_me():
 		var cheer_to_place = event_data["cheer_to_place"]
@@ -446,6 +448,16 @@ func _on_cheer_step(event_data):
 			})
 		_begin_place_cheer(remaining_cheer_placements)
 	else:
+		pass
+
+func _on_main_step_decision(event_data):
+	var active_player = get_player(event_data["active_player"])
+	if active_player.is_me():
+		var available_actions = event_data["available_actions"]
+		
+		#TODO: Show action menu with all the actions.
+	else:
+		# Nothing for opponent.
 		pass
 
 func _on_draw_event(event_data):
@@ -470,43 +482,53 @@ func _begin_card_selection(selectable_ids : Array, min_selectable : int, max_sel
 
 func _begin_place_cheer(remaining_cheer_placements : Array):
 	select_destination_card_remaining = remaining_cheer_placements
+	select_destination_card_decisions = {}
 	_continue_select_destination_cards()
-	_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
 
 func _continue_select_destination_cards():
-	selection_current_choice_info = {
-		"strings": [],
-		"enabled": [],
-		"enable_check": []
-	}
-	var next_selection = select_destination_card_remaining[0]
-	var source = next_selection["source"]
-	var color = next_selection["color"]
-	var allowed_placements = next_selection["allowed_placements"]
-	selectable_card_ids = allowed_placements
-	# Light up the various placements
-	# For all cards in all zones, update selectable.
-	for card : CardBase in all_cards.get_children():
-		var selectable = card._card_id in selectable_card_ids
-		card.set_selectable(selectable)
-		if selectable:
-			card.set_selected(true)
-	
-	var instructions = Strings.build_place_cheer_string(source, color)
-	action_menu.show_choices(instructions, selection_current_choice_info, func(_choice_index): 
-		# Unexpected, just for instructions.
-		assert(false, "This didn't have a button press available")
-		pass
-	)
+	if len(select_destination_card_remaining) == 0:
+		# Selection is finished.
+		action_menu.hide_menu()
+		submit_place_cheer(select_destination_card_decisions)
+		_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+	else:
+		_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
+		
+		selection_current_choice_info = {
+			"strings": [],
+			"enabled": [],
+			"enable_check": []
+		}
+		var next_selection = select_destination_card_remaining[0]
+		var source = next_selection["source"]
+		var color = next_selection["color"]
+		var allowed_placements = next_selection["allowed_placements"]
+		selectable_card_ids = allowed_placements
+		selected_cards = []
+		# Light up the various placements
+		# For all cards in all zones, update selectable.
+		for card : CardBase in all_cards.get_children():
+			var selectable = card._card_id in selectable_card_ids
+			card.set_selectable(selectable)
+			if selectable:
+				card.set_selected(true)
+				selected_cards.append(card)
+		
+		var instructions = Strings.build_place_cheer_string(source, color)
+		action_menu.show_choices(instructions, selection_current_choice_info, func(_choice_index): 
+			# Unexpected, just for instructions.
+			assert(false, "This didn't have a button press available")
+			pass
+		)
 
 func _place_cheer_on_card(selected_card_id):
-	# TODO: 
-	# Call do_move_cards somehow, but the player maybe doesn't matter?
-	# Remove 0 from the select_destination_card_remaining list and call _continue_select_destination_cards
-	# _continue_select_destination_cards needs to check if we're at 0 and then actually submit the game action.
-	# Also the selections made should be tracked (and executed locally for visuals)
+	var current_selection_info = select_destination_card_remaining.pop_front()
+	var cheer_id = current_selection_info["cheer_id"]
+	var source = current_selection_info["source"]
+	select_destination_card_decisions[cheer_id] = selected_card_id
 	
-	pass
+	do_move_cards(me, source, "holomem", selected_card_id, [cheer_id])
+	_continue_select_destination_cards()
 
 func _change_ui_phase(new_ui_phase : UIPhase):
 	_deselect_cards()
@@ -595,7 +617,10 @@ func _on_initial_placement_revealed(event_data):
 		print("Mine: %s  Info: %s" % [active_player.hand_count, hand_count])
 		assert(active_player.hand_count == hand_count)
 
-
+func _on_main_step_start(_event_data):
+	# TODO: Play an animation for main step starting.
+	pass
+	
 func _on_move_card_event(event_data):
 	var active_player = get_player(event_data["moving_player_id"])
 	var from_zone = event_data["from_zone"]
@@ -605,7 +630,15 @@ func _on_move_card_event(event_data):
 		zone_card_id = event_data["zone_card_id"]
 	var card_id = event_data["card_id"]
 	
-	do_move_cards(active_player, from_zone, to_zone, zone_card_id, [card_id])
+	var already_handled = false
+	if select_destination_card_decisions:
+		if card_id in select_destination_card_decisions:
+			assert(select_destination_card_decisions[card_id] == zone_card_id)
+			select_destination_card_decisions.erase(card_id)
+			already_handled = true
+	
+	if not already_handled:
+		do_move_cards(active_player, from_zone, to_zone, zone_card_id, [card_id])
 
 func do_move_cards(player, from, to, zone_card_id, card_ids):
 	var visible_to_zone = player.is_zone_visible(to)
@@ -622,6 +655,10 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			"collab":
 				# TODO:
 				assert(false)
+			"floating":
+				# A played support card.
+				# TODO: Animate this card going from where it is to wherever.
+				pass
 			"hand":
 				player.remove_from_hand(card_id)
 			"deck":
@@ -660,7 +697,11 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			_:
 				Logger.log_game("Unimplemented MoveCard from zone")
 				assert(false)
-			
+
+func _on_move_cheer_event(_event_data):
+	assert(false, "Unimplemented")
+	pass
+
 func _on_mulligan_decision_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
@@ -701,8 +742,13 @@ func submit_initial_placement(placement_state):
 		"backstage_holomem_card_ids": placement_state["backstage"]
 	}
 	NetworkManager.send_game_message(Enums.GameAction_InitialPlacement, action)
-	
-	
+
+func submit_place_cheer(placements):
+	var action = {
+		"placements": placements
+	}
+	NetworkManager.send_game_message(Enums.GameAction_PlaceCheer, action)
+
 #
 # Signal callbacks
 #
