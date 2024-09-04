@@ -14,9 +14,9 @@ func load_json_file(file_path : String):
 	else:
 		print("Card definitions file doesn't exist")
 
-func get_card(definition_id):
+func get_card(definition_id) -> Dictionary:
 	for card in card_data:
 		if card['card_id'] == definition_id:
 			return card
 	assert(false, "Missing card definition: " + definition_id)
-	return null
+	return {}

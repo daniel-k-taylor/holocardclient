@@ -53,6 +53,7 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 enum UIPhase {
 	UIPhase_Init,
 	UIPhase_SelectCardsForChoice,
+	UIPhase_ClickCardsForAction,
 	UIPhase_MainStepAction,
 	UIPhase_WaitingOnServer,
 }
@@ -186,6 +187,7 @@ var selection_min : int = 0
 var selection_max : int = 0
 var selected_cards = []
 var selection_current_choice_info = {}
+var select_destination_card_remaining = []
 var initial_placement_state = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -218,7 +220,7 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_BoostStat:
 			pass
 		Enums.EventType_CheerStep:
-			pass
+			_on_cheer_step(event_data)
 		Enums.EventType_Choice_SendCollabBack:
 			pass
 		Enums.EventType_Collab:
@@ -303,7 +305,7 @@ func _get_card_definition_id(card_id):
 		if key == card_id:
 			return all_cards_map[key]
 	return null
-	
+
 func _get_card_colors(card_id):
 	var definition_id = _get_card_definition_id(card_id)
 	var card = CardDatabase.get_card(definition_id)
@@ -367,29 +369,39 @@ func can_select_card(card_id: String):
 		UIPhase.UIPhase_SelectCardsForChoice:
 			if _is_card_selected(card_id) or (card_id in selectable_card_ids and selected_cards.size() < selection_max):
 				return true
+		UIPhase.UIPhase_ClickCardsForAction:
+			return _is_card_selected(card_id)
 		_:
 			return false
 
 func select_card(card_id: String):
-	var deselected = false
-	for card_graphic : CardBase in selected_cards:
-		if card_id == card_graphic._card_id:
-			# Already selected, deselect.
-			card_graphic.set_selected(false)
-			selected_cards.erase(card_graphic)
-			deselected = true
-			break
-	if not deselected:
-		# Set the card as selected.
-		var card_graphic = find_card_on_board(card_id)
-		selected_cards.append(card_graphic)
-		card_graphic.set_selected(true)
-			
-	# After selection is changed, update buttons.
-	var enabled_states = []
-	for enable_check : Callable in selection_current_choice_info["enable_check"]:
-		enabled_states.append(enable_check.call())
-	action_menu.update_buttons_enabled(enabled_states)
+	match ui_phase:
+		UIPhase.UIPhase_SelectCardsForChoice:
+			var deselected = false
+			for card_graphic : CardBase in selected_cards:
+				if card_id == card_graphic._card_id:
+					# Already selected, deselect.
+					card_graphic.set_selected(false)
+					selected_cards.erase(card_graphic)
+					deselected = true
+					break
+			if not deselected:
+				# Set the card as selected.
+				var card_graphic = find_card_on_board(card_id)
+				selected_cards.append(card_graphic)
+				card_graphic.set_selected(true)
+					
+			# After selection is changed, update buttons.
+			var enabled_states = []
+			for enable_check : Callable in selection_current_choice_info["enable_check"]:
+				enabled_states.append(enable_check.call())
+			action_menu.update_buttons_enabled(enabled_states)
+		UIPhase.UIPhase_ClickCardsForAction:
+			var current_selection = select_destination_card_remaining[0]
+			var callback : Callable = current_selection["action"]
+			callback.call(card_id)
+		_:
+			assert(false, "Unimplemented selection phase")
 
 func _deselect_cards():
 	for card_graphic in selected_cards:
@@ -413,6 +425,29 @@ func _allowed():
 # Game Event Handlers
 #
 
+func _on_cheer_step(event_data):
+	var active_player = get_player(event_data["drawing_player_id"])
+	# TODO: Animation for Cheer Step
+	if active_player.is_me():
+		var cheer_to_place = event_data["cheer_to_place"]
+		var source = event_data["source"]
+		var options = event_data["options"]
+		
+		var remaining_cheer_placements = []
+		for cheer_id in cheer_to_place:
+			# For now, assume cheer has 1 color.
+			var color = _get_card_colors(cheer_id)[0]
+			remaining_cheer_placements.append({
+				"source": source,
+				"cheer_id": cheer_id,
+				"color": color,
+				"allowed_placements": options,
+				"action": _place_cheer_on_card,
+			})
+		_begin_place_cheer(remaining_cheer_placements)
+	else:
+		pass
+
 func _on_draw_event(event_data):
 	var drawn_card_ids = event_data["drawn_card_ids"]
 	var active_player = get_player(event_data["drawing_player_id"])
@@ -432,6 +467,46 @@ func _begin_card_selection(selectable_ids : Array, min_selectable : int, max_sel
 	for card in all_cards.get_children():
 		var selectable = card._card_id in selectable_card_ids
 		card.set_selectable(selectable)
+
+func _begin_place_cheer(remaining_cheer_placements : Array):
+	select_destination_card_remaining = remaining_cheer_placements
+	_continue_select_destination_cards()
+	_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
+
+func _continue_select_destination_cards():
+	selection_current_choice_info = {
+		"strings": [],
+		"enabled": [],
+		"enable_check": []
+	}
+	var next_selection = select_destination_card_remaining[0]
+	var source = next_selection["source"]
+	var color = next_selection["color"]
+	var allowed_placements = next_selection["allowed_placements"]
+	selectable_card_ids = allowed_placements
+	# Light up the various placements
+	# For all cards in all zones, update selectable.
+	for card : CardBase in all_cards.get_children():
+		var selectable = card._card_id in selectable_card_ids
+		card.set_selectable(selectable)
+		if selectable:
+			card.set_selected(true)
+	
+	var instructions = Strings.build_place_cheer_string(source, color)
+	action_menu.show_choices(instructions, selection_current_choice_info, func(_choice_index): 
+		# Unexpected, just for instructions.
+		assert(false, "This didn't have a button press available")
+		pass
+	)
+
+func _place_cheer_on_card(selected_card_id):
+	# TODO: 
+	# Call do_move_cards somehow, but the player maybe doesn't matter?
+	# Remove 0 from the select_destination_card_remaining list and call _continue_select_destination_cards
+	# _continue_select_destination_cards needs to check if we're at 0 and then actually submit the game action.
+	# Also the selections made should be tracked (and executed locally for visuals)
+	
+	pass
 
 func _change_ui_phase(new_ui_phase : UIPhase):
 	_deselect_cards()
