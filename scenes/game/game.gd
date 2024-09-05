@@ -165,8 +165,20 @@ class PlayerState:
 	func add_backstage(card : CardBase):
 		_backstage_zone.add_card(card)
 
+	func remove_backstage(card_id : String):
+		_backstage_zone.remove_card(card_id)
+
 	func add_center(card : CardBase):
 		_center_zone.add_card(card)
+
+	func remove_center(card_id : String):
+		_center_zone.remove_card(card_id)
+
+	func add_collab(card : CardBase):
+		_collab_zone.add_card(card)
+
+	func remove_collab(card_id : String):
+		_collab_zone.remove_card(card_id)
 
 	func replace_card_on_stage(target_card_id, new_card):
 		for zone in stage_zones:
@@ -193,6 +205,12 @@ class PlayerState:
 		var target_card = _game.find_card_on_board(target_card_id)
 		if target_card:
 			_game.destroy_card(target_card)
+
+	func generate_holopower(holopower_generated):
+		holopower_count += holopower_generated
+
+	func remove_holopower(removed_count):
+		holopower_count -= removed_count
 
 	func set_oshi(oshi_id : String):
 		var oshi_card_id = _player_id + "_oshi"
@@ -257,7 +275,7 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_Choice_SendCollabBack:
 			pass
 		Enums.EventType_Collab:
-			pass
+			_on_collab_event(event_data)
 		Enums.EventType_Decision_ChooseCards:
 			pass
 		Enums.EventType_Decision_MainStep:
@@ -497,6 +515,13 @@ func _on_cheer_step(event_data):
 	else:
 		pass
 
+func _on_collab_event(event_data):
+	var active_player = get_player(event_data["collab_player_id"])
+	var collab_card_id = event_data["collab_card_id"]
+	var holopower_generated = event_data["holopower_generated"]
+	do_move_cards(active_player, "backstage", "collab", "", [collab_card_id])
+	active_player.generate_holopower(holopower_generated)
+
 func _on_main_step_decision(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
@@ -605,18 +630,35 @@ func _on_main_step_action_chosen(choice_index):
 				_bloom_target_selection,
 				Strings.DECISION_INSTRUCTIONS_CHOOSE_BLOOM
 			)
-		# Enums.GameAction_MainStepCollab:
-		# 	_on_main_step_collab()
+		Enums.GameAction_MainStepCollab:
+			# The valid actions have all holomems that are selectable to collab.
+			var valid_card_ids = []
+			for action in valid_actions:
+				valid_card_ids.append(action["card_id"])
+			_show_click_cards_cancelable_action_menu(
+				valid_card_ids,
+				_collab_holomem,
+				Strings.DECISION_INSTRUCTIONS_COLLAB
+			)
 		# Enums.GameAction_MainStepOshiSkill:
 		# 	_on_main_step_oshi_skill()
 		# Enums.GameAction_MainStepPlaySupport:
 		# 	_on_main_step_play_support()
-		# Enums.GameAction_MainStepBatonPass:
-		# 	_on_main_step_baton_pass()
-		# Enums.GameAction_MainStepBeginPerformance:
-		# 	_on_main_step_begin_performance()
-		# Enums.GameAction_MainStepEndTurn:
-		# 	_on_main_step_end_turn()
+		Enums.GameAction_MainStepBatonPass:
+			# There is only one possible action for baton pass and
+			# it has the backstage options in it.
+			var valid_card_ids = valid_actions[0]["backstage_options"]
+			_show_click_cards_cancelable_action_menu(
+				valid_card_ids,
+				_baton_pass_holomem,
+				Strings.DECISION_INSTRUCTIONS_BATON_PASS
+			)
+		Enums.GameAction_MainStepBeginPerformance:
+			submit_main_step_begin_performance()
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		Enums.GameAction_MainStepEndTurn:
+			submit_main_step_end_turn()
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 		_:
 			assert(false, "Unknown action type")
 
@@ -713,8 +755,17 @@ func _bloom_target_completed(target_card_id):
 	submit_main_step_bloom(multi_step_decision_info["bloom_card_id"], target_card_id)
 	_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 
+func _collab_holomem(card_id):
+	submit_main_step_collab(card_id)
+	_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+
+func _baton_pass_holomem(card_id):
+	submit_main_step_baton_pass(card_id)
+	_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+
 func _change_ui_phase(new_ui_phase : UIPhase):
 	_deselect_cards()
+	action_menu.hide_menu()
 	ui_phase = new_ui_phase
 	if new_ui_phase == UIPhase.UIPhase_WaitingOnServer:
 		thinking_spinner.visible = true
@@ -828,14 +879,11 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			"archive":
 				player.remove_from_archive(card_id)
 			"backstage":
-				# TODO:
-				assert(false)
+				player.remove_backstage(card_id)
 			"center":
-				# TODO:
-				assert(false)
+				player.remove_center(card_id)
 			"collab":
-				# TODO:
-				assert(false)
+				player.remove_collab(card_id)
 			"floating":
 				# A played support card.
 				# TODO: Animate this card going from where it is to wherever.
@@ -864,8 +912,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			"cheer_deck":
 				player.add_card_to_cheer_deck(card)
 			"collab":
-				# TODO:
-				assert(false)
+				player.add_collab(card)
 			"deck":
 				player.add_card_to_deck(card)
 			"holomem":
@@ -965,6 +1012,27 @@ func submit_main_step_bloom(bloom_card_id, target_card_id):
 		"target_card_id": target_card_id
 	}
 	NetworkManager.send_game_message(Enums.GameAction_MainStepBloom, action)
+
+func submit_main_step_collab(card_id):
+	var action = {
+		"card_id": card_id
+	}
+	NetworkManager.send_game_message(Enums.GameAction_MainStepCollab, action)
+
+func submit_main_step_baton_pass(card_id):
+	var action = {
+		"card_id": card_id
+	}
+	NetworkManager.send_game_message(Enums.GameAction_MainStepBatonPass, action)
+
+func submit_main_step_begin_performance():
+	NetworkManager.send_game_message(Enums.GameAction_MainStepBeginPerformance, {})
+
+func submit_main_step_end_turn():
+	NetworkManager.send_game_message(Enums.GameAction_MainStepEndTurn, {})
+
+func submit_performance_step_end_turn():
+	NetworkManager.send_game_message(Enums.GameAction_PerformanceStepEndTurn, {})
 
 #
 # Signal callbacks

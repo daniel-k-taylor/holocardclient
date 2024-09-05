@@ -15,6 +15,8 @@ const DECISION_INSTRUCTIONS_MAIN_STEP = "Main Step - Choose an action"
 const DECISION_INSTRUCTIONS_PLACE_HOLOMEM = "Choose a Holomem to enter the stage"
 const DECISION_INSTRUCTIONS_CHOOSE_BLOOM = "Choose a Bloom card to play"
 const DECISION_INSTRUCTIONS_CHOOSE_BLOOM_TARGET = "Choose a Holomem to Bloom"
+const DECISION_INSTRUCTIONS_COLLAB = "Choose a Holomem to Collab"
+const DECISION_INSTRUCTIONS_BATON_PASS = "Choose a Holomem to Baton Pass"
 
 
 # Lazy placeholder for loc
