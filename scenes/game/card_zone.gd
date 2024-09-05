@@ -30,6 +30,8 @@ func get_card_ids_in_zone():
 func remove_card(card_id : String):
 	for child in zone_contents.get_children():
 		if child is CardEntry and child.get_card_id() == card_id:
-			child.clear_data()
+			# Delete the card entry from this zone.
+			child.clear_graphic_link()
 			zone_contents.remove_child(child)
-			break
+			return true
+	return false

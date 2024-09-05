@@ -5,6 +5,7 @@ signal on_card_pressed(card_id, card_graphic)
 
 @onready var contents_label = $EntryContents/EntryLabel
 @onready var selection_highlight = $SelectionHighlight
+@onready var info_highlight = $InfoHighlight
 @onready var selection_button = $SelectionButton
 var _card : CardBase = null
 var _card_id = -1
@@ -19,7 +20,7 @@ func set_data(card : CardBase):
 	selection_button.visible = false
 	self.update_stats()
 
-func clear_data():
+func clear_graphic_link():
 	_card._selected_graphic_link = null
 
 func update_stats():
@@ -33,7 +34,7 @@ func update_stats():
 
 func get_card_id():
 	return _card._card_id
-	
+
 func get_card_definition_id():
 	return _card._definition_id
 
@@ -47,3 +48,6 @@ func set_selected(is_selected : bool):
 func set_selectable(is_selectable : bool):
 	_selectable = is_selectable
 	selection_button.visible = _selectable
+
+func set_info_highlight(is_highlighted : bool):
+	info_highlight.visible = is_highlighted

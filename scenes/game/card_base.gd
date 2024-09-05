@@ -29,6 +29,11 @@ func set_selectable(is_selectable : bool) -> void:
 	if _selected_graphic_link:
 		_selected_graphic_link.set_selectable(is_selectable)
 
+func set_info_highlight(is_highlighted : bool) -> void:
+	assert(_selected_graphic_link, "This hack expects this to always be set if a card is on the board.")
+	if _selected_graphic_link:
+		_selected_graphic_link.set_info_highlight(is_highlighted)
+
 func attach_cheer(card_id, colors : Array):
 	_cheer[card_id] = colors
 	_selected_graphic_link.update_stats()
@@ -44,7 +49,7 @@ func add_damage(amount):
 func remove_damage(amount):
 	damage -= amount
 	_selected_graphic_link.update_stats()
-	
+
 
 func get_cheer_counts():
 	var blue = 0
