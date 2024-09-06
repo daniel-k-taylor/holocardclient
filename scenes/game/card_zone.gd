@@ -1,37 +1,54 @@
 class_name CardZone
 extends PanelContainer
 
-signal on_card_pressed(card_id, card_graphic)
+#signal on_card_pressed(card_id, card_graphic)
 
 @export var ZoneName = "Unset"
 
-const CardEntryScene = preload("res://scenes/game/card_entry.tscn")
+enum LayoutStyle {
+	Single,
+	Hand,
+	Backstage,
+}
 
-@onready var zone_contents = $Margin/Layout/ZoneContents
+var layout_style = LayoutStyle.Single
 
+var cards = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Margin/Layout/ZoneName.text = ZoneName
 
-func add_card(card):
-	var new_entry : CardEntry = CardEntryScene.instantiate()
-	zone_contents.add_child(new_entry)
-	new_entry.set_data(card)
-	new_entry.connect("on_card_pressed", func(card_id, card_graphic): on_card_pressed.emit(card_id, card_graphic))
+func set_layout_style(style):
+	layout_style = style
 
-func get_card_ids_in_zone():
-	var card_ids = []
-	for child in zone_contents.get_children():
-		if child is CardEntry:
-			card_ids.append(child.get_card_id())
-	return card_ids
+func add_card(card : CardBase):
+	cards.append(card)
+	layout_zone()
+
+func layout_zone():
+	if layout_style == LayoutStyle.Hand:
+		for i in range(len(cards)):
+			var card = cards[i]
+			card.position = global_position
+			card.position.x += i * 80
+	elif layout_style == LayoutStyle.Backstage:
+		for i in range(len(cards)):
+			var card = cards[i]
+			card.position = global_position
+			card.position.x += i * 80
+	else:
+		assert(len(cards) == 1)
+		for card in cards:
+			card.position = global_position
+
+
+func get_cards_in_zone():
+	return cards
 
 func remove_card(card_id : String):
-	for child in zone_contents.get_children():
-		if child is CardEntry and child.get_card_id() == card_id:
-			# Delete the card entry from this zone.
-			child.clear_graphic_link()
-			zone_contents.remove_child(child)
-			return true
-	return false
+	for card in cards:
+		if card._card_id == card_id:
+			cards.erase(card)
+			layout_zone()
+			break

@@ -3,8 +3,8 @@ Current:
         - attach cards to zone points
         - popout also needs to position cards correctly
         - test popout
-        - test cheer indicator
 
+    impelment move_cheer event
 
 Next up:
     ☐ Main step actions

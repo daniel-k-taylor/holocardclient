@@ -47,145 +47,90 @@ offset_right = 1244.0
 offset_bottom = 705.0
 
 [node name="MeArchive" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 1118.0
 offset_top = 392.0
 offset_right = 1368.0
 offset_bottom = 742.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Archive"
 
 [node name="MeBackstage" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 20.0
 offset_top = 561.0
 offset_right = 270.0
 offset_bottom = 911.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Back"
 
 [node name="MeCenter" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 624.0
 offset_top = 353.0
 offset_right = 874.0
 offset_bottom = 703.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Center"
 
 [node name="MeCollab" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 486.0
 offset_top = 356.0
 offset_right = 736.0
 offset_bottom = 706.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Collab"
 
 [node name="MeOshi" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 982.0
 offset_top = 396.0
 offset_right = 1232.0
 offset_bottom = 746.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Oshi"
 
 [node name="MeHand" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 445.0
 offset_top = 554.0
 offset_right = 695.0
 offset_bottom = 904.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Hand"
 
 [node name="OpponentArchive" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 1119.0
 offset_top = 220.0
 offset_right = 1369.0
 offset_bottom = 570.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Archive"
 
 [node name="OpponentBackstage" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 25.0
 offset_top = 18.0
 offset_right = 275.0
 offset_bottom = 368.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Back"
 
 [node name="OpponentCenter" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 622.0
 offset_top = 199.0
 offset_right = 872.0
 offset_bottom = 549.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Center"
 
 [node name="OpponentCollab" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 485.0
 offset_top = 198.0
 offset_right = 735.0
 offset_bottom = 548.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Collab"
 
 [node name="OpponentOshi" parent="." instance=ExtResource("10_bk3r3")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 984.0
 offset_top = 222.0
 offset_right = 1234.0
 offset_bottom = 572.0
-grow_horizontal = 1
-grow_vertical = 1
 scale = Vector2(0.4, 0.4)
 ZoneName = "Oshi"
 
@@ -212,5 +157,6 @@ fill_mode = 4
 texture_progress = ExtResource("12_j6jby")
 
 [node name="CardPopout" parent="." instance=ExtResource("6_vy7a0")]
+visible = false
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

@@ -103,4 +103,6 @@ columns = 10
 [node name="PopoutElement" parent="PanelContainer/VBoxContainer/CardPanel/ScrollContainer/MarginContainer/CardGrid" instance=ExtResource("2_ef3nm")]
 layout_mode = 2
 
+[node name="CardParent" type="Node2D" parent="."]
+
 [connection signal="pressed" from="FullScreenButtonPanel/ClickOutsideButton" to="." method="_on_click_outside_button_pressed"]

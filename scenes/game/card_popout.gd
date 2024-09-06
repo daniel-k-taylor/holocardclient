@@ -19,11 +19,11 @@ func remove_all_children(element):
 
 func add_card_elements(count):
 	for i in range(count):
-		var popout_element = PopoutElementScene.instance()
-		popout_element.set_card_controls(false)
+		var popout_element = PopoutElementScene.instantiate()
 		card_grid.add_child(popout_element)
+		popout_element.set_card_controls(false)
 
-func show_panel(instructions, popout_choice_info, cards, callback : Callable):
+func show_panel(instructions, popout_choice_info, cards):
 	visible = true
 
 	remove_all_children(card_grid)
@@ -38,6 +38,8 @@ func show_panel(instructions, popout_choice_info, cards, callback : Callable):
 
 	for card in cards:
 		card_parent.add_child(card)
+		card.initialize_graphics()
+		card.set_selectable(true)
 
 	update_panel(instructions, popout_choice_info)
 

@@ -1,7 +1,7 @@
 class_name CardBase
 extends Node2D
 
-signal clicked_card(card_id)
+signal clicked_card(card_id, card)
 
 const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 
@@ -9,46 +9,48 @@ const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 @onready var card_id_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer/MarginContainer/CardIdLabel
 @onready var card_def_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer/PanelContainer/MarginContainer/CardDefLabel
 @onready var cheer_indicators = $OuterMargin/InnerMargin/PanelContainer/CheerIndicators/PanelContainer/CheerVBox
-
+@onready var info_highlight = $OuterMargin/Highlight
+@onready var selection_button = $OuterMargin/Button
 var _card_id
 var _definition_id
-var _selected_graphic_link : CardEntry
 
 var _cheer : Dictionary = {}
 var damage = 0
 var _card_type
 
+var _selected = false
+var _selectable = false
+
 func create_card(definition_id, card_id, card_type):
 	_definition_id = definition_id
 	_card_id = card_id
-	_selected_graphic_link = null
 	_card_type = card_type
 
-	card_image.texture = load("res://assets/cards/" + definition_id + ".png")
+func initialize_graphics():
+	card_image.texture = load("res://assets/cards/" + _definition_id + ".png")
+	selection_button.visible = false
+	scale = Vector2(0.4, 0.4)
+	_update_stats()
 
 func is_holomem_card():
 	return _card_type in ["holomem_debut", "holomem_bloom", "holomem_spot"]
 
 func set_selected(is_selected : bool) -> void:
-	assert(_selected_graphic_link, "This hack expects this to always be set if a card is on the board.")
-	if _selected_graphic_link:
-		_selected_graphic_link.set_selected(is_selected)
+	_selected = is_selected
+	info_highlight.visible = is_selected
 
 func set_selectable(is_selectable : bool) -> void:
-	assert(_selected_graphic_link, "This hack expects this to always be set if a card is on the board.")
-	if _selected_graphic_link:
-		_selected_graphic_link.set_selectable(is_selectable)
+	_selectable = is_selectable
+	selection_button.visible = is_selectable
 
 func set_info_highlight(is_highlighted : bool) -> void:
-	assert(_selected_graphic_link, "This hack expects this to always be set if a card is on the board.")
-	if _selected_graphic_link:
-		_selected_graphic_link.set_info_highlight(is_highlighted)
+	info_highlight.visible = is_highlighted
 
 func get_or_create_cheer_indicator(color):
 	for cheer_indicator in cheer_indicators.get_children():
 		if cheer_indicator.color == color:
 			return cheer_indicator
-	var cheer_indicator = CheerIndicatorScene.instance()
+	var cheer_indicator = CheerIndicatorScene.instantiate()
 	cheer_indicator.set_cheer(color, 0)
 	cheer_indicators.add_child(cheer_indicator)
 	return cheer_indicator
@@ -61,7 +63,13 @@ func remove_cheer_indicator(color):
 			break
 
 func _update_stats():
-	_selected_graphic_link.update_stats()
+	card_def_label.text = _definition_id
+	# Use only the card_id part after _ if there is a _.
+	# This is to avoid the card_id being too long.
+	var small_id = _card_id
+	if "_" in _card_id:
+		small_id = _card_id.split("_")[1]
+	card_id_label.text = small_id
 	var cheer_counts = get_cheer_counts()
 	for color in cheer_counts:
 		var count = cheer_counts[color]
@@ -112,4 +120,4 @@ func get_cheer_counts():
 
 
 func _on_button_pressed() -> void:
-	clicked_card.emit(_card_id)
+	clicked_card.emit(_card_id, self)

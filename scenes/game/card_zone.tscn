@@ -7,13 +7,10 @@ bg_color = Color(6.257e-07, 0.345685, 0.464665, 1)
 
 [node name="CardZone" type="PanelContainer"]
 custom_minimum_size = Vector2(250, 350)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1280.0
-offset_bottom = -720.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 250.0
+offset_bottom = 350.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_bj4gp")
 script = ExtResource("1_va8gc")
 

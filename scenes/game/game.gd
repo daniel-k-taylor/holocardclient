@@ -87,9 +87,12 @@ class PlayerState:
 
 		_archive_zone = archive_zone
 		_hand_zone = hand_zone
+		if _hand_zone:
+			_hand_zone.set_layout_style(CardZone.LayoutStyle.Hand)
 		_center_zone = center_zone
 		_collab_zone = collab_zone
 		_backstage_zone = backstage_zone
+		_backstage_zone.set_layout_style(CardZone.LayoutStyle.Backstage)
 		_oshi_zone = oshi_zone
 
 		stage_zones = [center_zone, collab_zone, oshi_zone]
@@ -106,7 +109,7 @@ class PlayerState:
 				_hand_zone.add_card(card)
 
 	func get_archive_count() -> int:
-		return len(_archive_zone.get_card_ids_in_zone())
+		return len(_archive_zone.get_cards_in_zone())
 
 	func get_hand_count() -> int:
 		return hand_count
@@ -132,11 +135,10 @@ class PlayerState:
 
 	func get_card_ids_in_hand(card_types: Array):
 		var matched_ids = []
-		for card_id in _hand_zone.get_card_ids_in_zone():
-			var definition_id = _game._get_card_definition_id(card_id)
-			var card_data = CardDatabase.get_card(definition_id)
+		for card in _hand_zone.get_cards_in_zone():
+			var card_data = CardDatabase.get_card(card._definition_id)
 			if card_data["card_type"] in card_types:
-				matched_ids.append(card_id)
+				matched_ids.append(card._card_id)
 		return matched_ids
 
 	func add_card_to_deck(card : CardBase):
@@ -251,8 +253,8 @@ func _ready() -> void:
 	action_menu.visible = false
 	thinking_spinner.visible = true
 
-	for zone in me_zones:
-		zone.connect("on_card_pressed", _on_card_pressed)
+	#for zone in me_zones:
+		#zone.connect("on_card_pressed", _on_card_pressed)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -401,15 +403,17 @@ func create_card(card_id : String, definition_id_for_oshi : String = "", skip_ad
 	var definition_id = definition_id_for_oshi
 	var card_type = "oshi"
 	if definition_id_for_oshi:
-		definition_id = "oshi"
+		definition_id = definition_id_for_oshi
 	else:
 		definition_id = _get_card_definition_id(card_id)
 		var definition = CardDatabase.get_card(definition_id)
 		card_type = definition["card_type"]
 	var new_card : CardBase = CardBaseScene.instantiate()
 	new_card.create_card(definition_id, card_id, card_type)
+	new_card.connect("clicked_card", _on_card_pressed)
 	if not skip_add_to_all:
 		all_cards.add_child(new_card)
+		new_card.initialize_graphics()
 	return new_card
 
 func destroy_card(card : CardBase) -> void:
@@ -454,8 +458,9 @@ func select_card(card : CardBase):
 				enabled_states.append(enable_check.call())
 			action_menu.update_buttons_enabled(enabled_states)
 			var popout_enabled_states = []
-			for enable_check : Callable in card_popout_choice_info["enable_check"]:
-				popout_enabled_states.append(enable_check.call())
+			if "enable_check" in card_popout_choice_info:
+				for enable_check : Callable in card_popout_choice_info["enable_check"]:
+					popout_enabled_states.append(enable_check.call())
 			if popout_enabled_states:
 				# TODO: Here is where to update instructions for # / # remaining.
 				card_popout.update_panel("", popout_enabled_states)
@@ -606,7 +611,6 @@ func _show_popout(instructions : String, card_ids : Array, required_count : int,
 
 	action_menu_choice_info = {
 			"strings": [
-				Strings.get_string(Strings.STRING_OK),
 				Strings.get_string(Strings.STRING_CANCEL),
 				Strings.get_string(Strings.STRING_SHOW_CHOICE),
 			],
@@ -638,11 +642,10 @@ func _show_popout(instructions : String, card_ids : Array, required_count : int,
 	var card_copies = []
 	for card_id in card_ids:
 		var new_card = create_card(card_id, "", true)
-		new_card.set_selectable(true)
 		new_card.connect("clicked_card", _on_card_pressed)
 		card_copies.append(new_card)
 
-	card_popout.show_panel(instructions, card_popout_choice_info, card_copies, callback)
+	card_popout.show_panel(instructions, card_popout_choice_info, card_copies)
 
 func _get_main_step_actions(action_type):
 	for i in range(len(main_step_action_data["action_type"])):
@@ -1005,6 +1008,7 @@ func _on_mulligan_decision_event(event_data):
 			"enabled": [true, true],
 			"enable_check": [_allowed, _allowed]
 		}
+		_begin_make_choice([], 0, 0)
 		action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_MULLIGAN), action_menu_choice_info, func(choice_index : int):
 			if choice_index == 0:
 				submit_mulligan_choice(true)
@@ -1012,7 +1016,6 @@ func _on_mulligan_decision_event(event_data):
 				submit_mulligan_choice(false)
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 		)
-		_begin_make_choice([], 0, 0)
 	else: # Opponent
 		# Do nothing.
 		pass
