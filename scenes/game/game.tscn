@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ds6ostisut8ij"]
+[gd_scene load_steps=8 format=3 uid="uid://ds6ostisut8ij"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_mkj14"]
 [ext_resource type="PackedScene" uid="uid://nn3fa22gm0m0" path="res://scenes/game/stats_group.tscn" id="2_yswsg"]
+[ext_resource type="PackedScene" uid="uid://b7di8plutlm5b" path="res://scenes/game/card_popout.tscn" id="6_vy7a0"]
 [ext_resource type="PackedScene" uid="uid://b5yajeq6o3fln" path="res://scenes/game/card_zone.tscn" id="10_bk3r3"]
 [ext_resource type="PackedScene" uid="uid://db711yiboenfu" path="res://scenes/game/action_menu.tscn" id="11_cx0xb"]
 [ext_resource type="Texture2D" uid="uid://bsyfgok3mshy8" path="res://assets/icons/donut.png" id="12_j6jby"]
@@ -209,5 +210,7 @@ offset_bottom = 111.0
 value = 30.0
 fill_mode = 4
 texture_progress = ExtResource("12_j6jby")
+
+[node name="CardPopout" parent="." instance=ExtResource("6_vy7a0")]
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

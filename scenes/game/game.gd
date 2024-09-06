@@ -34,6 +34,8 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var me_oshi : CardZone = $MeOshi
 @onready var me_hand : CardZone = $MeHand
 
+@onready var card_popout : CardPopout = $CardPopout
+
 @onready var me_zones = [
 	me_archive,
 	me_backstage,
@@ -234,7 +236,8 @@ var selectable_card_ids : Array = []
 var selection_min : int = 0
 var selection_max : int = 0
 var selected_cards = []
-var selection_current_choice_info = {}
+var action_menu_choice_info = {}
+var card_popout_choice_info = {}
 var click_cards_actions_remaining = []
 var multi_step_decision_info = {}
 var move_card_ids_already_handled = []
@@ -393,7 +396,7 @@ func _begin_game(event_data):
 	me = PlayerState.new(self, my_id, true, me_archive, me_backstage, me_collab, me_center, me_oshi, me_hand)
 	opponent = PlayerState.new(self, opponent_id, false, opponent_archive, opponent_backstage, opponent_collab, opponent_center, opponent_oshi, null)
 
-func create_card(card_id : String, definition_id_for_oshi : String = "") -> CardBase:
+func create_card(card_id : String, definition_id_for_oshi : String = "", skip_add_to_all : bool = false) -> CardBase:
 	assert(card_id != "HIDDEN")
 	var definition_id = definition_id_for_oshi
 	var card_type = "oshi"
@@ -405,7 +408,8 @@ func create_card(card_id : String, definition_id_for_oshi : String = "") -> Card
 		card_type = definition["card_type"]
 	var new_card : CardBase = CardBaseScene.instantiate()
 	new_card.create_card(definition_id, card_id, card_type)
-	all_cards.add_child(new_card)
+	if not skip_add_to_all:
+		all_cards.add_child(new_card)
 	return new_card
 
 func destroy_card(card : CardBase) -> void:
@@ -433,32 +437,32 @@ func can_select_card(card_id: String):
 		_:
 			return false
 
-func select_card(card_id: String):
+func select_card(card : CardBase):
 	match ui_phase:
 		UIPhase.UIPhase_MakeChoiceCanSelectCards:
-			var deselected = false
-			for card_graphic : CardBase in selected_cards:
-				if card_id == card_graphic._card_id:
-					# Already selected, deselect.
-					card_graphic.set_selected(false)
-					selected_cards.erase(card_graphic)
-					deselected = true
-					break
-			if not deselected:
+			if _is_card_selected(card._card_id):
+				card.set_selected(false)
+				selected_cards.erase(card)
+			else:
 				# Set the card as selected.
-				var card_graphic = find_card_on_board(card_id)
-				selected_cards.append(card_graphic)
-				card_graphic.set_selected(true)
+				selected_cards.append(card)
+				card.set_selected(true)
 
 			# After selection is changed, update buttons.
 			var enabled_states = []
-			for enable_check : Callable in selection_current_choice_info["enable_check"]:
+			for enable_check : Callable in action_menu_choice_info["enable_check"]:
 				enabled_states.append(enable_check.call())
 			action_menu.update_buttons_enabled(enabled_states)
+			var popout_enabled_states = []
+			for enable_check : Callable in card_popout_choice_info["enable_check"]:
+				popout_enabled_states.append(enable_check.call())
+			if popout_enabled_states:
+				# TODO: Here is where to update instructions for # / # remaining.
+				card_popout.update_panel("", popout_enabled_states)
 		UIPhase.UIPhase_ClickCardsForAction:
 			var current_selection = click_cards_actions_remaining[0]
 			var callback : Callable = current_selection["callback"]
-			callback.call(card_id)
+			callback.call(card._card_id)
 		_:
 			assert(false, "Unimplemented selection phase")
 
@@ -526,7 +530,7 @@ func _on_main_step_decision(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
 		var available_actions = event_data["available_actions"]
-		selection_current_choice_info = {
+		action_menu_choice_info = {
 			"strings": [],
 			"enabled": [],
 			"enable_check": [],
@@ -535,16 +539,16 @@ func _on_main_step_decision(event_data):
 		}
 		var current_action_type_index = -1
 		for action in available_actions:
-			if action["action_type"] not in selection_current_choice_info["action_type"]:
-				selection_current_choice_info["strings"].append(Strings.get_action_name(action["action_type"]))
-				selection_current_choice_info["enabled"].append(true)
-				selection_current_choice_info["enable_check"].append(_allowed)
-				selection_current_choice_info["action_type"].append(action["action_type"])
+			if action["action_type"] not in action_menu_choice_info["action_type"]:
+				action_menu_choice_info["strings"].append(Strings.get_action_name(action["action_type"]))
+				action_menu_choice_info["enabled"].append(true)
+				action_menu_choice_info["enable_check"].append(_allowed)
+				action_menu_choice_info["action_type"].append(action["action_type"])
 				current_action_type_index += 1
-				selection_current_choice_info["valid_actions"].append([action])
+				action_menu_choice_info["valid_actions"].append([action])
 			else:
 				# For actions with multiple instances, keep them all for validation later.
-				selection_current_choice_info["valid_actions"][current_action_type_index].append(action)
+				action_menu_choice_info["valid_actions"][current_action_type_index].append(action)
 
 		_start_main_step_decision()
 	else:
@@ -554,7 +558,7 @@ func _on_main_step_decision(event_data):
 func _start_main_step_decision():
 	_begin_make_choice([], 0, 0)
 	var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_MAIN_STEP)
-	action_menu.show_choices(instructions, selection_current_choice_info, func(choice_index):
+	action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
 		_on_main_step_action_chosen(choice_index)
 	)
 
@@ -573,9 +577,6 @@ func _highlight_info_cards(card_ids : Array):
 		if card._card_id in card_ids:
 			card.set_info_highlight(true)
 
-func _cancel_to_main_step():
-	_change_ui_phase(UIPhase)
-
 func _show_click_cards_cancelable_action_menu(card_ids, callback, instructions_id):
 	_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
 	_highlight_selectable_cards(card_ids)
@@ -584,17 +585,64 @@ func _show_click_cards_cancelable_action_menu(card_ids, callback, instructions_i
 		"callback": callback
 	}]
 
-	selection_current_choice_info = {
+	action_menu_choice_info = {
 		"strings": [Strings.get_string(Strings.STRING_CANCEL)],
 		"enabled": [true],
 		"enable_check": [_allowed]
 	}
 	var instructions = Strings.get_string(instructions_id)
-	action_menu.show_choices(instructions, selection_current_choice_info, func(_choice_index):
+	action_menu.show_choices(instructions, action_menu_choice_info, func(_choice_index):
 		# Must be a cancel.
-		selection_current_choice_info = main_step_action_data
-		_start_main_step_decision()
+		_cancel_to_main_step()
 	)
+
+func _cancel_to_main_step():
+	action_menu_choice_info = main_step_action_data
+	_start_main_step_decision()
+
+func _show_popout(instructions : String, card_ids : Array, required_count : int, callback : Callable):
+	# Also show the action menu with two buttons: Show Choice and Cancel
+	_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
+
+	action_menu_choice_info = {
+			"strings": [
+				Strings.get_string(Strings.STRING_OK),
+				Strings.get_string(Strings.STRING_CANCEL),
+				Strings.get_string(Strings.STRING_SHOW_CHOICE),
+			],
+			"enabled": [true, true],
+			"enable_check": [_allowed, _allowed]
+	}
+
+	selection_max = required_count
+	selection_min = required_count
+	card_popout_choice_info = {
+		"strings": [
+			Strings.get_string(Strings.STRING_OK),
+			Strings.get_string(Strings.STRING_CANCEL),
+		],
+		"enabled": [true, true],
+		"enable_check": [_is_selection_requirement_met, _allowed],
+		"callback": [callback, _cancel_to_main_step],
+	}
+
+	action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
+		if choice_index == 0:
+			# Re-show the popout.
+			card_popout.visible = true
+		else:
+			# Cancel
+			_cancel_to_main_step()
+	)
+
+	var card_copies = []
+	for card_id in card_ids:
+		var new_card = create_card(card_id, "", true)
+		new_card.set_selectable(true)
+		new_card.connect("clicked_card", _on_card_pressed)
+		card_copies.append(new_card)
+
+	card_popout.show_panel(instructions, card_popout_choice_info, card_copies, callback)
 
 func _get_main_step_actions(action_type):
 	for i in range(len(main_step_action_data["action_type"])):
@@ -604,8 +652,8 @@ func _get_main_step_actions(action_type):
 
 func _on_main_step_action_chosen(choice_index):
 	# Save action data in case the user cancels.
-	main_step_action_data = selection_current_choice_info
-	var chosen_action_type = selection_current_choice_info["action_type"][choice_index]
+	main_step_action_data = action_menu_choice_info
+	var chosen_action_type = action_menu_choice_info["action_type"][choice_index]
 	var valid_actions = _get_main_step_actions(chosen_action_type)
 	match chosen_action_type:
 		Enums.GameAction_MainStepPlaceHolomem:
@@ -646,13 +694,13 @@ func _on_main_step_action_chosen(choice_index):
 		# 	_on_main_step_play_support()
 		Enums.GameAction_MainStepBatonPass:
 			# There is only one possible action for baton pass and
-			# it has the backstage options in it.
-			var valid_card_ids = valid_actions[0]["backstage_options"]
-			_show_click_cards_cancelable_action_menu(
-				valid_card_ids,
-				_baton_pass_holomem,
-				Strings.DECISION_INSTRUCTIONS_BATON_PASS
-			)
+			# it has the backstage options and cheer options in it.
+			# First, present the user a card popout with the cheer to select.
+			# Once they've selected the required cheer, then they'll pick the backstage to swap.
+			var cost = valid_actions[0]["cost"]
+			var available_cheer = valid_actions[0]["available_cheer"]
+			var instructions = Strings.build_archive_cheer_string(cost)
+			_show_popout(instructions, available_cheer, cost, _baton_pass_target_selection)
 		Enums.GameAction_MainStepBeginPerformance:
 			submit_main_step_begin_performance()
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
@@ -699,7 +747,7 @@ func _continue_select_destination_cards():
 	else:
 		_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
 
-		selection_current_choice_info = {
+		action_menu_choice_info = {
 			"strings": [],
 			"enabled": [],
 			"enable_check": []
@@ -711,7 +759,7 @@ func _continue_select_destination_cards():
 		_highlight_selectable_cards(allowed_placements)
 
 		var instructions = Strings.build_place_cheer_string(source, color)
-		action_menu.show_choices(instructions, selection_current_choice_info, func(_choice_index):
+		action_menu.show_choices(instructions, action_menu_choice_info, func(_choice_index):
 			# Unexpected, just for instructions.
 			assert(false, "This didn't have a button press available")
 			pass
@@ -750,6 +798,20 @@ func _bloom_target_selection(bloom_card_id):
 	)
 	_highlight_info_cards([bloom_card_id])
 
+func _baton_pass_target_selection(card_ids):
+	multi_step_decision_info = {
+		"card_ids": card_ids
+	}
+	var actions = _get_main_step_actions(Enums.GameAction_MainStepBatonPass)
+	var target_card_ids = actions[0]["backstage_options"]
+
+	# Now select the target.
+	_show_click_cards_cancelable_action_menu(
+		target_card_ids,
+		_baton_pass_holomem_complete,
+		Strings.DECISION_INSTRUCTIONS_CHOOSE_BLOOM
+	)
+
 func _bloom_target_completed(target_card_id):
 	# Bloom event will handle the animations/card updates.
 	submit_main_step_bloom(multi_step_decision_info["bloom_card_id"], target_card_id)
@@ -759,13 +821,15 @@ func _collab_holomem(card_id):
 	submit_main_step_collab(card_id)
 	_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 
-func _baton_pass_holomem(card_id):
-	submit_main_step_baton_pass(card_id)
+func _baton_pass_holomem_complete(card_id):
+	var cheer_ids = multi_step_decision_info["card_ids"]
+	submit_main_step_baton_pass(card_id, cheer_ids)
 	_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 
 func _change_ui_phase(new_ui_phase : UIPhase):
 	_deselect_cards()
 	action_menu.hide_menu()
+	card_popout.clear_panel()
 	ui_phase = new_ui_phase
 	if new_ui_phase == UIPhase.UIPhase_WaitingOnServer:
 		thinking_spinner.visible = true
@@ -780,12 +844,12 @@ func _on_initial_placement_begin(event_data):
 		# First, choose the center member.
 		var debut_in_hand  = me.get_card_ids_in_hand(["holomem_debut"])
 		_begin_make_choice(debut_in_hand, 1, 1)
-		selection_current_choice_info = {
+		action_menu_choice_info = {
 			"strings": [Strings.get_string(Strings.STRING_OK)],
 			"enabled": [false],
 			"enable_check": [_is_selection_requirement_met]
 		}
-		action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER), selection_current_choice_info, func(_choice_index):
+		action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER), action_menu_choice_info, func(_choice_index):
 			# Pressed ok and a mem is selected.
 			# Next select backstagers.
 			initial_placement_state["center"] = selected_cards[0]._card_id
@@ -793,12 +857,12 @@ func _on_initial_placement_begin(event_data):
 			var backstage_options = me.get_card_ids_in_hand(["holomem_debut", "holomem_spot"])
 			backstage_options.erase(initial_placement_state["center"])
 			_begin_make_choice(backstage_options, 0, 5)
-			selection_current_choice_info = {
+			action_menu_choice_info = {
 				"strings": [Strings.get_string(Strings.STRING_OK)],
 				"enabled": [true],
 				"enable_check": [_is_selection_requirement_met]
 			}
-			action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_INITIAL_CHOOSE_BACKSTAGE), selection_current_choice_info, func(_choice_index2):
+			action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_INITIAL_CHOOSE_BACKSTAGE), action_menu_choice_info, func(_choice_index2):
 				initial_placement_state["backstage"] = []
 				for card in selected_cards:
 					initial_placement_state["backstage"].append(card._card_id)
@@ -933,7 +997,7 @@ func _on_move_cheer_event(_event_data):
 func _on_mulligan_decision_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
-		selection_current_choice_info = {
+		action_menu_choice_info = {
 			"strings": [
 				Strings.get_string(Strings.STRING_YES),
 				Strings.get_string(Strings.STRING_NO),
@@ -941,7 +1005,7 @@ func _on_mulligan_decision_event(event_data):
 			"enabled": [true, true],
 			"enable_check": [_allowed, _allowed]
 		}
-		action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_MULLIGAN), selection_current_choice_info, func(choice_index : int):
+		action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_MULLIGAN), action_menu_choice_info, func(choice_index : int):
 			if choice_index == 0:
 				submit_mulligan_choice(true)
 			else:
@@ -1019,9 +1083,10 @@ func submit_main_step_collab(card_id):
 	}
 	NetworkManager.send_game_message(Enums.GameAction_MainStepCollab, action)
 
-func submit_main_step_baton_pass(card_id):
+func submit_main_step_baton_pass(card_id, cheer_ids):
 	var action = {
-		"card_id": card_id
+		"card_id": card_id,
+		"cheer_ids": cheer_ids,
 	}
 	NetworkManager.send_game_message(Enums.GameAction_MainStepBatonPass, action)
 
@@ -1037,9 +1102,9 @@ func submit_performance_step_end_turn():
 #
 # Signal callbacks
 #
-func _on_card_pressed(card_id: String, _card_graphic):
+func _on_card_pressed(card_id: String, card : CardBase):
 	if can_select_card(card_id):
-		select_card(card_id)
+		select_card(card)
 
 func _on_exit_game_button_pressed() -> void:
 	NetworkManager.leave_game()

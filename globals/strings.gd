@@ -6,6 +6,7 @@ const STRING_YES = "Yes"
 const STRING_NO = "No"
 const STRING_PASS = "Pass"
 const STRING_CANCEL = "Cancel"
+const STRING_SHOW_CHOICE = "Show Choice"
 
 const DECISION_INSTRUCTIONS_MULLIGAN = "Mulligan all cards?"
 const DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER = "Debut the center!"
@@ -22,6 +23,9 @@ const DECISION_INSTRUCTIONS_BATON_PASS = "Choose a Holomem to Baton Pass"
 # Lazy placeholder for loc
 func get_string(str_id) -> String:
 	return str_id
+
+func build_archive_cheer_string(count):
+	return "Choose %s Cheer to Archive" % count
 
 func build_place_cheer_string(source:String, color:String):
 	var color_str = color.to_upper()

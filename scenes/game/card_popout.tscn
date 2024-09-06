@@ -1,0 +1,106 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7di8plutlm5b"]
+
+[ext_resource type="Script" path="res://scenes/game/card_popout.gd" id="1_nkmer"]
+[ext_resource type="PackedScene" uid="uid://cdh1c0yenr2w4" path="res://scenes/game/popout_element.tscn" id="2_ef3nm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f7jww"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2f57a"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.194349, 0.194349, 0.194349, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3c3kd"]
+bg_color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="CardPopout" type="CenterContainer"]
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_nkmer")
+
+[node name="FullScreenButtonPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_f7jww")
+
+[node name="ClickOutsideButton" type="TextureButton" parent="FullScreenButtonPanel"]
+layout_mode = 2
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2f57a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="TitleBar" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3c3kd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="InstructionsLabel" type="Label" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Title with instructions"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionButton2" type="Button" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "ActionButton"
+
+[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="ActionButton1" type="Button" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "ActionButton"
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+
+[node name="CardPanel" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/CardPanel"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/CardPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/margin_right = 5
+
+[node name="CardGrid" type="GridContainer" parent="PanelContainer/VBoxContainer/CardPanel/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 10
+
+[node name="PopoutElement" parent="PanelContainer/VBoxContainer/CardPanel/ScrollContainer/MarginContainer/CardGrid" instance=ExtResource("2_ef3nm")]
+layout_mode = 2
+
+[connection signal="pressed" from="FullScreenButtonPanel/ClickOutsideButton" to="." method="_on_click_outside_button_pressed"]
