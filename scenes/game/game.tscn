@@ -134,6 +134,14 @@ offset_bottom = 572.0
 scale = Vector2(0.4, 0.4)
 ZoneName = "Oshi"
 
+[node name="FloatingCardZone" parent="." instance=ExtResource("10_bk3r3")]
+offset_left = 803.0
+offset_top = 266.0
+offset_right = 1053.0
+offset_bottom = 616.0
+scale = Vector2(0.4, 0.4)
+ZoneName = "Support Card"
+
 [node name="AllCards" type="Node2D" parent="."]
 
 [node name="ActionMenu" parent="." instance=ExtResource("11_cx0xb")]

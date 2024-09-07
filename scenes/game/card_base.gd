@@ -14,11 +14,15 @@ const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 @onready var cheer_indicators = $OuterMargin/InnerMargin/PanelContainer/CheerIndicators/PanelContainer/CheerVBox
 @onready var info_highlight = $OuterMargin/Highlight
 @onready var selection_button = $OuterMargin/Button
+@onready var damage_indicator = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage/DamageIndicator
+@onready var damage_label = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage/DamageIndicator/MarginContainer/MarginContainer/CenterContainer/DamageLabel
+
 var _card_id
 var _definition_id
 
 var _cheer : Dictionary = {}
 var damage = 0
+var dead = false
 var _card_type
 
 var _selected = false
@@ -91,12 +95,11 @@ func remove_cheer(card_id):
 	_cheer.erase(card_id)
 	_update_stats()
 
-func add_damage(amount):
+func add_damage(amount, is_dead : bool):
 	damage += amount
-	_update_stats()
-
-func remove_damage(amount):
-	damage -= amount
+	dead = is_dead
+	damage_indicator.visible = damage > 0
+	damage_label.text = str(damage)
 	_update_stats()
 
 func set_resting(is_resting):

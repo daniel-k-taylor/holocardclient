@@ -1,7 +1,7 @@
 class_name CardPopout
 extends CenterContainer
 
-@onready var instructions_label : Label = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer/InstructionsLabel
+@onready var instructions_label : RichTextLabel = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer/InstructionsLabel
 @onready var card_grid : GridContainer = $PanelContainer/VBoxContainer/CardPanel/ScrollContainer/MarginContainer/CardGrid
 @onready var action_button1 : MultiChoiceButton = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2/ActionButton1
 @onready var action_button2 : MultiChoiceButton = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2/ActionButton2
@@ -22,7 +22,7 @@ func _ready():
 			test_cards.append(CardDatabase.test_create_card("id_" + str(i), "hSD01-001"))
 		
 		show_panel(
-			"Test here are some instructions",
+			"[b]Test[/b] here are some instructions",
 			{
 				"strings": [Strings.get_string(Strings.STRING_OK), Strings.get_string(Strings.STRING_CANCEL)],
 				"callback": [null, null],

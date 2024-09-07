@@ -48,14 +48,15 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer"]
+[node name="InstructionsLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 5
-
-[node name="InstructionsLabel" type="Label" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "Title with instructions"
+size_flags_horizontal = 3
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b]Test[/b] with instructions"
+fit_content = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
 layout_mode = 2

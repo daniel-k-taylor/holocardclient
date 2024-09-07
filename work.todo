@@ -1,10 +1,8 @@
 Current:
-    ☐ Finish hooking up actual cards
-        - attach cards to zone points
-        - popout also needs to position cards correctly
-        - test popout
-
-    impelment move_cheer event
+    # Enums.GameAction_MainStepOshiSkill:
+		# 	_on_main_step_oshi_skill()
+    # Enums.GameAction_MainStepPlaySupport:
+    # 	_on_main_step_play_support()
 
 Next up:
     ☐ Main step actions

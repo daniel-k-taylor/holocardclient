@@ -27,6 +27,8 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var opponent_backstage : CardZone = $OpponentBackstage
 @onready var opponent_oshi : CardZone = $OpponentOshi
 
+@onready var floating_zone : CardZone = $FloatingCardZone
+
 @onready var me_archive: CardZone = $MeArchive
 @onready var me_center : CardZone = $MeCenter
 @onready var me_collab : CardZone = $MeCollab
@@ -35,22 +37,6 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var me_hand : CardZone = $MeHand
 
 @onready var card_popout : CardPopout = $CardPopout
-
-@onready var me_zones = [
-	me_archive,
-	me_backstage,
-	me_center,
-	me_collab,
-	me_hand,
-	me_oshi,
-]
-@onready var opponent_zones = [
-	opponent_archive,
-	opponent_backstage,
-	opponent_center,
-	opponent_collab,
-	opponent_oshi
-]
 
 enum UIPhase {
 	UIPhase_Init,
@@ -77,10 +63,15 @@ class PlayerState:
 	var _collab_zone : CardZone
 	var _hand_zone : CardZone
 	var _oshi_zone : CardZone
+	var _floating_zone : CardZone
 
 	var stage_zones = []
 
-	func _init(game, player_id:String, is_local_player : bool, archive_zone, backstage_zone, collab_zone, center_zone, oshi_zone, hand_zone):
+	func _init(game, player_id:String, is_local_player : bool,
+		archive_zone, backstage_zone, collab_zone,
+		center_zone, oshi_zone, hand_zone,
+		floating_zone
+	):
 		_game = game
 		_player_id = player_id
 		_is_me = is_local_player
@@ -95,6 +86,7 @@ class PlayerState:
 		_backstage_zone = backstage_zone
 		_backstage_zone.set_layout_style(CardZone.LayoutStyle.Backstage)
 		_oshi_zone = oshi_zone
+		_floating_zone = floating_zone
 
 		stage_zones = [center_zone, collab_zone, oshi_zone]
 
@@ -185,6 +177,12 @@ class PlayerState:
 	func remove_collab(card_id : String):
 		_collab_zone.remove_card(card_id)
 
+	func add_floating(card : CardBase):
+		_floating_zone.add_card(card)
+
+	func remove_floating(card_id : String):
+		_floating_zone.remove_card(card_id)
+
 	func replace_card_on_stage(target_card_id, new_card):
 		for zone in stage_zones:
 			if zone.remove_card(target_card_id):
@@ -254,9 +252,6 @@ func _ready() -> void:
 	action_menu.visible = false
 	thinking_spinner.visible = true
 
-	#for zone in me_zones:
-		#zone.connect("on_card_pressed", _on_card_pressed)
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	thinking_spinner.radial_initial_angle += delta * 360
@@ -271,11 +266,11 @@ func handle_game_event(event_type, event_data):
 
 	match event_type:
 		Enums.EventType_AddTurnEffect:
-			pass
+			_on_add_turn_effect(event_data)
 		Enums.EventType_Bloom:
 			_on_bloom_event(event_data)
 		Enums.EventType_BoostStat:
-			pass
+			_on_boost_stat_event(event_data)
 		Enums.EventType_CheerStep:
 			_on_cheer_step(event_data)
 		Enums.EventType_Choice_SendCollabBack:
@@ -291,19 +286,19 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_Decision_OrderCards:
 			pass
 		Enums.EventType_Decision_PerformanceStep:
-			pass
+			_on_performance_step_decision(event_data)
 		Enums.EventType_Decision_SendCheer:
 			pass
 		Enums.EventType_Decision_SwapHolomemToCenter:
-			pass
+			_on_swap_holomem_to_center_event(event_data)
 		Enums.EventType_Draw:
 			_on_draw_event(event_data)
 		Enums.EventType_EndTurn:
 			_on_end_turn_event(event_data)
 		Enums.EventType_ForceDieResult:
-			pass
+			_on_force_die_result_event(event_data)
 		Enums.EventType_GameError:
-			pass
+			_on_game_error(event_data)
 		Enums.EventType_GameOver:
 			_on_game_over(event_data)
 		Enums.EventType_GameStartInfo:
@@ -325,13 +320,13 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_MulliganReveal:
 			_on_mulligan_reveal_event(event_data)
 		Enums.EventType_OshiSkillActivation:
-			pass
+			_on_oshi_skill_activation(event_data)
 		Enums.EventType_PerformanceStepStart:
 			_on_turn_phase_update(event_data)
 		Enums.EventType_PerformArt:
-			pass
+			_on_perform_art_event(event_data)
 		Enums.EventType_PlaySupportCard:
-			pass
+			_on_play_support_card_event(event_data)
 		Enums.EventType_ResetStepActivate:
 			_on_reset_step_activate_event(event_data)
 		Enums.EventType_ResetStepChooseNewCenter:
@@ -339,7 +334,7 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_ResetStepCollab:
 			_on_reset_step_collab_event(event_data)
 		Enums.EventType_RollDie:
-			pass
+			_on_roll_die_event(event_data)
 		Enums.EventType_ShuffleDeck:
 			_on_shuffle_deck_event(event_data)
 		Enums.EventType_TurnStart:
@@ -383,6 +378,12 @@ func _update_ui():
 	_update_player_stats(me, me_stats)
 	_update_player_stats(opponent, opponent_stats)
 
+func _on_game_error(event_data):
+	var _error_id = event_data["error_id"]
+	var _error_message = event_data["error_message"]
+	# TODO: Show a message box.
+	pass
+
 func _on_game_over(event_data):
 	var _winner_id = event_data["winner_id"]
 	var _loser_id = event_data["loser_id"]
@@ -396,8 +397,16 @@ func _begin_game(event_data):
 	var opponent_id = event_data["opponent_id"]
 	game_card_map = event_data["game_card_map"]
 
-	me = PlayerState.new(self, my_id, true, me_archive, me_backstage, me_collab, me_center, me_oshi, me_hand)
-	opponent = PlayerState.new(self, opponent_id, false, opponent_archive, opponent_backstage, opponent_collab, opponent_center, opponent_oshi, null)
+	me = PlayerState.new(self, my_id, true,
+		me_archive, me_backstage, me_collab,
+		me_center, me_oshi, me_hand,
+		floating_zone
+	)
+	opponent = PlayerState.new(self, opponent_id, false,
+		opponent_archive, opponent_backstage, opponent_collab,
+		opponent_center, opponent_oshi, null,
+		floating_zone
+	)
 
 func create_card(card_id : String, definition_id_for_oshi : String = "", skip_add_to_all : bool = false) -> CardBase:
 	assert(card_id != "HIDDEN")
@@ -495,12 +504,25 @@ func _allowed():
 # Game Event Handlers
 #
 
+func _on_add_turn_effect(event_data):
+	var _active_player = get_player(event_data["effect_player_id"])
+	var _turn_effect = event_data["turn_effect"]
+	# TODO: Animation for turn effect being added / permanent indicator somewhere?
+	pass
+
 func _on_bloom_event(event_data):
 	var active_player = get_player(event_data["bloom_player_id"])
 	var bloom_card_id = event_data["bloom_card_id"]
 	var target_card_id = event_data["target_card_id"]
 	var bloom_from_zone = event_data["bloom_from_zone"]
 	active_player.bloom(bloom_card_id, target_card_id, bloom_from_zone)
+
+func _on_boost_stat_event(event_data):
+	var _card_id = event_data["card_id"]
+	var _stat = event_data["stat"]
+	var _amount = event_data["amount"]
+	# TODO: Animation - show stat boost.
+	pass
 
 func _on_cheer_step(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -584,6 +606,50 @@ func _start_main_step_decision():
 	action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
 		_on_main_step_action_chosen(choice_index)
 	)
+
+func _on_performance_step_decision(event_data):
+	var active_player = get_player(event_data["active_player"])
+	if active_player.is_me():
+		var available_actions = event_data["available_actions"]
+		action_menu_choice_info = {
+			"strings": [],
+			"enabled": [],
+			"enable_check": [],
+			"action_type": [],
+			"valid_actions": [],
+		}
+		for action in available_actions:
+			var action_type = action["action_type"]
+			if action_type == Enums.GameAction_PerformanceStepUseArt:
+				var performer_position = action["performer_position"]
+				var power = action["power"]
+				action_menu_choice_info["strings"].append(Strings.get_performance_skill(performer_position, action["art_id"], power))
+				action_menu_choice_info["enabled"].append(true)
+				action_menu_choice_info["enable_check"].append(_allowed)
+			else:
+				# End Turn
+				action_menu_choice_info["strings"].append(Strings.get_action_name(action["action_type"]))
+				action_menu_choice_info["enabled"].append(true)
+				action_menu_choice_info["enable_check"].append(_allowed)
+
+		_begin_make_choice([], 0, 0)
+		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_PERFORMANCE_STEP)
+		action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
+			var chosen_action = available_actions[choice_index]
+			var valid_targets = chosen_action["valid_targets"]
+			if len(valid_targets) == 1:
+				var target_id = valid_targets[0]
+				submit_performance_step_use_art(chosen_action["performer_id"], chosen_action["art_id"], target_id)
+				_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+			else:
+				# Need to select between the targets.
+				# TODO: Save off the chosen action for later.
+				# Choose between targets
+				# Cancel goes back to here.
+		)
+	else:
+		# Nothing for opponent.
+		pass
 
 func _highlight_selectable_cards(card_ids : Array):
 	selectable_card_ids = card_ids
@@ -731,6 +797,27 @@ func _on_main_step_action_chosen(choice_index):
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 		_:
 			assert(false, "Unknown action type")
+
+func _on_swap_holomem_to_center_event(event_data):
+	var active_player = get_player(event_data["effect_player_id"])
+	var cards_can_choose = event_data["cards_can_choose"]
+	#var is_opponent = event_data["swap_opponent_cards"]
+	if active_player.is_me():
+		_begin_make_choice(cards_can_choose, 1, 1)
+		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_SWAP_CENTER)
+		action_menu_choice_info = {
+			"strings": [Strings.get_string(Strings.STRING_OK)],
+			"enabled": [false],
+			"enable_check": [_is_selection_requirement_met],
+		}
+		action_menu.show_choices(instructions, action_menu_choice_info, func(_choice_index):
+			# Submit the choice.
+			submit_effect_resolution_choose_cards_for_effect([selected_cards[0]._card_id])
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		)
+	else:
+		# Nothing for opponent.
+		pass
 
 func _on_draw_event(event_data):
 	var drawn_card_ids = event_data["drawn_card_ids"]
@@ -978,9 +1065,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			"deck":
 				player.remove_card_from_deck(card_id)
 			"floating":
-				# A played support card.
-				# TODO: Animate this card going from where it is to wherever.
-				pass
+				player.remove_floating(card_id)
 			"hand":
 				player.remove_from_hand(card_id)
 			"holopower":
@@ -1010,6 +1095,8 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				player.add_collab(card)
 			"deck":
 				player.add_card_to_deck(card)
+			"floating":
+				player.add_floating(card)
 			"holopower":
 				player.generate_holopower(1)
 				# TODO: Animation card to holopower
@@ -1064,6 +1151,29 @@ func _on_mulligan_reveal_event(event_data):
 		# TODO: Show the cards somehow.
 		pass
 
+func _on_perform_art_event(event_data):
+	var _active_player = get_player(event_data["active_player"])
+	var _performer_id = event_data["performer_id"]
+	var _art_id = event_data["art_id"]
+	var target_id = event_data["target_id"]
+	var power = event_data["power"]
+	var died = event_data["died"]
+	var _game_over = event_data["game_over"]
+
+	# TODO: Mark performer as used an art, icon?
+	# TODO: Mark target dead with an icon?
+
+	var card = find_card_on_board(target_id)
+	card.add_damage(power, died)
+
+func _on_play_support_card_event(event_data):
+	var active_player = get_player(event_data["player_id"])
+	var card_id = event_data["card_id"]
+	var _limited = event_data["limited"]
+	do_move_cards(active_player, "hand", "floating", "", [card_id])
+	# TODO: Mark limited use somewhere
+	pass
+
 func _on_reset_step_activate_event(event_data):
 	#var active_player = get_player(event_data["active_player"])
 	var activated_cards = event_data["rested_card_ids"]
@@ -1107,9 +1217,22 @@ func _on_reset_step_collab_event(event_data):
 		else:
 			assert(false, "Missing card")
 
+func _on_roll_die_event(event_data):
+	var _active_player = get_player(event_data["effect_player_id"])
+	var _die_result = event_data["die_result"]
+	var _rigged = event_data["rigged"]
+	# TODO: Animation of die roll.
+	pass
+
 func _on_shuffle_deck_event(event_data):
 	var _active_player = get_player(event_data["shuffling_player_id"])
 	# TODO: Animation - Shuffle the deck
+	pass
+
+func _on_oshi_skill_activation(event_data):
+	var _active_player = get_player(event_data["effect_player_id"])
+	var _skill_id = event_data["skill_id"]
+	# TODO: Animation - show oshi skill activate and mark once per game/turn somehow.
 	pass
 
 func _on_turn_phase_update(event_data):
@@ -1122,6 +1245,39 @@ func _on_end_turn_event(event_data):
 	var _next_player_id = get_player(event_data["next_player_id"])
 	# TODO: Animation - show turn phase change
 	pass
+
+func _on_force_die_result_event(event_data):
+	var active_player = get_player(event_data["effect_player_id"])
+	var is_oshi_effect = event_data["is_oshi_effect"]
+	var oshi_skill_id = event_data["oshi_skill_id"]
+	var cost = event_data["cost"]
+	if active_player.is_me():
+		_begin_make_choice([], 0, 0)
+		var skill_name = ""
+		if is_oshi_effect:
+			skill_name = Strings.get_skill_string(oshi_skill_id)
+		var instructions = Strings.build_choose_die_result_string(skill_name, cost)
+		action_menu_choice_info = {
+			"strings": [
+				Strings.get_string(Strings.STRING_PASS),
+				"1",
+				"2",
+				"3",
+				"4",
+				"5",
+				"6",
+				],
+			"enabled": [true, true, true, true, true, true, true],
+			"enable_check": [_allowed, _allowed, _allowed, _allowed, _allowed, _allowed, _allowed],
+		}
+		action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
+			# Submit the choice.
+			submit_effect_resolution_make_choice(choice_index)
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		)
+	else:
+		# Nothing for opponent.
+		pass
 
 #
 # Submit to server funcs
@@ -1178,6 +1334,14 @@ func submit_main_step_begin_performance():
 func submit_main_step_end_turn():
 	NetworkManager.send_game_message(Enums.GameAction_MainStepEndTurn, {})
 
+func submit_performance_step_use_art(performer_id, art_id, target_id):
+	var action = {
+		"performer_id": performer_id,
+		"art_id": art_id,
+		"target_id": target_id,
+	}
+	NetworkManager.send_game_message(Enums.GameAction_PerformanceStepUseArt, action)
+
 func submit_performance_step_end_turn():
 	NetworkManager.send_game_message(Enums.GameAction_PerformanceStepEndTurn, {})
 
@@ -1192,6 +1356,12 @@ func submit_choose_new_center(card_id):
 		"new_center_card_id": card_id
 	}
 	NetworkManager.send_game_message(Enums.GameAction_ChooseNewCenter, action)
+
+func submit_effect_resolution_choose_cards_for_effect(card_ids):
+	var action = {
+		"card_ids": card_ids
+	}
+	NetworkManager.send_game_message(Enums.GameAction_EffectResolution_ChooseCardsForEffect, action)
 
 #
 # Signal callbacks
