@@ -29,6 +29,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "ZoneName"
 
-[node name="ZoneContents" type="HBoxContainer" parent="Margin/Layout"]
+[node name="ZoneContents" type="MarginContainer" parent="Margin/Layout"]
 layout_mode = 2
-theme_override_constants/separation = 15
+size_flags_vertical = 3

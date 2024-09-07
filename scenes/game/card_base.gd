@@ -3,6 +3,9 @@ extends Node2D
 
 signal clicked_card(card_id, card)
 
+const DefaultCardSize = Vector2(250.0, 350.0)
+const DefaultCardScale = 0.4
+
 const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 
 @onready var card_image = $OuterMargin/InnerMargin/PanelContainer/CardImage
@@ -51,8 +54,8 @@ func get_or_create_cheer_indicator(color):
 		if cheer_indicator.color == color:
 			return cheer_indicator
 	var cheer_indicator = CheerIndicatorScene.instantiate()
-	cheer_indicator.set_cheer(color, 0)
 	cheer_indicators.add_child(cheer_indicator)
+	cheer_indicator.set_cheer(color, 0)
 	return cheer_indicator
 
 func remove_cheer_indicator(color):

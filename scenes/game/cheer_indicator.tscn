@@ -3,21 +3,31 @@
 [ext_resource type="Script" path="res://scenes/game/cheer_indicator.gd" id="1_ddmwx"]
 [ext_resource type="Texture2D" uid="uid://cywhpp24syoku" path="res://assets/cheer_icons/white.png" id="1_nmxdq"]
 
-[node name="CheerIndicator" type="HBoxContainer"]
-alignment = 2
+[node name="CheerIndicator" type="MarginContainer"]
+offset_left = 64.0
+offset_right = 64.0
+offset_bottom = 28.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 script = ExtResource("1_ddmwx")
 
-[node name="CheerImage" type="TextureRect" parent="."]
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="CheerImage" type="TextureRect" parent="HBox"]
 layout_mode = 2
 texture = ExtResource("1_nmxdq")
 expand_mode = 2
 
-[node name="x" type="Label" parent="."]
+[node name="x" type="Label" parent="HBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "x"
 
-[node name="CheerCount" type="Label" parent="."]
+[node name="CheerCount" type="Label" parent="HBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "2"

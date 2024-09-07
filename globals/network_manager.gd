@@ -162,6 +162,7 @@ func send_game_message(action_type:String, action_data :Dictionary):
 		"action_type": action_type,
 		"action_data": action_data,
 	}
+	Logger.log_net("Sending game message - %s: %s" % [action_type, message])
 	_send_message(message)
 
 func get_player_list():

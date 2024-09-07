@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b7di8plutlm5b"]
 
 [ext_resource type="Script" path="res://scenes/game/card_popout.gd" id="1_nkmer"]
-[ext_resource type="PackedScene" uid="uid://cdh1c0yenr2w4" path="res://scenes/game/popout_element.tscn" id="2_ef3nm"]
+[ext_resource type="PackedScene" uid="uid://c86ockf3l38eh" path="res://scenes/game/multichoicebutton.tscn" id="2_a2hxt"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f7jww"]
 
@@ -42,37 +42,39 @@ layout_mode = 2
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3c3kd")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar"]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 
-[node name="InstructionsLabel" type="Label" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+[node name="InstructionsLabel" type="Label" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Title with instructions"
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="ActionButton2" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2" instance=ExtResource("2_a2hxt")]
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="ActionButton2" type="Button" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "ActionButton"
-
-[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
-layout_mode = 2
 theme_override_constants/margin_left = 5
 
-[node name="ActionButton1" type="Button" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+[node name="ActionButton1" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2" instance=ExtResource("2_a2hxt")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "ActionButton"
 
-[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/HBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 
@@ -99,10 +101,5 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 10
-
-[node name="PopoutElement" parent="PanelContainer/VBoxContainer/CardPanel/ScrollContainer/MarginContainer/CardGrid" instance=ExtResource("2_ef3nm")]
-layout_mode = 2
-
-[node name="CardParent" type="Node2D" parent="."]
 
 [connection signal="pressed" from="FullScreenButtonPanel/ClickOutsideButton" to="." method="_on_click_outside_button_pressed"]

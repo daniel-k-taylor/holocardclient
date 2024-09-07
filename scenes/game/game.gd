@@ -86,6 +86,7 @@ class PlayerState:
 		_is_me = is_local_player
 
 		_archive_zone = archive_zone
+		_archive_zone.set_layout_style(CardZone.LayoutStyle.Archive)
 		_hand_zone = hand_zone
 		if _hand_zone:
 			_hand_zone.set_layout_style(CardZone.LayoutStyle.Hand)
@@ -160,7 +161,7 @@ class PlayerState:
 		cheer_count -= 1
 
 	func is_zone_visible(to_zone : String):
-		if to_zone in ["archive", "backstage", "center", "collab","oshi"]:
+		if to_zone in ["archive", "backstage", "center", "collab", "oshi"]:
 			return true
 		if to_zone == "hand" and _hand_zone:
 			return true
@@ -463,7 +464,7 @@ func select_card(card : CardBase):
 					popout_enabled_states.append(enable_check.call())
 			if popout_enabled_states:
 				# TODO: Here is where to update instructions for # / # remaining.
-				card_popout.update_panel("", popout_enabled_states)
+				card_popout.update_panel_states("", popout_enabled_states)
 		UIPhase.UIPhase_ClickCardsForAction:
 			var current_selection = click_cards_actions_remaining[0]
 			var callback : Callable = current_selection["callback"]
@@ -607,12 +608,12 @@ func _cancel_to_main_step():
 
 func _show_popout(instructions : String, card_ids : Array, required_count : int, callback : Callable):
 	# Also show the action menu with two buttons: Show Choice and Cancel
-	_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
+	_change_ui_phase(UIPhase.UIPhase_MakeChoiceCanSelectCards)
 
 	action_menu_choice_info = {
 			"strings": [
-				Strings.get_string(Strings.STRING_CANCEL),
 				Strings.get_string(Strings.STRING_SHOW_CHOICE),
+				Strings.get_string(Strings.STRING_CANCEL),
 			],
 			"enabled": [true, true],
 			"enable_check": [_allowed, _allowed]
@@ -625,7 +626,7 @@ func _show_popout(instructions : String, card_ids : Array, required_count : int,
 			Strings.get_string(Strings.STRING_OK),
 			Strings.get_string(Strings.STRING_CANCEL),
 		],
-		"enabled": [true, true],
+		"enabled": [required_count == 0, true],
 		"enable_check": [_is_selection_requirement_met, _allowed],
 		"callback": [callback, _cancel_to_main_step],
 	}
@@ -634,17 +635,18 @@ func _show_popout(instructions : String, card_ids : Array, required_count : int,
 		if choice_index == 0:
 			# Re-show the popout.
 			card_popout.visible = true
+			action_menu.visible = true
 		else:
 			# Cancel
 			_cancel_to_main_step()
 	)
 
 	var card_copies = []
+	selectable_card_ids = []
 	for card_id in card_ids:
 		var new_card = create_card(card_id, "", true)
-		new_card.connect("clicked_card", _on_card_pressed)
 		card_copies.append(new_card)
-
+		selectable_card_ids.append(card_id)
 	card_popout.show_panel(instructions, card_popout_choice_info, card_copies)
 
 func _get_main_step_actions(action_type):
@@ -801,7 +803,10 @@ func _bloom_target_selection(bloom_card_id):
 	)
 	_highlight_info_cards([bloom_card_id])
 
-func _baton_pass_target_selection(card_ids):
+func _baton_pass_target_selection():
+	var card_ids = []
+	for card in selected_cards:
+		card_ids.append(card._card_id)
 	multi_step_decision_info = {
 		"card_ids": card_ids
 	}
@@ -949,21 +954,27 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				player.remove_backstage(card_id)
 			"center":
 				player.remove_center(card_id)
+			"cheer_deck":
+				player.remove_card_from_cheer_deck(card_id)
 			"collab":
 				player.remove_collab(card_id)
+			"deck":
+				player.remove_card_from_deck(card_id)
 			"floating":
 				# A played support card.
 				# TODO: Animate this card going from where it is to wherever.
 				pass
 			"hand":
 				player.remove_from_hand(card_id)
-			"deck":
-				player.remove_card_from_deck(card_id)
-			"cheer_deck":
-				player.remove_card_from_cheer_deck(card_id)
+			"holopower":
+				player.remove_holopower(1)
 			_:
-				Logger.log_game("Unimplemented MoveCard from zone")
-				assert(false)
+				# Assume this is a holomem card.
+				var holomem_from_card = find_card_on_board(from)
+				if holomem_from_card:
+					holomem_from_card.remove_cheer(card_id)
+				else:
+					assert(false, "Unexpected from zone")
 
 		var card = find_card_on_board(card_id)
 		if not card and visible_to_zone:
@@ -982,20 +993,28 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				player.add_collab(card)
 			"deck":
 				player.add_card_to_deck(card)
-			"holomem":
-				var holomem_card = find_card_on_board(zone_card_id)
-				var cheer_colors = _get_card_colors(card_id)
-				holomem_card.attach_cheer(card_id, cheer_colors)
+			"holopower":
+				player.generate_holopower(1)
+				# TODO: Animation card to holopower
 				destroy_card(card)
 			"hand":
 				player.add_card_to_hand(card)
 			_:
-				Logger.log_game("Unimplemented MoveCard from zone")
-				assert(false)
+				var holomem_card = find_card_on_board(zone_card_id)
+				if holomem_card:
+					var cheer_colors = _get_card_colors(card_id)
+					holomem_card.attach_cheer(card_id, cheer_colors)
+					destroy_card(card)
+				else:
+					Logger.log_game("Unimplemented MoveCard from zone")
+					assert(false)
 
-func _on_move_cheer_event(_event_data):
-	assert(false, "Unimplemented")
-	pass
+func _on_move_cheer_event(event_data):
+	var active_player= get_player(event_data["owning_player_id"])
+	var from_holomem_id = event_data["from_holomem_id"]
+	var to_holomem_id = event_data["to_holomem_id"]
+	var cheer_id = event_data["cheer_id"]
+	do_move_cards(active_player, from_holomem_id, to_holomem_id, to_holomem_id, [cheer_id])
 
 func _on_mulligan_decision_event(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -1076,7 +1095,7 @@ func submit_main_step_place_holomem(card_id):
 func submit_main_step_bloom(bloom_card_id, target_card_id):
 	var action = {
 		"card_id": bloom_card_id,
-		"target_card_id": target_card_id
+		"target_id": target_card_id
 	}
 	NetworkManager.send_game_message(Enums.GameAction_MainStepBloom, action)
 
