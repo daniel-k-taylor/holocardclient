@@ -22,7 +22,7 @@ const DECISION_INSTRUCTIONS_BATON_PASS = "Choose a Holomem to Baton Pass"
 const DECISION_INSTRUCTIONS_SEND_COLLAB_BACK = "Send Collab back?"
 const DECISION_INSTRUCTIONS_CHOOSE_NEW_CENTER = "Choose a new Center"
 const DECISION_INSTRUCTIONS_SWAP_CENTER = "Choose a Holomem to swap into the Center"
-const DECISION_INSTRUCTIONS_CHOOSE_DIE_RESULT = "Choose the next die result ("
+const DECISION_INSTRUCTIONS_PERFORMANCE_ART_TARGET = "Choose a target for this Art"
 
 const SkillNameMap = {
 	# Oshi
@@ -90,6 +90,59 @@ func build_place_cheer_string(source:String, color:String):
 		"cheer_deck":
 			source_str = "your Cheer Deck"
 	return "Place 1 %s Cheer from %s" % [color_str, source_str]
+
+func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remaining_cards_action):
+	var from_zone_str = from_zone
+	var to_zone_str = to_zone
+	match from_zone:
+		"hand":
+			from_zone_str = "your hand"
+		"deck":
+			from_zone_str = "your deck"
+		"archive":
+			from_zone_str = "your archive"
+		"backstage":
+			from_zone_str = "your backstage"
+		"center":
+			from_zone_str = "your center"
+		"collab":
+			from_zone_str = "your collab"
+		"holopower":
+			from_zone_str = "your Holopower"
+	match to_zone:
+		"hand":
+			to_zone_str = "your hand"
+		"deck":
+			to_zone_str = "your deck"
+		"archive":
+			to_zone_str = "your archive"
+		"backstage":
+			to_zone_str = "your backstage"
+		"center":
+			to_zone_str = "your center"
+		"collab":
+			to_zone_str = "your collab"
+		"holopower":
+			to_zone_str = "your Holopower"
+	var amount_str = "%s" % amount_min
+	if amount_min != amount_max:
+		amount_str = "%s-%s" % [amount_min, amount_max]
+	var remaining_cards_str = ""
+	if remaining_cards_action:
+		match remaining_cards_action:
+			"shuffle":
+				remaining_cards_str = "\nShuffle the remaining cards"
+			"order_on_bottom":
+				remaining_cards_str = "\nOrder the rest on bottom"
+			"nothing":
+				remaining_cards_str = ""
+			_:
+				remaining_cards_str = "\nUNKNOWN REMAINING CARDS ACTION"
+		remaining_cards_str = "\n%s" % remaining_cards_action
+	var card_str = "cards"
+	if amount_min == 1 and amount_max == 1:
+		card_str = "card"
+	return "Choose %s %s from %s to move to %s%s" % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
 
 func get_action_name(action_type:String):
 	match action_type:
