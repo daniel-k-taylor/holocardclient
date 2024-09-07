@@ -9,7 +9,7 @@ const STRING_CANCEL = "Cancel"
 const STRING_SHOW_CHOICE = "Show Choice"
 
 const DECISION_INSTRUCTIONS_MULLIGAN = "Mulligan all cards?"
-const DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER = "Debut the center!"
+const DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER = "Debut your Center!"
 const DECISION_INSTRUCTIONS_INITIAL_CHOOSE_BACKSTAGE = "Select 0-5 backup members (debut/spot)"
 
 const DECISION_INSTRUCTIONS_MAIN_STEP = "Main Step - Choose an action"
@@ -18,7 +18,8 @@ const DECISION_INSTRUCTIONS_CHOOSE_BLOOM = "Choose a Bloom card to play"
 const DECISION_INSTRUCTIONS_CHOOSE_BLOOM_TARGET = "Choose a Holomem to Bloom"
 const DECISION_INSTRUCTIONS_COLLAB = "Choose a Holomem to Collab"
 const DECISION_INSTRUCTIONS_BATON_PASS = "Choose a Holomem to Baton Pass"
-
+const DECISION_INSTRUCTIONS_SEND_COLLAB_BACK = "Send Collab back?"
+const DECISION_INSTRUCTIONS_CHOOSE_NEW_CENTER = "Choose a new Center"
 
 # Lazy placeholder for loc
 func get_string(str_id) -> String:

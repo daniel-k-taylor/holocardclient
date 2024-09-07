@@ -35,8 +35,16 @@ custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ehge2")
 
-[node name="CardImage" type="TextureRect" parent="OuterMargin/InnerMargin/PanelContainer"]
+[node name="CardImageHolder" type="Control" parent="OuterMargin/InnerMargin/PanelContainer"]
 layout_mode = 2
+
+[node name="CardImage" type="TextureRect" parent="OuterMargin/InnerMargin/PanelContainer/CardImageHolder"]
+layout_mode = 2
+offset_right = 250.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(125, 175)
 texture = ExtResource("2_fmpqo")
 expand_mode = 1
 

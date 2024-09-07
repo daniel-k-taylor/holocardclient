@@ -8,7 +8,7 @@ const DefaultCardScale = 0.4
 
 const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 
-@onready var card_image = $OuterMargin/InnerMargin/PanelContainer/CardImage
+@onready var card_image = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage
 @onready var card_id_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer/MarginContainer/CardIdLabel
 @onready var card_def_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer/PanelContainer/MarginContainer/CardDefLabel
 @onready var cheer_indicators = $OuterMargin/InnerMargin/PanelContainer/CheerIndicators/PanelContainer/CheerVBox
@@ -23,6 +23,7 @@ var _card_type
 
 var _selected = false
 var _selectable = false
+var _resting = false
 
 func create_card(definition_id, card_id, card_type):
 	_definition_id = definition_id
@@ -98,6 +99,11 @@ func remove_damage(amount):
 	damage -= amount
 	_update_stats()
 
+func set_resting(is_resting):
+	_resting = is_resting
+	rotation_degrees = 0
+	if _resting:
+		rotation_degrees = 90
 
 func get_cheer_counts():
 	var blue = 0

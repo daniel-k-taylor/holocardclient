@@ -279,7 +279,7 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_CheerStep:
 			_on_cheer_step(event_data)
 		Enums.EventType_Choice_SendCollabBack:
-			pass
+			_on_send_collab_back_event(event_data)
 		Enums.EventType_Collab:
 			_on_collab_event(event_data)
 		Enums.EventType_Decision_ChooseCards:
@@ -333,11 +333,11 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_PlaySupportCard:
 			pass
 		Enums.EventType_ResetStepActivate:
-			pass
+			_on_reset_step_activate_event(event_data)
 		Enums.EventType_ResetStepChooseNewCenter:
-			pass
+			_on_reset_step_choose_new_center_event(event_data)
 		Enums.EventType_ResetStepCollab:
-			pass
+			_on_reset_step_collab_event(event_data)
 		Enums.EventType_RollDie:
 			pass
 		Enums.EventType_ShuffleDeck:
@@ -524,6 +524,23 @@ func _on_cheer_step(event_data):
 		_begin_place_cheer(remaining_cheer_placements)
 	else:
 		pass
+
+func _on_send_collab_back_event(event_data):
+	var active_player = event_data["effect_player_id"]
+	if active_player.is_me():
+		_begin_make_choice([], 0, 0)
+		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_SEND_COLLAB_BACK)
+		action_menu_choice_info = {
+			"strings": [Strings.get_string(Strings.STRING_YES), Strings.get_string(Strings.STRING_NO)],
+			"enabled": [true, true],
+			"enable_check": [_allowed, _allowed],
+		}
+		action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
+			# 0 is Yes, 1 is No
+			submit_effect_resolution_make_choice(choice_index)
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		)
+
 
 func _on_collab_event(event_data):
 	var active_player = get_player(event_data["collab_player_id"])
@@ -1047,6 +1064,49 @@ func _on_mulligan_reveal_event(event_data):
 		# TODO: Show the cards somehow.
 		pass
 
+func _on_reset_step_activate_event(event_data):
+	#var active_player = get_player(event_data["active_player"])
+	var activated_cards = event_data["rested_card_ids"]
+	# These cards are no longer resting.
+	for card_id in activated_cards:
+		var card = find_card_on_board(card_id)
+		if card:
+			card.set_resting(false)
+		else:
+			assert(false, "Missing card")
+
+func _on_reset_step_choose_new_center_event(event_data):
+	var active_player = get_player(event_data["active_player"])
+	var center_options = event_data["center_options"]
+	if active_player.is_me():
+		_begin_make_choice(center_options, 1, 1)
+		action_menu_choice_info = {
+			"strings": [Strings.get_string(Strings.STRING_OK)],
+			"enabled": [false],
+			"enable_check": [_is_selection_requirement_met]
+		}
+		action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_NEW_CENTER), action_menu_choice_info, func(_choice_index):
+			# Pressed ok and a mem is selected.
+			submit_choose_new_center(selected_cards[0]._card_id)
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		)
+	else:
+		# Do nothing.
+		pass
+
+
+func _on_reset_step_collab_event(event_data):
+	var active_player = get_player(event_data["active_player"])
+	var activated_cards = event_data["activated_card_ids"]
+	# These cards are no longer resting.
+	for card_id in activated_cards:
+		var card = find_card_on_board(card_id)
+		if card:
+			card.set_resting(true)
+			do_move_cards(active_player, "collab", "backstage", "", [card_id])
+		else:
+			assert(false, "Missing card")
+
 func _on_shuffle_deck_event(event_data):
 	var _active_player = get_player(event_data["shuffling_player_id"])
 	# TODO: Animation - Shuffle the deck
@@ -1120,6 +1180,18 @@ func submit_main_step_end_turn():
 
 func submit_performance_step_end_turn():
 	NetworkManager.send_game_message(Enums.GameAction_PerformanceStepEndTurn, {})
+
+func submit_effect_resolution_make_choice(choice_index):
+	var action = {
+		"choice_index": choice_index
+	}
+	NetworkManager.send_game_message(Enums.GameAction_EffectResolution_MakeChoice, action)
+
+func submit_choose_new_center(card_id):
+	var action = {
+		"new_center_card_id": card_id
+	}
+	NetworkManager.send_game_message(Enums.GameAction_ChooseNewCenter, action)
 
 #
 # Signal callbacks
