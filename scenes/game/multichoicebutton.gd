@@ -19,7 +19,7 @@ var button_value : int = 0
 
 func _ready():
 	button_label.text = button_label_text
-	
+
 
 func set_value(value, label):
 	button_value = value

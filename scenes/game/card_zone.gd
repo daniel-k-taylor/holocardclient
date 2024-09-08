@@ -22,6 +22,7 @@ enum LayoutStyle {
 	Single,
 	Hand,
 	Backstage,
+	Floating,
 }
 
 @export var layout_style : LayoutStyle = LayoutStyle.Single :
@@ -41,16 +42,25 @@ func _update_locations():
 				else:
 					for i in range(len(zone_locations) - 1):
 						zone_locations[i+1].visible = false
-						
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	zone_text_label.text = zone_name
 	_update_locations()
+	if layout_style == LayoutStyle.Floating:
+		set_transparent(true)
+
+func set_transparent(is_transparent):
+	if is_transparent:
+		modulate = Color(1, 1, 1, 0)
+	else:
+		modulate = Color(1, 1, 1, 1)
 
 func set_layout_style(style):
 	layout_style = style
 
 func add_card(card : CardBase, at_index : int = -1):
+	set_transparent(false)
 	if at_index != -1:
 		cards.insert(at_index, card)
 	else:
@@ -93,5 +103,7 @@ func remove_card(card_id : String):
 		if card._card_id == card_id:
 			cards.erase(card)
 			layout_zone()
+			if len(cards) == 0 and layout_style == LayoutStyle.Floating:
+				set_transparent(true)
 			return i
 	return -1

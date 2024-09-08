@@ -30,6 +30,9 @@ var _selected = false
 var _selectable = false
 var _resting = false
 
+func _ready():
+	info_highlight.visible = false
+
 func create_card(definition_id, card_id, card_type):
 	_definition_id = definition_id
 	_card_id = card_id
@@ -38,7 +41,7 @@ func create_card(definition_id, card_id, card_type):
 func initialize_graphics():
 	card_image.texture = load("res://assets/cards/" + _definition_id + ".png")
 	selection_button.visible = false
-	scale = Vector2(0.4, 0.4)
+	scale = Vector2(DefaultCardScale, DefaultCardScale)
 	_update_stats()
 
 func is_holomem_card():

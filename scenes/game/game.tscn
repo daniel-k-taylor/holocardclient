@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://ds6ostisut8ij"]
+[gd_scene load_steps=10 format=3 uid="uid://ds6ostisut8ij"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_mkj14"]
 [ext_resource type="PackedScene" uid="uid://nn3fa22gm0m0" path="res://scenes/game/stats_group.tscn" id="2_yswsg"]
 [ext_resource type="PackedScene" uid="uid://b7di8plutlm5b" path="res://scenes/game/card_popout.tscn" id="6_vy7a0"]
+[ext_resource type="PackedScene" uid="uid://djt48j2x6telk" path="res://scenes/game/game_log.tscn" id="6_xt86y"]
 [ext_resource type="PackedScene" uid="uid://b5yajeq6o3fln" path="res://scenes/game/card_zone.tscn" id="10_bk3r3"]
 [ext_resource type="PackedScene" uid="uid://db711yiboenfu" path="res://scenes/game/action_menu.tscn" id="11_cx0xb"]
 [ext_resource type="Texture2D" uid="uid://bsyfgok3mshy8" path="res://assets/icons/donut.png" id="12_j6jby"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv8ov"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v0wnc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1urmv"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_mkj14")
@@ -26,15 +27,12 @@ offset_right = 1264.0
 offset_bottom = 205.0
 text = "Exit Game"
 
-[node name="MessageHistory" type="RichTextLabel" parent="."]
-offset_left = 17.0
-offset_top = 217.0
-offset_right = 227.0
-offset_bottom = 483.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_lv8ov")
-bbcode_enabled = true
-scroll_following = true
-shortcut_keys_enabled = false
+[node name="LogButton" type="Button" parent="."]
+offset_left = 1074.31
+offset_top = 174.0
+offset_right = 1161.31
+offset_bottom = 205.0
+text = "Game Log"
 
 [node name="OpponentStatsGroup" parent="." instance=ExtResource("2_yswsg")]
 offset_left = 1030.0
@@ -148,6 +146,7 @@ offset_right = 1053.0
 offset_bottom = 616.0
 scale = Vector2(0.4, 0.4)
 zone_name = "Playing"
+layout_style = 4
 
 [node name="AllCards" type="Node2D" parent="."]
 
@@ -172,6 +171,27 @@ alignment = 1
 [node name="ActionMenu" parent="UIOverlay/VBoxContainer/HBoxContainer" instance=ExtResource("11_cx0xb")]
 layout_mode = 2
 
+[node name="GameOverContainer" type="PanelContainer" parent="UIOverlay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1urmv")
+
+[node name="CenterContainer" type="CenterContainer" parent="UIOverlay/VBoxContainer/GameOverContainer"]
+layout_mode = 2
+
+[node name="GameOverText" type="RichTextLabel" parent="UIOverlay/VBoxContainer/GameOverContainer/CenterContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 80
+theme_override_font_sizes/bold_font_size = 60
+bbcode_enabled = true
+text = "[center][b]GAME OVER[/b]
+
+WINNER_TEXT![/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
 [node name="ThinkingSpinner" type="TextureProgressBar" parent="."]
 offset_left = 944.0
 offset_top = 47.0
@@ -181,7 +201,16 @@ value = 30.0
 fill_mode = 4
 texture_progress = ExtResource("12_j6jby")
 
+[node name="GameLog" parent="." instance=ExtResource("6_xt86y")]
+visible = false
+
+[node name="ArchiveCardPopout" parent="." instance=ExtResource("6_vy7a0")]
+visible = false
+offset_right = 1280.0
+offset_bottom = 720.0
+
 [node name="CardPopout" parent="." instance=ExtResource("6_vy7a0")]
 visible = false
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
+[connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]

@@ -5,7 +5,6 @@ signal returning_from_game
 
 const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 
-@onready var message_box : RichTextLabel = $MessageHistory
 @onready var action_menu : ActionMenu = $UIOverlay/VBoxContainer/HBoxContainer/ActionMenu
 @onready var all_cards : Node2D = $AllCards
 
@@ -37,6 +36,9 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var me_hand : CardZone = $MeHand
 
 @onready var card_popout : CardPopout = $CardPopout
+@onready var archive_card_popout : CardPopout = $ArchiveCardPopout
+@onready var game_log : GameLog = $GameLog
+@onready var game_over_text = $UIOverlay/VBoxContainer/GameOverContainer/CenterContainer/GameOverText
 
 enum UIPhase {
 	UIPhase_Init,
@@ -88,6 +90,10 @@ class PlayerState:
 
 	func is_me() -> bool:
 		return _is_me
+
+	func get_name() -> String:
+		if _is_me: return "You"
+		return "Opponent"
 
 	func draw_cards(count, cards : Array):
 		hand_count += count
@@ -255,6 +261,7 @@ var initial_placement_state = {}
 var main_step_action_data = {}
 var preformance_step_action_data = {}
 var last_network_event = null
+var game_over = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -274,7 +281,7 @@ func begin_remote_game(event_type, event_data):
 
 func handle_game_event(event_type, event_data):
 	Logger.log_game("Received game event: %s\n%s" % [event_type, event_data])
-	_append_to_messages(event_type)
+	game_log.add_to_log(GameLog.GameLogLine.Debug, "Event: %s" % event_type)
 
 	match event_type:
 		Enums.EventType_AddTurnEffect:
@@ -332,7 +339,7 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_OshiSkillActivation:
 			_on_oshi_skill_activation(event_data)
 		Enums.EventType_PerformanceStepStart:
-			_on_turn_phase_update(event_data)
+			on_performance_step_start(event_data)
 		Enums.EventType_PerformArt:
 			_on_perform_art_event(event_data)
 		Enums.EventType_PlaySupportCard:
@@ -348,7 +355,7 @@ func handle_game_event(event_type, event_data):
 		Enums.EventType_ShuffleDeck:
 			_on_shuffle_deck_event(event_data)
 		Enums.EventType_TurnStart:
-			_on_turn_phase_update(event_data)
+			_on_turn_start(event_data)
 		_:
 			Logger.log_game("Unknown event type: %s" % event_type)
 			assert(false)
@@ -358,11 +365,7 @@ func handle_game_event(event_type, event_data):
 	_update_ui()
 
 func _on_disconnected():
-	_append_to_messages("disconnected")
-
-func _append_to_messages(message):
-	message_box.text += "\n" + message
-
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "Lost connection to server")
 
 func _get_card_definition_id(card_id):
 	for key in game_card_map:
@@ -398,11 +401,20 @@ func _on_game_error(event_data):
 	handle_game_event(last_network_event["event_type"], last_network_event)
 
 func _on_game_over(event_data):
-	var _winner_id = event_data["winner_id"]
+	var winner_id = event_data["winner_id"]
+	var winner_player = get_player(winner_id)
 	var _loser_id = event_data["loser_id"]
 	var _reason_id = event_data["reason_id"]
-	# TODO: Indicate game over.
-	pass
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "[PHASE]Winner:[/PHASE] %s!" % [
+		winner_player.get_name(),
+	])
+	game_over_text.visible = true
+	if winner_player.is_me():
+		game_over_text.text = game_over_text.text.replace("WINNER_TEXT", "YOU WIN!")
+	else:
+		game_over_text.text = game_over_text.text.replace("WINNER_TEXT", "YOU LOSE!")
+	thinking_spinner.visible = false
+	game_over = true
 
 func _begin_game(event_data):
 	starting_player_id = event_data["starting_player"]
@@ -519,8 +531,12 @@ func _allowed():
 #
 
 func _on_add_turn_effect(event_data):
-	var _active_player = get_player(event_data["effect_player_id"])
-	var _turn_effect = event_data["turn_effect"]
+	var active_player = get_player(event_data["effect_player_id"])
+	var turn_effect = event_data["turn_effect"]
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s adds turn effect: %s" % [
+		active_player.get_name(),
+		turn_effect
+	])
 	# TODO: Animation for turn effect being added / permanent indicator somewhere?
 	pass
 
@@ -529,6 +545,11 @@ func _on_bloom_event(event_data):
 	var bloom_card_id = event_data["bloom_card_id"]
 	var target_card_id = event_data["target_card_id"]
 	var bloom_from_zone = event_data["bloom_from_zone"]
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] blooms into [CARD]%s[/CARD]" % [
+		active_player.get_name(),
+		_get_card_definition_id(target_card_id),
+		_get_card_definition_id(bloom_card_id)
+	])
 	active_player.bloom(bloom_card_id, target_card_id, bloom_from_zone)
 
 func _on_boost_stat_event(event_data):
@@ -545,7 +566,9 @@ func _on_cheer_step(event_data):
 		var cheer_to_place = event_data["cheer_to_place"]
 		var source = event_data["source"]
 		var options = event_data["options"]
-
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Cheer Step[/DECISION]" % [
+			active_player.get_name()
+		])
 		var remaining_cheer_placements = []
 		for cheer_id in cheer_to_place:
 			# For now, assume cheer has 1 color.
@@ -564,6 +587,9 @@ func _on_cheer_step(event_data):
 func _on_send_collab_back_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Send Collab back[/DECISION]" % [
+			active_player.get_name()
+		])
 		_begin_make_choice([], 0, 0)
 		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_SEND_COLLAB_BACK)
 		action_menu_choice_info = {
@@ -582,6 +608,10 @@ func _on_collab_event(event_data):
 	var active_player = get_player(event_data["collab_player_id"])
 	var collab_card_id = event_data["collab_card_id"]
 	var holopower_generated = event_data["holopower_generated"]
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] collabs" % [
+		active_player.get_name(),
+		_get_card_definition_id(collab_card_id)
+	])
 	do_move_cards(active_player, "backstage", "collab", "", [collab_card_id])
 	active_player.generate_holopower(holopower_generated)
 
@@ -597,6 +627,9 @@ func _on_choose_cards_event(event_data):
 		#var reveal_chosen = event_data["reveal_chosen"]
 		var remaining_cards_action = event_data["remaining_cards_action"]
 		var requirement_details = event_data["requirement_details"]
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose Cards[/DECISION]" % [
+			active_player.get_name()
+		])
 		if active_player.is_zone_visible(from_zone):
 			# Select from already on screen cards.
 			assert(len(cards_can_choose) == len(all_card_seen))
@@ -646,6 +679,9 @@ func _on_order_cards_event(event_data):
 		var bottom = event_data["bottom"]
 		var no_cancel_callback = null
 		var instructions = Strings.build_order_cards_string(to_zone, bottom)
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Order Cards[/DECISION]" % [
+			active_player.get_name()
+		])
 		_show_popout(instructions, card_ids, card_ids, 0, 0,
 			func():
 				var ordered_card_ids = card_popout.get_ordered_card_ids()
@@ -661,6 +697,9 @@ func _on_order_cards_event(event_data):
 func _on_main_step_decision(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Main Step Action[/DECISION]" % [
+			me.get_name()
+		])
 		var available_actions = event_data["available_actions"]
 		action_menu_choice_info = {
 			"strings": [],
@@ -704,6 +743,9 @@ func _start_main_step_decision():
 func _on_performance_step_decision(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Performance Step Action[/DECISION]" % [
+			me.get_name()
+		])
 		var available_actions = event_data["available_actions"]
 		action_menu_choice_info = {
 			"strings": [],
@@ -1001,6 +1043,9 @@ func _on_main_step_action_chosen(choice_index):
 func _on_send_cheer_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Send Cheer[/DECISION]" % [
+			me.get_name()
+		])
 		var amount_min = event_data["amount_min"]
 		var amount_max = event_data["amount_max"]
 		var from_zone = event_data["from_zone"]
@@ -1129,8 +1174,14 @@ func _send_no_cheer():
 func _on_swap_holomem_to_center_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	var cards_can_choose = event_data["cards_can_choose"]
-	#var is_opponent = event_data["swap_opponent_cards"]
+	var is_opponent = event_data["swap_opponent_cards"]
 	if active_player.is_me():
+		var player_str = "your"
+		if is_opponent:
+			player_str = "opponent's"
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Swap %s Holomem with Center[/DECISION]" % [
+			active_player.get_name(), player_str
+		])
 		_begin_make_choice(cards_can_choose, 1, 1)
 		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_SWAP_CENTER)
 		action_menu_choice_info = {
@@ -1147,6 +1198,19 @@ func _on_swap_holomem_to_center_event(event_data):
 		# Nothing for opponent.
 		pass
 
+func get_card_logline(card_ids):
+	var card_detail_str = ""
+	var card_strs = []
+	for card_id in card_ids:
+		if card_id == "HIDDEN":
+			card_strs.append("?")
+		else:
+			card_strs.append(_get_card_definition_id(card_id))
+	if card_strs:
+		card_detail_str = " - [CARD]%s" % "[/CARD], [CARD]".join(card_strs)
+		card_detail_str += "[/CARD]"
+	return card_detail_str
+
 func _on_draw_event(event_data):
 	var drawn_card_ids = event_data["drawn_card_ids"]
 	var active_player = get_player(event_data["drawing_player_id"])
@@ -1154,6 +1218,11 @@ func _on_draw_event(event_data):
 	if active_player.is_zone_visible("hand"):
 		for card_id in drawn_card_ids:
 			created_cards.append(create_card(card_id))
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s draws %s cards%s" % [
+		active_player.get_name(),
+		len(drawn_card_ids),
+		get_card_logline(drawn_card_ids)
+	])
 	active_player.draw_cards(len(drawn_card_ids), created_cards)
 
 func _begin_make_choice(selectable_ids : Array, min_selectable : int, max_selectable : int):
@@ -1282,6 +1351,7 @@ func _change_ui_phase(new_ui_phase : UIPhase):
 func _on_initial_placement_begin(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Initial Placement[/DECISION]" % active_player.get_name())
 		initial_placement_state = {}
 		# First, choose the center member.
 		var debut_in_hand  = me.get_card_ids_in_hand(["holomem_debut"])
@@ -1323,7 +1393,7 @@ func _on_initial_placement_placed(event_data):
 	var backstage_ids = event_data["backstage_card_ids"]
 	var hand_count = event_data["hand_count"]
 	if active_player.is_me():
-		# The initial placemetn should have probably already moved and updated everything.
+		# The initial placement should have probably already moved and updated everything.
 		# So there should be nothing to do here.
 		pass
 	else:
@@ -1346,6 +1416,7 @@ func _on_initial_placement_revealed(event_data):
 		var life_count = info["life_count"]
 
 		if not active_player.is_me():
+			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Initial Placement*[/PHASE]" % active_player.get_name())
 			# Local player is done on initial placement
 			do_move_cards(active_player, "hand", "center", "", [center_card_id])
 			do_move_cards(active_player, "hand", "backstage", "", backstage_card_ids)
@@ -1357,9 +1428,9 @@ func _on_initial_placement_revealed(event_data):
 		print("Mine: %s  Info: %s" % [active_player.hand_count, hand_count])
 		assert(active_player.hand_count == hand_count)
 
-func _on_main_step_start(_event_data):
-	# TODO: Play an animation for main step starting.
-	pass
+func _on_main_step_start(event_data):
+	var active_player = get_player(event_data["active_player"])
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Main Step*[/PHASE]" % active_player.get_name())
 
 func _on_move_card_event(event_data):
 	var active_player = get_player(event_data["moving_player_id"])
@@ -1381,6 +1452,14 @@ func _on_move_card_event(event_data):
 func do_move_cards(player, from, to, zone_card_id, card_ids):
 	var visible_to_zone = player.is_zone_visible(to)
 	for card_id in card_ids:
+		var ignore_log = from == "floating" or to == "floating"
+		if not ignore_log:
+			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s moves [CARD]%s[/CARD] from %s to %s" % [
+				player.get_name(),
+				_get_card_definition_id(card_id),
+				from,
+				to
+			])
 		match from:
 			"archive":
 				player.remove_from_archive(card_id)
@@ -1468,6 +1547,9 @@ func _on_move_cheer_event(event_data):
 func _on_mulligan_decision_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Mulligan[/DECISION]" % [
+			active_player.get_name(),
+		])
 		action_menu_choice_info = {
 			"strings": [
 				Strings.get_string(Strings.STRING_YES),
@@ -1490,16 +1572,24 @@ func _on_mulligan_decision_event(event_data):
 
 func _on_mulligan_reveal_event(event_data):
 	var active_player = get_player(event_data["active_player"])
-	var _revealed_card_ids = event_data["revealed_card_ids"]
+	var revealed_card_ids = event_data["revealed_card_ids"]
 	if not active_player.is_me():
+		var card_def_list = []
+		for card_id in revealed_card_ids:
+			card_def_list.append(_get_card_definition_id(card_id))
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s mulligans revealing [%s]" % [
+			active_player.get_name(),
+			", ".join(card_def_list)
+		])
 		# The opponent is revealing us cards they mulliganed from a forced mulligan.
 		# TODO: Show the cards somehow.
 		pass
 
 func _on_perform_art_event(event_data):
+	var active_player = get_player(event_data["active_player"])
 	var target_player = get_player(event_data["target_player"])
-	var _performer_id = event_data["performer_id"]
-	var _art_id = event_data["art_id"]
+	var performer_id = event_data["performer_id"]
+	var art_id = event_data["art_id"]
 	var target_id = event_data["target_id"]
 	var power = event_data["power"]
 	var died = event_data["died"]
@@ -1510,7 +1600,17 @@ func _on_perform_art_event(event_data):
 
 	var card = find_card_on_board(target_id)
 	card.add_damage(power, died)
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] performs art [SKILL][%s][/SKILL] for %s damage" % [
+		active_player.get_name(),
+		_get_card_definition_id(performer_id),
+		Strings.get_skill_string(art_id),
+		power,
+	])
 	if died:
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
+			target_player.get_name(),
+			_get_card_definition_id(target_id),
+		])
 		# Put the card and all attached cards in the archive.
 		var attached_cards = card.remove_all_attached_cards()
 		var attached_cheer = card.remove_all_attached_cheer()
@@ -1526,17 +1626,29 @@ func _on_play_support_card_event(event_data):
 	var active_player = get_player(event_data["player_id"])
 	var card_id = event_data["card_id"]
 	var _limited = event_data["limited"]
+	var limited_str = ""
+	if _limited:
+		limited_str = " (LIMITED)"
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s plays Support - [CARD]%s[/CARD]%s" % [
+		active_player.get_name(),
+		_get_card_definition_id(card_id),
+		limited_str,
+	])
 	do_move_cards(active_player, "hand", "floating", "", [card_id])
 	# TODO: Mark limited use somewhere
 	pass
 
 func _on_reset_step_activate_event(event_data):
-	#var active_player = get_player(event_data["active_player"])
+	var active_player = get_player(event_data["active_player"])
 	var activated_cards = event_data["activated_card_ids"]
 	# These cards are no longer resting.
 	for card_id in activated_cards:
 		var card = find_card_on_board(card_id)
 		if card:
+			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] no longer resting" % [
+				active_player.get_name(),
+				_get_card_definition_id(card_id)
+			])
 			card.set_resting(false)
 		else:
 			assert(false, "Missing card")
@@ -1545,6 +1657,9 @@ func _on_reset_step_choose_new_center_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	var center_options = event_data["center_options"]
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose new Center[/DECISION]" % [
+			active_player.get_name(),
+		])
 		_begin_make_choice(center_options, 1, 1)
 		action_menu_choice_info = {
 			"strings": [Strings.get_string(Strings.STRING_OK)],
@@ -1569,36 +1684,62 @@ func _on_reset_step_collab_event(event_data):
 		var card = find_card_on_board(card_id)
 		if card:
 			card.set_resting(true)
+			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] resting from Collab" % [
+				active_player.get_name(),
+				_get_card_definition_id(card_id)
+			])
 			do_move_cards(active_player, "collab", "backstage", "", [card_id])
 		else:
 			assert(false, "Missing card")
 
 func _on_roll_die_event(event_data):
-	var _active_player = get_player(event_data["effect_player_id"])
-	var _die_result = event_data["die_result"]
-	var _rigged = event_data["rigged"]
+	var active_player = get_player(event_data["effect_player_id"])
+	var die_result = event_data["die_result"]
+	var rigged = event_data["rigged"]
+	var rigged_str = ""
+	if rigged:
+		rigged_str = " (RIGGED)"
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s die roll = %s%s" % [
+		active_player.get_name(),
+		die_result,
+		rigged_str,
+	])
 	# TODO: Animation of die roll.
 	pass
 
 func _on_shuffle_deck_event(event_data):
-	var _active_player = get_player(event_data["shuffling_player_id"])
+	var active_player = get_player(event_data["shuffling_player_id"])
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s shuffles deck" % [
+		active_player.get_name()
+	])
 	# TODO: Animation - Shuffle the deck
 	pass
 
 func _on_oshi_skill_activation(event_data):
-	var _active_player = get_player(event_data["oshi_player_id"])
-	var _skill_id = event_data["skill_id"]
+	var active_player = get_player(event_data["oshi_player_id"])
+	var skill_id = event_data["skill_id"]
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s Oshi Skill [SKILL][%s][/SKILL] activated" % [
+		active_player.get_name(), Strings.get_skill_string(skill_id)
+	])
 	# TODO: Animation - show oshi skill activate and mark once per game/turn somehow.
 	pass
 
-func _on_turn_phase_update(event_data):
-	var _active_player = get_player(event_data["active_player"])
+func on_performance_step_start(event_data):
+	var active_player = get_player(event_data["active_player"])
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Performance Step*[/PHASE]" % active_player.get_name())
+	# TODO: Animation - performance start
+	pass
+
+func _on_turn_start(event_data):
+	var active_player = get_player(event_data["active_player"])
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn Start**[/PHASE]" % active_player.get_name())
 	# TODO: Animation - show turn phase change
 	pass
 
 func _on_end_turn_event(event_data):
-	var _ending_player_id = get_player(event_data["ending_player_id"])
+	var ending_player = get_player(event_data["ending_player_id"])
 	var _next_player_id = get_player(event_data["next_player_id"])
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn End**[/PHASE]" % ending_player.get_name())
 	# TODO: Animation - show turn phase change
 	pass
 
@@ -1608,6 +1749,7 @@ func _on_force_die_result_event(event_data):
 	var oshi_skill_id = event_data["oshi_skill_id"]
 	var cost = event_data["cost"]
 	if active_player.is_me():
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose die result[/DECISION]" % active_player.get_name())
 		_begin_make_choice([], 0, 0)
 		var skill_name = ""
 		if is_oshi_effect:
@@ -1755,3 +1897,6 @@ func _on_card_pressed(card_id: String, card : CardBase):
 func _on_exit_game_button_pressed() -> void:
 	NetworkManager.leave_game()
 	returning_from_game.emit()
+
+func _on_log_button_pressed() -> void:
+	game_log.visible = true

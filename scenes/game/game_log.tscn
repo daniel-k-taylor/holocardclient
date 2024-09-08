@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://djt48j2x6telk"]
+
+[ext_resource type="Script" path="res://scenes/game/game_log.gd" id="1_f32iv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ta11c"]
+bg_color = Color(0.351563, 0.351563, 0.351563, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.180005, 0.180005, 0.180005, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv8ov"]
+
+[node name="GameLog" type="CenterContainer"]
+offset_right = 1280.0
+offset_bottom = 720.0
+script = ExtResource("1_f32iv")
+
+[node name="FullButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ta11c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Close"
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lv8ov")
+bbcode_enabled = true
+scroll_following = true
+shortcut_keys_enabled = false
+
+[connection signal="pressed" from="FullButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
