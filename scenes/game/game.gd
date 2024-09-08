@@ -4,6 +4,7 @@ extends Node2D
 signal returning_from_game
 
 const CardBaseScene = preload("res://scenes/game/card_base.tscn")
+const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 
 @onready var action_menu : ActionMenu = $UIOverlay/VBoxContainer/HBoxContainer/ActionMenu
 @onready var all_cards : Node2D = $AllCards
@@ -267,6 +268,9 @@ var main_step_action_data = {}
 var preformance_step_action_data = {}
 var last_network_event = null
 var game_over = false
+var event_queue = []
+var remaining_animation_seconds = 0
+var after_animation_continuation = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -279,6 +283,28 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	thinking_spinner.radial_initial_angle += delta * 360
+	if is_playing_animation():
+		remaining_animation_seconds -= delta
+	else:
+		if after_animation_continuation:
+			var callback = after_animation_continuation
+			after_animation_continuation = null
+			callback.call()
+		else:
+			_update_stats_ui()
+			_process_next_event()
+			if not is_playing_animation() and ui_phase == UIPhase.UIPhase_WaitingOnServer:
+				thinking_spinner.visible = true
+			else:
+				thinking_spinner.visible = false
+
+func is_playing_animation():
+	return remaining_animation_seconds > 0
+
+func _process_next_event():
+	var event = event_queue.pop_front()
+	if event:
+		process_game_event(event["event_type"], event)
 
 func begin_remote_game(event_type, event_data):
 	Logger.log_game("Starting game!")
@@ -286,6 +312,9 @@ func begin_remote_game(event_type, event_data):
 
 func handle_game_event(event_type, event_data):
 	Logger.log_game("Received game event: %s\n%s" % [event_type, event_data])
+	event_queue.append(event_data)
+
+func process_game_event(event_type, event_data):
 	game_log.add_to_log(GameLog.GameLogLine.Debug, "Event: %s" % event_type)
 
 	match event_type:
@@ -367,7 +396,9 @@ func handle_game_event(event_type, event_data):
 
 	if event_data["event_type"] != Enums.EventType_GameError:
 		last_network_event = event_data
-	_update_ui()
+
+	if not is_playing_animation():
+		_update_stats_ui()
 
 func _on_disconnected():
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "Lost connection to server")
@@ -394,16 +425,22 @@ func _update_player_stats(player, stats_group):
 	}
 	stats_group.update_stats(stats_info)
 
-func _update_ui():
+func _update_stats_ui():
+	if ui_phase == UIPhase.UIPhase_Init:
+		return
 	_update_player_stats(me, me_stats)
 	_update_player_stats(opponent, opponent_stats)
 
 func _on_game_error(event_data):
-	var _error_id = event_data["error_id"]
-	var _error_message = event_data["error_message"]
+	var error_id = event_data["error_id"]
+	var error_message = event_data["error_message"]
+	game_log.add_to_log(GameLog.GameLogLine.Debug, "[PHASE]Error (%s):[/PHASE] %s" % [
+		error_id,
+		error_message
+	])
 	# TODO: Show a message box.
 	# Replay the last event.
-	handle_game_event(last_network_event["event_type"], last_network_event)
+	process_game_event(last_network_event["event_type"], last_network_event)
 
 func _on_game_over(event_data):
 	var winner_id = event_data["winner_id"]
@@ -539,17 +576,26 @@ func _is_card_selected(card_id : String):
 func _allowed():
 	return true
 
+func _play_popup_message(text :String):
+	var popup = PopupMessageScene.instantiate()
+	add_child(popup)
+	popup.position = $PopupLocation.position
+	remaining_animation_seconds = PopupMessage.MessageDurationSeconds
+	popup.play_message(text)
+
 #
 # Game Event Handlers
 #
 
 func _on_add_turn_effect(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	var turn_effect = event_data["turn_effect"]
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s adds turn effect: %s" % [
+	var effect = event_data["full_effect"]
+	var effect_text = Strings.get_effect_text(effect)
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s %s" % [
 		active_player.get_name(),
-		turn_effect
+		effect_text
 	])
+	_play_popup_message(effect_text)
 	# TODO: Animation for turn effect being added / permanent indicator somewhere?
 	pass
 
@@ -563,6 +609,8 @@ func _on_bloom_event(event_data):
 		_get_card_definition_id(target_card_id),
 		_get_card_definition_id(bloom_card_id)
 	])
+	if not active_player.is_me():
+		_play_popup_message("Bloom!")
 	active_player.bloom(bloom_card_id, target_card_id, bloom_from_zone)
 
 func _on_boost_stat_event(event_data):
@@ -575,6 +623,7 @@ func _on_boost_stat_event(event_data):
 		amount,
 		stat,
 	])
+	_play_popup_message("+%s %s" % [amount, stat])
 
 func _on_cheer_step(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -629,6 +678,8 @@ func _on_collab_event(event_data):
 		active_player.get_name(),
 		_get_card_definition_id(collab_card_id)
 	])
+	if not active_player.is_me():
+		_play_popup_message("Collab!")
 	do_move_cards(active_player, "backstage", "collab", "", [collab_card_id])
 	active_player.generate_holopower(holopower_generated)
 
@@ -1240,6 +1291,9 @@ func _on_draw_event(event_data):
 		len(drawn_card_ids),
 		get_card_logline(drawn_card_ids)
 	])
+	if not active_player.is_me():
+		_play_popup_message("Opponent draws %s" % len(drawn_card_ids))
+
 	active_player.draw_cards(len(drawn_card_ids), created_cards)
 
 func _begin_make_choice(selectable_ids : Array, min_selectable : int, max_selectable : int):
@@ -1359,11 +1413,9 @@ func _change_ui_phase(new_ui_phase : UIPhase):
 	action_menu.hide_menu()
 	card_popout.clear_panel()
 	ui_phase = new_ui_phase
-	if new_ui_phase == UIPhase.UIPhase_WaitingOnServer:
-		thinking_spinner.visible = true
-	else:
+	if new_ui_phase != UIPhase.UIPhase_WaitingOnServer:
 		thinking_spinner.visible = false
-	_update_ui()
+	_update_stats_ui()
 
 func _on_initial_placement_begin(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -1448,6 +1500,8 @@ func _on_initial_placement_revealed(event_data):
 func _on_main_step_start(event_data):
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Main Step*[/PHASE]" % active_player.get_name())
+	if not active_player.is_me():
+		_play_popup_message("Main Step")
 
 func _on_move_card_event(event_data):
 	var active_player = get_player(event_data["moving_player_id"])
@@ -1553,6 +1607,7 @@ func _on_move_cheer_event(event_data):
 	var to_holomem_id = event_data["to_holomem_id"]
 	var cheer_id = event_data["cheer_id"]
 
+	_play_popup_message("Moving Cheer")
 	var already_handled = false
 	if cheer_id in move_card_ids_already_handled:
 		move_card_ids_already_handled.erase(cheer_id)
@@ -1624,6 +1679,8 @@ func _on_perform_art_event(event_data):
 		Strings.get_skill_string(art_id),
 		power,
 	])
+	_play_popup_message("Art: %s\nDamage: %s" % [Strings.get_skill_string(art_id), power])
+
 	if died:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
 			target_player.get_name(),
@@ -1657,6 +1714,8 @@ func _on_play_support_card_event(event_data):
 	])
 	do_move_cards(active_player, "hand", "floating", "", [card_id])
 	# TODO: Mark limited use somewhere
+	if not active_player.is_me():
+		_play_popup_message("Playing Support Card")
 	pass
 
 func _on_reset_step_activate_event(event_data):
@@ -1673,6 +1732,7 @@ func _on_reset_step_activate_event(event_data):
 			card.set_resting(false)
 		else:
 			assert(false, "Missing card")
+	_play_popup_message("Reset Step - Activation")
 
 func _on_reset_step_choose_new_center_event(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -1693,7 +1753,7 @@ func _on_reset_step_choose_new_center_event(event_data):
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 		)
 	else:
-		# Do nothing.
+		_play_popup_message("Reset Step - Choose Center")
 		pass
 
 
@@ -1713,6 +1773,8 @@ func _on_reset_step_collab_event(event_data):
 		else:
 			assert(false, "Missing card")
 
+	_play_popup_message("Reset Step - Collabs Rest")
+
 func _on_roll_die_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	var die_result = event_data["die_result"]
@@ -1725,6 +1787,7 @@ func _on_roll_die_event(event_data):
 		die_result,
 		rigged_str,
 	])
+	_play_popup_message("Rolled die: %s%s" % [die_result, rigged_str])
 	# TODO: Animation of die roll.
 	pass
 
@@ -1734,27 +1797,35 @@ func _on_shuffle_deck_event(event_data):
 		active_player.get_name()
 	])
 	# TODO: Animation - Shuffle the deck
+	_play_popup_message("Shuffling Deck")
 	pass
 
 func _on_oshi_skill_activation(event_data):
 	var active_player = get_player(event_data["oshi_player_id"])
 	var skill_id = event_data["skill_id"]
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s Oshi Skill [SKILL][%s][/SKILL] activated" % [
-		active_player.get_name(), Strings.get_skill_string(skill_id)
-	])
+	var logline = "%s Oshi Skill [SKILL][%s][/SKILL] activated" % [
+		active_player.get_name(),
+		Strings.get_skill_string(skill_id)
+	]
+	game_log.add_to_log(GameLog.GameLogLine.Detail, logline)
 	# TODO: Animation - show oshi skill activate and mark once per game/turn somehow.
+	if not active_player.is_me():
+		_play_popup_message("Oshi Skill: %s" % Strings.get_skill_string(skill_id))
 	pass
 
 func on_performance_step_start(event_data):
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Performance Step*[/PHASE]" % active_player.get_name())
 	# TODO: Animation - performance start
+	if not active_player.is_me():
+		_play_popup_message("Performance Step")
 	pass
 
 func _on_turn_start(event_data):
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn Start**[/PHASE]" % active_player.get_name())
 	# TODO: Animation - show turn phase change
+	_play_popup_message("Turn Start")
 	pass
 
 func _on_end_turn_event(event_data):
@@ -1762,6 +1833,7 @@ func _on_end_turn_event(event_data):
 	var _next_player_id = get_player(event_data["next_player_id"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn End**[/PHASE]" % ending_player.get_name())
 	# TODO: Animation - show turn phase change
+	_play_popup_message("Turn End")
 	pass
 
 func _on_force_die_result_event(event_data):

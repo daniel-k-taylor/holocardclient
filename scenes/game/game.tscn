@@ -234,6 +234,9 @@ position = Vector2(1000, 280)
 scale = Vector2(1.5, 1.5)
 is_big_card = true
 
+[node name="PopupLocation" type="Node2D" parent="."]
+position = Vector2(798, 216)
+
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
 [connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]
 [connection signal="zone_pressed" from="MeArchive" to="." method="_on_me_archive_zone_pressed"]

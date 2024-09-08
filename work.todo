@@ -1,6 +1,12 @@
 Current:
   ☐ Animations/delays on events
 
+No message on:
+  ☐ Draw - move the cards
+  ☐ reset steps - just move cards
+  ☐ Cheer - move the cards
+
+
 Todo:
   ☐ Clean up Stat counter distribution
     - Deck/life/holopower/cheer next to oshi
