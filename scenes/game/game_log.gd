@@ -3,6 +3,8 @@ extends CenterContainer
 
 @onready var label : RichTextLabel = $PanelContainer/VBoxContainer/PanelContainer/Label
 
+@onready var debug_check = $PanelContainer/VBoxContainer/HBoxContainer/ShowDebugCheckbox
+
 const DEFAULT_PLAYER_COLOR = "#16c2f7"
 const DEFAULT_OPPONENT_COLOR = "#ff0000"
 const PHASE_COLOR = "#e3ed2e"
@@ -33,7 +35,25 @@ func add_to_log(log_type, text : String):
 		"log_type": log_type,
 		"text": text,
 	})
-	label.text += "\n%s" % text
+	if _is_log_type_enabled(log_type):
+		label.text += "\n%s" % text
 
 func _on_close_button_pressed() -> void:
 	visible = false
+
+func _is_log_type_enabled(log_type):
+	match log_type:
+		GameLogLine.Debug:
+			return debug_check.button_pressed
+		_:
+			return true
+
+func _generate_full_text():
+	var text = ""
+	for logline in full_log:
+		if _is_log_type_enabled(logline["log_type"]):
+			text += logline["text"] + "\n"
+	label.text = text
+
+func _on_show_debug_checkbox_toggled(_toggled_on: bool) -> void:
+	_generate_full_text()

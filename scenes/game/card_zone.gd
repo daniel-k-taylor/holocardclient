@@ -13,10 +13,6 @@ signal zone_pressed
 @onready var loc6 = $Margin/Layout/GridContainer/ZoneLocation6
 @onready var zone_locations = [loc1, loc2, loc3, loc4, loc5, loc6]
 
-@onready var CenterCardOval = Vector2(get_viewport().content_scale_size) * Vector2(0.5, 1.3)
-@onready var HorizontalRadius = get_viewport().content_scale_size.x * 0.55
-@onready var VerticalRadius = get_viewport().content_scale_size.y * 0.4
-
 @onready var zone_button : TextureButton = $ZoneButton
 
 @export var zone_name : String = "Unset" :
@@ -39,6 +35,9 @@ enum LayoutStyle {
 		_update_locations()
 
 var cards = []
+var CenterCardOval
+var HorizontalRadius
+var VerticalRadius
 
 func _update_locations():
 	if zone_locations:
@@ -59,6 +58,11 @@ func _ready() -> void:
 		set_transparent(true)
 
 	zone_button.visible = layout_style == LayoutStyle.Archive
+
+	if not Engine.is_editor_hint():
+		CenterCardOval = Vector2(get_viewport().content_scale_size) * Vector2(0.5, 1.3)
+		HorizontalRadius = get_viewport().content_scale_size.x * 0.55
+		VerticalRadius = get_viewport().content_scale_size.y * 0.4
 
 func set_transparent(is_transparent):
 	if is_transparent:
@@ -153,7 +157,7 @@ func layout_player_hand():
 				max_angle -= extra_angle
 
 			for i in range(num_cards):
-				var card : CardBase = cards[i]
+				var card : CardBase = cards[num_cards - i - 1]
 
 				# Calculate the angle for this card, distributing the cards evenly between min_angle and max_angle
 				var angle = min_angle + i * (max_angle - min_angle) / (num_cards - 1)

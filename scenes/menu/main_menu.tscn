@@ -8,8 +8,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 128.0
-offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wc6th")
@@ -105,6 +103,25 @@ layout_mode = 0
 offset_right = 44.0
 offset_bottom = 24.0
 button_pressed = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 306.0
+offset_right = 308.0
+offset_bottom = 346.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Deck:"
+
+[node name="DeckSelector" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Sora"
+popup/item_1/text = "Azki"
+popup/item_1/id = 1
 
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]

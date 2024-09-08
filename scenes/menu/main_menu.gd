@@ -1,6 +1,7 @@
 extends Control
 
-var oshi_id = "hSD01-001"
+var oshi_sora = "hSD01-001"
+var oshi_azki = "hSD01-002"
 var deck = {
 	"hSD01-003": 4,
 	"hSD01-004": 3,
@@ -41,6 +42,7 @@ var cheer_deck = {
 
 # Other
 @onready var server_info_list : ItemList = $ServerInfoList
+@onready var deck_selector = $HBoxContainer/DeckSelector
 
 enum MenuState {
 	MenuState_ConnectingToServer,
@@ -73,6 +75,7 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, false, true)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, false, false)
+			_update_element(deck_selector, true, true)
 			server_status.text = "Connecting to server..."
 		MenuState.MenuState_Connected_Default:
 			_update_element(play_ai_button, true, true)
@@ -80,6 +83,7 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, true, true)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, false, false)
+			_update_element(deck_selector, true, true)
 			server_status.text = "Connected"
 		MenuState.MenuState_Disconnected:
 			_update_element(play_ai_button, false, false)
@@ -87,6 +91,7 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, false, false)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, false, false)
+			_update_element(deck_selector, true, true)
 			server_status.text = "Disconnected from server"
 		MenuState.MenuState_Queued:
 			_update_element(play_ai_button, false, false)
@@ -94,6 +99,7 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, false, false)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, true, true)
+			_update_element(deck_selector, false, true)
 		_:
 			assert(false, "Unimplemented menu state")
 			pass
@@ -141,10 +147,20 @@ func get_ai_queue():
 		if queue["queue_name"] == "main_matchmaking_ai":
 			return queue
 
+func get_deck_oshi():
+	var deck_value = deck_selector.selected
+	var chosen_oshi = oshi_sora
+	match deck_value:
+		0:
+			chosen_oshi = oshi_sora
+		1:
+			chosen_oshi = oshi_azki
+	return chosen_oshi
+	
 func _on_join_queue_button_pressed() -> void:
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()
-	NetworkManager.join_match_queue(self.get_matchmaking_queue(), oshi_id, deck, cheer_deck)
+	NetworkManager.join_match_queue(self.get_matchmaking_queue(), get_deck_oshi(), deck, cheer_deck)
 
 func _on_join_failed() -> void:
 	menu_state = MenuState.MenuState_Connected_Default
@@ -161,4 +177,4 @@ func _on_debug_spew_button_toggled(toggled_on: bool) -> void:
 func _on_play_ai_button_pressed() -> void:
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()
-	NetworkManager.join_match_queue(self.get_ai_queue(), oshi_id, deck, cheer_deck)
+	NetworkManager.join_match_queue(self.get_ai_queue(), get_deck_oshi(), deck, cheer_deck)

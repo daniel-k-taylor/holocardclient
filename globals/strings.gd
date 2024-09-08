@@ -129,7 +129,10 @@ func build_send_cheer_string(amount_min, amount_max, source):
 			source_str = "this Holomem"
 	var amount_str = "%s" % amount_min
 	if amount_min != amount_max:
-		amount_str = "%s-%s" % [amount_min, amount_max]
+		if amount_max == -1:
+			amount_str = "any amount of"
+		else:
+			amount_str = "%s-%s" % [amount_min, amount_max]
 	return "Send %s Cheer from %s." % [amount_str, source_str]
 
 func build_order_cards_string(to, bottom):

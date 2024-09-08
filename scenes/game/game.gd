@@ -101,9 +101,10 @@ class PlayerState:
 		hand_count += count
 		deck_count -= count
 
-		for card in cards:
-			if _hand_zone:
+		if _hand_zone:
+			for card in cards:
 				_hand_zone.add_card(card)
+			_game._put_cards_on_top(_hand_zone.cards)
 
 	func get_archive_count() -> int:
 		return len(_archive_zone.get_cards_in_zone())
@@ -117,11 +118,13 @@ class PlayerState:
 	func add_card_to_archive(card:CardBase):
 		card.remove_all_attached_cards()
 		_archive_zone.add_card(card, 0)
+		_game._put_cards_on_top([card])
 
 	func add_card_to_hand(card : CardBase):
 		hand_count += 1
 		if _hand_zone:
 			_hand_zone.add_card(card)
+			_game._put_cards_on_top(_hand_zone.cards)
 		else:
 			# TODO: Animation then
 			_game.destroy_card(card)
@@ -458,6 +461,10 @@ func destroy_card(card : CardBase) -> void:
 	if card:
 		all_cards.remove_child(card)
 		card.queue_free()
+
+func _put_cards_on_top(cards : Array):
+	for card in cards:
+		all_cards.move_child(card, all_cards.get_child_count() - 1)
 
 func find_card_on_board(card_id : String) -> CardBase:
 	for card in all_cards.get_children():
@@ -1257,7 +1264,7 @@ func _continue_select_destination_cards():
 		action_menu.hide_menu()
 		move_card_ids_already_handled = []
 		for key in multi_step_decision_info:
-			move_card_ids_already_handled.append(multi_step_decision_info)
+			move_card_ids_already_handled.append(key)
 		submit_place_cheer(multi_step_decision_info)
 		_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 	else:
