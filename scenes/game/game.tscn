@@ -22,17 +22,17 @@ offset_bottom = 720.0
 color = Color(0.31802, 0.31802, 0.31802, 1)
 
 [node name="ExitGameButton" type="Button" parent="."]
-offset_left = 1177.0
-offset_top = 174.0
-offset_right = 1264.0
-offset_bottom = 205.0
+offset_left = 1183.0
+offset_top = 130.0
+offset_right = 1270.0
+offset_bottom = 161.0
 text = "Exit Game"
 
 [node name="LogButton" type="Button" parent="."]
-offset_left = 1074.31
-offset_top = 174.0
-offset_right = 1161.31
-offset_bottom = 205.0
+offset_left = 969.0
+offset_top = 90.0
+offset_right = 1056.0
+offset_bottom = 121.0
 text = "Game Log"
 
 [node name="OpponentStatsGroup" parent="." instance=ExtResource("2_yswsg")]
