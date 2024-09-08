@@ -208,6 +208,34 @@ func get_cheer_counts():
 		"white": white,
 	}
 
+func get_compare_value():
+	var compare_value = 0
+	var card_type = _definition["card_type"]
+	var card_name = ""
+	match card_type:
+		"holomem_spot":
+			compare_value = 10000
+			card_name = _definition["holomem_names"][0]
+		"holomem_debut":
+			compare_value = 20000
+			card_name = _definition["holomem_names"][0]
+		"holomem_bloom":
+			compare_value = 30000
+			card_name = _definition["holomem_names"][0]
+		"support":
+			compare_value = 40000
+			card_name = _definition["support_names"][0]
+	if "bloom_level" in _definition:
+		compare_value += _definition["bloom_level"] * 1000
+	if "limited" not in _definition or not _definition["limited"]:
+		compare_value += 1000
+
+	var compare_str = "%s_%s_%s" % [compare_value, card_name, _definition_id]
+
+	return compare_str
+
+func compare(other : CardBase):
+	return get_compare_value() < other.get_compare_value()
 
 func _on_button_pressed() -> void:
 	if _selectable:

@@ -72,6 +72,7 @@ func layout_zone():
 	if cards:
 		card_offset = cards[0].scale * (CardBase.DefaultCardSize / 2)
 	if layout_style == LayoutStyle.Hand:
+		order_hand()
 		var center = loc1.global_position + card_offset
 		for i in range(len(cards)):
 			var card = cards[i]
@@ -107,3 +108,9 @@ func remove_card(card_id : String):
 				set_transparent(true)
 			return i
 	return -1
+
+func order_hand():
+	cards.sort_custom(
+	func(a, b):
+		return a.compare(b)
+	)
