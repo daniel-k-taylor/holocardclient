@@ -77,14 +77,10 @@ class PlayerState:
 		_is_me = is_local_player
 
 		_archive_zone = archive_zone
-		_archive_zone.set_layout_style(CardZone.LayoutStyle.Archive)
 		_hand_zone = hand_zone
-		if _hand_zone:
-			_hand_zone.set_layout_style(CardZone.LayoutStyle.Hand)
 		_center_zone = center_zone
 		_collab_zone = collab_zone
 		_backstage_zone = backstage_zone
-		_backstage_zone.set_layout_style(CardZone.LayoutStyle.Backstage)
 		_oshi_zone = oshi_zone
 		_floating_zone = floating_zone
 
@@ -264,6 +260,7 @@ var last_network_event = null
 func _ready() -> void:
 	NetworkManager.connect("disconnected_from_server", _on_disconnected)
 
+	$UIOverlay.visible = true
 	action_menu.visible = false
 	thinking_spinner.visible = true
 

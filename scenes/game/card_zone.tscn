@@ -2,8 +2,13 @@
 
 [ext_resource type="Script" path="res://scenes/game/card_zone.gd" id="1_va8gc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj4gp"]
-bg_color = Color(6.257e-07, 0.345685, 0.464665, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_derwr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1.44392e-07, 0.340004, 0.324413, 1)
 
 [node name="CardZone" type="PanelContainer"]
 custom_minimum_size = Vector2(250, 350)
@@ -11,7 +16,7 @@ offset_right = 250.0
 offset_bottom = 350.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_bj4gp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_derwr")
 script = ExtResource("1_va8gc")
 
 [node name="Margin" type="MarginContainer" parent="."]
@@ -29,6 +34,36 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "ZoneName"
 
-[node name="ZoneContents" type="MarginContainer" parent="Margin/Layout"]
+[node name="GridContainer" type="GridContainer" parent="Margin/Layout"]
+layout_mode = 2
+columns = 3
+
+[node name="ZoneLocation1" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+custom_minimum_size = Vector2(250, 350)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ZoneLocation2" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+custom_minimum_size = Vector2(250, 350)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ZoneLocation3" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+custom_minimum_size = Vector2(250, 350)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ZoneLocation4" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+custom_minimum_size = Vector2(250, 350)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ZoneLocation5" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+custom_minimum_size = Vector2(250, 350)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ZoneLocation6" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 size_flags_vertical = 3

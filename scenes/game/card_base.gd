@@ -14,8 +14,8 @@ const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 @onready var cheer_indicators = $OuterMargin/InnerMargin/PanelContainer/CheerIndicators/PanelContainer/CheerVBox
 @onready var info_highlight = $OuterMargin/Highlight
 @onready var selection_button = $OuterMargin/Button
-@onready var damage_indicator = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage/DamageIndicator
-@onready var damage_label = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
+@onready var damage_indicator = $OuterMargin/DamageIndicator
+@onready var damage_label = $OuterMargin/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
 
 var _card_id
 var _definition_id
