@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7di8plutlm5b"]
+[gd_scene load_steps=8 format=3 uid="uid://b7di8plutlm5b"]
 
 [ext_resource type="Script" path="res://scenes/game/card_popout.gd" id="1_nkmer"]
+[ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="2_38lt7"]
 [ext_resource type="PackedScene" uid="uid://c86ockf3l38eh" path="res://scenes/game/multichoicebutton.tscn" id="2_a2hxt"]
+[ext_resource type="Texture2D" uid="uid://dh6ntvtll3ni" path="res://assets/icons/minus.png" id="3_mqvsl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f7jww"]
 
@@ -55,9 +57,17 @@ theme_override_font_sizes/bold_italics_font_size = 24
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
-text = "[b]Test[/b] with instructions
+text = "[b]Test[/b] with instructions this is a really long instruction
 Do the thing"
 fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="MinimizeButton" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer" instance=ExtResource("2_38lt7")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("3_mqvsl")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
 layout_mode = 2
@@ -105,3 +115,4 @@ size_flags_vertical = 4
 columns = 10
 
 [connection signal="pressed" from="FullScreenButtonPanel/ClickOutsideButton" to="." method="_on_click_outside_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer/MinimizeButton" to="." method="_on_minimize_button_pressed"]

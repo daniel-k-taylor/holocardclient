@@ -13,13 +13,13 @@ border_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5ihf"]
 
 [node name="ActionMenu" type="PanelContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -849.0
-offset_bottom = -672.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -640.0
+offset_right = -209.0
+offset_bottom = 53.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2exqa")
 script = ExtResource("1_bxj4n")
 
@@ -43,6 +43,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_l5ihf")
 
 [node name="InstructionsHBox" type="HBoxContainer" parent="OuterMargin/MainVBox/PanelContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 alignment = 1
 
 [node name="InstructionsLabel" type="RichTextLabel" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox"]

@@ -15,20 +15,21 @@ var callbacks = []
 func _ready():
 	for button in action_buttons:
 		button.connect("button_pressed", _action_button_pressed)
-		
+
 	if get_parent() == get_tree().root:
 		var test_cards = []
 		for i in range(33):
 			test_cards.append(CardDatabase.test_create_card("id_" + str(i), "hSD01-001"))
-		
+
 		show_panel(
 			"[b]Test[/b] here are some instructions",
 			{
 				"strings": [Strings.get_string(Strings.STRING_OK), Strings.get_string(Strings.STRING_CANCEL)],
 				"callback": [null, null],
-				"enabled": [true, true]
+				"enabled": [true, true],
+				"order_cards_mode": false,
 			},
-			test_cards,
+			test_cards, test_cards
 		)
 
 func remove_all_children(element):
@@ -40,9 +41,9 @@ func add_card_elements(count):
 	for i in range(count):
 		var popout_element = PopoutElementScene.instantiate()
 		card_grid.add_child(popout_element)
-		popout_element.set_card_controls(false)
+		popout_element.set_card_controls(false, null)
 
-func show_panel(instructions, popout_choice_info, cards):
+func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : Array):
 	visible = true
 
 	remove_all_children(card_grid)
@@ -51,9 +52,11 @@ func show_panel(instructions, popout_choice_info, cards):
 	add_card_elements(count)
 
 	if count < 10:
-		card_grid.columns = count
+		card_grid.columns = max(1, count)
 	else:
 		card_grid.columns = 10
+
+	var order_cards_mode = popout_choice_info["order_cards_mode"]
 
 	var popout_elements  = card_grid.get_children()
 	for i in range(len(cards)):
@@ -61,9 +64,33 @@ func show_panel(instructions, popout_choice_info, cards):
 		var element: PopoutElement = popout_elements[i]
 		element.add_card(card)
 		card.initialize_graphics()
-		card.set_selectable(true)
+		if order_cards_mode:
+			element.set_card_controls(true, _reorder_card_element)
+			if i == 0:
+				element.set_top_visible(true)
+		else:
+			if card._card_id in chooseable_card_ids:
+				card.set_selectable(true)
+			else:
+				card.set_selectable(false)
 
 	init_panel(instructions, popout_choice_info)
+
+func _reorder_card_element(element, direction):
+	# Get the index of the element in the grid.
+	var index = element.get_index()
+	var max_index = card_grid.get_child_count() - 1
+	var new_index = index + direction
+	if index == 0:
+		element.set_top_visible(false)
+
+	if index == 0 and direction == -1:
+		new_index = max_index
+	elif index == max_index and direction == 1:
+		new_index = 0
+		card_grid.get_child(0).set_top_visible(false)
+	card_grid.move_child(element, new_index)
+	card_grid.get_child(0).set_top_visible(true)
 
 func update_panel_states(instructions, enabled_states):
 	var update_count = len(enabled_states)
@@ -87,8 +114,21 @@ func clear_panel():
 	visible = false
 	remove_all_children(card_grid)
 
-func _on_click_outside_button_pressed() -> void:
+func get_ordered_card_ids():
+	var card_ids = []
+	var popout_elements = card_grid.get_children()
+	for element in popout_elements:
+		card_ids.append(element.get_card_id())
+	return card_ids
+
+func minimize():
 	visible = false
+
+func _on_click_outside_button_pressed() -> void:
+	minimize()
 
 func _action_button_pressed(button_value):
 	callbacks[button_value].call()
+
+func _on_minimize_button_pressed() -> void:
+	minimize()

@@ -1,8 +1,11 @@
 Current:
-    # Enums.GameAction_MainStepOshiSkill:
-		# 	_on_main_step_oshi_skill()
-    # Enums.GameAction_MainStepPlaySupport:
-    # 	_on_main_step_play_support()
 
-Next up:
-    ☐ Main step actions
+Todo:
+  ☐ Card zoom hover
+  ☐ Hand fanout
+  ☐ Backstage layout
+  ☐ Archive top card ordering
+  ☐ Animations/delays on events
+  ☐ Click archive to pop up card popout view of it (don't interfere with existing choice popout, make a separate instance)
+  ☐ Click info button on card to view attached cards
+

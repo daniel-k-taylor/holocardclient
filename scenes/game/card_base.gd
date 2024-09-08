@@ -15,7 +15,7 @@ const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 @onready var info_highlight = $OuterMargin/Highlight
 @onready var selection_button = $OuterMargin/Button
 @onready var damage_indicator = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage/DamageIndicator
-@onready var damage_label = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage/DamageIndicator/MarginContainer/MarginContainer/CenterContainer/DamageLabel
+@onready var damage_label = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
 
 var _card_id
 var _definition_id
@@ -24,6 +24,7 @@ var _cheer : Dictionary = {}
 var damage = 0
 var dead = false
 var _card_type
+var _attached_cards = []
 
 var _selected = false
 var _selectable = false
@@ -87,9 +88,20 @@ func _update_stats():
 		else:
 			remove_cheer_indicator(color)
 
+	damage_indicator.visible = damage > 0
+	damage_label.text = str(damage)
+
 func attach_cheer(card_id, colors : Array):
 	_cheer[card_id] = colors
 	_update_stats()
+
+func remove_attached(card_id):
+	if card_id in _cheer:
+		_cheer.erase(card_id)
+		_update_stats()
+	elif card_id in _attached_cards:
+		_attached_cards.erase(card_id)
+		_update_stats()
 
 func remove_cheer(card_id):
 	_cheer.erase(card_id)
@@ -98,8 +110,6 @@ func remove_cheer(card_id):
 func add_damage(amount, is_dead : bool):
 	damage += amount
 	dead = is_dead
-	damage_indicator.visible = damage > 0
-	damage_label.text = str(damage)
 	_update_stats()
 
 func set_resting(is_resting):
@@ -107,6 +117,21 @@ func set_resting(is_resting):
 	rotation_degrees = 0
 	if _resting:
 		rotation_degrees = 90
+
+func attach_card(card_id):
+	_attached_cards.append(card_id)
+	_update_stats()
+
+func remove_all_attached_cards():
+	var previously_attached = _attached_cards
+	_attached_cards = []
+	_update_stats()
+	return previously_attached
+
+func remove_all_attached_cheer():
+	var cheer = _cheer.duplicate()
+	_cheer = {}
+	return cheer
 
 func get_cheer_counts():
 	var blue = 0

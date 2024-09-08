@@ -24,8 +24,11 @@ func _ready() -> void:
 func set_layout_style(style):
 	layout_style = style
 
-func add_card(card : CardBase):
-	cards.append(card)
+func add_card(card : CardBase, at_index : int = -1):
+	if at_index != -1:
+		cards.insert(at_index, card)
+	else:
+		cards.append(card)
 	layout_zone()
 
 func layout_zone():
@@ -55,8 +58,10 @@ func get_cards_in_zone():
 	return cards
 
 func remove_card(card_id : String):
-	for card in cards:
+	for i in range(len(cards)):
+		var card = cards[i]
 		if card._card_id == card_id:
 			cards.erase(card)
 			layout_zone()
-			break
+			return i
+	return -1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ds6ostisut8ij"]
+[gd_scene load_steps=9 format=3 uid="uid://ds6ostisut8ij"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_mkj14"]
 [ext_resource type="PackedScene" uid="uid://nn3fa22gm0m0" path="res://scenes/game/stats_group.tscn" id="2_yswsg"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bsyfgok3mshy8" path="res://assets/icons/donut.png" id="12_j6jby"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lv8ov"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v0wnc"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_mkj14")
@@ -144,16 +146,25 @@ ZoneName = "Support Card"
 
 [node name="AllCards" type="Node2D" parent="."]
 
-[node name="ActionMenu" parent="." instance=ExtResource("11_cx0xb")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 355.0
-offset_top = 5.0
-offset_right = 786.0
-offset_bottom = 55.0
-grow_horizontal = 1
-grow_vertical = 1
+[node name="UIOverlay" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_v0wnc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIOverlay"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIOverlay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+alignment = 1
+
+[node name="ActionMenu" parent="UIOverlay/VBoxContainer/HBoxContainer" instance=ExtResource("11_cx0xb")]
+layout_mode = 2
 
 [node name="ThinkingSpinner" type="TextureProgressBar" parent="."]
 offset_left = 944.0

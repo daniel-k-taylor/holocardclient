@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://blev8t8g4iq0m"]
+
+[ext_resource type="Script" path="res://scenes/misc/icon_button.gd" id="1_wg47j"]
+[ext_resource type="Texture2D" uid="uid://du5dscbsvut2m" path="res://assets/highlights/border_thin.png" id="2_s366y"]
+[ext_resource type="Texture2D" uid="uid://bnuol0ewqd6p8" path="res://assets/highlights/card_border_highlight_pressed.png" id="3_uom1h"]
+[ext_resource type="Texture2D" uid="uid://bcgmt81k756it" path="res://assets/highlights/border_thin_hover.png" id="4_wjpua"]
+
+[node name="IconButton" type="MarginContainer"]
+script = ExtResource("1_wg47j")
+
+[node name="Image" type="TextureRect" parent="."]
+layout_mode = 2
+expand_mode = 1
+
+[node name="Button" type="TextureButton" parent="."]
+layout_mode = 2
+texture_normal = ExtResource("2_s366y")
+texture_pressed = ExtResource("3_uom1h")
+texture_hover = ExtResource("4_wjpua")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
