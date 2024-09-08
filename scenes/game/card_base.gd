@@ -5,7 +5,10 @@ signal clicked_card(card_id, card)
 signal hover_card(card_id, card, hover)
 
 const DefaultCardSize = Vector2(250.0, 350.0)
-const DefaultCardScale = 0.4
+const DefaultCardScale = 0.5
+const StageCardScale = 0.45
+const ReferenceCardScale = 0.6
+const ArchiveCardScale = 0.4
 
 const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 const CardTextInfoScene = preload("res://scenes/game/card_text_info.tscn")
@@ -41,6 +44,8 @@ func _ready():
 	if is_big_card:
 		visible = false
 		selection_button.visible = false
+	if scale.x == 1.0:
+		scale = Vector2(DefaultCardScale, DefaultCardScale)
 
 func create_card(definition, definition_id, card_id, card_type):
 	_definition = definition
@@ -57,7 +62,6 @@ func set_button_visible(button_visible):
 func initialize_graphics():
 	card_image.texture = load("res://assets/cards/" + _definition_id + ".png")
 	set_button_visible(false)
-	scale = Vector2(DefaultCardScale, DefaultCardScale)
 	_update_stats()
 	_update_english_text()
 
@@ -76,6 +80,12 @@ func _update_english_text():
 
 func get_texture():
 	return card_image.texture
+
+func on_add_to_zone():
+	if _resting:
+		rotation_degrees = 90
+	else:
+		rotation_degrees = 0
 
 func copy_graphics(card : CardBase):
 	selection_button.visible = false

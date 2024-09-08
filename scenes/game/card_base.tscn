@@ -140,7 +140,7 @@ mouse_filter = 2
 [node name="MarginContainer" type="MarginContainer" parent="OuterMargin/InnerMargin/PanelContainer/CheerIndicators"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_top = 70
+theme_override_constants/margin_top = 60
 
 [node name="PanelContainer" type="PanelContainer" parent="OuterMargin/InnerMargin/PanelContainer/CheerIndicators"]
 layout_mode = 2

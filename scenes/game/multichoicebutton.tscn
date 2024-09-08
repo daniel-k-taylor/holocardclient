@@ -20,7 +20,6 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 mouse_filter = 2
 bbcode_enabled = true
-text = "Choice 0"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0

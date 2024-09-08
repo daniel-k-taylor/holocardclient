@@ -32,7 +32,7 @@ layout_mode = 2
 [node name="ZoneName" type="Label" parent="Margin/Layout"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "ZoneName"
+text = "Unset"
 
 [node name="GridContainer" type="GridContainer" parent="Margin/Layout"]
 layout_mode = 2
@@ -44,26 +44,31 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ZoneLocation2" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+visible = false
 custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ZoneLocation3" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+visible = false
 custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ZoneLocation4" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+visible = false
 custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ZoneLocation5" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+visible = false
 custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ZoneLocation6" type="MarginContainer" parent="Margin/Layout/GridContainer"]
+visible = false
 custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 size_flags_vertical = 3

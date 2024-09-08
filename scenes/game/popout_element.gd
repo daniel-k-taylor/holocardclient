@@ -9,6 +9,8 @@ var _move_callback
 
 func _ready():
 	set_top_visible(false)
+	placeholder.custom_minimum_size.x = CardBase.DefaultCardSize.x * CardBase.ReferenceCardScale
+	placeholder.custom_minimum_size.y = CardBase.DefaultCardSize.y * CardBase.ReferenceCardScale
 
 func set_card_controls(enabled:bool, move_callback):
 	controls.visible = enabled
@@ -19,7 +21,8 @@ func set_top_visible(is_top):
 
 func add_card(card : CardBase):
 	placeholder.add_child(card)
-	card.position = CardBase.DefaultCardScale * (CardBase.DefaultCardSize / 2)
+	card.scale = Vector2(CardBase.ReferenceCardScale, CardBase.ReferenceCardScale)
+	card.position = CardBase.ReferenceCardScale * (CardBase.DefaultCardSize / 2)
 
 func get_card_id():
 	return placeholder.get_child(0)._card_id

@@ -7,7 +7,7 @@ extends CenterContainer
 @onready var action_button2 : MultiChoiceButton = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2/ActionButton2
 @onready var action_buttons : Array[MultiChoiceButton] = [action_button1, action_button2]
 
-
+const MaxColumns = 6
 
 const PopoutElementScene = preload("res://scenes/game/popout_element.tscn")
 var callbacks = []
@@ -19,7 +19,7 @@ func _ready():
 	if get_parent() == get_tree().root:
 		var test_cards = []
 		for i in range(33):
-			test_cards.append(CardDatabase.test_create_card("id_" + str(i), "hSD01-001"))
+			test_cards.append(CardDatabase.test_create_card("id_" + str(i), "hSD01-003"))
 
 		show_panel(
 			"[b]Test[/b] here are some instructions",
@@ -51,10 +51,10 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 	var count = len(cards)
 	add_card_elements(count)
 
-	if count < 10:
+	if count < MaxColumns:
 		card_grid.columns = max(1, count)
 	else:
-		card_grid.columns = 10
+		card_grid.columns = MaxColumns
 
 	var order_cards_mode = popout_choice_info["order_cards_mode"]
 

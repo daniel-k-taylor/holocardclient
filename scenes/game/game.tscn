@@ -36,16 +36,16 @@ offset_bottom = 205.0
 text = "Game Log"
 
 [node name="OpponentStatsGroup" parent="." instance=ExtResource("2_yswsg")]
-offset_left = 1030.0
-offset_top = 16.0
-offset_right = 1244.0
-offset_bottom = 159.0
+offset_left = 1040.0
+offset_top = 10.0
+offset_right = 1254.0
+offset_bottom = 153.0
 
 [node name="MeStatsGroup" parent="." instance=ExtResource("2_yswsg")]
-offset_left = 1030.0
-offset_top = 562.0
-offset_right = 1244.0
-offset_bottom = 705.0
+offset_left = 1040.0
+offset_top = 570.0
+offset_right = 1254.0
+offset_bottom = 713.0
 
 [node name="MeArchive" parent="." instance=ExtResource("10_bk3r3")]
 offset_left = 1118.0
@@ -57,43 +57,44 @@ zone_name = "Archive"
 layout_style = 0
 
 [node name="MeBackstage" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 20.0
-offset_top = 400.0
-offset_right = 828.0
-offset_bottom = 1172.0
-scale = Vector2(0.4, 0.4)
+offset_left = 5.0
+offset_top = 365.0
+offset_right = 813.0
+offset_bottom = 1137.0
+scale = Vector2(0.45, 0.45)
 zone_name = "Backstage"
 layout_style = 3
 
 [node name="MeCenter" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 630.0
+offset_left = 580.0
 offset_top = 340.0
-offset_right = 930.0
+offset_right = 880.0
 offset_bottom = 758.0
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.45, 0.45)
 zone_name = "Center"
 
 [node name="MeCollab" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 485.0
+offset_left = 400.0
 offset_top = 340.0
-offset_right = 785.0
+offset_right = 700.0
 offset_bottom = 758.0
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.45, 0.45)
 zone_name = "Collab"
 
 [node name="MeOshi" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 982.0
-offset_top = 396.0
-offset_right = 1232.0
-offset_bottom = 746.0
-scale = Vector2(0.4, 0.4)
+offset_left = 890.0
+offset_top = 340.0
+offset_right = 1190.0
+offset_bottom = 758.0
+scale = Vector2(0.45, 0.45)
 zone_name = "Oshi"
 
 [node name="MeHand" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 445.0
-offset_top = 554.0
-offset_right = 695.0
-offset_bottom = 904.0
+modulate = Color(1, 1, 1, 0)
+offset_left = 610.0
+offset_top = 542.0
+offset_right = 910.0
+offset_bottom = 960.0
 scale = Vector2(0.4, 0.4)
 zone_name = "Hand"
 layout_style = 2
@@ -108,45 +109,45 @@ zone_name = "Archive"
 layout_style = 0
 
 [node name="OpponentBackstage" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 828.0
-offset_bottom = 792.0
-scale = Vector2(0.4, 0.4)
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 813.0
+offset_bottom = 777.0
+scale = Vector2(0.45, 0.45)
 zone_name = "Backstage"
 layout_style = 3
 
 [node name="OpponentCenter" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 630.0
+offset_left = 580.0
 offset_top = 150.0
-offset_right = 930.0
+offset_right = 880.0
 offset_bottom = 568.0
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.45, 0.45)
 zone_name = "Center"
 
 [node name="OpponentCollab" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 485.0
+offset_left = 400.0
 offset_top = 150.0
-offset_right = 785.0
+offset_right = 700.0
 offset_bottom = 568.0
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.45, 0.45)
 zone_name = "Collab"
 
 [node name="OpponentOshi" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 984.0
-offset_top = 222.0
-offset_right = 1234.0
-offset_bottom = 572.0
-scale = Vector2(0.4, 0.4)
+offset_left = 890.0
+offset_top = 150.0
+offset_right = 1190.0
+offset_bottom = 568.0
+scale = Vector2(0.45, 0.45)
 zone_name = "Oshi"
 
 [node name="FloatingCardZone" parent="." instance=ExtResource("10_bk3r3")]
 modulate = Color(1, 1, 1, 0)
-offset_left = 803.0
-offset_top = 266.0
-offset_right = 1053.0
-offset_bottom = 616.0
-scale = Vector2(0.4, 0.4)
+offset_left = 730.0
+offset_top = 260.0
+offset_right = 1030.0
+offset_bottom = 678.0
+scale = Vector2(0.45, 0.45)
 zone_name = "Playing"
 layout_style = 4
 
@@ -195,10 +196,10 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="ThinkingSpinner" type="TextureProgressBar" parent="."]
-offset_left = 944.0
-offset_top = 47.0
-offset_right = 1008.0
-offset_bottom = 111.0
+offset_left = 965.0
+offset_top = 10.0
+offset_right = 1029.0
+offset_bottom = 74.0
 value = 30.0
 fill_mode = 4
 texture_progress = ExtResource("12_j6jby")
@@ -215,6 +216,7 @@ offset_bottom = 720.0
 visible = false
 
 [node name="BigCard" parent="." instance=ExtResource("8_13v6m")]
+visible = false
 position = Vector2(1000, 280)
 scale = Vector2(1.5, 1.5)
 is_big_card = true
