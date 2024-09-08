@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ds6ostisut8ij"]
+[gd_scene load_steps=11 format=3 uid="uid://ds6ostisut8ij"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_mkj14"]
 [ext_resource type="PackedScene" uid="uid://nn3fa22gm0m0" path="res://scenes/game/stats_group.tscn" id="2_yswsg"]
 [ext_resource type="PackedScene" uid="uid://b7di8plutlm5b" path="res://scenes/game/card_popout.tscn" id="6_vy7a0"]
 [ext_resource type="PackedScene" uid="uid://djt48j2x6telk" path="res://scenes/game/game_log.tscn" id="6_xt86y"]
+[ext_resource type="PackedScene" uid="uid://d2fspiqdcp0p1" path="res://scenes/game/card_base.tscn" id="8_13v6m"]
 [ext_resource type="PackedScene" uid="uid://b5yajeq6o3fln" path="res://scenes/game/card_zone.tscn" id="10_bk3r3"]
 [ext_resource type="PackedScene" uid="uid://db711yiboenfu" path="res://scenes/game/action_menu.tscn" id="11_cx0xb"]
 [ext_resource type="Texture2D" uid="uid://bsyfgok3mshy8" path="res://assets/icons/donut.png" id="12_j6jby"]
@@ -140,6 +141,7 @@ scale = Vector2(0.4, 0.4)
 zone_name = "Oshi"
 
 [node name="FloatingCardZone" parent="." instance=ExtResource("10_bk3r3")]
+modulate = Color(1, 1, 1, 0)
 offset_left = 803.0
 offset_top = 266.0
 offset_right = 1053.0
@@ -211,6 +213,11 @@ offset_bottom = 720.0
 
 [node name="CardPopout" parent="." instance=ExtResource("6_vy7a0")]
 visible = false
+
+[node name="BigCard" parent="." instance=ExtResource("8_13v6m")]
+position = Vector2(1000, 280)
+scale = Vector2(1.5, 1.5)
+is_big_card = true
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
 [connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]

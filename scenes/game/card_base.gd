@@ -2,13 +2,14 @@ class_name CardBase
 extends Node2D
 
 signal clicked_card(card_id, card)
+signal hover_card(card_id, card, hover)
 
 const DefaultCardSize = Vector2(250.0, 350.0)
 const DefaultCardScale = 0.4
 
 const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 
-@onready var card_image = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage
+@onready var card_image : TextureRect = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage
 @onready var card_id_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer/MarginContainer/CardIdLabel
 @onready var card_def_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer/PanelContainer/MarginContainer/CardDefLabel
 @onready var cheer_indicators = $OuterMargin/InnerMargin/PanelContainer/CheerIndicators/PanelContainer/CheerVBox
@@ -16,6 +17,8 @@ const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 @onready var selection_button = $OuterMargin/Button
 @onready var damage_indicator = $OuterMargin/DamageIndicator
 @onready var damage_label = $OuterMargin/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
+
+@export var is_big_card : bool = false
 
 var _card_id
 var _definition_id
@@ -32,17 +35,44 @@ var _resting = false
 
 func _ready():
 	info_highlight.visible = false
+	if is_big_card:
+		visible = false
+		selection_button.visible = false
 
 func create_card(definition_id, card_id, card_type):
 	_definition_id = definition_id
 	_card_id = card_id
 	_card_type = card_type
 
+func set_button_visible(button_visible):
+	if button_visible:
+		selection_button.modulate = Color(1, 1, 1, 1)
+	else:
+		selection_button.modulate = Color(1, 1, 1, 0)
+
 func initialize_graphics():
 	card_image.texture = load("res://assets/cards/" + _definition_id + ".png")
-	selection_button.visible = false
+	set_button_visible(false)
 	scale = Vector2(DefaultCardScale, DefaultCardScale)
 	_update_stats()
+
+func get_texture():
+	return card_image.texture
+
+func copy_graphics(card : CardBase):
+	selection_button.visible = false
+	card_image.texture = card.get_texture()
+	_card_id = card._card_id
+	_definition_id = card._definition_id
+	_cheer = card._cheer
+	damage = card.damage
+	dead = card.dead
+	_card_type = card._card_type
+	_attached_cards = card._attached_cards
+	set_selected(card._selected)
+	set_info_highlight(card.info_highlight.visible)
+	_update_stats()
+	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func is_holomem_card():
 	return _card_type in ["holomem_debut", "holomem_bloom", "holomem_spot"]
@@ -53,7 +83,7 @@ func set_selected(is_selected : bool) -> void:
 
 func set_selectable(is_selectable : bool) -> void:
 	_selectable = is_selectable
-	selection_button.visible = is_selectable
+	set_button_visible(is_selectable)
 
 func set_info_highlight(is_highlighted : bool) -> void:
 	info_highlight.visible = is_highlighted
@@ -160,4 +190,13 @@ func get_cheer_counts():
 
 
 func _on_button_pressed() -> void:
-	clicked_card.emit(_card_id, self)
+	if _selectable:
+		clicked_card.emit(_card_id, self)
+
+func _on_button_mouse_entered() -> void:
+	if not is_big_card:
+		hover_card.emit(_card_id, self, true)
+
+func _on_button_mouse_exited() -> void:
+	if not is_big_card:
+		hover_card.emit(_card_id, self, false)

@@ -24,9 +24,11 @@ offset_left = -130.0
 offset_top = -180.0
 offset_right = 120.0
 offset_bottom = 170.0
+mouse_filter = 2
 
 [node name="InnerMargin" type="MarginContainer" parent="OuterMargin"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -35,10 +37,12 @@ theme_override_constants/margin_bottom = 10
 [node name="PanelContainer" type="PanelContainer" parent="OuterMargin/InnerMargin"]
 custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ehge2")
 
 [node name="CardImageHolder" type="Control" parent="OuterMargin/InnerMargin/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="CardImage" type="TextureRect" parent="OuterMargin/InnerMargin/PanelContainer/CardImageHolder"]
 layout_mode = 2
@@ -52,17 +56,21 @@ expand_mode = 1
 
 [node name="Overlay" type="VBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0l67n")
 
 [node name="MarginContainer" type="MarginContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -74,14 +82,17 @@ text = "CARD Def"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0l67n")
 
 [node name="MarginContainer" type="MarginContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -93,23 +104,28 @@ text = "CARD ID"
 
 [node name="CheerIndicators" type="VBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="OuterMargin/InnerMargin/PanelContainer/CheerIndicators"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_top = 70
 
 [node name="PanelContainer" type="PanelContainer" parent="OuterMargin/InnerMargin/PanelContainer/CheerIndicators"]
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_igk3u")
 
 [node name="CheerVBox" type="VBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer/CheerIndicators/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 5
 
 [node name="Highlight" type="TextureRect" parent="OuterMargin"]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("3_gijux")
 expand_mode = 1
 
@@ -163,4 +179,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "999"
 
+[connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="OuterMargin/Button" to="." method="_on_button_pressed"]

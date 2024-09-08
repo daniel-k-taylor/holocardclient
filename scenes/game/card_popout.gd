@@ -78,17 +78,14 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 
 func _reorder_card_element(element, direction):
 	# Get the index of the element in the grid.
+	card_grid.get_child(0).set_top_visible(false)
 	var index = element.get_index()
 	var max_index = card_grid.get_child_count() - 1
 	var new_index = index + direction
-	if index == 0:
-		element.set_top_visible(false)
-
 	if index == 0 and direction == -1:
 		new_index = max_index
 	elif index == max_index and direction == 1:
 		new_index = 0
-		card_grid.get_child(0).set_top_visible(false)
 	card_grid.move_child(element, new_index)
 	card_grid.get_child(0).set_top_visible(true)
 

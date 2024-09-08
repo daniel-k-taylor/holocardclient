@@ -40,6 +40,8 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var game_log : GameLog = $GameLog
 @onready var game_over_text = $UIOverlay/VBoxContainer/GameOverContainer/CenterContainer/GameOverText
 
+@onready var big_card = $BigCard
+
 enum UIPhase {
 	UIPhase_Init,
 	UIPhase_MakeChoiceCanSelectCards,
@@ -446,6 +448,7 @@ func create_card(card_id : String, definition_id_for_oshi : String = "", skip_ad
 	var new_card : CardBase = CardBaseScene.instantiate()
 	new_card.create_card(definition_id, card_id, card_type)
 	new_card.connect("clicked_card", _on_card_pressed)
+	new_card.connect("hover_card", _on_card_hovered)
 	if not skip_add_to_all:
 		all_cards.add_child(new_card)
 		new_card.initialize_graphics()
@@ -486,6 +489,8 @@ func select_card(card : CardBase):
 				# Set the card as selected.
 				selected_cards.append(card)
 				card.set_selected(true)
+			if big_card._card_id == card._card_id:
+				big_card.set_selected(card._selected)
 
 			# After selection is changed, update buttons.
 			var enabled_states = []
@@ -1893,6 +1898,11 @@ func submit_effect_resolution_order_cards(card_ids):
 func _on_card_pressed(card_id: String, card : CardBase):
 	if can_select_card(card_id):
 		select_card(card)
+
+func _on_card_hovered(_card_id : String, card : CardBase, is_hover : bool):
+	big_card.visible = is_hover
+	if is_hover:
+		big_card.copy_graphics(card)
 
 func _on_exit_game_button_pressed() -> void:
 	NetworkManager.leave_game()

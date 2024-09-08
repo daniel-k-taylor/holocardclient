@@ -1,16 +1,21 @@
 Current:
+  ☐ Hand fanout
+  ☐ English text for cards
+    - arts/collab
+
+  ☐ Archive top card ordering
+  ☐ Click archive to pop up card popout view of it (don't interfere with existing choice popout, make a separate instance)
+
+  ☐ Animations/delays on events
 
 Todo:
-  ☐ Stat counter distribution
+  ☐ Clean up Stat counter distribution
     - Deck/life/holopower/cheer next to oshi
     - Archive next to it
     ☐ no oshi zone boundary
-  ☐ Hide indicator for action menu
-  ☐ Card zoom hover
-  ☐ Hand fanout
-  ☐ Backstage layout
-  ☐ Archive top card ordering
-  ☐ Animations/delays on events
-  ☐ Click archive to pop up card popout view of it (don't interfere with existing choice popout, make a separate instance)
+
   ☐ Click info button on card to view attached cards
 
+Later:
+  ☐ Hide indicator for action menu
+  ☐ Consider Exceed style hover, probably still use big card just put it closer to the actual card?
