@@ -2,6 +2,8 @@
 class_name CardZone
 extends PanelContainer
 
+signal zone_pressed
+
 @onready var zone_text_label : Label = $Margin/Layout/ZoneName
 @onready var loc1 = $Margin/Layout/GridContainer/ZoneLocation1
 @onready var loc2 = $Margin/Layout/GridContainer/ZoneLocation2
@@ -14,6 +16,8 @@ extends PanelContainer
 @onready var CenterCardOval = Vector2(get_viewport().content_scale_size) * Vector2(0.5, 1.3)
 @onready var HorizontalRadius = get_viewport().content_scale_size.x * 0.55
 @onready var VerticalRadius = get_viewport().content_scale_size.y * 0.4
+
+@onready var zone_button : TextureButton = $ZoneButton
 
 @export var zone_name : String = "Unset" :
 	set(value):
@@ -53,6 +57,8 @@ func _ready() -> void:
 	_update_locations()
 	if layout_style == LayoutStyle.Floating or layout_style == LayoutStyle.Hand:
 		set_transparent(true)
+
+	zone_button.visible = layout_style == LayoutStyle.Archive
 
 func set_transparent(is_transparent):
 	if is_transparent:
@@ -157,3 +163,6 @@ func layout_player_hand():
 				var dst_rot = (90 - rad_to_deg(angle)) / 4
 				card.position = dst_pos
 				card.rotation_degrees = dst_rot
+
+func _on_zone_button_pressed() -> void:
+	zone_pressed.emit()

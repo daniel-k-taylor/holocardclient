@@ -17,7 +17,8 @@ const CardTextInfoScene = preload("res://scenes/game/card_text_info.tscn")
 @onready var card_id_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer/MarginContainer/CardIdLabel
 @onready var card_def_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer/PanelContainer/MarginContainer/CardDefLabel
 @onready var cheer_indicators = $OuterMargin/InnerMargin/PanelContainer/CheerIndicators/PanelContainer/CheerVBox
-@onready var info_highlight = $OuterMargin/Highlight
+@onready var selected_highlight = $OuterMargin/Highlight
+@onready var info_highlight = $OuterMargin/InfoHighlight
 @onready var selection_button = $OuterMargin/Button
 @onready var damage_indicator = $OuterMargin/DamageIndicator
 @onready var damage_label = $OuterMargin/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
@@ -41,6 +42,7 @@ var _resting = false
 
 func _ready():
 	info_highlight.visible = false
+	selected_highlight.visible = false
 	if is_big_card:
 		visible = false
 		selection_button.visible = false
@@ -87,6 +89,9 @@ func on_add_to_zone():
 	else:
 		rotation_degrees = 0
 
+func copy_stats(card : CardBase):
+	damage = card.damage
+
 func copy_graphics(card : CardBase):
 	selection_button.visible = false
 	card_image.texture = card.get_texture()
@@ -99,7 +104,7 @@ func copy_graphics(card : CardBase):
 	_card_type = card._card_type
 	_attached_cards = card._attached_cards
 	set_selected(card._selected)
-	set_info_highlight(card.info_highlight.visible)
+	set_selected_highlight(card.selected_highlight.visible)
 	_update_stats()
 	_update_english_text()
 	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -109,11 +114,14 @@ func is_holomem_card():
 
 func set_selected(is_selected : bool) -> void:
 	_selected = is_selected
-	info_highlight.visible = is_selected
+	set_selected_highlight(is_selected)
 
 func set_selectable(is_selectable : bool) -> void:
 	_selectable = is_selectable
 	set_button_visible(is_selectable)
+
+func set_selected_highlight(is_seleted : bool) -> void:
+	selected_highlight.visible = is_seleted
 
 func set_info_highlight(is_highlighted : bool) -> void:
 	info_highlight.visible = is_highlighted

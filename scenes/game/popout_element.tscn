@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdh1c0yenr2w4"]
+[gd_scene load_steps=7 format=3 uid="uid://cdh1c0yenr2w4"]
 
 [ext_resource type="Script" path="res://scenes/game/popout_element.gd" id="1_hpmv6"]
 [ext_resource type="Texture2D" uid="uid://dh6ntvtll3ni" path="res://assets/icons/minus.png" id="1_tf732"]
@@ -8,8 +8,6 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o3o6m"]
 bg_color = Color(0.192157, 0.192157, 0.192157, 0.356863)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mai8v"]
 
 [node name="PopoutElement" type="PanelContainer"]
 offset_right = 122.0
@@ -36,7 +34,6 @@ alignment = 1
 
 [node name="TopLabelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TopContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_mai8v")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/TopContainer/TopLabelContainer"]
 layout_mode = 2

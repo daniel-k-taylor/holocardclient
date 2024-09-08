@@ -36,25 +36,29 @@ offset_bottom = 205.0
 text = "Game Log"
 
 [node name="OpponentStatsGroup" parent="." instance=ExtResource("2_yswsg")]
-offset_left = 1040.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1070.0
 offset_top = 10.0
-offset_right = 1254.0
+offset_right = 1322.0
 offset_bottom = 153.0
+grow_horizontal = 0
+scale = Vector2(0.8, 0.8)
 
 [node name="MeStatsGroup" parent="." instance=ExtResource("2_yswsg")]
-offset_left = 1040.0
-offset_top = 570.0
-offset_right = 1254.0
-offset_bottom = 713.0
-
-[node name="MeArchive" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 1118.0
-offset_top = 392.0
-offset_right = 1368.0
-offset_bottom = 742.0
-scale = Vector2(0.4, 0.4)
-zone_name = "Archive"
-layout_style = 0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1070.0
+offset_top = 600.0
+offset_right = 1322.0
+offset_bottom = 743.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.8, 0.8)
 
 [node name="MeBackstage" parent="." instance=ExtResource("10_bk3r3")]
 offset_left = 5.0
@@ -98,15 +102,6 @@ offset_bottom = 960.0
 scale = Vector2(0.4, 0.4)
 zone_name = "Hand"
 layout_style = 2
-
-[node name="OpponentArchive" parent="." instance=ExtResource("10_bk3r3")]
-offset_left = 1119.0
-offset_top = 220.0
-offset_right = 1369.0
-offset_bottom = 570.0
-scale = Vector2(0.4, 0.4)
-zone_name = "Archive"
-layout_style = 0
 
 [node name="OpponentBackstage" parent="." instance=ExtResource("10_bk3r3")]
 offset_left = 5.0
@@ -152,6 +147,24 @@ zone_name = "Playing"
 layout_style = 4
 
 [node name="AllCards" type="Node2D" parent="."]
+
+[node name="MeArchive" parent="." instance=ExtResource("10_bk3r3")]
+offset_left = 1118.0
+offset_top = 392.0
+offset_right = 1418.0
+offset_bottom = 810.0
+scale = Vector2(0.4, 0.4)
+zone_name = "Archive"
+layout_style = 0
+
+[node name="OpponentArchive" parent="." instance=ExtResource("10_bk3r3")]
+offset_left = 1119.0
+offset_top = 220.0
+offset_right = 1419.0
+offset_bottom = 638.0
+scale = Vector2(0.4, 0.4)
+zone_name = "Archive"
+layout_style = 0
 
 [node name="UIOverlay" type="PanelContainer" parent="."]
 visible = false
@@ -223,3 +236,5 @@ is_big_card = true
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
 [connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]
+[connection signal="zone_pressed" from="MeArchive" to="." method="_on_me_archive_zone_pressed"]
+[connection signal="zone_pressed" from="OpponentArchive" to="." method="_on_opponent_archive_zone_pressed"]

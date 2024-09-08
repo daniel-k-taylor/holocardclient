@@ -116,7 +116,7 @@ class PlayerState:
 
 	func add_card_to_archive(card:CardBase):
 		card.remove_all_attached_cards()
-		_archive_zone.add_card(card)
+		_archive_zone.add_card(card, 0)
 
 	func add_card_to_hand(card : CardBase):
 		hand_count += 1
@@ -559,11 +559,15 @@ func _on_bloom_event(event_data):
 	active_player.bloom(bloom_card_id, target_card_id, bloom_from_zone)
 
 func _on_boost_stat_event(event_data):
-	var _card_id = event_data["card_id"]
-	var _stat = event_data["stat"]
-	var _amount = event_data["amount"]
+	var card_id = event_data["card_id"]
+	var stat = event_data["stat"]
+	var amount = event_data["amount"]
 	# TODO: Animation - show stat boost.
-	pass
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "[CARD]%s[/CARD] +%s [SKILL_COLOR]%s[/SKILL_COLOR] " % [
+		_get_card_definition_id(card_id),
+		amount,
+		stat,
+	])
 
 func _on_cheer_step(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -1915,3 +1919,31 @@ func _on_exit_game_button_pressed() -> void:
 
 func _on_log_button_pressed() -> void:
 	game_log.visible = true
+
+func _on_me_archive_zone_pressed() -> void:
+	_show_archive(me)
+
+func _on_opponent_archive_zone_pressed() -> void:
+	_show_archive(opponent)
+
+func _show_archive(player : PlayerState):
+	var cards = player._archive_zone.get_cards_in_zone()
+	var archive_popout_info = {
+		"strings": [],
+		"enabled": [],
+		"enable_check": [],
+		"callback": [],
+		"order_cards_mode": false,
+	}
+
+	var instructions = Strings.get_string(Strings.OPPONENT_ARCHIVE)
+	if player.is_me():
+		instructions = Strings.get_string(Strings.YOUR_ARCHIVE)
+	instructions += " (%s)" % len(cards)
+	var card_copies = []
+	for card in cards:
+		var card_id = card._card_id
+		var new_card = create_card(card_id, "", true)
+		card_copies.append(new_card)
+		new_card.copy_stats(card)
+	archive_card_popout.show_panel(instructions, archive_popout_info, card_copies, [])

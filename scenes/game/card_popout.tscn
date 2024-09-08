@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7di8plutlm5b"]
+[gd_scene load_steps=9 format=3 uid="uid://b7di8plutlm5b"]
 
 [ext_resource type="Script" path="res://scenes/game/card_popout.gd" id="1_nkmer"]
 [ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="2_38lt7"]
@@ -7,15 +7,18 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f7jww"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2f57a"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkair"]
+bg_color = Color(0.6, 0.6, 0.6, 0.686275)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.194349, 0.194349, 0.194349, 1)
+border_color = Color(0.0823529, 0.0823529, 0.0823529, 0.686275)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3c3kd"]
 bg_color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pe41s"]
 
 [node name="CardPopout" type="CenterContainer"]
 custom_minimum_size = Vector2(1280, 720)
@@ -35,10 +38,11 @@ stretch_mode = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2f57a")
+theme_override_styles/panel = SubResource("StyleBoxFlat_pkair")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="TitleBar" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -46,6 +50,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_3c3kd")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
 layout_mode = 2
@@ -92,8 +97,6 @@ theme_override_constants/margin_left = 0
 
 [node name="CardPanel" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
@@ -101,6 +104,7 @@ theme_override_constants/margin_bottom = 5
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pe41s")
 horizontal_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/CardPanel/ScrollContainer"]
@@ -112,6 +116,8 @@ theme_override_constants/margin_right = 5
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
 columns = 10
 
 [connection signal="pressed" from="FullScreenButtonPanel/ClickOutsideButton" to="." method="_on_click_outside_button_pressed"]

@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5yajeq6o3fln"]
+[gd_scene load_steps=5 format=3 uid="uid://b5yajeq6o3fln"]
 
 [ext_resource type="Script" path="res://scenes/game/card_zone.gd" id="1_va8gc"]
+[ext_resource type="Texture2D" uid="uid://bnuol0ewqd6p8" path="res://assets/highlights/card_border_highlight_pressed.png" id="2_70vai"]
+[ext_resource type="Texture2D" uid="uid://yfm3tk3pgk1i" path="res://assets/highlights/card_border_highlight_selected.png" id="3_1gp3b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_derwr"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -72,3 +74,12 @@ visible = false
 custom_minimum_size = Vector2(250, 350)
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ZoneButton" type="TextureButton" parent="."]
+layout_mode = 2
+texture_pressed = ExtResource("2_70vai")
+texture_hover = ExtResource("3_1gp3b")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="ZoneButton" to="." method="_on_zone_button_pressed"]

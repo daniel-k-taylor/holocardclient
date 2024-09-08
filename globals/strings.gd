@@ -7,6 +7,7 @@ const STRING_NO = "No"
 const STRING_PASS = "Pass"
 const STRING_CANCEL = "Cancel"
 const STRING_SHOW_CHOICE = "Show Choice"
+const STRING_CLOSE = "Close"
 
 const DECISION_INSTRUCTIONS_MULLIGAN = "Mulligan all cards?"
 const DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER = "Debut your Center!"
@@ -26,6 +27,9 @@ const DECISION_INSTRUCTIONS_SWAP_CENTER = "Choose a Holomem to swap into the Cen
 const DECISION_INSTRUCTIONS_PERFORMANCE_ART_TARGET = "Choose a target for this Art"
 const DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM = "Choose a Holomem to remove Cheer from"
 const DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM = "Choose a Holomem to receive Cheer"
+
+const YOUR_ARCHIVE = "Your Archive"
+const OPPONENT_ARCHIVE = "Opponent Archive"
 
 const SkillNameMap = {
 	# Oshi

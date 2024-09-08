@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2fspiqdcp0p1"]
+[gd_scene load_steps=13 format=3 uid="uid://d2fspiqdcp0p1"]
 
 [ext_resource type="Script" path="res://scenes/game/card_base.gd" id="1_gln13"]
 [ext_resource type="Texture2D" uid="uid://2i5fcwe4t8xo" path="res://assets/cardbacks/holo_back.png" id="2_fmpqo"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c1lmyyd7ucqmu" path="res://assets/highlights/border_thin_pressed.png" id="3_gijux"]
 [ext_resource type="Texture2D" uid="uid://yfm3tk3pgk1i" path="res://assets/highlights/card_border_highlight_selected.png" id="3_oudmd"]
 [ext_resource type="Texture2D" uid="uid://dyk152ovl8kmg" path="res://assets/icons/damage_counter_red.png" id="3_ugdbs"]
+[ext_resource type="Texture2D" uid="uid://cgsd11ktytjvc" path="res://assets/highlights/card_border_highlight_discard_pile.png" id="4_dh5j2"]
 [ext_resource type="Texture2D" uid="uid://bnuol0ewqd6p8" path="res://assets/highlights/card_border_highlight_pressed.png" id="4_ovykp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehge2"]
@@ -152,6 +153,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_igk3u")
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 5
+
+[node name="InfoHighlight" type="TextureRect" parent="OuterMargin"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_dh5j2")
+expand_mode = 1
 
 [node name="Highlight" type="TextureRect" parent="OuterMargin"]
 visible = false

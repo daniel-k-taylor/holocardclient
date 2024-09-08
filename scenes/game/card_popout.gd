@@ -35,7 +35,8 @@ func _ready():
 func remove_all_children(element):
 	var children = element.get_children()
 	for child in children:
-		child.free()
+		element.remove_child(child)
+		child.queue_free()
 
 func add_card_elements(count):
 	for i in range(count):

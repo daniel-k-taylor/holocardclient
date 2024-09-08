@@ -40,7 +40,7 @@ theme_override_constants/margin_left = 3
 [node name="HandCount" type="Label" parent="HandIndicator"]
 layout_mode = 2
 theme = ExtResource("3_er6l1")
-text = "7"
+text = "13"
 
 [node name="DeckIndicator" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -65,7 +65,7 @@ theme_override_constants/margin_left = 3
 [node name="DeckCount" type="Label" parent="DeckIndicator"]
 layout_mode = 2
 theme = ExtResource("3_er6l1")
-text = "7"
+text = "34"
 
 [node name="LifeIndicator" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -140,7 +140,7 @@ theme_override_constants/margin_left = 3
 [node name="ArchiveCount" type="Label" parent="ArchiveIndicator"]
 layout_mode = 2
 theme = ExtResource("3_er6l1")
-text = "7"
+text = "88"
 
 [node name="CheerIndicator" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -166,4 +166,4 @@ theme_override_constants/margin_left = 3
 [node name="CheerCount" type="Label" parent="CheerIndicator"]
 layout_mode = 2
 theme = ExtResource("3_er6l1")
-text = "7"
+text = "20"
