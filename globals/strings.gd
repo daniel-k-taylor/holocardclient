@@ -92,7 +92,7 @@ func build_choose_die_result_string(skill_name, cost):
 			skill_name_str = "Use [b]%s[/b] (%s Holopower)?\n" % [skill_name, cost]
 		else:
 			skill_name_str = "Use [b]%s[/b]?\n" % skill_name
-	return "%sChoose the next die result" % [skill_name_str]
+	return "%sChoose the next die result." % [skill_name_str]
 
 func build_use_oshi_skill_string(skill_id, cost):
 	var skill_name = get_skill_string(skill_id)
@@ -102,7 +102,7 @@ func build_use_oshi_skill_string(skill_id, cost):
 	return "Oshi: [b]%s[/b]%s" % [skill_name, cost_str]
 
 func build_archive_cheer_string(count):
-	return "Choose %s Cheer to Archive" % count
+	return "Choose %s Cheer to Archive." % count
 
 func build_place_cheer_string(source:String, color:String):
 	var color_str = color.to_upper()
@@ -112,19 +112,21 @@ func build_place_cheer_string(source:String, color:String):
 			source_str = "your Cheer Deck"
 		"life":
 			source_str = "your Life"
-	return "Place 1 %s Cheer from %s" % [color_str, source_str]
+	return "Place 1 %s Cheer from %s." % [color_str, source_str]
 
 func build_send_cheer_string(amount_min, amount_max, source):
 	var source_str = source
 	match source:
 		"archive":
 			source_str = "your Archive"
+		"cheer_deck":
+			source_str = "your Cheer Deck"
 		"holomem":
 			source_str = "this Holomem"
 	var amount_str = "%s" % amount_min
 	if amount_min != amount_max:
 		amount_str = "%s-%s" % [amount_min, amount_max]
-	return "Choose %s Cheer to move from %s" % [amount_str, source_str]
+	return "Send %s Cheer from %s." % [amount_str, source_str]
 
 func build_order_cards_string(to, bottom):
 	var dir_str = "top"
@@ -143,19 +145,21 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	var to_zone_str = to_zone
 	match from_zone:
 		"hand":
-			from_zone_str = "your hand"
+			from_zone_str = " from your hand"
 		"deck":
-			from_zone_str = "your deck"
+			from_zone_str = " from your deck"
 		"archive":
-			from_zone_str = "your archive"
+			from_zone_str = " from your archive"
 		"backstage":
-			from_zone_str = "your backstage"
+			from_zone_str = " from your backstage"
 		"center":
-			from_zone_str = "your center"
+			from_zone_str = " from your center"
 		"collab":
-			from_zone_str = "your collab"
+			from_zone_str = " from your collab"
 		"holopower":
-			from_zone_str = "your Holopower"
+			from_zone_str = " from your Holopower"
+		"":
+			from_zone_str = ""
 	match to_zone:
 		"hand":
 			to_zone_str = "your hand"
@@ -188,19 +192,19 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	var card_str = "cards"
 	if amount_min == 1 and amount_max == 1:
 		card_str = "card"
-	var main_text = "Choose %s %s from %s to move to %s%s" % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
+	var main_text = "Choose %s %s%s to move to %s%s." % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
 	if requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
 			"limited":
-				main_text += "\nLIMITED cards only"
+				main_text += "\nOnly LIMITED"
 			"holomem_bloom":
-				main_text += "\nBloom cards only"
+				main_text += "\nOnly Bloom"
 				if requirement_details["requirement_buzz_blocked"]:
 					main_text += " (no Buzz)"
 			"holomem_named":
 				var name_ids = requirement_details["requirement_names"]
 				var names = get_names(name_ids)
-				main_text += "\nOnly: %s" % ", ".join(names)
+				main_text += "\nOnly Holomem (%s)" % "/".join(names)
 	return main_text
 
 
@@ -224,3 +228,212 @@ func get_action_name(action_type:String):
 			return "End Turn"
 		_:
 			return "Unknown Action"
+
+func get_condition_text(conditions):
+	var text = ""
+	for i in range(len(conditions)):
+		var condition = conditions[i]
+		match condition["condition"]:
+			"center_is_color":
+				text += "Is %s: " % ["/".join(condition["condition_colors"])]
+			"collab_with":
+				text += "Collab with %s: " % [HolomemNames[condition["required_member_name"]]]
+			"holomem_on_stage":
+				text += "%s on stage: " % [HolomemNames[condition["required_member_name"]]]
+			"performer_is_center":
+				text += "Center: "
+			"target_color":
+				text += "Weak(%s): " % [condition["color_requirement"]]
+	return text
+
+func get_effect_text(effect):
+	var text = ""
+	if "conditions" in effect:
+		text += get_condition_text(effect["conditions"])
+
+	var effect_type = effect["effect_type"]
+	match effect_type:
+		"add_turn_effect":
+			var turn_effect = effect["turn_effect"]
+			text += "This Turn: %s" % [get_effect_text(turn_effect)]
+		"choose_cards":
+			var requirement_details = {
+				"requirement": null,
+			}
+			if "requirement" in effect:
+				requirement_details["requirement"] = effect["requirement"]
+				requirement_details["requirement_buzz_blocked"] = effect.get("requirement_buzz_blocked", false)
+				requirement_details["requirement_names"] = effect.get("requirement_names", [])
+			var from_str = effect["from"]
+			if "look_at" in effect:
+				var look_at = effect["look_at"]
+				if look_at == -1:
+					look_at = "all"
+				else:
+					look_at = "the top %s" % look_at
+				text += "Look at %s cards of your %s: " % [look_at, effect["from"]]
+				from_str = ""
+			var choose_str = build_choose_cards_string(
+				from_str,
+				effect["destination"],
+				effect["amount_min"],
+				effect["amount_max"],
+				effect["remaining_cards_action"],
+				requirement_details
+			)
+			text += choose_str
+		"choose_die_result":
+			text += build_choose_die_result_string("", effect["cost"])
+		"draw":
+			text += "Draw %s." % [effect["amount"]]
+		"move_cheer_between_holomems":
+			var amount = effect["amount"]
+			text += "Move %s Cheer between your Holomems." % amount
+		"power_boost":
+			text += "+%s Power." % [effect["amount"]]
+		"roll_die":
+			text += "Roll a die: "
+			var die_effects = effect["die_effects"]
+			for die_effect in die_effects:
+				var sub_effects = die_effect["effects"]
+				var sub_text = ""
+				for i in range(len(sub_effects)):
+					var sub_effect = sub_effects[i]
+					if i > 0:
+						sub_text += " "
+					sub_text += get_effect_text(sub_effect)
+				text += "%s = %s\n" % [die_effect["english_values"], sub_text]
+		"send_cheer":
+			text += build_send_cheer_string(effect["amount_min"], effect["amount_max"], effect["from"])
+			if effect["to"] == "this_holomem":
+				text += " Only to this Holomem."
+			if "from_limitation" in effect:
+				match effect["from_limitation"]:
+					"color_in":
+						text += " Only %s Cheer." % ["/".join(effect["from_limitation_colors"])]
+			if "to_limitation" in effect:
+				match effect["to_limitation"]:
+					"backstage":
+						text += " Only to Back members."
+					"center":
+						text += " Only to Center."
+					"color_in":
+						text += " Only to %s Holomem." % "/".join(effect["to_limitation_colors"])
+		"send_collab_back":
+			if "optional" in effect and effect["optional"]:
+				text += "May send Collab back."
+			else:
+				text += "Send Collab back."
+		"switch_center_with_back":
+			if effect["target_player"] == "opponent":
+				text += "Switch your opponent's Center with a Back member."
+			else:
+				text += "Switch your Center with a Back member."
+		"shuffle_hand_to_deck":
+			text += "Shuffle your hand into your deck."
+	return text
+
+func build_english_card_text(definition):
+	var data = []
+	match definition["card_type"]:
+		"holomem_debut", "holomem_bloom", "holomem_spot":
+			if "collab_effects" in definition:
+				var collab_effects = definition["collab_effects"]
+				var text = "[b]Collab[/b]: "
+				for i in range(len(collab_effects)):
+					var effect = collab_effects[i]
+					if i > 0:
+						text += " "
+					text += get_effect_text(effect)
+
+				var next_entry = {
+					"colors": [],
+					"text": text
+				}
+				data.append(next_entry)
+			var arts = definition["arts"]
+			for art in arts:
+				var colors = []
+				for cost in art["costs"]:
+					for i in range(cost["amount"]):
+						colors.append(cost["color"])
+				var text = "%s: %s" % [get_skill_string(art["art_id"]), art["power"]]
+				if "art_effects" in art:
+					text += "\n"
+					var arts_texts = []
+					for art_effect in art["art_effects"]:
+						arts_texts.append(get_effect_text(art_effect))
+					text += "\n".join(arts_texts)
+				var next_entry = {
+					"colors": colors,
+					"text": text
+				}
+				data.append(next_entry)
+			data.append({"colors": [], "text": "Baton Pass Cost: %s" % definition["baton_cost"]})
+		"support":
+			var effects = definition["effects"]
+			var next_entry = {
+				"colors": [],
+				"text": ""
+			}
+			if "limited" in definition and definition["limited"]:
+				data.append({"colors": [], "text": "LIMITED"})
+			if "play_conditions" in definition:
+				var play_conditions = definition["play_conditions"]
+				for condition in play_conditions:
+					match condition:
+						"cards_in_hand":
+							var amount = play_conditions["amount_max"] - 1
+							next_entry["text"] += "Must have %s or fewer cards in hand to play (excluding this).\n" % [amount]
+					data.append(next_entry)
+					next_entry = {
+						"colors": [],
+						"text": ""
+					}
+			if "play_requirements" in definition:
+				var play_requirements = definition["play_requirements"]
+				for requirement_name in play_requirements:
+					match requirement_name:
+						"cheer_to_archive_from_play":
+							next_entry["text"] += "Must archive %s Cheer.\n" % [play_requirements[requirement_name]["length"]]
+					data.append(next_entry)
+					next_entry = {
+						"colors": [],
+						"text": ""
+					}
+
+			for i in range(len(effects)):
+				var effect = effects[i]
+				if i > 0:
+					next_entry["text"] += " "
+				next_entry["text"] += get_effect_text(effect)
+
+			data.append(next_entry)
+		"oshi":
+			for oshi_skill in definition["oshi_skills"]:
+				var limit = "1/Turn"
+				if oshi_skill["limit"] == "once_per_game":
+					limit = "1/Game"
+				var text = "-%s [b]%s[/b] (%s): " % [oshi_skill["cost"], get_skill_string(oshi_skill["skill_id"]), limit]
+				match oshi_skill["timing"]:
+					"action":
+						text += "Action: "
+					"before_die_roll":
+						text += "Before Holomem ability die roll: "
+				for i in range(len(oshi_skill["effects"])):
+					var effect = oshi_skill["effects"][i]
+					if i > 0:
+						text += " "
+					text += get_effect_text(effect)
+
+				var next_entry = {
+					"colors": [],
+					"text": text
+				}
+				data.append(next_entry)
+		"cheer":
+			# No card text
+			pass
+		_:
+			assert(false, "Unknown card type")
+	return data

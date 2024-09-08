@@ -443,10 +443,10 @@ func create_card(card_id : String, definition_id_for_oshi : String = "", skip_ad
 		definition_id = definition_id_for_oshi
 	else:
 		definition_id = _get_card_definition_id(card_id)
-		var definition = CardDatabase.get_card(definition_id)
-		card_type = definition["card_type"]
+	var definition = CardDatabase.get_card(definition_id)
+	card_type = definition["card_type"]
 	var new_card : CardBase = CardBaseScene.instantiate()
-	new_card.create_card(definition_id, card_id, card_type)
+	new_card.create_card(definition, definition_id, card_id, card_type)
 	new_card.connect("clicked_card", _on_card_pressed)
 	new_card.connect("hover_card", _on_card_hovered)
 	if not skip_add_to_all:
@@ -457,6 +457,7 @@ func create_card(card_id : String, definition_id_for_oshi : String = "", skip_ad
 func destroy_card(card : CardBase) -> void:
 	if card:
 		all_cards.remove_child(card)
+		card.queue_free()
 
 func find_card_on_board(card_id : String) -> CardBase:
 	for card in all_cards.get_children():
@@ -598,12 +599,12 @@ func _on_send_collab_back_event(event_data):
 		_begin_make_choice([], 0, 0)
 		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_SEND_COLLAB_BACK)
 		action_menu_choice_info = {
-			"strings": [Strings.get_string(Strings.STRING_YES), Strings.get_string(Strings.STRING_NO)],
+			"strings": [Strings.get_string(Strings.STRING_NO), Strings.get_string(Strings.STRING_YES)],
 			"enabled": [true, true],
 			"enable_check": [_allowed, _allowed],
 		}
 		action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
-			# 0 is Yes, 1 is No
+			# 0 is No, 1 is Yes
 			submit_effect_resolution_make_choice(choice_index)
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 		)
@@ -1598,7 +1599,8 @@ func _on_perform_art_event(event_data):
 	var target_id = event_data["target_id"]
 	var power = event_data["power"]
 	var died = event_data["died"]
-	var _game_over = event_data["game_over"]
+	var is_game_over = event_data["game_over"]
+	var life_lost = event_data["life_lost"]
 
 	# TODO: Mark performer as used an art, icon?
 	# TODO: Mark target dead with an icon?
@@ -1624,8 +1626,11 @@ func _on_perform_art_event(event_data):
 		for cheer_id in attached_cheer:
 			do_move_cards(target_player, target_id, "archive", "", [cheer_id])
 
-
 		do_move_cards(target_player, "stage", "archive", "", [target_id])
+
+		if is_game_over:
+			# The event to lower the life won't occur, so do that now.
+			target_player.life_count -= life_lost
 
 func _on_play_support_card_event(event_data):
 	var active_player = get_player(event_data["player_id"])

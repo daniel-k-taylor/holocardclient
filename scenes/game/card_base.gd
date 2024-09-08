@@ -8,6 +8,7 @@ const DefaultCardSize = Vector2(250.0, 350.0)
 const DefaultCardScale = 0.4
 
 const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
+const CardTextInfoScene = preload("res://scenes/game/card_text_info.tscn")
 
 @onready var card_image : TextureRect = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage
 @onready var card_id_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer/MarginContainer/CardIdLabel
@@ -17,11 +18,13 @@ const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 @onready var selection_button = $OuterMargin/Button
 @onready var damage_indicator = $OuterMargin/DamageIndicator
 @onready var damage_label = $OuterMargin/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
+@onready var card_text_info_container = $OuterMargin/InnerMargin/PanelContainer/Overlay/PanelContainer/CardTextContainer
 
 @export var is_big_card : bool = false
 
 var _card_id
 var _definition_id
+var _definition
 
 var _cheer : Dictionary = {}
 var damage = 0
@@ -39,7 +42,8 @@ func _ready():
 		visible = false
 		selection_button.visible = false
 
-func create_card(definition_id, card_id, card_type):
+func create_card(definition, definition_id, card_id, card_type):
+	_definition = definition
 	_definition_id = definition_id
 	_card_id = card_id
 	_card_type = card_type
@@ -55,6 +59,20 @@ func initialize_graphics():
 	set_button_visible(false)
 	scale = Vector2(DefaultCardScale, DefaultCardScale)
 	_update_stats()
+	_update_english_text()
+
+func _update_english_text():
+	# Remove any previous text.
+	var children = card_text_info_container.get_children()
+	for child in children:
+		card_text_info_container.remove_child(child)
+		child.queue_free()
+
+	var english_data = Strings.build_english_card_text(_definition)
+	for info_data in english_data:
+		var new_info : CardTextInfo = CardTextInfoScene.instantiate()
+		card_text_info_container.add_child(new_info)
+		new_info.set_text(info_data["colors"], info_data["text"])
 
 func get_texture():
 	return card_image.texture
@@ -64,6 +82,7 @@ func copy_graphics(card : CardBase):
 	card_image.texture = card.get_texture()
 	_card_id = card._card_id
 	_definition_id = card._definition_id
+	_definition = card._definition
 	_cheer = card._cheer
 	damage = card.damage
 	dead = card.dead
@@ -72,6 +91,7 @@ func copy_graphics(card : CardBase):
 	set_selected(card._selected)
 	set_info_highlight(card.info_highlight.visible)
 	_update_stats()
+	_update_english_text()
 	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func is_holomem_card():

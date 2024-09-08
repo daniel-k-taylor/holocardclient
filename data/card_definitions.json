@@ -1,823 +1,831 @@
 [
-	{
-		"NOTE": "OSHI CARDS START",
+    {
+        "NOTE": "OSHI CARDS START",
 
-		"card_id": "hSD01-001",
-		"card_type": "oshi",
-		"oshi_name": "tokino_sora",
-		"rarity": "osr",
-		"life": 5,
-		"oshi_skills": [
-			{
-				"skill_id": "replacement",
-				"timing": "action",
-				"cost_type": "holopower",
-				"cost": 1,
-				"limit": "once_per_turn",
-				"effects": [
-					{
-						"effect_type": "move_cheer_between_holomems",
-						"amount": 1
-					}
-				]
-			},
-			{
-				"skill_id": "soyouretheenemy",
-				"timing": "action",
-				"cost_type": "holopower",
-				"cost": 2,
-				"limit": "once_per_game",
-				"effects": [
-					{
-						"effect_type": "switch_center_with_back",
-						"target_player": "opponent"
-					},
-					{
-						"effect_type": "add_turn_effect",
-						"turn_effect": {
-							"timing": "before_art",
-							"effect_type": "power_boost",
-							"amount": 50,
-							"conditions": [
-								{ "condition": "performer_is_center" },
-								{
-									"condition": "center_is_color",
-									"condition_colors": ["white"]
-								}
-							]
-						}
-					}
-				]
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-002",
-		"card_type": "oshi",
-		"oshi_name": "azki",
-		"rarity": "osr",
-		"life": 5,
-		"oshi_skills": [
-			{
-				"skill_id": "mapinthelefthand",
-				"timing": "before_die_roll",
-				"timing_source": "holomem_ability",
-				"cost_type": "holopower",
-				"cost": 3,
-				"limit": "once_per_turn",
-				"effects": [
-					{
-						"effect_type": "choose_die_result",
-						"oshi_effect": "true",
-						"skill_id": "mapinthelefthand",
-						"cost": 3
-					}
-				]
-			},
-			{
-				"skill_id": "micintherighthand",
-				"timing": "action",
-				"cost_type": "holopower",
-				"cost": 3,
-				"limit": "once_per_game",
-				"effects": [
-					{
-						"effect_type": "send_cheer",
-						"amount_min": 0,
-						"amount_max": -1,
-						"from": "archive",
-						"to": "holomem",
-						"to_limitation": "color_in",
-						"to_limitation_colors": ["green"]
-					}
-				]
-			}
-		],
+        "card_id": "hSD01-001",
+        "card_type": "oshi",
+        "oshi_name": "tokino_sora",
+        "rarity": "osr",
+        "life": 5,
+        "oshi_skills": [
+            {
+                "skill_id": "replacement",
+                "timing": "action",
+                "cost_type": "holopower",
+                "cost": 1,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "effect_type": "move_cheer_between_holomems",
+                        "amount": 1
+                    }
+                ]
+            },
+            {
+                "skill_id": "soyouretheenemy",
+                "timing": "action",
+                "cost_type": "holopower",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "effect_type": "switch_center_with_back",
+                        "target_player": "opponent"
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "effect_type": "power_boost",
+                            "amount": 50,
+                            "conditions": [
+                                { "condition": "performer_is_center" },
+                                {
+                                    "condition": "center_is_color",
+                                    "condition_colors": ["white"]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-002",
+        "card_type": "oshi",
+        "oshi_name": "azki",
+        "rarity": "osr",
+        "life": 5,
+        "oshi_skills": [
+            {
+                "skill_id": "mapinthelefthand",
+                "timing": "before_die_roll",
+                "timing_source": "holomem_ability",
+                "cost_type": "holopower",
+                "cost": 3,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "effect_type": "choose_die_result",
+                        "oshi_effect": "true",
+                        "skill_id": "mapinthelefthand",
+                        "cost": 3
+                    }
+                ]
+            },
+            {
+                "skill_id": "micintherighthand",
+                "timing": "action",
+                "cost_type": "holopower",
+                "cost": 3,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "effect_type": "send_cheer",
+                        "amount_min": 0,
+                        "amount_max": -1,
+                        "from": "archive",
+                        "to": "holomem",
+                        "to_limitation": "color_in",
+                        "to_limitation_colors": ["green"]
+                    }
+                ]
+            }
+        ],
 
-		"NOTE": "OSHI CARDS END"
-	},
+        "NOTE": "OSHI CARDS END"
+    },
 
-	{
-		"NOTE": "STARTER DECK CARDS START",
+    {
+        "NOTE": "STARTER DECK CARDS START",
 
-		"card_id": "hSD01-003",
-		"card_type": "holomem_debut",
-		"holomem_names": ["tokino_sora"],
-		"rarity": "c",
-		"colors": ["white"],
-		"hp": 60,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "nunnun",
-				"costs": [
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 30
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-004",
-		"card_type": "holomem_debut",
-		"holomem_names": ["tokino_sora"],
-		"rarity": "r",
-		"colors": ["white"],
-		"hp": 50,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "onstage",
-				"costs": [
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 20
-			}
-		],
-		"collab_effects": [
-			{
-				"effect_type": "add_turn_effect",
-				"turn_effect": {
-					"timing": "before_art",
-					"effect_type": "power_boost",
-					"amount": 20,
-					"conditions": [{ "condition": "performer_is_center" }]
-				}
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-005",
-		"card_type": "holomem_bloom",
-		"bloom_level": 1,
-		"holomem_names": ["tokino_sora"],
-		"rarity": "u",
-		"colors": ["white"],
-		"hp": 150,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "nunnunshiyo",
-				"costs": [
-					{ "color": "white", "amount": 1 }
-				],
-				"power": 30
-			},
-			{
-				"art_id": "yourheartiscloudythenclear",
-				"costs": [
-					{ "color": "white", "amount": 1 },
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 50
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-006",
-		"card_type": "holomem_bloom",
-		"bloom_level": 1,
-		"holomem_names": ["tokino_sora"],
-		"buzz": true,
-		"rarity": "rr",
-		"colors": ["white"],
-		"hp": 240,
-		"baton_cost": 2,
-		"down_life_cost": 2,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "dreamlive",
-				"costs": [
-					{ "color": "white", "amount": 1 },
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 50
-			},
-			{
-				"art_id": "sorazsympathy",
-				"costs": [
-					{ "color": "white", "amount": 1 },
-					{ "color": "green", "amount": 1 },
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 60,
-				"art_effects": [
-					{
-						"timing": "before_art",
-						"effect_type": "power_boost",
-						"amount": 50,
-						"conditions": [{
-							"condition": "holomem_on_stage",
-							"required_member_name": "azki"
-						}]
-					}
-				]
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-007",
-		"card_type": "holomem_debut",
-		"holomem_names": ["irys"],
-		"rarity": "c",
-		"colors": ["white"],
-		"hp": 50,
-		"baton_cost": 1,
-		"tags": [
-			"#EN",
-			"#Promise",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "embodimentofhope",
-				"costs": [
-					{ "color": "white", "amount": 1 }
-				],
-				"power": 20
-			}
-		],
-		"collab_effects": [
-			{
-				"effect_type": "choose_cards",
-				"from": "holopower",
-				"look_at": -1,
-				"destination": "hand",
-				"amount_min": 1,
-				"amount_max": 1,
-				"reveal_chosen": true,
-				"remaining_cards_action": "nothing"
-			},
-			{
-				"effect_type": "choose_cards",
-				"from": "hand",
-				"look_at": -1,
-				"destination": "holopower",
-				"amount_min": 1,
-				"amount_max": 1,
-				"reveal_chosen": false,
-				"remaining_cards_action": "nothing"
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-008",
-		"card_type": "holomem_debut",
-		"holomem_names": ["azki"],
-		"rarity": "c",
-		"colors": ["green"],
-		"hp": 70,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "keepworkinghard",
-				"costs": [
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 20
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-009",
-		"card_type": "holomem_debut",
-		"holomem_names": ["azki"],
-		"rarity": "r",
-		"colors": ["green"],
-		"hp": 60,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "wherenextwherenext",
-				"costs": [
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 10
-			}
-		],
-		"collab_effects": [
-			{
-				"effect_type": "roll_die",
-				"source": "holomem_ability",
-				"die_effects": [
-					{
-						"activate_on_values": [1],
-						"effects": [
-							{
-								"effect_type": "send_cheer",
-								"amount_min": 1,
-								"amount_max": 1,
-								"from": "cheer_deck",
-								"to": "holomem",
-								"to_limitation": "backstage"
-							},
-							{
-								"effect_type": "send_collab_back",
-								"optional": true
-							}
-						]
-					},
-					{
-						"activate_on_values": [2,3,4],
-						"effects": [
-							{
-								"effect_type": "send_cheer",
-								"amount_min": 1,
-								"amount_max": 1,
-								"from": "cheer_deck",
-								"to": "holomem",
-								"to_limitation": "backstage"
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-010",
-		"card_type": "holomem_bloom",
-		"bloom_level": 1,
-		"holomem_names": ["azki"],
-		"rarity": "u",
-		"colors": ["green"],
-		"hp": 160,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "anaimlessjourneywithyou",
-				"costs": [
-					{ "color": "green", "amount": 1 },
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 50
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-011",
-		"card_type": "holomem_bloom",
-		"bloom_level": 2,
-		"holomem_names": ["azki"],
-		"rarity": "rr",
-		"colors": ["green"],
-		"hp": 190,
-		"baton_cost": 2,
-		"tags": [
-			"#JP",
-			"#Gen0",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "sorazgravity",
-				"costs": [
-					{ "color": "green", "amount": 1 }
-				],
-				"power": 60,
-				"art_effects": [
-					{
-						"timing": "before_art",
-						"effect_type": "power_boost",
-						"amount": 50,
-						"conditions": [{
-							"condition": "target_color",
-							"color_requirement": "blue"
-						}]
-					},
-					{
-						"timing": "before_art",
-						"effect_type": "send_cheer",
-						"amount_min": 1,
-						"amount_max": 1,
-						"from": "cheer_deck",
-						"to": "holomem",
-						"conditions": [{
-							"condition": "holomem_on_stage",
-							"required_member_name": "tokino_sora"
-						}]
-					}
-				]
-			},
-			{
-				"art_id": "destinysong",
-				"costs": [
-					{ "color": "green", "amount": 2 },
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 100,
-				"art_effects": [
-					{
-						"timing": "before_art",
-						"effect_type": "power_boost",
-						"amount": 50,
-						"conditions": [{
-							"condition": "target_color",
-							"color_requirement": "blue"
-						}]
-					},
-					{
-						"effect_type": "roll_die",
-						"source": "holomem_ability",
-						"die_effects": [
-							{
-								"activate_on_values": [1],
-								"effects": [
-									{
-										"effect_type": "power_boost",
-										"amount": 100
-									}
-								]
-							},
-							{
-								"activate_on_values": [3,5],
-								"effects": [
-									{
-										"effect_type": "power_boost",
-										"amount": 50
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-012",
-		"card_type": "holomem_debut",
-		"holomem_names": ["airani_iofifteen"],
-		"rarity": "c",
-		"colors": ["green"],
-		"hp": 70,
-		"baton_cost": 1,
-		"tags": [
-			"#ID",
-			"#IDGen1",
-			"#Art"
-		],
-		"arts": [
-			{
-				"art_id": "ihadfundrawing",
-				"costs": [
-					{ "color": "green", "amount": 1 }
-				],
-				"power": 20
-			}
-		],
-		"collab_effects": [
-			{
-				"effect_type": "send_cheer",
-				"amount_min": 1,
-				"amount_max": 1,
-				"from": "archive",
-				"from_limitation": "color_in",
-				"from_limitation_colors": ["green", "white"],
-				"to": "holomem",
-				"to_limitation": "center"
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-013",
-		"card_type": "holomem_bloom",
-		"bloom_level": 1,
-		"holomem_names": ["soraz", "azki", "tokino_sora"],
-		"rarity": "r",
-		"colors": ["green", "white"],
-		"hp": 130,
-		"baton_cost": 1,
-		"tags": [
-			"#ID",
-			"#IDGen1",
-			"#Art"
-		],
-		"arts": [
-			{
-				"art_id": "brighterfuture",
-				"costs": [
-					{ "color": "any", "amount": 2 }
-				],
-				"power": 50,
-				"art_effects": [
-					{
-						"timing": "before_art",
-						"effect_type": "roll_die",
-						"source": "holomem_ability",
-						"die_effects": [
-							{
-								"activate_on_values": [1,3,5],
-								"effects": [
-									{
-										"effect_type": "send_cheer",
-										"amount_min": 1,
-										"amount_max": 1,
-										"from": "cheer_deck",
-										"to": "this_holomem"
-									}
-								]
-							},
-							{
-								"activate_on_values": [2,4,6],
-								"effects": [
-									{
-										"effect_type": "draw",
-										"amount": 1
-									}
-								]
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-014",
-		"card_type": "holomem_spot",
-		"bloom_blocked": true,
-		"holomem_names": ["amane_kanata"],
-		"rarity": "u",
-		"colors": ["none"],
-		"hp": 150,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#Gen4",
-			"#Song"
-		],
-		"arts": [
-			{
-				"art_id": "hey",
-				"costs": [
-					{ "color": "white", "amount": 1 },
-					{ "color": "green", "amount": 1 }
-				],
-				"power": 30
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-015",
-		"card_type": "holomem_spot",
-		"bloom_blocked": true,
-		"holomem_names": ["hakui_koyori"],
-		"rarity": "u",
-		"colors": ["none"],
-		"hp": 150,
-		"baton_cost": 1,
-		"tags": [
-			"#JP",
-			"#SecretSocietyholoX",
-			"#AnimalEars"
-		],
-		"arts": [
-			{
-				"art_id": "purepurepure",
-				"costs": [
-					{ "color": "any", "amount": 1 }
-				],
-				"power": 10
-			}
-		],
-		"collab_effects": [
-			{
-				"effect_type": "draw",
-				"amount": 1,
-				"conditions": [{
-					"condition": "collab_with",
-					"required_member_name": "tokino_sora"
-				}]
-			},
-			{
-				"effect_type": "send_cheer",
-				"amount_min": 1,
-				"amount_max": 1,
-				"from": "cheer_deck",
-				"to": "holomem",
-				"to_limitation": "center",
-				"conditions": [{
-					"condition": "collab_with",
-					"required_member_name": "azki"
-				}]
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-016",
-		"card_type": "support",
-		"sub_type": "staff",
-		"support_names": ["harusaki_nodoka"],
-		"rarity": "c",
-		"limited": true,
-		"effects": [
-			{
-				"effect_type": "draw",
-				"amount": 3
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-017",
-		"card_type": "support",
-		"sub_type": "staff",
-		"support_names": ["manechan"],
-		"rarity": "c",
-		"limited": true,
-		"play_conditions": [
-			{
-				"condition": "cards_in_hand",
-				"amount_min": 2,
-				"amount_max": -1
-			}
-		],
-		"effects": [
-			{
-				"effect_type": "shuffle_hand_to_deck"
-			},
-			{
-				"effect_type": "draw",
-				"amount": 5
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-018",
-		"card_type": "support",
-		"sub_type": "item",
-		"support_names": ["subpc"],
-		"rarity": "c",
-		"limited": false,
-		"effects": [
-			{
-				"effect_type": "choose_cards",
-				"from": "deck",
-				"look_at": 5,
-				"destination": "hand",
-				"amount_min": 1,
-				"amount_max": 1,
-				"requirement": "limited",
-				"reveal_chosen": true,
-				"remaining_cards_action": "order_on_bottom"
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-019",
-		"card_type": "support",
-		"sub_type": "item",
-		"support_names": ["amazingpc"],
-		"rarity": "c",
-		"limited": true,
-		"play_conditions": [
-			{
-				"condition": "cheer_in_play",
-				"amount_min": 1,
-				"amount_max": -1
-			}
-		],
-		"play_requirements": {
-			"cheer_to_archive_from_play": {
-				"type": "list",
-				"length": 1,
-				"content_type": "cheer_in_play"
-			}
-		},
-		"effects": [
-			{
-				"effect_type": "choose_cards",
-				"from": "deck",
-				"look_at": -1,
-				"destination": "hand",
-				"amount_min": 1,
-				"amount_max": 1,
-				"requirement": "holomem_bloom",
-				"requirement_bloom_levels": [1,2],
-				"requirement_buzz_blocked": true,
-				"reveal_chosen": true,
-				"remaining_cards_action": "shuffle"
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-020",
-		"card_type": "support",
-		"sub_type": "event",
-		"support_names": ["holofan_circle"],
-		"rarity": "c",
-		"limited": false,
-		"effects": [
-			{
-				"effect_type": "roll_die",
-				"source": "support_card",
-				"die_effects": [
-					{
-						"activate_on_values": [3,4,5,6],
-						"effects": [
-							{
-								"effect_type": "send_cheer",
-								"amount_min": 1,
-								"amount_max": 1,
-								"from": "archive",
-								"to": "holomem"
-							}
-						]
-					}
-				]
-			}
-		]
-	},
-	{
-		"card_id": "hSD01-021",
-		"card_type": "support",
-		"sub_type": "event",
-		"support_names": ["first_gravity"],
-		"rarity": "c",
-		"limited": true,
-		"play_conditions": [
-			{
-				"condition": "cards_in_hand",
-				"amount_min": 0,
-				"amount_max": 7
-			}
-		],
-		"effects": [
-			{
-				"effect_type": "choose_cards",
-				"from": "deck",
-				"look_at": 4,
-				"destination": "hand",
-				"amount_min": 0,
-				"amount_max": 4,
-				"requirement": "holomem_named",
-				"requirement_names": ["azki", "tokino_sora"],
-				"reveal_chosen": true,
-				"remaining_cards_action": "order_on_bottom"
-			}
-		],
+        "card_id": "hSD01-003",
+        "card_type": "holomem_debut",
+        "holomem_names": ["tokino_sora"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "nunnun",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-004",
+        "card_type": "holomem_debut",
+        "holomem_names": ["tokino_sora"],
+        "rarity": "r",
+        "colors": ["white"],
+        "hp": 50,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "onstage",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "add_turn_effect",
+                "turn_effect": {
+                    "timing": "before_art",
+                    "effect_type": "power_boost",
+                    "amount": 20,
+                    "conditions": [{ "condition": "performer_is_center" }]
+                }
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-005",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["tokino_sora"],
+        "rarity": "u",
+        "colors": ["white"],
+        "hp": 150,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "nunnunshiyo",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 30
+            },
+            {
+                "art_id": "yourheartiscloudythenclear",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-006",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["tokino_sora"],
+        "buzz": true,
+        "rarity": "rr",
+        "colors": ["white"],
+        "hp": 240,
+        "baton_cost": 2,
+        "down_life_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "dreamlive",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50
+            },
+            {
+                "art_id": "sorazsympathy",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{
+                            "condition": "holomem_on_stage",
+                            "required_member_name": "azki"
+                        }]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-007",
+        "card_type": "holomem_debut",
+        "holomem_names": ["irys"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 50,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "embodimentofhope",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "holopower",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "remaining_cards_action": "nothing"
+            },
+            {
+                "effect_type": "choose_cards",
+                "from": "hand",
+                "look_at": -1,
+                "destination": "holopower",
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": false,
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-008",
+        "card_type": "holomem_debut",
+        "holomem_names": ["azki"],
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "keepworkinghard",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-009",
+        "card_type": "holomem_debut",
+        "holomem_names": ["azki"],
+        "rarity": "r",
+        "colors": ["green"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "wherenextwherenext",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "roll_die",
+                "source": "holomem_ability",
+                "die_effects": [
+                    {
+                        "english_values": "1",
+                        "activate_on_values": [1],
+                        "effects": [
+                            {
+                                "effect_type": "send_cheer",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "cheer_deck",
+                                "to": "holomem",
+                                "to_limitation": "backstage"
+                            },
+                            {
+                                "effect_type": "send_collab_back",
+                                "optional": true
+                            }
+                        ]
+                    },
+                    {
+                        "english_values": "2-4",
+                        "activate_on_values": [2,3,4],
+                        "effects": [
+                            {
+                                "effect_type": "send_cheer",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "cheer_deck",
+                                "to": "holomem",
+                                "to_limitation": "backstage"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-010",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["azki"],
+        "rarity": "u",
+        "colors": ["green"],
+        "hp": 160,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "anaimlessjourneywithyou",
+                "costs": [
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-011",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "holomem_names": ["azki"],
+        "rarity": "rr",
+        "colors": ["green"],
+        "hp": 190,
+        "baton_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "sorazgravity",
+                "costs": [
+                    { "color": "green", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{
+                            "condition": "target_color",
+                            "color_requirement": "blue"
+                        }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "send_cheer",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "from": "cheer_deck",
+                        "to": "holomem",
+                        "conditions": [{
+                            "condition": "holomem_on_stage",
+                            "required_member_name": "tokino_sora"
+                        }]
+                    }
+                ]
+            },
+            {
+                "art_id": "destinysong",
+                "costs": [
+                    { "color": "green", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 100,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{
+                            "condition": "target_color",
+                            "color_requirement": "blue"
+                        }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "roll_die",
+                        "source": "holomem_ability",
+                        "die_effects": [
+                            {
+                                "english_values": "1",
+                                "activate_on_values": [1],
+                                "effects": [
+                                    {
+                                        "effect_type": "power_boost",
+                                        "amount": 100
+                                    }
+                                ]
+                            },
+                            {
+                                "english_values": "3,5",
+                                "activate_on_values": [3,5],
+                                "effects": [
+                                    {
+                                        "effect_type": "power_boost",
+                                        "amount": 50
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-012",
+        "card_type": "holomem_debut",
+        "holomem_names": ["airani_iofifteen"],
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen1",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "ihadfundrawing",
+                "costs": [
+                    { "color": "green", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "archive",
+                "from_limitation": "color_in",
+                "from_limitation_colors": ["green", "white"],
+                "to": "holomem",
+                "to_limitation": "center"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-013",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["soraz", "azki", "tokino_sora"],
+        "rarity": "r",
+        "colors": ["green", "white"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen1",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "brighterfuture",
+                "costs": [
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 50,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "roll_die",
+                        "source": "holomem_ability",
+                        "die_effects": [
+                            {
+                                "english_values": "odd",
+                                "activate_on_values": [1,3,5],
+                                "effects": [
+                                    {
+                                        "effect_type": "send_cheer",
+                                        "amount_min": 1,
+                                        "amount_max": 1,
+                                        "from": "cheer_deck",
+                                        "to": "this_holomem"
+                                    }
+                                ]
+                            },
+                            {
+                                "english_values": "even",
+                                "activate_on_values": [2,4,6],
+                                "effects": [
+                                    {
+                                        "effect_type": "draw",
+                                        "amount": 1
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-014",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "holomem_names": ["amane_kanata"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 150,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen4",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "hey",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "green", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-015",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "holomem_names": ["hakui_koyori"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 150,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "purepurepure",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "draw",
+                "amount": 1,
+                "conditions": [{
+                    "condition": "collab_with",
+                    "required_member_name": "tokino_sora"
+                }]
+            },
+            {
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "cheer_deck",
+                "to": "holomem",
+                "to_limitation": "center",
+                "conditions": [{
+                    "condition": "collab_with",
+                    "required_member_name": "azki"
+                }]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-016",
+        "card_type": "support",
+        "sub_type": "staff",
+        "support_names": ["harusaki_nodoka"],
+        "rarity": "c",
+        "limited": true,
+        "effects": [
+            {
+                "effect_type": "draw",
+                "amount": 3
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-017",
+        "card_type": "support",
+        "sub_type": "staff",
+        "support_names": ["manechan"],
+        "rarity": "c",
+        "limited": true,
+        "play_conditions": [
+            {
+                "condition": "cards_in_hand",
+                "amount_min": 2,
+                "amount_max": -1
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "shuffle_hand_to_deck"
+            },
+            {
+                "effect_type": "draw",
+                "amount": 5
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-018",
+        "card_type": "support",
+        "sub_type": "item",
+        "support_names": ["subpc"],
+        "rarity": "c",
+        "limited": false,
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 5,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "limited",
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-019",
+        "card_type": "support",
+        "sub_type": "item",
+        "support_names": ["amazingpc"],
+        "rarity": "c",
+        "limited": true,
+        "play_conditions": [
+            {
+                "condition": "cheer_in_play",
+                "amount_min": 1,
+                "amount_max": -1
+            }
+        ],
+        "play_requirements": {
+            "cheer_to_archive_from_play": {
+                "type": "list",
+                "length": 1,
+                "content_type": "cheer_in_play"
+            }
+        },
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem_bloom",
+                "requirement_bloom_levels": [1,2],
+                "requirement_buzz_blocked": true,
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-020",
+        "card_type": "support",
+        "sub_type": "event",
+        "support_names": ["holofan_circle"],
+        "rarity": "c",
+        "limited": false,
+        "effects": [
+            {
+                "effect_type": "roll_die",
+                "source": "support_card",
+                "die_effects": [
+                    {
+                        "english_values": "3-6",
+                        "activate_on_values": [3,4,5,6],
+                        "effects": [
+                            {
+                                "effect_type": "send_cheer",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "archive",
+                                "to": "holomem"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD01-021",
+        "card_type": "support",
+        "sub_type": "event",
+        "support_names": ["first_gravity"],
+        "rarity": "c",
+        "limited": true,
+        "play_conditions": [
+            {
+                "condition": "cards_in_hand",
+                "amount_min": 0,
+                "amount_max": 7
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem_named",
+                "requirement_names": ["azki", "tokino_sora"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ],
 
-		"NOTE": "STARTER DECK CARDS END"
-	},
+        "NOTE": "STARTER DECK CARDS END"
+    },
 
-	{
-		"NOTE": "CHEER CARDS START",
+    {
+        "NOTE": "CHEER CARDS START",
 
-		"card_id": "hY01-001",
-		"card_type": "cheer",
-		"colors": ["white"]
-	},
-	{
-		"card_id": "hY02-001",
-		"card_type": "cheer",
-		"colors": ["green"]
-	},
-	{
-		"card_id": "hY03-001",
-		"card_type": "cheer",
-		"colors": ["red"]
-	},
-	{
-		"card_id": "hY04-001",
-		"card_type": "cheer",
-		"colors": ["blue"],
+        "card_id": "hY01-001",
+        "card_type": "cheer",
+        "colors": ["white"]
+    },
+    {
+        "card_id": "hY02-001",
+        "card_type": "cheer",
+        "colors": ["green"]
+    },
+    {
+        "card_id": "hY03-001",
+        "card_type": "cheer",
+        "colors": ["red"]
+    },
+    {
+        "card_id": "hY04-001",
+        "card_type": "cheer",
+        "colors": ["blue"],
 
-		"NOTE": "CHEER CARDS END"
-	}
+        "NOTE": "CHEER CARDS END"
+    }
 
 ]

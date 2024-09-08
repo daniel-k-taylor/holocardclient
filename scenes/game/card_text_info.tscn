@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dexwm7av1pqs6"]
+
+[ext_resource type="Script" path="res://scenes/game/card_text_info.gd" id="1_da26s"]
+
+[node name="CardTextInfo" type="MarginContainer"]
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("1_da26s")
+
+[node name="Label" type="RichTextLabel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[img=24}]res://assets/cheer_icons/white.png[/img] Art Do thie things nalfnwiln so i see and do the thing"
+fit_content = true
+scroll_active = false

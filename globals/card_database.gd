@@ -27,5 +27,5 @@ func test_create_card(card_id : String, definition_id : String) -> CardBase:
 	var definition = CardDatabase.get_card(definition_id)
 	var card_type = definition["card_type"]
 	var new_card : CardBase = CardBaseScene.instantiate()
-	new_card.create_card(definition_id, card_id, card_type)
+	new_card.create_card(definition, definition_id, card_id, card_type)
 	return new_card

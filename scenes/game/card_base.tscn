@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2fspiqdcp0p1"]
+[gd_scene load_steps=12 format=3 uid="uid://d2fspiqdcp0p1"]
 
 [ext_resource type="Script" path="res://scenes/game/card_base.gd" id="1_gln13"]
 [ext_resource type="Texture2D" uid="uid://2i5fcwe4t8xo" path="res://assets/cardbacks/holo_back.png" id="2_fmpqo"]
+[ext_resource type="PackedScene" uid="uid://dexwm7av1pqs6" path="res://scenes/game/card_text_info.tscn" id="3_0fe7q"]
 [ext_resource type="Texture2D" uid="uid://c1lmyyd7ucqmu" path="res://assets/highlights/border_thin_pressed.png" id="3_gijux"]
 [ext_resource type="Texture2D" uid="uid://yfm3tk3pgk1i" path="res://assets/highlights/card_border_highlight_selected.png" id="3_oudmd"]
 [ext_resource type="Texture2D" uid="uid://dyk152ovl8kmg" path="res://assets/icons/damage_counter_red.png" id="3_ugdbs"]
@@ -12,6 +13,9 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l67n"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpddh"]
+bg_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igk3u"]
 bg_color = Color(0, 0, 0, 1)
@@ -101,6 +105,33 @@ theme_override_constants/margin_bottom = 5
 [node name="CardIdLabel" type="Label" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer/MarginContainer"]
 layout_mode = 2
 text = "CARD ID"
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 70
+
+[node name="PanelContainer" type="PanelContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay"]
+layout_mode = 2
+size_flags_vertical = 10
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xpddh")
+
+[node name="CardTextContainer" type="VBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+alignment = 2
+
+[node name="CardTextInfo" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/PanelContainer/CardTextContainer" instance=ExtResource("3_0fe7q")]
+modulate = Color(0.121569, 1, 1, 1)
+layout_mode = 2
+
+[node name="CardTextInfo2" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/PanelContainer/CardTextContainer" instance=ExtResource("3_0fe7q")]
+layout_mode = 2
+
+[node name="CardTextInfo3" parent="OuterMargin/InnerMargin/PanelContainer/Overlay/PanelContainer/CardTextContainer" instance=ExtResource("3_0fe7q")]
+layout_mode = 2
 
 [node name="CheerIndicators" type="VBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer"]
 layout_mode = 2
