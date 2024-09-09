@@ -26,6 +26,7 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var opponent_collab : CardZone = $OpponentCollab
 @onready var opponent_backstage : CardZone = $OpponentBackstage
 @onready var opponent_oshi : CardZone = $OpponentOshi
+@onready var opponent_hand = $OpponentHand
 @onready var opponent_deck_spawn = $OpponentDeckSpawn
 
 @onready var floating_zone : CardZone = $FloatingCardZone
@@ -106,13 +107,29 @@ class PlayerState:
 		hand_count += count
 		deck_count -= count
 
-		if _hand_zone:
+		if _hand_zone and is_me():
 			for card in cards:
 				_hand_zone.add_card(card)
 			_game._put_cards_on_top(_hand_zone.cards)
+		else:
+			for card in cards:
+				card.begin_move_to(get_card_spawn_location(), true)
+				card.begin_move_to(get_hand_placeholder_location(), false, true)
 
 	func get_card_spawn_location() -> Vector2:
-		return _deck_spawn_zone.global_position
+		return _deck_spawn_zone.global_position + (CardBase.DefaultCardScale * CardBase.DefaultCardSize * 0.5)
+
+	func get_holopower_spawn_location() -> Vector2:
+		return _oshi_zone.global_position + (CardBase.DefaultCardScale * CardBase.DefaultCardSize * 0.5)
+
+	func get_life_spawn_location() -> Vector2:
+		return _oshi_zone.global_position + (CardBase.DefaultCardScale * CardBase.DefaultCardSize * 0.5)
+
+	func get_cheer_deck_spawn_location() -> Vector2:
+		return _oshi_zone.global_position + (CardBase.DefaultCardScale * CardBase.DefaultCardSize * 0.5)
+
+	func get_hand_placeholder_location() -> Vector2:
+		return _hand_zone.global_position
 
 	func get_archive_count() -> int:
 		return len(_archive_zone.get_cards_in_zone())
@@ -130,19 +147,18 @@ class PlayerState:
 
 	func add_card_to_hand(card : CardBase):
 		hand_count += 1
-		if _hand_zone:
+		if is_me():
 			_hand_zone.add_card(card)
 			_game._put_cards_on_top(_hand_zone.cards)
 		else:
-			if card:
-				card.begin_move_to(get_card_spawn_location(), false, true)
+			card.begin_move_to(get_hand_placeholder_location(), false, true)
 
 	func remove_from_hand(card_id : String):
 		hand_count -= 1
-		if _hand_zone:
-			_hand_zone.remove_card(card_id)
+		_hand_zone.remove_card(card_id)
 
 	func get_card_ids_in_hand(card_types: Array):
+		assert(is_me(), "Only the local player can get their hand")
 		var matched_ids = []
 		for card in _hand_zone.get_cards_in_zone():
 			var card_data = CardDatabase.get_card(card._definition_id)
@@ -161,15 +177,15 @@ class PlayerState:
 	func add_card_to_cheer_deck(card : CardBase):
 		cheer_count += 1
 		if card:
-			card.begin_move_to(get_card_spawn_location(), false, true)
+			card.begin_move_to(get_cheer_deck_spawn_location(), false, true)
 
 	func remove_card_from_cheer_deck(_card_id : String):
 		cheer_count -= 1
 
-	func is_zone_visible(to_zone : String):
+	func are_cards_in_zone_visible(to_zone : String):
 		if to_zone in ["archive", "backstage", "center", "collab", "floating", "oshi"]:
 			return true
-		if to_zone == "hand" and _hand_zone:
+		if to_zone == "hand" and is_me():
 			return true
 		return false
 
@@ -213,8 +229,10 @@ class PlayerState:
 		# The bloom card will always show up, so find/create it.
 		var bloom_card = _game.find_card_on_board(bloom_card_id)
 		if not bloom_card:
+			assert(not is_me())
 			bloom_card = _game.create_card(bloom_card_id)
-			bloom_card.begin_move_to(get_card_spawn_location(), true)
+			var spawn_at = get_hand_placeholder_location()
+			bloom_card.begin_move_to(spawn_at, true)
 
 		# Figure out where the target card is and replace it.
 		replace_card_on_stage(target_card_id, bloom_card)
@@ -222,18 +240,18 @@ class PlayerState:
 		# TODO: Somehow attach the target card to the bloom card.
 		# The target card is no longer need so delete it.
 		var target_card = _game.find_card_on_board(target_card_id)
-		if target_card:
-			# Copy the damage/resting states from the target card.
-			# TODO: Attach the target card to the bloom card for viewing? Maybe a little flower icon that shows a popout?
-			bloom_card.add_damage(target_card.damage, false)
-			bloom_card.set_resting(target_card._resting, true)
-			bloom_card.attach_card(target_card._card_id)
-			for attached_card_id in target_card.remove_all_attached_cards():
-				bloom_card.attach_card(attached_card_id)
-			var cheer_map = target_card.remove_all_attached_cheer()
-			for cheer_id in cheer_map:
-				bloom_card.attach_cheer(cheer_id, cheer_map[cheer_id])
-			_game.destroy_card(target_card)
+		assert(target_card)
+		# Copy the damage/resting states from the target card.
+		# TODO: Attach the target card to the bloom card for viewing? Maybe a little flower icon that shows a popout?
+		bloom_card.add_damage(target_card.damage, false)
+		bloom_card.set_resting(target_card._resting, true)
+		bloom_card.attach_card(target_card._card_id)
+		for attached_card_id in target_card.remove_all_attached_cards():
+			bloom_card.attach_card(attached_card_id)
+		var cheer_map = target_card.remove_all_attached_cheer()
+		for cheer_id in cheer_map:
+			bloom_card.attach_cheer(cheer_id, cheer_map[cheer_id])
+		_game.destroy_card(target_card)
 
 	func generate_holopower(holopower_generated):
 		holopower_count += holopower_generated
@@ -478,24 +496,29 @@ func _begin_game(event_data):
 	)
 	opponent = PlayerState.new(self, opponent_id, false,
 		opponent_archive, opponent_backstage, opponent_collab,
-		opponent_center, opponent_oshi, null,
+		opponent_center, opponent_oshi, opponent_hand,
 		floating_zone, opponent_deck_spawn
 	)
 
 func create_card(card_id : String, definition_id_for_oshi : String = "", skip_add_to_all : bool = false) -> CardBase:
-	assert(card_id != "HIDDEN")
+	var generic_hidden_card = card_id == "HIDDEN"
 	var definition_id = definition_id_for_oshi
 	var card_type = "oshi"
-	if definition_id_for_oshi:
-		definition_id = definition_id_for_oshi
+	var new_card : CardBase
+	if generic_hidden_card:
+		new_card = CardBaseScene.instantiate()
+		new_card.create_card({}, "HIDDEN", card_id, "support")
 	else:
-		definition_id = _get_card_definition_id(card_id)
-	var definition = CardDatabase.get_card(definition_id)
-	card_type = definition["card_type"]
-	var new_card : CardBase = CardBaseScene.instantiate()
-	new_card.create_card(definition, definition_id, card_id, card_type)
-	new_card.connect("clicked_card", _on_card_pressed)
-	new_card.connect("hover_card", _on_card_hovered)
+		if definition_id_for_oshi:
+			definition_id = definition_id_for_oshi
+		else:
+			definition_id = _get_card_definition_id(card_id)
+		var definition = CardDatabase.get_card(definition_id)
+		card_type = definition["card_type"]
+		new_card = CardBaseScene.instantiate()
+		new_card.create_card(definition, definition_id, card_id, card_type)
+		new_card.connect("clicked_card", _on_card_pressed)
+		new_card.connect("hover_card", _on_card_hovered)
 	if not skip_add_to_all:
 		all_cards.add_child(new_card)
 		new_card.initialize_graphics()
@@ -705,7 +728,7 @@ func _on_choose_cards_event(event_data):
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose Cards[/DECISION]" % [
 			active_player.get_name()
 		])
-		if active_player.is_zone_visible(from_zone):
+		if active_player.are_cards_in_zone_visible(from_zone):
 			# Select from already on screen cards.
 			assert(len(cards_can_choose) == len(all_card_seen))
 			_begin_make_choice(cards_can_choose, amount_min, amount_max)
@@ -1290,11 +1313,10 @@ func _on_draw_event(event_data):
 	var drawn_card_ids = event_data["drawn_card_ids"]
 	var active_player = get_player(event_data["drawing_player_id"])
 	var created_cards = []
-	if active_player.is_zone_visible("hand"):
-		for card_id in drawn_card_ids:
-			var new_card = create_card(card_id)
-			created_cards.append(new_card)
-			new_card.begin_move_to(active_player.get_card_spawn_location(), true)
+	for card_id in drawn_card_ids:
+		var new_card = create_card(card_id)
+		created_cards.append(new_card)
+		new_card.begin_move_to(active_player.get_card_spawn_location(), true)
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s draws %s cards%s" % [
 		active_player.get_name(),
 		len(drawn_card_ids),
@@ -1526,13 +1548,17 @@ func _on_move_card_event(event_data):
 		move_card_ids_already_handled.erase(card_id)
 		already_handled = true
 
+	if not active_player.is_me() and from_zone == "hand" and to_zone == "backstage":
+		# Play a popup message informing what opponent is doing.
+		_play_popup_message("Place Holomem")
+
 	if not already_handled:
 		do_move_cards(active_player, from_zone, to_zone, zone_card_id, [card_id])
 
 func do_move_cards(player, from, to, zone_card_id, card_ids):
-	var visible_to_zone = player.is_zone_visible(to)
 	for card_id in card_ids:
-		var ignore_log = from == "floating" or to == "floating"
+		var spawn_location = player.get_card_spawn_location()
+		var ignore_log = (from == "floating" or to == "floating" or from == to)
 		if not ignore_log:
 			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s moves [CARD]%s[/CARD] from %s to %s" % [
 				player.get_name(),
@@ -1549,18 +1575,23 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				player.remove_center(card_id)
 			"cheer_deck":
 				player.remove_card_from_cheer_deck(card_id)
+				spawn_location = player.get_cheer_deck_spawn_location()
 			"collab":
 				player.remove_collab(card_id)
 			"deck":
 				player.remove_card_from_deck(card_id)
 			"life":
 				player.life_count -= 1
+				spawn_location = player.get_life_spawn_location()
 			"floating":
 				player.remove_floating(card_id)
 			"hand":
 				player.remove_from_hand(card_id)
+				if not player.is_me():
+					spawn_location = player.get_hand_placeholder_location()
 			"holopower":
 				player.remove_holopower(1)
+				spawn_location = player.get_holopower_spawn_location()
 			"stage":
 				# This is a holomem card on stage, but we're not sure where.
 				# Just try to remove it, it can only be in one place anyway.
@@ -1572,13 +1603,15 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				var holomem_from_card = find_card_on_board(from)
 				if holomem_from_card:
 					holomem_from_card.remove_attached(card_id)
+					spawn_location = holomem_from_card.position
 				else:
 					assert(false, "Unexpected from zone")
 
 		var card = find_card_on_board(card_id)
-		if not card and visible_to_zone:
+		if card_id == "HIDDEN" or not card:
 			card = create_card(card_id)
-			card.begin_move_to(player.get_card_spawn_location(), true)
+			card.scale = Vector2(CardBase.DefaultCardScale, CardBase.DefaultCardScale)
+			card.begin_move_to(spawn_location, true)
 
 		match to:
 			"archive":
@@ -1597,8 +1630,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				player.add_floating(card)
 			"holopower":
 				player.generate_holopower(1)
-				# TODO: Animation card to holopower
-				destroy_card(card)
+				card.begin_move_to(player.get_holopower_spawn_location(), false, true)
 			"hand":
 				player.add_card_to_hand(card)
 			_:
@@ -1606,7 +1638,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				if holomem_card:
 					var cheer_colors = _get_card_colors(card_id)
 					holomem_card.attach_cheer(card_id, cheer_colors)
-					destroy_card(card)
+					card.begin_move_to(holomem_card.position, false, true)
 				else:
 					Logger.log_game("Unimplemented MoveCard from zone")
 					assert(false)
@@ -1617,7 +1649,6 @@ func _on_move_cheer_event(event_data):
 	var to_holomem_id = event_data["to_holomem_id"]
 	var cheer_id = event_data["cheer_id"]
 
-	_play_popup_message("Moving Cheer")
 	var already_handled = false
 	if cheer_id in move_card_ids_already_handled:
 		move_card_ids_already_handled.erase(cheer_id)

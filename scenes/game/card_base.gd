@@ -23,6 +23,7 @@ const CardTextInfoScene = preload("res://scenes/game/card_text_info.tscn")
 @onready var damage_indicator = $OuterMargin/DamageIndicator
 @onready var damage_label = $OuterMargin/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
 @onready var card_text_info_container = $OuterMargin/InnerMargin/PanelContainer/Overlay/PanelContainer/CardTextContainer
+@onready var overlay_root = $OuterMargin/InnerMargin/PanelContainer/Overlay
 
 @export var is_big_card : bool = false
 
@@ -92,6 +93,10 @@ func reset_rotation():
 
 func begin_move_to(target, immediate : bool, destroy_on_completion : bool = false):
 	_destroy_on_move_completion = destroy_on_completion
+	if _destroy_on_move_completion and (target == position or immediate):
+		visible = false
+		queue_free()
+		return
 	if immediate:
 		target_position = target
 		position = target
@@ -112,12 +117,20 @@ func set_button_visible(button_visible):
 		selection_button.modulate = Color(1, 1, 1, 0)
 
 func initialize_graphics():
-	card_image.texture = load("res://assets/cards/" + _definition_id + ".png")
+	if _definition_id == "HIDDEN":
+		card_image.texture = load("res://assets/cardbacks/holo_back.png")
+		overlay_root.visible = false
+		damage_indicator.visible = false
+	else:
+		card_image.texture = load("res://assets/cards/" + _definition_id + ".png")
 	set_button_visible(false)
 	_update_stats()
 	_update_english_text()
 
 func _update_english_text():
+	if _definition_id == "HIDDEN":
+		return
+
 	# Remove any previous text.
 	var children = card_text_info_container.get_children()
 	for child in children:
@@ -187,6 +200,9 @@ func remove_cheer_indicator(color):
 			break
 
 func _update_stats():
+	if _definition_id == "HIDDEN":
+		return
+
 	card_def_label.text = _definition_id
 	# Use only the card_id part after _ if there is a _.
 	# This is to avoid the card_id being too long.

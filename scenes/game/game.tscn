@@ -136,6 +136,16 @@ offset_bottom = 568.0
 scale = Vector2(0.45, 0.45)
 zone_name = "Oshi"
 
+[node name="OpponentHand" parent="." instance=ExtResource("10_bk3r3")]
+modulate = Color(1, 1, 1, 0)
+offset_left = 593.0
+offset_top = -220.0
+offset_right = 893.0
+offset_bottom = 198.0
+scale = Vector2(0.4, 0.4)
+zone_name = "Hand"
+layout_style = 0
+
 [node name="FloatingCardZone" parent="." instance=ExtResource("10_bk3r3")]
 modulate = Color(1, 1, 1, 0)
 offset_left = 730.0

@@ -5,6 +5,8 @@ const MultiChoiceButtonScene = preload("res://scenes/game/multichoicebutton.tscn
 
 @onready var instruction_label : RichTextLabel = $OuterMargin/MainVBox/PanelContainer/InstructionsHBox/InstructionsLabel
 @onready var choice_grid : GridContainer = $OuterMargin/MainVBox/ChoiceButtons
+@onready var show_menu_button = $OuterMargin/MainVBox/PanelContainer/InstructionsHBox/ShowMenuButton
+@onready var hide_menu_button = $OuterMargin/MainVBox/PanelContainer/InstructionsHBox/HideMenuButton
 
 var choice_buttons : Array[MultiChoiceButton] = []
 const MAX_BUTTONS = 10
@@ -55,3 +57,13 @@ func update_buttons_enabled(enabled_states : Array):
 func _on_button_pressed(choice_index):
 	visible = false
 	_callback.call(choice_index)
+
+func _on_hide_menu_button_pressed() -> void:
+	show_menu_button.visible = true
+	hide_menu_button.visible = false
+	choice_grid.visible = false
+
+func _on_show_menu_button_pressed() -> void:
+	show_menu_button.visible = false
+	hide_menu_button.visible = true
+	choice_grid.visible = true

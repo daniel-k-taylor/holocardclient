@@ -79,6 +79,8 @@ func add_card(card : CardBase, at_index : int = -1):
 			card.scale = Vector2(CardBase.DefaultCardScale, CardBase.DefaultCardScale)
 		LayoutStyle.Archive:
 			card.scale = Vector2(CardBase.ArchiveCardScale, CardBase.ArchiveCardScale)
+			card.set_resting(false)
+			card.reset_rotation()
 		_:
 			card.scale = Vector2(CardBase.StageCardScale, CardBase.StageCardScale)
 	if layout_style == LayoutStyle.Floating:

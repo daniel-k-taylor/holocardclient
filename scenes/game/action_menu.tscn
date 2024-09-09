@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://db711yiboenfu"]
+[gd_scene load_steps=7 format=3 uid="uid://db711yiboenfu"]
 
 [ext_resource type="Script" path="res://scenes/game/action_menu.gd" id="1_bxj4n"]
+[ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="2_o375t"]
+[ext_resource type="Texture2D" uid="uid://c4duawv6u6o6o" path="res://assets/icons/eye_show.png" id="3_68mdx"]
+[ext_resource type="Texture2D" uid="uid://dtd16sta1beg0" path="res://assets/icons/eye_hide.png" id="4_text0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2exqa"]
 bg_color = Color(0.235294, 0.235294, 0.235294, 0.882353)
@@ -59,6 +62,21 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ShowMenuButton" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox" instance=ExtResource("2_o375t")]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("3_68mdx")
+
+[node name="HideMenuButton" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox" instance=ExtResource("2_o375t")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("4_text0")
+
 [node name="ChoiceButtons" type="GridContainer" parent="OuterMargin/MainVBox"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -66,3 +84,6 @@ size_flags_vertical = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
 columns = 2
+
+[connection signal="pressed" from="OuterMargin/MainVBox/PanelContainer/InstructionsHBox/ShowMenuButton" to="." method="_on_show_menu_button_pressed"]
+[connection signal="pressed" from="OuterMargin/MainVBox/PanelContainer/InstructionsHBox/HideMenuButton" to="." method="_on_hide_menu_button_pressed"]
