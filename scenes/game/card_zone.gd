@@ -74,7 +74,6 @@ func set_layout_style(style):
 	layout_style = style
 
 func add_card(card : CardBase, at_index : int = -1):
-	card.on_add_to_zone()
 	match layout_style:
 		LayoutStyle.Hand:
 			card.scale = Vector2(CardBase.DefaultCardScale, CardBase.DefaultCardScale)
@@ -102,17 +101,17 @@ func layout_zone():
 		for i in range(len(cards)):
 			var card = cards[i]
 			var center = zone_locations[i].global_position + card_offset
-			card.position = center
+			card.begin_move_to(center, false)
 	elif layout_style == LayoutStyle.Archive:
 		var center = loc1.global_position + card_offset
 		for card in cards:
-			card.position = center
+			card.begin_move_to(center, false)
 	else:
 		var center = loc1.global_position + card_offset
 		if cards:
 			assert(len(cards) == 1)
 			for card in cards:
-				card.position = center
+				card.begin_move_to(center, false)
 
 func get_cards_in_zone():
 	return cards
@@ -122,6 +121,8 @@ func remove_card(card_id : String):
 		var card = cards[i]
 		if card._card_id == card_id:
 			cards.erase(card)
+			if layout_style == LayoutStyle.Hand:
+				card.reset_rotation()
 			layout_zone()
 			if len(cards) == 0 and layout_style == LayoutStyle.Floating:
 				set_transparent(true)
@@ -142,7 +143,7 @@ func layout_player_hand():
 			var angle = deg_to_rad(90)
 			var ovalAngleVector = Vector2(HorizontalRadius * cos(angle), -VerticalRadius * sin(angle))
 			var dst_pos = CenterCardOval + ovalAngleVector
-			card.position = dst_pos
+			card.begin_move_to(dst_pos, false)
 		else:
 			var min_angle = deg_to_rad(60)
 			var max_angle = deg_to_rad(120)
@@ -165,8 +166,8 @@ func layout_player_hand():
 				var ovalAngleVector = Vector2(HorizontalRadius * cos(angle), -VerticalRadius * sin(angle))
 				var dst_pos = CenterCardOval + ovalAngleVector # - size/2
 				var dst_rot = (90 - rad_to_deg(angle)) / 4
-				card.position = dst_pos
-				card.rotation_degrees = dst_rot
+				card.begin_move_to(dst_pos, false)
+				card._begin_rotation(dst_rot, false)
 
 func _on_zone_button_pressed() -> void:
 	zone_pressed.emit()

@@ -26,6 +26,7 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var opponent_collab : CardZone = $OpponentCollab
 @onready var opponent_backstage : CardZone = $OpponentBackstage
 @onready var opponent_oshi : CardZone = $OpponentOshi
+@onready var opponent_deck_spawn = $OpponentDeckSpawn
 
 @onready var floating_zone : CardZone = $FloatingCardZone
 
@@ -35,6 +36,7 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var me_backstage : CardZone = $MeBackstage
 @onready var me_oshi : CardZone = $MeOshi
 @onready var me_hand : CardZone = $MeHand
+@onready var me_deck_spawn = $MeDeckSpawn
 
 @onready var card_popout : CardPopout = $CardPopout
 @onready var archive_card_popout : CardPopout = $ArchiveCardPopout
@@ -69,13 +71,14 @@ class PlayerState:
 	var _hand_zone : CardZone
 	var _oshi_zone : CardZone
 	var _floating_zone : CardZone
+	var _deck_spawn_zone
 
 	var stage_zones = []
 
 	func _init(game, player_id:String, is_local_player : bool,
 		archive_zone, backstage_zone, collab_zone,
 		center_zone, oshi_zone, hand_zone,
-		floating_zone
+		floating_zone, deck_spawn_zone
 	):
 		_game = game
 		_player_id = player_id
@@ -88,6 +91,7 @@ class PlayerState:
 		_backstage_zone = backstage_zone
 		_oshi_zone = oshi_zone
 		_floating_zone = floating_zone
+		_deck_spawn_zone = deck_spawn_zone
 
 		stage_zones = [center_zone, collab_zone, backstage_zone]
 
@@ -106,6 +110,9 @@ class PlayerState:
 			for card in cards:
 				_hand_zone.add_card(card)
 			_game._put_cards_on_top(_hand_zone.cards)
+
+	func get_card_spawn_location() -> Vector2:
+		return _deck_spawn_zone.global_position
 
 	func get_archive_count() -> int:
 		return len(_archive_zone.get_cards_in_zone())
@@ -127,8 +134,8 @@ class PlayerState:
 			_hand_zone.add_card(card)
 			_game._put_cards_on_top(_hand_zone.cards)
 		else:
-			# TODO: Animation then
-			_game.destroy_card(card)
+			if card:
+				card.begin_move_to(get_card_spawn_location(), false, true)
 
 	func remove_from_hand(card_id : String):
 		hand_count -= 1
@@ -146,8 +153,7 @@ class PlayerState:
 	func add_card_to_deck(card : CardBase):
 		deck_count += 1
 		if card:
-			# TODO: Animation to something then destroy card.
-			_game.destroy_card(card)
+			card.begin_move_to(get_card_spawn_location(), false, true)
 
 	func remove_card_from_deck(_card_id : String):
 		deck_count -= 1
@@ -155,8 +161,7 @@ class PlayerState:
 	func add_card_to_cheer_deck(card : CardBase):
 		cheer_count += 1
 		if card:
-			#TODO: Animation
-			_game.destroy(card)
+			card.begin_move_to(get_card_spawn_location(), false, true)
 
 	func remove_card_from_cheer_deck(_card_id : String):
 		cheer_count -= 1
@@ -209,6 +214,7 @@ class PlayerState:
 		var bloom_card = _game.find_card_on_board(bloom_card_id)
 		if not bloom_card:
 			bloom_card = _game.create_card(bloom_card_id)
+			bloom_card.begin_move_to(get_card_spawn_location(), true)
 
 		# Figure out where the target card is and replace it.
 		replace_card_on_stage(target_card_id, bloom_card)
@@ -220,7 +226,7 @@ class PlayerState:
 			# Copy the damage/resting states from the target card.
 			# TODO: Attach the target card to the bloom card for viewing? Maybe a little flower icon that shows a popout?
 			bloom_card.add_damage(target_card.damage, false)
-			bloom_card.set_resting(target_card._resting)
+			bloom_card.set_resting(target_card._resting, true)
 			bloom_card.attach_card(target_card._card_id)
 			for attached_card_id in target_card.remove_all_attached_cards():
 				bloom_card.attach_card(attached_card_id)
@@ -239,6 +245,7 @@ class PlayerState:
 	func set_oshi(oshi_id : String):
 		var oshi_card_id = _player_id + "_oshi"
 		var card = _game.create_card(oshi_card_id, oshi_id)
+		card.begin_move_to(get_card_spawn_location(), true)
 		_oshi_zone.add_card(card)
 
 	func set_starting_life(starting_life_count):
@@ -293,7 +300,7 @@ func _process(delta: float) -> void:
 		else:
 			_update_stats_ui()
 			_process_next_event()
-			if not is_playing_animation() and ui_phase == UIPhase.UIPhase_WaitingOnServer:
+			if not is_playing_animation() and ui_phase == UIPhase.UIPhase_WaitingOnServer and not game_over:
 				thinking_spinner.visible = true
 			else:
 				thinking_spinner.visible = false
@@ -467,12 +474,12 @@ func _begin_game(event_data):
 	me = PlayerState.new(self, my_id, true,
 		me_archive, me_backstage, me_collab,
 		me_center, me_oshi, me_hand,
-		floating_zone
+		floating_zone, me_deck_spawn
 	)
 	opponent = PlayerState.new(self, opponent_id, false,
 		opponent_archive, opponent_backstage, opponent_collab,
 		opponent_center, opponent_oshi, null,
-		floating_zone
+		floating_zone, opponent_deck_spawn
 	)
 
 func create_card(card_id : String, definition_id_for_oshi : String = "", skip_add_to_all : bool = false) -> CardBase:
@@ -1285,7 +1292,9 @@ func _on_draw_event(event_data):
 	var created_cards = []
 	if active_player.is_zone_visible("hand"):
 		for card_id in drawn_card_ids:
-			created_cards.append(create_card(card_id))
+			var new_card = create_card(card_id)
+			created_cards.append(new_card)
+			new_card.begin_move_to(active_player.get_card_spawn_location(), true)
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s draws %s cards%s" % [
 		active_player.get_name(),
 		len(drawn_card_ids),
@@ -1569,6 +1578,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 		var card = find_card_on_board(card_id)
 		if not card and visible_to_zone:
 			card = create_card(card_id)
+			card.begin_move_to(player.get_card_spawn_location(), true)
 
 		match to:
 			"archive":
@@ -1732,7 +1742,6 @@ func _on_reset_step_activate_event(event_data):
 			card.set_resting(false)
 		else:
 			assert(false, "Missing card")
-	_play_popup_message("Reset Step - Activation")
 
 func _on_reset_step_choose_new_center_event(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -1772,8 +1781,6 @@ func _on_reset_step_collab_event(event_data):
 			do_move_cards(active_player, "collab", "backstage", "", [card_id])
 		else:
 			assert(false, "Missing card")
-
-	_play_popup_message("Reset Step - Collabs Rest")
 
 func _on_roll_die_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
@@ -1833,8 +1840,8 @@ func _on_end_turn_event(event_data):
 	var _next_player_id = get_player(event_data["next_player_id"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn End**[/PHASE]" % ending_player.get_name())
 	# TODO: Animation - show turn phase change
-	_play_popup_message("Turn End")
-	pass
+	if not ending_player.is_me():
+		_play_popup_message("Turn End")
 
 func _on_force_die_result_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])

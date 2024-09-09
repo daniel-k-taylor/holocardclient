@@ -76,6 +76,8 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 				card.set_selectable(false)
 
 	init_panel(instructions, popout_choice_info)
+	for element in popout_elements:
+		element.position_card()
 
 func _reorder_card_element(element, direction):
 	# Get the index of the element in the grid.

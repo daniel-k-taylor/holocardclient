@@ -29,10 +29,10 @@ offset_bottom = 161.0
 text = "Exit Game"
 
 [node name="LogButton" type="Button" parent="."]
-offset_left = 969.0
-offset_top = 90.0
-offset_right = 1056.0
-offset_bottom = 121.0
+offset_left = 1060.0
+offset_top = 130.0
+offset_right = 1147.0
+offset_bottom = 161.0
 text = "Game Log"
 
 [node name="OpponentStatsGroup" parent="." instance=ExtResource("2_yswsg")]
@@ -235,7 +235,19 @@ scale = Vector2(1.5, 1.5)
 is_big_card = true
 
 [node name="PopupLocation" type="Node2D" parent="."]
-position = Vector2(798, 216)
+position = Vector2(640, 118)
+
+[node name="MeDeckSpawn" type="MarginContainer" parent="."]
+offset_left = 1171.0
+offset_top = 601.0
+offset_right = 1211.0
+offset_bottom = 641.0
+
+[node name="OpponentDeckSpawn" type="MarginContainer" parent="."]
+offset_left = 1177.0
+offset_top = 12.0
+offset_right = 1217.0
+offset_bottom = 52.0
 
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
 [connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]

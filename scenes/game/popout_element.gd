@@ -21,8 +21,12 @@ func set_top_visible(is_top):
 
 func add_card(card : CardBase):
 	placeholder.add_child(card)
+
+func position_card():
+	var card = placeholder.get_child(0)
 	card.scale = Vector2(CardBase.ReferenceCardScale, CardBase.ReferenceCardScale)
-	card.position = CardBase.ReferenceCardScale * (CardBase.DefaultCardSize / 2)
+	var desired_pos = CardBase.ReferenceCardScale * (CardBase.DefaultCardSize / 2)
+	card.begin_move_to(desired_pos, true)
 
 func get_card_id():
 	return placeholder.get_child(0)._card_id

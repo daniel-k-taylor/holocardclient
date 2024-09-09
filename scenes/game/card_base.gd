@@ -40,6 +40,15 @@ var _selected = false
 var _selectable = false
 var _resting = false
 
+const RotationTime = 0.5
+var target_rotation = 0.0
+var rotation_start_time = RotationTime
+
+const PositionTime = 0.8
+var target_position = Vector2.ZERO
+var position_start_time = PositionTime
+var _destroy_on_move_completion = false
+
 func _ready():
 	info_highlight.visible = false
 	selected_highlight.visible = false
@@ -48,6 +57,47 @@ func _ready():
 		selection_button.visible = false
 	if scale.x == 1.0:
 		scale = Vector2(DefaultCardScale, DefaultCardScale)
+
+func _process(delta: float) -> void:
+	if is_big_card:
+		return
+
+	if rotation_degrees != target_rotation:
+		rotation_start_time += delta
+		rotation_degrees = lerp(rotation_degrees, target_rotation, rotation_start_time / RotationTime)
+		if abs(rotation_degrees - target_rotation) < 1:
+			rotation_degrees = target_rotation
+
+	if position != target_position:
+		position_start_time += delta
+		position = lerp(position, target_position, position_start_time / PositionTime)
+		if position.distance_to(target_position) < 1:
+			position = target_position
+			if _destroy_on_move_completion:
+				queue_free()
+
+func _begin_rotation(target, immediate : bool):
+	if immediate:
+		target_rotation = target * 1.0
+		rotation_degrees = target * 1.0
+	else:
+		target_rotation = target * 1.0
+		rotation_start_time = 0
+
+func reset_rotation():
+	if _resting:
+		_begin_rotation(90, false)
+	else:
+		_begin_rotation(0, false)
+
+func begin_move_to(target, immediate : bool, destroy_on_completion : bool = false):
+	_destroy_on_move_completion = destroy_on_completion
+	if immediate:
+		target_position = target
+		position = target
+	else:
+		target_position = target
+		position_start_time = 0
 
 func create_card(definition, definition_id, card_id, card_type):
 	_definition = definition
@@ -82,12 +132,6 @@ func _update_english_text():
 
 func get_texture():
 	return card_image.texture
-
-func on_add_to_zone():
-	if _resting:
-		rotation_degrees = 90
-	else:
-		rotation_degrees = 0
 
 func copy_stats(card : CardBase):
 	damage = card.damage
@@ -183,11 +227,13 @@ func add_damage(amount, is_dead : bool):
 	dead = is_dead
 	_update_stats()
 
-func set_resting(is_resting):
-	_resting = is_resting
-	rotation_degrees = 0
-	if _resting:
-		rotation_degrees = 90
+func set_resting(is_resting, immediate : bool = false):
+	if _resting != is_resting:
+		_resting = is_resting
+		if _resting:
+			_begin_rotation(90, immediate)
+		else:
+			_begin_rotation(0, immediate)
 
 func attach_card(card_id):
 	_attached_cards.append(card_id)
