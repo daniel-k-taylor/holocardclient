@@ -1,8 +1,8 @@
 extends Node
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
-const UseAzureServerAlways = false # If true, always defaults to the azure server.
-const ClientVersionString : String = "240804.1135" # YYMMDD.HHMM
+const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
+const ClientVersionString : String = "240908.2100" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 var LoggingEnabled : bool = true

@@ -44,6 +44,21 @@ offset_bottom = 690.0
 layout_mode = 2
 text = "Uninitialized"
 
+[node name="ClientVersion" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 650.0
+offset_right = 1107.0
+offset_bottom = 690.0
+
+[node name="ClientVersionHeader" type="Label" parent="ClientVersion"]
+layout_mode = 2
+text = "Client Version:"
+
+[node name="ClientVersionLabel" type="Label" parent="ClientVersion"]
+layout_mode = 2
+text = "Uninitialized"
+
 [node name="MainButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8

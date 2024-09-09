@@ -39,6 +39,7 @@ var cheer_deck = {
 
 # Labels
 @onready var server_status = $ServerStatus/ServerStatusLabel
+@onready var client_version = $ClientVersion/ClientVersionLabel
 
 # Other
 @onready var server_info_list : ItemList = $ServerInfoList
@@ -62,6 +63,8 @@ func _ready() -> void:
 	NetworkManager.connect("disconnected_from_server", _on_disconnected)
 	NetworkManager.connect("server_info", _on_server_info)
 	NetworkManager.connect("join_operation_failed", _on_join_failed)
+	
+	client_version.text = GlobalSettings.get_client_version()
 
 func _update_element(button, enabled_value, visibility_value):
 	button.disabled = not enabled_value
