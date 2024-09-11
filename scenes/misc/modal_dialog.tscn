@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://wmclosx28ofb"]
+
+[ext_resource type="Script" path="res://scenes/misc/modal_dialog.gd" id="1_533qy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i5084"]
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="ModalDialog" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_533qy")
+
+[node name="CloseOuterClick" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_i5084")
+
+[node name="OuterMargin" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VerticalLayout" type="VBoxContainer" parent="PanelContainer/OuterMargin"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="MessageLabel" type="Label" parent="PanelContainer/OuterMargin/VerticalLayout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Are you sure you want to quit?"
+horizontal_alignment = 1
+
+[node name="ChoiceButtons" type="HBoxContainer" parent="PanelContainer/OuterMargin/VerticalLayout"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="AcceptButton" type="Button" parent="PanelContainer/OuterMargin/VerticalLayout/ChoiceButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "QUIT TO
+MENU"
+
+[node name="CancelButton" type="Button" parent="PanelContainer/OuterMargin/VerticalLayout/ChoiceButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "CANCEL"
+
+[connection signal="pressed" from="CloseOuterClick" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="PanelContainer/OuterMargin/VerticalLayout/ChoiceButtons/AcceptButton" to="." method="_on_accept_button_pressed"]
+[connection signal="pressed" from="PanelContainer/OuterMargin/VerticalLayout/ChoiceButtons/CancelButton" to="." method="_on_cancel_button_pressed"]

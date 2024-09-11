@@ -1,0 +1,31 @@
+<script>
+//called in main_menu.gd for loading replays
+function setupFileLoad(callback){
+	window.input = document.createElement('input');
+	input.type = 'file';
+	input.onchange = e => {
+		var file = e.target.files[0];
+		var reader = new FileReader();
+		reader.readAsText(file, 'UTF-8');
+		reader.onload = readerEvent => {
+			callback(readerEvent.target.result);
+		}
+	}
+}
+
+function saveTextToFile(filename, content) {
+	var blob = new Blob([content], { type: 'text/plain' });
+	var link = document.createElement('a');
+	link.href = URL.createObjectURL(blob);
+	link.download = filename;
+
+	// Append the link to the document (not visible to the user)
+	document.body.appendChild(link);
+
+	// Trigger the download
+	link.click();
+
+	// Clean up by removing the link
+	document.body.removeChild(link);
+}
+</script>

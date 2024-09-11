@@ -119,7 +119,7 @@ func _handle_server_error(message):
 
 	match message["error_id"]:
 		ServerError_JoinInvalidDeck:
-			join_operation_failed.emit()
+			join_operation_failed.emit(ServerError_JoinInvalidDeck)
 		_:
 			# No special error handling.
 			pass
