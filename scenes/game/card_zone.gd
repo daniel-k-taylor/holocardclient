@@ -4,7 +4,9 @@ extends PanelContainer
 
 signal zone_pressed
 
-@onready var zone_text_label : Label = $Margin/Layout/ZoneName
+@onready var zone_text_label : Label = $Margin/Layout/NameBox/ZoneName
+@onready var zone_text_dash : Label = $Margin/Layout/NameBox/Dash
+@onready var zone_text_count : Label = $Margin/Layout/NameBox/ZoneCount
 @onready var loc1 = $Margin/Layout/GridContainer/ZoneLocation1
 @onready var loc2 = $Margin/Layout/GridContainer/ZoneLocation2
 @onready var loc3 = $Margin/Layout/GridContainer/ZoneLocation3
@@ -57,12 +59,19 @@ func _ready() -> void:
 	if layout_style == LayoutStyle.Floating or layout_style == LayoutStyle.Hand:
 		set_transparent(true)
 
+	zone_text_dash.visible = layout_style == LayoutStyle.Archive
+	zone_text_count.visible = layout_style == LayoutStyle.Archive
 	zone_button.visible = layout_style == LayoutStyle.Archive
 
 	if not Engine.is_editor_hint():
 		CenterCardOval = Vector2(get_viewport().content_scale_size) * Vector2(0.5, 1.3)
 		HorizontalRadius = get_viewport().content_scale_size.x * 0.55
 		VerticalRadius = get_viewport().content_scale_size.y * 0.4
+		
+	update_count()
+
+func update_count():
+	zone_text_count.text = str(len(cards))
 
 func set_transparent(is_transparent):
 	if is_transparent:
@@ -114,6 +123,8 @@ func layout_zone():
 			assert(len(cards) == 1)
 			for card in cards:
 				card.begin_move_to(center, false)
+				
+	update_count()
 
 func get_cards_in_zone():
 	return cards

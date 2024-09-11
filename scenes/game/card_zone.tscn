@@ -31,10 +31,24 @@ theme_override_constants/margin_bottom = 5
 [node name="Layout" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
 
-[node name="ZoneName" type="Label" parent="Margin/Layout"]
+[node name="NameBox" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ZoneName" type="Label" parent="Margin/Layout/NameBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Unset"
+
+[node name="Dash" type="Label" parent="Margin/Layout/NameBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "-"
+
+[node name="ZoneCount" type="Label" parent="Margin/Layout/NameBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "XX"
 
 [node name="GridContainer" type="GridContainer" parent="Margin/Layout"]
 layout_mode = 2

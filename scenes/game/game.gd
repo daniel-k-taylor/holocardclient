@@ -28,6 +28,7 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var opponent_oshi : CardZone = $OpponentOshi
 @onready var opponent_hand = $OpponentHand
 @onready var opponent_deck_spawn = $OpponentDeckSpawn
+@onready var opponent_hand_indicator = $OpponentHandIndicator/HandCount
 
 @onready var floating_zone : CardZone = $FloatingCardZone
 
@@ -38,6 +39,7 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var me_oshi : CardZone = $MeOshi
 @onready var me_hand : CardZone = $MeHand
 @onready var me_deck_spawn = $MeDeckSpawn
+@onready var me_hand_indicator = $MeHandIndicator/HandCount
 
 @onready var card_popout : CardPopout = $CardPopout
 @onready var archive_card_popout : CardPopout = $ArchiveCardPopout
@@ -73,12 +75,13 @@ class PlayerState:
 	var _oshi_zone : CardZone
 	var _floating_zone : CardZone
 	var _deck_spawn_zone
+	var _hand_indicator : Label
 
 	var stage_zones = []
 
 	func _init(game, player_id:String, is_local_player : bool,
 		archive_zone, backstage_zone, collab_zone,
-		center_zone, oshi_zone, hand_zone,
+		center_zone, oshi_zone, hand_zone, hand_indicator,
 		floating_zone, deck_spawn_zone
 	):
 		_game = game
@@ -93,6 +96,7 @@ class PlayerState:
 		_oshi_zone = oshi_zone
 		_floating_zone = floating_zone
 		_deck_spawn_zone = deck_spawn_zone
+		_hand_indicator = hand_indicator
 
 		stage_zones = [center_zone, collab_zone, backstage_zone]
 
@@ -305,6 +309,9 @@ func _ready() -> void:
 	action_menu.visible = false
 	thinking_spinner.visible = true
 
+	me_stats.visible = false
+	opponent_stats.visible = false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	thinking_spinner.radial_initial_angle += delta * 360
@@ -449,6 +456,7 @@ func _update_player_stats(player, stats_group):
 		"cheer": player.cheer_count,
 	}
 	stats_group.update_stats(stats_info)
+	player._hand_indicator.text = str(player.hand_count)
 
 func _update_stats_ui():
 	if ui_phase == UIPhase.UIPhase_Init:
@@ -491,12 +499,12 @@ func _begin_game(event_data):
 
 	me = PlayerState.new(self, my_id, true,
 		me_archive, me_backstage, me_collab,
-		me_center, me_oshi, me_hand,
+		me_center, me_oshi, me_hand, me_hand_indicator,
 		floating_zone, me_deck_spawn
 	)
 	opponent = PlayerState.new(self, opponent_id, false,
 		opponent_archive, opponent_backstage, opponent_collab,
-		opponent_center, opponent_oshi, opponent_hand,
+		opponent_center, opponent_oshi, opponent_hand, opponent_hand_indicator,
 		floating_zone, opponent_deck_spawn
 	)
 
@@ -1529,6 +1537,8 @@ func _on_initial_placement_revealed(event_data):
 		active_player.set_starting_life(life_count)
 		print("Mine: %s  Info: %s" % [active_player.hand_count, hand_count])
 		assert(active_player.hand_count == hand_count)
+	me_stats.visible = true
+	opponent_stats.visible = true
 
 func _on_main_step_start(event_data):
 	var active_player = get_player(event_data["active_player"])
