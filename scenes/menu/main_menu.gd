@@ -285,10 +285,9 @@ func _on_save_file_dialog_file_selected(path: String) -> void:
 	var content = JSON.stringify(get_starter_deck())
 	file.store_string(content)
 
-
 func _on_open_file_dialog_file_selected(path: String) -> void:
 	load_deck([FileAccess.get_file_as_string(path)])
-
+	
 func get_starter_deck():
 	return {
 		"oshi": "hSD01-001",
@@ -318,3 +317,7 @@ func get_starter_deck():
 			"hY02-001": 10
 		}
 	}
+
+
+func _on_settings_button_pressed() -> void:
+	$SettingsWindow.show_settings()

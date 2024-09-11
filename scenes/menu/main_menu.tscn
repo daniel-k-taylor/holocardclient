@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dl8ct7vpm73vm"]
+[gd_scene load_steps=7 format=3 uid="uid://dl8ct7vpm73vm"]
 
 [ext_resource type="Theme" uid="uid://dpxwceaf3f35h" path="res://themes/menubuttontheme.tres" id="1_i5wud"]
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
 [ext_resource type="PackedScene" uid="uid://wmclosx28ofb" path="res://scenes/misc/modal_dialog.tscn" id="3_6lbr4"]
+[ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="4_1cxk2"]
+[ext_resource type="Texture2D" uid="uid://byu4ays6kt1da" path="res://assets/icons/gear.png" id="5_rki3m"]
+[ext_resource type="PackedScene" uid="uid://dqeoyiig2xv07" path="res://scenes/misc/settings_window.tscn" id="6_gl1g0"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -154,7 +157,7 @@ theme_override_font_sizes/font_size = 32
 text = "Player Name"
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="PlayersLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 861.0
 offset_top = 175.0
@@ -162,6 +165,15 @@ offset_right = 973.0
 offset_bottom = 220.0
 theme_override_font_sizes/font_size = 32
 text = "Players"
+
+[node name="SettingsButton" parent="." instance=ExtResource("4_1cxk2")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_left = 1215.0
+offset_top = 10.0
+offset_right = 1263.0
+offset_bottom = 58.0
+texture = ExtResource("5_rki3m")
 
 [node name="SampleDeckButton" type="Button" parent="."]
 layout_mode = 0
@@ -197,6 +209,10 @@ use_native_dialog = true
 visible = false
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="CustomDeckLabel" type="Label" parent="."]
 layout_mode = 0
@@ -206,11 +222,16 @@ offset_right = 305.0
 offset_bottom = 490.0
 text = "Custom Deck Loaded"
 
+[node name="SettingsWindow" parent="." instance=ExtResource("6_gl1g0")]
+visible = false
+layout_mode = 0
+
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
 [connection signal="pressed" from="MainButtons/JoinQueueButton" to="." method="_on_join_queue_button_pressed"]
 [connection signal="pressed" from="MainButtons/LeaveQueueButton" to="." method="_on_leave_queue_button_pressed"]
 [connection signal="toggled" from="DebugSpewButton" to="." method="_on_debug_spew_button_toggled"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="SampleDeckButton" to="." method="_on_save_deck_button_pressed"]
 [connection signal="pressed" from="LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]

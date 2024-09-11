@@ -4,13 +4,15 @@ extends MarginContainer
 
 signal button_pressed(value)
 
+@onready var button_label = $MarginContainer/Label
+@onready var button : Button = $Button
+
 @export var button_label_text : String :
 	set(value):
 		button_label_text = value
-		button_label.text = button_label_text
+		if button_label:
+			button_label.text = button_label_text
 
-@onready var button_label = $MarginContainer/Label
-@onready var button : Button = $Button
 
 const EnabledColor = Color(1.0, 1.0, 1.0)
 const DisabledColor = Color(0.43, 0.43, 0.43)

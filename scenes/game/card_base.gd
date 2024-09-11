@@ -122,7 +122,15 @@ func initialize_graphics():
 		overlay_root.visible = false
 		damage_indicator.visible = false
 	else:
-		card_image.texture = load("res://assets/cards/" + _definition_id + ".png")
+		var jp_path = "res://assets/cards/" + _definition_id + ".png"
+		var en_path = "res://assets/cards/en/" + _definition_id  + ".jpg"
+		# Check if the en card exists.
+		var use_en_proxies = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
+		if use_en_proxies and FileAccess.file_exists(en_path):
+			card_image.texture = load(en_path)
+			overlay_root.visible = false
+		else:
+			card_image.texture = load(jp_path)
 	set_button_visible(false)
 	_update_stats()
 	_update_english_text()
@@ -165,6 +173,8 @@ func copy_graphics(card : CardBase):
 	_update_stats()
 	_update_english_text()
 	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	overlay_root.visible = card.overlay_root.visible
+	
 
 func is_holomem_card():
 	return _card_type in ["holomem_debut", "holomem_bloom", "holomem_spot"]
