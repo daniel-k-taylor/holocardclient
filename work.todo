@@ -1,4 +1,6 @@
 
+☐ deck loading
+
 Todo:
   ☐ Clean up Stat counter distribution
     - Deck/life/holopower/cheer next to oshi
@@ -8,5 +10,5 @@ Todo:
   ☐ Click info button on card to view attached cards
 
 Later:
-  ☐ Hide indicator for action menu
   ☐ Consider Exceed style hover, probably still use big card just put it closer to the actual card?
+  ☐ confusion over performer highlight? Maybe have a singing icon animation instead

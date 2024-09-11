@@ -40,10 +40,12 @@ var cheer_deck = {
 # Labels
 @onready var server_status = $ServerStatus/ServerStatusLabel
 @onready var client_version = $ClientVersion/ClientVersionLabel
+@onready var player_username = $PlayerUsernameLabel
 
 # Other
 @onready var server_info_list : ItemList = $ServerInfoList
 @onready var deck_selector = $HBoxContainer/DeckSelector
+
 
 enum MenuState {
 	MenuState_ConnectingToServer,
@@ -58,12 +60,13 @@ var match_queues : Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$DebugSpewButton.visible = OS.is_debug_build()
 	_update_buttons()
 	NetworkManager.connect("connected_to_server", _on_connected)
 	NetworkManager.connect("disconnected_from_server", _on_disconnected)
 	NetworkManager.connect("server_info", _on_server_info)
 	NetworkManager.connect("join_operation_failed", _on_join_failed)
-	
+
 	client_version.text = GlobalSettings.get_client_version()
 
 func _update_element(button, enabled_value, visibility_value):
@@ -96,6 +99,7 @@ func _update_buttons() -> void:
 			_update_element(leave_queue_button, false, false)
 			_update_element(deck_selector, true, true)
 			server_status.text = "Disconnected from server"
+			player_username.text = "Player Name"
 		MenuState.MenuState_Queued:
 			_update_element(play_ai_button, false, false)
 			_update_element(server_connect_button, false, false)
@@ -110,13 +114,14 @@ func _update_buttons() -> void:
 func returned_from_game():
 	if NetworkManager.is_server_connected():
 		menu_state = MenuState.MenuState_Connected_Default
+		_update_server_info()
 	else:
 		menu_state = MenuState.MenuState_Disconnected
 	_update_buttons()
 
 func settings_loaded():
 	pass
-	
+
 func _on_connected():
 	menu_state = MenuState.MenuState_Connected_Default
 	_update_buttons()
@@ -127,13 +132,34 @@ func _on_disconnected():
 	server_info_list.clear()
 	server_status.text = "Disconnected from server."
 
-func _on_server_info(queue_info):
+func _update_server_info():
 	server_info_list.clear()
+
+	player_username.text = NetworkManager.get_my_player_name()
+
 	match_queues = []
-	for queue in queue_info:
-		var queue_str = "%s - %s" % [queue["queue_name"], queue["players_count"]]
-		server_info_list.add_item(queue_str, null, false)
+	for player in NetworkManager.get_players_info():
+		var player_name = player["username"]
+		var queue = player["queue"]
+		var game_room = player["game_room"]
+		if queue:
+			game_room = ""
+		if game_room.begins_with("Match_"):
+			queue = "in"
+			game_room = "Match"
+		if game_room == "AI":
+			queue = "playing"
+
+		server_info_list.add_item(player_name, null, false)
+		server_info_list.add_item(queue, null, false)
+		server_info_list.add_item(game_room, null, false)
+
+	for queue in NetworkManager.get_queue_info():
 		match_queues.append(queue)
+
+func _on_server_info():
+	server_info_list.clear()
+	_update_server_info()
 
 func _on_server_connect_button_pressed() -> void:
 	menu_state = MenuState.MenuState_ConnectingToServer
@@ -159,7 +185,7 @@ func get_deck_oshi():
 		1:
 			chosen_oshi = oshi_azki
 	return chosen_oshi
-	
+
 func _on_join_queue_button_pressed() -> void:
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()

@@ -14,9 +14,7 @@ enum NetworkState {
 
 var _socket : WebSocketPeer = null
 var network_state : NetworkState = NetworkState.NetworkState_NotConnected
-var cached_players = []
-var cached_matches = []
-var cached_match_available : bool = false
+var cached_server_info = {}
 
 var connection_start_time = 0
 var first_connection = false
@@ -97,16 +95,28 @@ func _handle_server_response(data):
 			Logger.log(Logger.LogArea_Network, "Unhandled message type: %s" % message_type)
 
 func _handle_server_info(message):
-	var queue_info = message["queue_info"]
+	cached_server_info = message
 	if first_connection:
 		Logger.log(Logger.LogArea_Network, "Connected to server!")
 		connected_to_server.emit()
 		first_connection = false
-	server_info.emit(queue_info)
+	server_info.emit()
+
+func get_players_info():
+	return cached_server_info["players_info"]
+
+func get_queue_info():
+	return cached_server_info["queue_info"]
+
+func get_my_player_id():
+	return cached_server_info["your_id"]
+
+func get_my_player_name():
+	return cached_server_info["your_username"]
 
 func _handle_server_error(message):
 	Logger.log(Logger.LogArea_Network, "ERROR: %s - %s" % [message["error_id"], message["error_message"]])
-	
+
 	match message["error_id"]:
 		ServerError_JoinInvalidDeck:
 			join_operation_failed.emit()
@@ -164,12 +174,3 @@ func send_game_message(action_type:String, action_data :Dictionary):
 	}
 	Logger.log_net("Sending game message - %s: %s" % [action_type, message])
 	_send_message(message)
-
-func get_player_list():
-	return cached_players
-
-func get_match_list():
-	return cached_matches
-
-func get_match_available():
-	return cached_match_available

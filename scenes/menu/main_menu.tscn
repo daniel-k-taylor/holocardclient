@@ -106,11 +106,12 @@ text = "Leave Queue"
 
 [node name="ServerInfoList" type="ItemList" parent="."]
 layout_mode = 0
-offset_left = 930.0
+offset_left = 859.0
 offset_top = 226.0
-offset_right = 1242.0
-offset_bottom = 647.0
-item_count = 2
+offset_right = 1260.0
+offset_bottom = 514.0
+item_count = 1
+max_columns = 3
 item_0/text = "disconnected"
 
 [node name="DebugSpewButton" type="CheckButton" parent="."]
@@ -137,6 +138,29 @@ item_count = 2
 popup/item_0/text = "Sora"
 popup/item_1/text = "Azki"
 popup/item_1/id = 1
+
+[node name="PlayerUsernameLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.0
+offset_top = 100.0
+offset_right = 109.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Player Name"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 861.0
+offset_top = 175.0
+offset_right = 973.0
+offset_bottom = 220.0
+theme_override_font_sizes/font_size = 32
+text = "Players"
 
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]

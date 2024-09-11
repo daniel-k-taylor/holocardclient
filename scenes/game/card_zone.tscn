@@ -76,6 +76,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ZoneButton" type="TextureButton" parent="."]
+visible = false
 layout_mode = 2
 texture_pressed = ExtResource("2_70vai")
 texture_hover = ExtResource("3_1gp3b")

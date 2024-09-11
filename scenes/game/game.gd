@@ -606,12 +606,14 @@ func _is_card_selected(card_id : String):
 func _allowed():
 	return true
 
-func _play_popup_message(text :String):
+func _play_popup_message(text :String, fast:bool = false):
 	var popup = PopupMessageScene.instantiate()
 	add_child(popup)
 	popup.position = $PopupLocation.position
 	remaining_animation_seconds = PopupMessage.MessageDurationSeconds
-	popup.play_message(text)
+	if fast:
+		remaining_animation_seconds = PopupMessage.FastMessageDurationSeconds
+	popup.play_message(text, fast)
 
 #
 # Game Event Handlers
@@ -640,7 +642,7 @@ func _on_bloom_event(event_data):
 		_get_card_definition_id(bloom_card_id)
 	])
 	if not active_player.is_me():
-		_play_popup_message("Bloom!")
+		_play_popup_message("Bloom!", true)
 	active_player.bloom(bloom_card_id, target_card_id, bloom_from_zone)
 
 func _on_boost_stat_event(event_data):
@@ -709,7 +711,7 @@ func _on_collab_event(event_data):
 		_get_card_definition_id(collab_card_id)
 	])
 	if not active_player.is_me():
-		_play_popup_message("Collab!")
+		_play_popup_message("Collab!", true)
 	do_move_cards(active_player, "backstage", "collab", "", [collab_card_id])
 	active_player.generate_holopower(holopower_generated)
 
@@ -1323,7 +1325,7 @@ func _on_draw_event(event_data):
 		get_card_logline(drawn_card_ids)
 	])
 	if not active_player.is_me():
-		_play_popup_message("Opponent draws %s" % len(drawn_card_ids))
+		_play_popup_message("Opponent draws %s" % len(drawn_card_ids), true)
 
 	active_player.draw_cards(len(drawn_card_ids), created_cards)
 
@@ -1532,7 +1534,7 @@ func _on_main_step_start(event_data):
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Main Step*[/PHASE]" % active_player.get_name())
 	if not active_player.is_me():
-		_play_popup_message("Main Step")
+		_play_popup_message("Main Step", true)
 
 func _on_move_card_event(event_data):
 	var active_player = get_player(event_data["moving_player_id"])
@@ -1550,7 +1552,7 @@ func _on_move_card_event(event_data):
 
 	if not active_player.is_me() and from_zone == "hand" and to_zone == "backstage":
 		# Play a popup message informing what opponent is doing.
-		_play_popup_message("Place Holomem")
+		_play_popup_message("Place Holomem", true)
 
 	if not already_handled:
 		do_move_cards(active_player, from_zone, to_zone, zone_card_id, [card_id])
@@ -1756,7 +1758,7 @@ func _on_play_support_card_event(event_data):
 	do_move_cards(active_player, "hand", "floating", "", [card_id])
 	# TODO: Mark limited use somewhere
 	if not active_player.is_me():
-		_play_popup_message("Playing Support Card")
+		_play_popup_message("Playing Support Card", true)
 	pass
 
 func _on_reset_step_activate_event(event_data):
@@ -1793,7 +1795,7 @@ func _on_reset_step_choose_new_center_event(event_data):
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 		)
 	else:
-		_play_popup_message("Reset Step - Choose Center")
+		_play_popup_message("Reset Step - Choose Center", true)
 		pass
 
 
@@ -1835,7 +1837,7 @@ func _on_shuffle_deck_event(event_data):
 		active_player.get_name()
 	])
 	# TODO: Animation - Shuffle the deck
-	_play_popup_message("Shuffling Deck")
+	_play_popup_message("Shuffling Deck", true)
 	pass
 
 func _on_oshi_skill_activation(event_data):
@@ -1856,14 +1858,14 @@ func on_performance_step_start(event_data):
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Performance Step*[/PHASE]" % active_player.get_name())
 	# TODO: Animation - performance start
 	if not active_player.is_me():
-		_play_popup_message("Performance Step")
+		_play_popup_message("Performance Step", true)
 	pass
 
 func _on_turn_start(event_data):
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn Start**[/PHASE]" % active_player.get_name())
 	# TODO: Animation - show turn phase change
-	_play_popup_message("Turn Start")
+	_play_popup_message("Turn Start", true)
 	pass
 
 func _on_end_turn_event(event_data):
@@ -1872,7 +1874,7 @@ func _on_end_turn_event(event_data):
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn End**[/PHASE]" % ending_player.get_name())
 	# TODO: Animation - show turn phase change
 	if not ending_player.is_me():
-		_play_popup_message("Turn End")
+		_play_popup_message("Turn End", true)
 
 func _on_force_die_result_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
