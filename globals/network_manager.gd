@@ -142,17 +142,24 @@ func _send_message(message):
 
 ### Commands ###
 
-func join_match_queue(queue, oshi_id, deck, cheer_deck):
+func join_match_queue(queue_name, oshi_id, deck, cheer_deck):
+	var game_type = "versus"
+	var custom_game = true
+	for queue in get_queue_info():
+		if queue["queue_name"] == queue_name:
+			game_type = queue["game_type"]
+			custom_game = queue["custom_game"]
 	var message = {
 		"message_type": ClientMessage_JoinMatchmakingQueue,
-		"custom_game": false,
-		"queue_name": queue["queue_name"],
-		"game_type": queue["game_type"],
+		"custom_game": custom_game,
+		"queue_name": queue_name,
+		"game_type": game_type,
 		"oshi_id": oshi_id,
 		"deck": deck,
 		"cheer_deck": cheer_deck,
 	}
 	_send_message(message)
+
 
 func leave_match_queue():
 	var message = {

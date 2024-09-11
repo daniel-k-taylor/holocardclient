@@ -14,6 +14,7 @@ var file_load_callback
 @onready var join_queue_button = $MainButtons/JoinQueueButton
 @onready var join_match_button = $MainButtons/JoinMatchButton
 @onready var leave_queue_button = $MainButtons/LeaveQueueButton
+@onready var join_custom_box = $MainButtons/JoinCustomBox
 
 # Labels
 @onready var server_status = $ServerStatus/ServerStatusLabel
@@ -23,10 +24,12 @@ var file_load_callback
 
 # Other
 @onready var server_info_list : ItemList = $ServerInfoList
-@onready var deck_selector = $HBoxContainer/DeckSelector
+@onready var deck_selector = $DeckControls/HBoxContainer/DeckSelector
+@onready var deck_controls = $DeckControls
 @onready var save_file_dialog = $SaveFileDialog
 @onready var open_file_dialog = $OpenFileDialog
 @onready var modal_dialog = $ModalDialog
+@onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
 
 enum MenuState {
 	MenuState_ConnectingToServer,
@@ -64,7 +67,8 @@ func _ready() -> void:
 		window.setupFileLoad(file_load_callback)
 
 func _update_element(button, enabled_value, visibility_value):
-	button.disabled = not enabled_value
+	if button is Button:
+		button.disabled = not enabled_value
 	button.visible = visibility_value
 
 func _update_buttons() -> void:
@@ -75,7 +79,8 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, false, true)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, false, false)
-			_update_element(deck_selector, true, true)
+			_update_element(deck_controls, true, true)
+			_update_element(join_custom_box, false, false)
 			server_status.text = "Connecting to server..."
 		MenuState.MenuState_Connected_Default:
 			_update_element(play_ai_button, true, true)
@@ -83,7 +88,8 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, true, true)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, false, false)
-			_update_element(deck_selector, true, true)
+			_update_element(deck_controls, true, true)
+			_update_element(join_custom_box, true, true)
 			server_status.text = "Connected"
 		MenuState.MenuState_Disconnected:
 			_update_element(play_ai_button, false, false)
@@ -91,7 +97,8 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, false, false)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, false, false)
-			_update_element(deck_selector, true, true)
+			_update_element(deck_controls, true, true)
+			_update_element(join_custom_box, false, false)
 			server_status.text = "Disconnected from server"
 			player_username.text = "Player Name"
 		MenuState.MenuState_Queued:
@@ -100,7 +107,8 @@ func _update_buttons() -> void:
 			_update_element(join_queue_button, false, false)
 			_update_element(join_match_button, false, false)
 			_update_element(leave_queue_button, true, true)
-			_update_element(deck_selector, false, true)
+			_update_element(deck_controls, false, false)
+			_update_element(join_custom_box, false, false)
 		_:
 			assert(false, "Unimplemented menu state")
 			pass
@@ -160,16 +168,6 @@ func _on_server_connect_button_pressed() -> void:
 	_update_buttons()
 	NetworkManager.connect_to_server()
 
-func get_matchmaking_queue():
-	for queue in match_queues:
-		if queue["queue_name"] == "main_matchmaking_normal":
-			return queue
-
-func get_ai_queue():
-	for queue in match_queues:
-		if queue["queue_name"] == "main_matchmaking_ai":
-			return queue
-
 func get_player_oshi():
 	if custom_deck_used:
 		return loaded_deck["oshi"]
@@ -192,10 +190,19 @@ func get_player_cheer_deck():
 func _on_join_queue_button_pressed() -> void:
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()
-	join_match_queue(self.get_matchmaking_queue())
+	join_match_queue("main_matchmaking_normal")
 
-func join_match_queue(queue):
-	NetworkManager.join_match_queue(queue, get_player_oshi(), get_player_deck(), get_player_cheer_deck())
+func _on_join_custom_button_pressed() -> void:
+	var desired_room : String = custom_room_entry.text
+	desired_room = desired_room.strip_edges(true, true)
+	if desired_room:
+		menu_state = MenuState.MenuState_Queued
+		_update_buttons()
+		join_match_queue(desired_room)
+
+
+func join_match_queue(queue_name):
+	NetworkManager.join_match_queue(queue_name, get_player_oshi(), get_player_deck(), get_player_cheer_deck())
 
 func _on_join_failed(error_id) -> void:
 	match error_id:
@@ -217,7 +224,7 @@ func _on_debug_spew_button_toggled(toggled_on: bool) -> void:
 func _on_play_ai_button_pressed() -> void:
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()
-	join_match_queue(self.get_ai_queue())
+	join_match_queue("main_matchmaking_ai")
 
 
 func _on_load_deck_button_pressed():
@@ -287,7 +294,7 @@ func _on_save_file_dialog_file_selected(path: String) -> void:
 
 func _on_open_file_dialog_file_selected(path: String) -> void:
 	load_deck([FileAccess.get_file_as_string(path)])
-	
+
 func get_starter_deck():
 	return {
 		"oshi": "hSD01-001",
