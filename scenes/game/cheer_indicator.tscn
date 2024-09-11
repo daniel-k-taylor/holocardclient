@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c4dakcv13kgc0"]
 
 [ext_resource type="Script" path="res://scenes/game/cheer_indicator.gd" id="1_ddmwx"]
-[ext_resource type="Texture2D" uid="uid://cywhpp24syoku" path="res://assets/cheer_icons/white.png" id="1_nmxdq"]
+[ext_resource type="Texture2D" uid="uid://ca7fc8bn5qmw6" path="res://assets/cheer_icons/white.png" id="1_nmxdq"]
 
 [node name="CheerIndicator" type="MarginContainer"]
 offset_left = 64.0

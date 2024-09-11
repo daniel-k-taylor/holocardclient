@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://nn3fa22gm0m0"]
 
 [ext_resource type="Script" path="res://scenes/game/stats_group.gd" id="1_2nl5y"]
-[ext_resource type="Texture2D" uid="uid://d2najgbir1uge" path="res://assets/icons/cards.png" id="1_egjg1"]
-[ext_resource type="Texture2D" uid="uid://bcdguxmk5g843" path="res://assets/icons/x.png" id="2_glo8x"]
+[ext_resource type="Texture2D" uid="uid://drsem2ah7hjbj" path="res://assets/icons/cards.png" id="1_egjg1"]
+[ext_resource type="Texture2D" uid="uid://2jdd70qmbibk" path="res://assets/icons/x.png" id="2_glo8x"]
 [ext_resource type="Theme" uid="uid://dcbb71xa6dfxt" path="res://themes/indicatorlabeltheme.tres" id="3_er6l1"]
-[ext_resource type="Texture2D" uid="uid://crdv1s7ufy186" path="res://assets/icons/deck.png" id="4_yabwa"]
-[ext_resource type="Texture2D" uid="uid://dtc5nr8kbr1ac" path="res://assets/icons/heart.png" id="5_y7cq5"]
-[ext_resource type="Texture2D" uid="uid://w17s6bfu7yij" path="res://assets/icons/battery-charging.svg" id="6_2jxq8"]
-[ext_resource type="Texture2D" uid="uid://cok5jfveer20n" path="res://assets/icons/discard.png" id="7_h2fck"]
-[ext_resource type="Texture2D" uid="uid://holdacy85lsj" path="res://assets/icons/volume.png" id="8_l2amm"]
+[ext_resource type="Texture2D" uid="uid://dj2jrem0ns5d8" path="res://assets/icons/deck.png" id="4_yabwa"]
+[ext_resource type="Texture2D" uid="uid://fdae7rpjwwv3" path="res://assets/icons/heart.png" id="5_y7cq5"]
+[ext_resource type="Texture2D" uid="uid://dt5gfu6i5xljk" path="res://assets/icons/battery-charging.svg" id="6_2jxq8"]
+[ext_resource type="Texture2D" uid="uid://dlqyskv1syjk6" path="res://assets/icons/discard.png" id="7_h2fck"]
+[ext_resource type="Texture2D" uid="uid://jvar2saw1b7k" path="res://assets/icons/volume.png" id="8_l2amm"]
 
 [node name="StatsGroup" type="GridContainer"]
 offset_right = 214.0

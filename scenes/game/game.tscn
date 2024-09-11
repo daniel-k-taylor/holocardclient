@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d2fspiqdcp0p1" path="res://scenes/game/card_base.tscn" id="8_13v6m"]
 [ext_resource type="PackedScene" uid="uid://b5yajeq6o3fln" path="res://scenes/game/card_zone.tscn" id="10_bk3r3"]
 [ext_resource type="PackedScene" uid="uid://db711yiboenfu" path="res://scenes/game/action_menu.tscn" id="11_cx0xb"]
-[ext_resource type="Texture2D" uid="uid://bsyfgok3mshy8" path="res://assets/icons/donut.png" id="12_j6jby"]
+[ext_resource type="Texture2D" uid="uid://b4kw22837um2t" path="res://assets/icons/donut.png" id="12_j6jby"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v0wnc"]
 

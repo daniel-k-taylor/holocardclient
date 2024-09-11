@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/game/card_popout.gd" id="1_nkmer"]
 [ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="2_38lt7"]
 [ext_resource type="PackedScene" uid="uid://c86ockf3l38eh" path="res://scenes/game/multichoicebutton.tscn" id="2_a2hxt"]
-[ext_resource type="Texture2D" uid="uid://dh6ntvtll3ni" path="res://assets/icons/minus.png" id="3_mqvsl"]
+[ext_resource type="Texture2D" uid="uid://ohmonvyuqeuf" path="res://assets/icons/minus.png" id="3_mqvsl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f7jww"]
 

@@ -30,6 +30,13 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
+[importer_defaults]
+
+texture={
+"compress/lossy_quality": 0.4,
+"compress/mode": 1
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

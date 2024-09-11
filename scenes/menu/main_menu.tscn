@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
 [ext_resource type="PackedScene" uid="uid://wmclosx28ofb" path="res://scenes/misc/modal_dialog.tscn" id="3_6lbr4"]
 [ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="4_1cxk2"]
-[ext_resource type="Texture2D" uid="uid://byu4ays6kt1da" path="res://assets/icons/gear.png" id="5_rki3m"]
+[ext_resource type="Texture2D" uid="uid://bh0c0vkyounat" path="res://assets/icons/gear.png" id="5_rki3m"]
 [ext_resource type="PackedScene" uid="uid://dqeoyiig2xv07" path="res://scenes/misc/settings_window.tscn" id="6_gl1g0"]
 
 [node name="MainMenu" type="Control"]
