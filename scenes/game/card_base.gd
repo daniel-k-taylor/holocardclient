@@ -174,7 +174,7 @@ func copy_graphics(card : CardBase):
 	_update_english_text()
 	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay_root.visible = card.overlay_root.visible
-	
+
 
 func is_holomem_card():
 	return _card_type in ["holomem_debut", "holomem_bloom", "holomem_spot"]
@@ -251,6 +251,10 @@ func remove_cheer(card_id):
 func add_damage(amount, is_dead : bool):
 	damage += amount
 	dead = is_dead
+	_update_stats()
+
+func set_damage(amount):
+	damage = amount
 	_update_stats()
 
 func set_resting(is_resting, immediate : bool = false):

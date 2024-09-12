@@ -41,14 +41,16 @@ theme_override_font_sizes/font_size = 24
 text = "Unset"
 
 [node name="Dash" type="Label" parent="Margin/Layout/NameBox"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "-"
 
 [node name="ZoneCount" type="Label" parent="Margin/Layout/NameBox"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "XX"
+text = "0"
 
 [node name="GridContainer" type="GridContainer" parent="Margin/Layout"]
 layout_mode = 2

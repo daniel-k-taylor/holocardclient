@@ -362,8 +362,12 @@ func process_game_event(event_type, event_data):
 			_on_send_collab_back_event(event_data)
 		Enums.EventType_Collab:
 			_on_collab_event(event_data)
+		Enums.EventType_DamageDealt:
+			_on_damage_dealt_event(event_data)
 		Enums.EventType_Decision_ChooseCards:
 			_on_choose_cards_event(event_data)
+		Enums.EventType_Decision_ChooseHolomemForEffect:
+			_on_choose_holomem_for_effect_event(event_data)
 		Enums.EventType_Decision_MainStep:
 			_on_main_step_decision(event_data)
 		Enums.EventType_Decision_OrderCards:
@@ -394,10 +398,12 @@ func process_game_event(event_type, event_data):
 			_on_initial_placement_revealed(event_data)
 		Enums.EventType_MainStepStart:
 			_on_main_step_start(event_data)
+		Enums.EventType_ModifyHP:
+			_on_modify_hp_event(event_data)
 		Enums.EventType_MoveCard:
 			_on_move_card_event(event_data)
-		Enums.EventType_MoveCheer:
-			_on_move_cheer_event(event_data)
+		Enums.EventType_MoveAttachedCard:
+			_on_move_attached_card_event(event_data)
 		Enums.EventType_MulliganDecision:
 			_on_mulligan_decision_event(event_data)
 		Enums.EventType_MulliganReveal:
@@ -440,6 +446,11 @@ func _get_card_definition_id(card_id):
 		if key == card_id:
 			return game_card_map[key]
 	return null
+
+func _is_cheer_card(card_id):
+	var definition_id = _get_card_definition_id(card_id)
+	var card = CardDatabase.get_card(definition_id)
+	return card["card_type"] == "cheer"
 
 func _get_card_colors(card_id):
 	var definition_id = _get_card_definition_id(card_id)
@@ -629,8 +640,8 @@ func _play_popup_message(text :String, fast:bool = false):
 
 func _on_add_turn_effect(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	var effect = event_data["full_effect"]
-	var effect_text = Strings.get_effect_text(effect)
+	var turn_effect = event_data["turn_effect"]
+	var effect_text = "This Turn: " + Strings.get_effect_text(turn_effect)
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s %s" % [
 		active_player.get_name(),
 		effect_text
@@ -774,6 +785,30 @@ func _on_choose_cards_event(event_data):
 				null
 			)
 
+	else:
+		# Nothing for opponent.
+		pass
+
+func _on_choose_holomem_for_effect_event(event_data):
+	var active_player = get_player(event_data["effect_player_id"])
+	if active_player.is_me():
+		var cards_can_choose = event_data["cards_can_choose"]
+		var effect = event_data["effect"]
+		_begin_make_choice(cards_can_choose, 1, 1)
+		var instructions = Strings.build_choose_holomem_for_effect_string(effect)
+		action_menu_choice_info = {
+			"strings": [Strings.get_string(Strings.STRING_OK)],
+			"enabled": [false],
+			"enable_check": [_is_selection_requirement_met],
+		}
+		action_menu.show_choices(instructions, action_menu_choice_info, func(_choice_index):
+			# Submit the choice.
+			var selected_ids = []
+			for card in selected_cards:
+				selected_ids.append(card._card_id)
+			submit_effect_resolution_choose_cards_for_effect(selected_ids)
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		)
 	else:
 		# Nothing for opponent.
 		pass
@@ -1546,6 +1581,23 @@ func _on_main_step_start(event_data):
 	if not active_player.is_me():
 		_play_popup_message("Main Step", true)
 
+func _on_modify_hp_event(event_data):
+	var active_player = get_player(event_data["target_player_id"])
+	var card_id = event_data["card_id"]
+	var damage_done = event_data["damage_done"]
+	var new_damage = event_data["new_damage"]
+
+	var card = find_card_on_board(card_id)
+	card.set_damage(new_damage)
+
+	_play_popup_message("Damage: %s" % [damage_done])
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
+		active_player.get_name(),
+		_get_card_definition_id(card_id),
+		damage_done
+	])
+
+
 func _on_move_card_event(event_data):
 	var active_player = get_player(event_data["moving_player_id"])
 	var from_zone = event_data["from_zone"]
@@ -1648,26 +1700,29 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			_:
 				var holomem_card = find_card_on_board(zone_card_id)
 				if holomem_card:
-					var cheer_colors = _get_card_colors(card_id)
-					holomem_card.attach_cheer(card_id, cheer_colors)
-					card.begin_move_to(holomem_card.position, false, true)
+					if _is_cheer_card(card_id):
+						var cheer_colors = _get_card_colors(card_id)
+						holomem_card.attach_cheer(card_id, cheer_colors)
+						card.begin_move_to(holomem_card.position, false, true)
+					else:
+						holomem_card.attach_card(card_id)
 				else:
 					Logger.log_game("Unimplemented MoveCard from zone")
 					assert(false)
 
-func _on_move_cheer_event(event_data):
+func _on_move_attached_card_event(event_data):
 	var active_player= get_player(event_data["owning_player_id"])
 	var from_holomem_id = event_data["from_holomem_id"]
 	var to_holomem_id = event_data["to_holomem_id"]
-	var cheer_id = event_data["cheer_id"]
+	var attached_id = event_data["attached_id"]
 
 	var already_handled = false
-	if cheer_id in move_card_ids_already_handled:
-		move_card_ids_already_handled.erase(cheer_id)
+	if attached_id in move_card_ids_already_handled:
+		move_card_ids_already_handled.erase(attached_id)
 		already_handled = true
 
 	if not already_handled:
-		do_move_cards(active_player, from_holomem_id, to_holomem_id, to_holomem_id, [cheer_id])
+		do_move_cards(active_player, from_holomem_id, to_holomem_id, to_holomem_id, [attached_id])
 
 func _on_mulligan_decision_event(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -1712,27 +1767,38 @@ func _on_mulligan_reveal_event(event_data):
 
 func _on_perform_art_event(event_data):
 	var active_player = get_player(event_data["active_player"])
-	var target_player = get_player(event_data["target_player"])
 	var performer_id = event_data["performer_id"]
 	var art_id = event_data["art_id"]
-	var target_id = event_data["target_id"]
 	var power = event_data["power"]
-	var died = event_data["died"]
-	var is_game_over = event_data["game_over"]
-	var life_lost = event_data["life_lost"]
-
-	# TODO: Mark performer as used an art, icon?
-	# TODO: Mark target dead with an icon?
-
-	var card = find_card_on_board(target_id)
-	card.add_damage(power, died)
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] performs art [SKILL][%s][/SKILL] for %s damage" % [
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] performs art [SKILL][%s][/SKILL]" % [
 		active_player.get_name(),
 		_get_card_definition_id(performer_id),
 		Strings.get_skill_string(art_id),
 		power,
 	])
+
+	# TODO: Mark performer as used an art, icon?
+	# TODO: Mark target dead with an icon?
 	_play_popup_message("Art: %s\nDamage: %s" % [Strings.get_skill_string(art_id), power])
+
+
+func _on_damage_dealt_event(event_data):
+	var target_player = get_player(event_data["target_player"])
+	var target_id = event_data["target_id"]
+	var damage = event_data["damage"]
+	var died = event_data["died"]
+	var _special = event_data["special"]
+	var is_game_over = event_data["game_over"]
+	var life_lost = event_data["life_lost"]
+	var _life_loss_prevented = event_data["life_loss_prevented"]
+
+	var card = find_card_on_board(target_id)
+	card.add_damage(damage, died)
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
+		target_player.get_name(),
+		_get_card_definition_id(target_id),
+		damage,
+	])
 
 	if died:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [

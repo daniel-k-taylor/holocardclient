@@ -64,6 +64,7 @@ layout_mode = 2
 text = "Uninitialized"
 
 [node name="MainButtons" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(350, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
