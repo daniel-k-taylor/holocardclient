@@ -25,6 +25,12 @@ func get_test_decks():
 	else:
 		print("Test decks file doesn't exist")
 
+func get_supported_cards():
+	var card_ids = []
+	for card in card_data:
+		card_ids.append(card["card_id"])
+	return card_ids
+
 func get_card(definition_id) -> Dictionary:
 	for card in card_data:
 		if card['card_id'] == definition_id:

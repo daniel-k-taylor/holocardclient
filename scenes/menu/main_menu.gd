@@ -30,6 +30,7 @@ var file_load_callback
 @onready var open_file_dialog = $OpenFileDialog
 @onready var modal_dialog = $ModalDialog
 @onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
+@onready var supported_cards_list : ItemList = $SupportedCardsList
 
 enum MenuState {
 	MenuState_ConnectingToServer,
@@ -60,6 +61,11 @@ func _ready() -> void:
 	custom_deck_label.visible = false
 
 	test_decks = CardDatabase.get_test_decks()
+	var supported_cards = CardDatabase.get_supported_cards()
+	# Sort supported cards by alpha.
+	supported_cards.sort()
+	for card in supported_cards:
+		supported_cards_list.add_item(card)
 	deck_selector.clear()
 	for i in range(len(test_decks)):
 		var deck = test_decks[i]
