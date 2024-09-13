@@ -145,7 +145,7 @@ class PlayerState:
 		_archive_zone.remove_card(card_id)
 
 	func add_card_to_archive(card:CardBase):
-		card.remove_all_attached_cards()
+		card.clear_attached()
 		_archive_zone.add_card(card, 0)
 		_game._put_cards_on_top([card])
 
@@ -249,12 +249,15 @@ class PlayerState:
 		# TODO: Attach the target card to the bloom card for viewing? Maybe a little flower icon that shows a popout?
 		bloom_card.add_damage(target_card.damage, false)
 		bloom_card.set_resting(target_card._resting, true)
-		bloom_card.attach_card(target_card._card_id)
-		for attached_card_id in target_card.remove_all_attached_cards():
+		var attached_card_ids = target_card.get_attached()
+		for attached_card_id in attached_card_ids:
 			bloom_card.attach_card(attached_card_id)
+		target_card.clear_attached()
 		var cheer_map = target_card.remove_all_attached_cheer()
 		for cheer_id in cheer_map:
 			bloom_card.attach_cheer(cheer_id, cheer_map[cheer_id])
+
+		bloom_card.attach_card(target_card._card_id)
 		_game.destroy_card(target_card)
 
 	func generate_holopower(holopower_generated):
@@ -538,6 +541,7 @@ func create_card(card_id : String, definition_id_for_oshi : String = "", skip_ad
 		new_card.create_card(definition, definition_id, card_id, card_type)
 		new_card.connect("clicked_card", _on_card_pressed)
 		new_card.connect("hover_card", _on_card_hovered)
+		new_card.connect("view_attachments", _on_view_attachments)
 	if not skip_add_to_all:
 		all_cards.add_child(new_card)
 		new_card.initialize_graphics()
@@ -1710,7 +1714,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 						var cheer_colors = _get_card_colors(card_id)
 						holomem_card.attach_cheer(card_id, cheer_colors)
 					else:
-						holomem_card.attach_card(card_id)
+						holomem_card.attach_card(card._card_id)
 				else:
 					Logger.log_game("Unimplemented MoveCard from zone")
 					assert(false)
@@ -1811,10 +1815,11 @@ func _on_damage_dealt_event(event_data):
 			_get_card_definition_id(target_id),
 		])
 		# Put the card and all attached cards in the archive.
-		var attached_cards = card.remove_all_attached_cards()
+		var attached_card_ids = card.get_attached()
 		var attached_cheer = card.remove_all_attached_cheer()
-		for attached_id in attached_cards:
+		for attached_id in attached_card_ids:
 			do_move_cards(target_player, target_id, "archive", "", [attached_id])
+		card.clear_attached()
 		for cheer_id in attached_cheer:
 			do_move_cards(target_player, target_id, "archive", "", [cheer_id])
 
@@ -2112,6 +2117,24 @@ func _on_card_hovered(_card_id : String, card : CardBase, is_hover : bool):
 	big_card.visible = is_hover
 	if is_hover:
 		big_card.copy_graphics(card)
+
+func _on_view_attachments(card_ids : Array):
+	var popout_info = {
+		"strings": [],
+		"enabled": [],
+		"enable_check": [],
+		"callback": [],
+		"order_cards_mode": false,
+	}
+
+	var instructions = Strings.get_string(Strings.ATTACHED_CARDS)
+	instructions += " (%s)" % len(card_ids)
+	var card_copies = []
+	for card_id in card_ids:
+		var new_card = create_card(card_id, "", true)
+		card_copies.append(new_card)
+	archive_card_popout.show_panel(instructions, popout_info, card_copies, [])
+
 
 func _on_exit_game_button_pressed() -> void:
 	NetworkManager.leave_game()

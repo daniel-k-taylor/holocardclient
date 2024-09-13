@@ -4,7 +4,7 @@ signal settings_loaded
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
-const ClientVersionString : String = "240908.2100" # YYMMDD.HHMM
+const ClientVersionString : String = "240912.2100" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 var LoggingEnabled : bool = true
@@ -43,11 +43,11 @@ func toggle_logging(toggle_on : bool) -> void:
 
 func get_user_setting(setting_name : String):
 	return user_settings[setting_name]
-	
+
 func save_user_setting(setting_name : String, value):
 	user_settings[setting_name] = value
 	save_persistent_settings()
-	
+
 func save_persistent_settings():
 	var file = FileAccess.open(user_settings_file, FileAccess.WRITE)
 	file.store_line(JSON.stringify(user_settings))

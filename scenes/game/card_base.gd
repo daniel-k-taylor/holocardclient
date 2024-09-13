@@ -3,6 +3,7 @@ extends Node2D
 
 signal clicked_card(card_id, card)
 signal hover_card(card_id, card, hover)
+signal view_attachments(card_ids)
 
 const DefaultCardSize = Vector2(250.0, 350.0)
 const DefaultCardScale = 0.5
@@ -12,6 +13,7 @@ const ArchiveCardScale = 0.4
 
 const CheerIndicatorScene = preload("res://scenes/game/cheer_indicator.tscn")
 const CardTextInfoScene = preload("res://scenes/game/card_text_info.tscn")
+const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 
 @onready var card_image : TextureRect = $OuterMargin/InnerMargin/PanelContainer/CardImageHolder/CardImage
 @onready var card_id_label = $OuterMargin/InnerMargin/PanelContainer/Overlay/HBoxContainer2/PanelContainer/MarginContainer/CardIdLabel
@@ -24,6 +26,8 @@ const CardTextInfoScene = preload("res://scenes/game/card_text_info.tscn")
 @onready var damage_label = $OuterMargin/DamageIndicator/HBox/MarginContainer/MarginContainer/CenterContainer/DamageLabel
 @onready var card_text_info_container = $OuterMargin/InnerMargin/PanelContainer/Overlay/PanelContainer/CardTextContainer
 @onready var overlay_root = $OuterMargin/InnerMargin/PanelContainer/Overlay
+@onready var attachment_box = $OuterMargin/AttachmentIndicator/AttachmentBox
+@onready var attachment_count = $OuterMargin/AttachmentIndicator/AttachmentBox/MarginContainer/HBox/AttachmentCount
 
 @export var is_big_card : bool = false
 
@@ -58,6 +62,7 @@ func _ready():
 		selection_button.visible = false
 	if scale.x == 1.0:
 		scale = Vector2(DefaultCardScale, DefaultCardScale)
+	attachment_box.visible = false
 
 func _process(delta: float) -> void:
 	if is_big_card:
@@ -167,14 +172,12 @@ func copy_graphics(card : CardBase):
 	damage = card.damage
 	dead = card.dead
 	_card_type = card._card_type
-	_attached_cards = card._attached_cards
 	set_selected(card._selected)
 	set_selected_highlight(card.selected_highlight.visible)
 	_update_stats()
 	_update_english_text()
 	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay_root.visible = card.overlay_root.visible
-
 
 func is_holomem_card():
 	return _card_type in ["holomem_debut", "holomem_bloom", "holomem_spot"]
@@ -212,6 +215,10 @@ func remove_cheer_indicator(color):
 func _update_stats():
 	if _definition_id == "HIDDEN":
 		return
+
+	var num_attachments = len(_attached_cards)
+	attachment_box.visible = num_attachments > 0
+	attachment_count.text = str(num_attachments)
 
 	card_def_label.text = _definition_id
 	# Use only the card_id part after _ if there is a _.
@@ -269,11 +276,11 @@ func attach_card(card_id):
 	_attached_cards.append(card_id)
 	_update_stats()
 
-func remove_all_attached_cards():
-	var previously_attached = _attached_cards
+func get_attached():
+	return _attached_cards
+
+func clear_attached():
 	_attached_cards = []
-	_update_stats()
-	return previously_attached
 
 func remove_all_attached_cheer():
 	var cheer = _cheer.duplicate()
@@ -342,3 +349,6 @@ func _on_button_mouse_entered() -> void:
 func _on_button_mouse_exited() -> void:
 	if not is_big_card:
 		hover_card.emit(_card_id, self, false)
+
+func _on_attachment_button_pressed() -> void:
+	view_attachments.emit(_attached_cards)

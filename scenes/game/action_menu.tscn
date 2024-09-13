@@ -57,23 +57,33 @@ size_flags_vertical = 4
 theme_override_font_sizes/normal_font_size = 20
 theme_override_font_sizes/bold_font_size = 20
 bbcode_enabled = true
-text = "Instructions go here to tell you what to do:"
+text = "Instructions go here to tell you what to do:
+triple
+line"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="HideShowBox" type="HBoxContainer" parent="OuterMargin/MainVBox/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/MainVBox/PanelContainer/HideShowBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ShowMenuButton" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox" instance=ExtResource("2_o375t")]
+[node name="ShowMenuButton" parent="OuterMargin/MainVBox/PanelContainer/HideShowBox" instance=ExtResource("2_o375t")]
 visible = false
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("3_68mdx")
 
-[node name="HideMenuButton" parent="OuterMargin/MainVBox/PanelContainer/InstructionsHBox" instance=ExtResource("2_o375t")]
-custom_minimum_size = Vector2(32, 32)
+[node name="HideMenuButton" parent="OuterMargin/MainVBox/PanelContainer/HideShowBox" instance=ExtResource("2_o375t")]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("4_text0")
 
@@ -85,5 +95,5 @@ theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
 columns = 2
 
-[connection signal="pressed" from="OuterMargin/MainVBox/PanelContainer/InstructionsHBox/ShowMenuButton" to="." method="_on_show_menu_button_pressed"]
-[connection signal="pressed" from="OuterMargin/MainVBox/PanelContainer/InstructionsHBox/HideMenuButton" to="." method="_on_hide_menu_button_pressed"]
+[connection signal="pressed" from="OuterMargin/MainVBox/PanelContainer/HideShowBox/ShowMenuButton" to="." method="_on_show_menu_button_pressed"]
+[connection signal="pressed" from="OuterMargin/MainVBox/PanelContainer/HideShowBox/HideMenuButton" to="." method="_on_hide_menu_button_pressed"]

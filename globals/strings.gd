@@ -30,6 +30,7 @@ const DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM = "Choose a Holomem to r
 
 const YOUR_ARCHIVE = "Your Archive"
 const OPPONENT_ARCHIVE = "Opponent Archive"
+const ATTACHED_CARDS = "Attached Cards"
 
 const SkillNameMap = {
 	# Oshi
@@ -467,7 +468,7 @@ func build_english_card_text(definition):
 				}
 				data.append(next_entry)
 				if "on_kill_effects" in art and len(art["on_kill_effects"]) > 0:
-					var kill_text = "\n"
+					var kill_text = ""
 					var on_kill_effects = art["on_kill_effects"]
 					kill_text += "[b]On Kill[/b]: "
 					for i in range(len(on_kill_effects)):
@@ -476,7 +477,7 @@ func build_english_card_text(definition):
 							kill_text += " "
 						kill_text += get_effect_text(effect)
 					var kill_entry = {
-						"colors": colors,
+						"colors": [],
 						"text": kill_text
 					}
 					data.append(kill_entry)

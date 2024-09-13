@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2fspiqdcp0p1"]
+[gd_scene load_steps=15 format=3 uid="uid://d2fspiqdcp0p1"]
 
 [ext_resource type="Script" path="res://scenes/game/card_base.gd" id="1_gln13"]
 [ext_resource type="Texture2D" uid="uid://6vtjn6xvu8je" path="res://assets/cardbacks/holo_back.png" id="2_fmpqo"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://yfm3tk3pgk1i" path="res://assets/highlights/card_border_highlight_selected.png" id="3_oudmd"]
 [ext_resource type="Texture2D" uid="uid://bbyh2gpahtady" path="res://assets/icons/damage_counter_red.png" id="3_ugdbs"]
 [ext_resource type="Texture2D" uid="uid://cgsd11ktytjvc" path="res://assets/highlights/card_border_highlight_discard_pile.png" id="4_dh5j2"]
+[ext_resource type="Texture2D" uid="uid://l1rbxm47rsmf" path="res://assets/highlights/arena_border_highlight_pressed.png" id="4_ff4sg"]
 [ext_resource type="Texture2D" uid="uid://bnuol0ewqd6p8" path="res://assets/highlights/card_border_highlight_pressed.png" id="4_ovykp"]
+[ext_resource type="Texture2D" uid="uid://dogldee47qjtf" path="res://assets/highlights/arena_border_highlight_selected.png" id="5_1ualb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehge2"]
 bg_color = Color(0, 0, 0, 1)
@@ -86,6 +88,7 @@ layout_mode = 2
 text = "CARD Def"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="OuterMargin/InnerMargin/PanelContainer/Overlay"]
+visible = false
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
@@ -175,6 +178,63 @@ texture_hover = ExtResource("3_oudmd")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="AttachmentIndicator" type="VBoxContainer" parent="OuterMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/AttachmentIndicator"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 30
+
+[node name="MarginContainer2" type="MarginContainer" parent="OuterMargin/AttachmentIndicator"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AttachmentBox" type="PanelContainer" parent="OuterMargin/AttachmentIndicator"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/AttachmentIndicator/AttachmentBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBox" type="HBoxContainer" parent="OuterMargin/AttachmentIndicator/AttachmentBox/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="AttachmentIcon" type="TextureRect" parent="OuterMargin/AttachmentIndicator/AttachmentBox/MarginContainer/HBox"]
+custom_minimum_size = Vector2(32, 48)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_fmpqo")
+expand_mode = 1
+
+[node name="x" type="Label" parent="OuterMargin/AttachmentIndicator/AttachmentBox/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "x"
+
+[node name="AttachmentCount" type="Label" parent="OuterMargin/AttachmentIndicator/AttachmentBox/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "9"
+
+[node name="AttachmentButton" type="TextureButton" parent="OuterMargin/AttachmentIndicator/AttachmentBox"]
+layout_mode = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+texture_pressed = ExtResource("4_ff4sg")
+texture_hover = ExtResource("5_1ualb")
+ignore_texture_size = true
+stretch_mode = 0
+
 [node name="DamageIndicator" type="VBoxContainer" parent="OuterMargin"]
 layout_mode = 2
 mouse_filter = 2
@@ -221,3 +281,4 @@ text = "999"
 [connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="OuterMargin/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="OuterMargin/AttachmentIndicator/AttachmentBox/AttachmentButton" to="." method="_on_attachment_button_pressed"]

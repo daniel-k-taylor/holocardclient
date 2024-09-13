@@ -5,8 +5,8 @@ const MultiChoiceButtonScene = preload("res://scenes/game/multichoicebutton.tscn
 
 @onready var instruction_label : RichTextLabel = $OuterMargin/MainVBox/PanelContainer/InstructionsHBox/InstructionsLabel
 @onready var choice_grid : GridContainer = $OuterMargin/MainVBox/ChoiceButtons
-@onready var show_menu_button = $OuterMargin/MainVBox/PanelContainer/InstructionsHBox/ShowMenuButton
-@onready var hide_menu_button = $OuterMargin/MainVBox/PanelContainer/InstructionsHBox/HideMenuButton
+@onready var show_menu_button = $OuterMargin/MainVBox/PanelContainer/HideShowBox/ShowMenuButton
+@onready var hide_menu_button = $OuterMargin/MainVBox/PanelContainer/HideShowBox/HideMenuButton
 
 var choice_buttons : Array[MultiChoiceButton] = []
 const MAX_BUTTONS = 10
