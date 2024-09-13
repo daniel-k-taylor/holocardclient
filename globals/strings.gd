@@ -40,6 +40,8 @@ const SkillNameMap = {
 	"micintherighthand": "Mic in the right hand",
 	"squeezesqueeze": "Squeeze squeeze",
 	"illcrushyou": "I'll crush you",
+	"guardianofcivilization": "Guardian of Civilization",
+	"amazingdrawing": "Amazing Drawing",
 
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
@@ -58,12 +60,18 @@ const SkillNameMap = {
 	"brighterfuture": "Brighter Future",
 	"hey": "Hey",
 	"purepurepure": "Pure Pure Pure~",
+	"relaxtime": "Relax Time",
 
 	"konkanata": "Konkanata",
 	"imoffnow": "I'm off now",
 	"pleasegivelotsofsupport": "Please give lots of support!",
 	"angelstage": "Angel Stage",
 	"jetblackwings": "Jet Black Wings",
+	"thankyouforyourcontinuedsupport": "Thank you for your continued support!",
+	"everyonetogether": "Everyone together",
+	"everyonekonsomme": "Everyone! Kon-somme!",
+	"letsmakeitthebestdayever": "Let's make it the best day ever",
+	"itwontstop": "It won't stop",
 }
 
 const HolomemNames = {
@@ -165,34 +173,38 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	var to_zone_str = to_zone
 	match from_zone:
 		"hand":
-			from_zone_str = " from your hand"
+			from_zone_str = " from your Hand"
 		"deck":
-			from_zone_str = " from your deck"
+			from_zone_str = " from your Deck"
 		"archive":
-			from_zone_str = " from your archive"
+			from_zone_str = " from your Archive"
 		"backstage":
-			from_zone_str = " from your backstage"
+			from_zone_str = " from your Backstage"
 		"center":
-			from_zone_str = " from your center"
+			from_zone_str = " from your Center"
+		"cheer_deck":
+			from_zone_str = " from your Cheer Deck"
 		"collab":
-			from_zone_str = " from your collab"
+			from_zone_str = " from your Collab"
 		"holopower":
 			from_zone_str = " from your Holopower"
 		"":
 			from_zone_str = ""
 	match to_zone:
 		"archive":
-			to_zone_str = "your archive"
+			to_zone_str = "your Archive"
 		"backstage":
-			to_zone_str = "your backstage"
+			to_zone_str = "your Backstage"
 		"center":
-			to_zone_str = "your center"
+			to_zone_str = "your Center"
+		"cheer_deck":
+			to_zone_str = "your Cheer Deck"
 		"collab":
-			to_zone_str = "your collab"
+			to_zone_str = "your Collab"
 		"deck":
-			to_zone_str = "your deck"
+			to_zone_str = "your Deck"
 		"hand":
-			to_zone_str = "your hand"
+			to_zone_str = "your Hand"
 		"holomem":
 			to_zone_str = "a Holomem"
 		"holopower":
@@ -217,8 +229,16 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	var main_text = "Choose %s %s%s to move to %s%s." % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
 	if requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
+			"holomem":
+				main_text += "\nOnly Holomem"
+				if requirement_details["requirement_buzz_blocked"]:
+					main_text += " (no Buzz)"
 			"holomem_bloom":
 				main_text += "\nOnly Bloom"
+				if requirement_details["requirement_buzz_blocked"]:
+					main_text += " (no Buzz)"
+			"holomem_debut_or_bloom":
+				main_text += "\nOnly Debut/Bloom"
 				if requirement_details["requirement_buzz_blocked"]:
 					main_text += " (no Buzz)"
 			"holomem_named":
@@ -229,6 +249,12 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 				main_text += "\nOnly LIMITED"
 			"mascot":
 				main_text += "\nOnly Mascot"
+			"event":
+				main_text += "\nOnly Event"
+			"cheer":
+				main_text += "\nOnly Cheer"
+		if "requirement_tags" in requirement_details and len(requirement_details["requirement_tags"]) > 0:
+			main_text += "\nOnly tags: %s" % "/".join(requirement_details["requirement_tags"])
 	return main_text
 
 
@@ -269,8 +295,12 @@ func get_condition_text(conditions):
 		match condition["condition"]:
 			"attached_to":
 				text += "If attached to %s: " % [HolomemNames[condition["required_member_name"]]]
+			"bloom_target_is_debut":
+				text += "Bloom from Debut: "
 			"cards_in_hand":
 				text += "Cards in hand (%s-%s): " % [condition["amount_min"], condition["amount_max"]]
+			"center_has_any_tag":
+				text += "Center has tag %s: " % ["/".join(condition["condition_tags"])]
 			"center_is_color":
 				text += "Is %s: " % ["/".join(condition["condition_colors"])]
 			"collab_with":
@@ -320,6 +350,7 @@ func get_effect_text(effect):
 				requirement_details["requirement"] = effect["requirement"]
 				requirement_details["requirement_buzz_blocked"] = effect.get("requirement_buzz_blocked", false)
 				requirement_details["requirement_names"] = effect.get("requirement_names", [])
+				requirement_details["requirement_tags"] = effect.get("requirement_tags", [])
 			var from_str = effect["from"]
 			if "look_at" in effect:
 				var look_at = effect["look_at"]
@@ -362,6 +393,8 @@ func get_effect_text(effect):
 			text += "Increase life lost by %s." % [effect["amount"]]
 		"power_boost":
 			text += "+%s Power." % [effect["amount"]]
+		"power_boost_per_backstage":
+			text += "+%s Power per Back member." % [effect["amount"]]
 		"roll_die":
 			text += "Roll a die: "
 			var die_effects = effect["die_effects"]
@@ -401,10 +434,13 @@ func get_effect_text(effect):
 			else:
 				text += "Reduce your Center's remaining HP to %s." % [effect["amount"]]
 		"switch_center_with_back":
-			if effect["target_player"] == "opponent":
-				text += "Switch your opponent's Center with a Back member."
-			else:
-				text += "Switch your Center with a Back member."
+			var resting_str = ""
+			if "skip_resting" in effect and effect["skip_resting"]:
+				resting_str = " that is not Resting"
+			var opponent_str = ""
+			if "opponent" in effect and effect["opponent"]:
+				opponent_str = "opponent's "
+			text += "Switch your %sCenter with a Back member%s." % [opponent_str, resting_str]
 		"shuffle_hand_to_deck":
 			text += "Shuffle your hand into your deck."
 
@@ -497,6 +533,8 @@ func build_english_card_text(definition):
 				data.append({"colors": [], "text": "LIMITED"})
 			if definition["sub_type"] == "mascot":
 				data.append({"colors": [], "text": "Mascot"})
+			elif definition["sub_type"] == "event":
+				data.append({"colors": [], "text": "Event"})
 			if "play_conditions" in definition:
 				var play_conditions = definition["play_conditions"]
 				for condition in play_conditions:
