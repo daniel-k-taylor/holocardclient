@@ -41,8 +41,8 @@ enum MenuState {
 var menu_state : MenuState = MenuState.MenuState_ConnectingToServer
 
 var match_queues : Array = []
-var loaded_deck = get_starter_deck()
-var custom_deck_used = false
+var loaded_deck
+var test_decks = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -58,6 +58,14 @@ func _ready() -> void:
 	save_file_dialog.visible = false
 	open_file_dialog.visible = false
 	custom_deck_label.visible = false
+
+	test_decks = CardDatabase.get_test_decks()
+	deck_selector.clear()
+	for i in range(len(test_decks)):
+		var deck = test_decks[i]
+		deck_selector.add_item(deck["deck_name"], i)
+	deck_selector.selected = 0
+	loaded_deck = test_decks[0]
 
 	if OS.has_feature("web"):
 		#setupFileLoad defined in the HTML5 export header
@@ -169,17 +177,7 @@ func _on_server_connect_button_pressed() -> void:
 	NetworkManager.connect_to_server()
 
 func get_player_oshi():
-	if custom_deck_used:
-		return loaded_deck["oshi"]
-
-	var deck_value = deck_selector.selected
-	var chosen_oshi = oshi_sora
-	match deck_value:
-		0:
-			chosen_oshi = oshi_sora
-		1:
-			chosen_oshi = oshi_azki
-	return chosen_oshi
+	return loaded_deck["oshi"]
 
 func get_player_deck():
 	return loaded_deck["deck"]
@@ -236,8 +234,8 @@ func _on_load_deck_button_pressed():
 func _on_save_deck_button_pressed():
 	if OS.has_feature("web"):
 		window = JavaScriptBridge.get_interface("window")
-		var file_name = "deck_format.json"
-		var file_content = JSON.stringify(get_starter_deck())
+		var file_name = "%s.json" % loaded_deck["deck_name"]
+		var file_content = JSON.stringify(loaded_deck)
 		window.saveTextToFile(file_name, file_content)
 	else:
 		save_file_dialog.visible = true
@@ -284,47 +282,20 @@ func load_deck(data):
 
 func _on_deck_loaded(new_deck):
 	loaded_deck = new_deck
-	custom_deck_used = true
 	custom_deck_label.visible = true
 
 func _on_save_file_dialog_file_selected(path: String) -> void:
 	var file = FileAccess.open(path, FileAccess.WRITE)
-	var content = JSON.stringify(get_starter_deck())
+	var content = JSON.stringify(loaded_deck)
 	file.store_string(content)
 
 func _on_open_file_dialog_file_selected(path: String) -> void:
 	load_deck([FileAccess.get_file_as_string(path)])
 
-func get_starter_deck():
-	return {
-		"oshi": "hSD01-001",
-		"deck": {
-			"hSD01-003": 4,
-			"hSD01-004": 3,
-			"hSD01-005": 3,
-			"hSD01-006": 2,
-			"hSD01-007": 2,
-			"hSD01-008": 4,
-			"hSD01-009": 3,
-			"hSD01-010": 3,
-			"hSD01-011": 2,
-			"hSD01-012": 2,
-			"hSD01-013": 2,
-			"hSD01-014": 2,
-			"hSD01-015": 2,
-			"hSD01-016": 3,
-			"hSD01-017": 3,
-			"hSD01-018": 3,
-			"hSD01-019": 3,
-			"hSD01-020": 2,
-			"hSD01-021": 2,
-		},
-		"cheer_deck": {
-			"hY01-001": 10,
-			"hY02-001": 10
-		}
-	}
-
-
 func _on_settings_button_pressed() -> void:
 	$SettingsWindow.show_settings()
+
+
+func _on_deck_selector_item_selected(index: int) -> void:
+	loaded_deck = test_decks[index]
+	custom_deck_label.visible = false

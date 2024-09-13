@@ -2,6 +2,7 @@ extends Node
 
 var card_data = []
 var card_definitions_path = "res://data/card_definitions.json"
+var test_decks_path = "res://data/test_decks.json"
 
 const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 
@@ -15,6 +16,14 @@ func load_json_file(file_path : String):
 		return json
 	else:
 		print("Card definitions file doesn't exist")
+
+func get_test_decks():
+	if FileAccess.file_exists(test_decks_path):
+		var data = FileAccess.open(test_decks_path, FileAccess.READ)
+		var json = JSON.parse_string(data.get_as_text())
+		return json
+	else:
+		print("Test decks file doesn't exist")
 
 func get_card(definition_id) -> Dictionary:
 	for card in card_data:

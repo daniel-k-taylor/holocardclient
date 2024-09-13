@@ -267,7 +267,7 @@ func get_condition_text(conditions):
 		var condition = conditions[i]
 		match condition["condition"]:
 			"attached_to":
-				text += "Attached to %s: " % [HolomemNames[condition["required_member_name"]]]
+				text += "If attached to %s: " % [HolomemNames[condition["required_member_name"]]]
 			"cards_in_hand":
 				text += "Cards in hand (%s-%s): " % [condition["amount_min"], condition["amount_max"]]
 			"center_is_color":
@@ -275,9 +275,11 @@ func get_condition_text(conditions):
 			"collab_with":
 				text += "Collab with %s: " % [HolomemNames[condition["required_member_name"]]]
 			"effect_card_id_not_used_this_turn":
-				text += "Effect not used this turn: "
+				text += "Once per turn: "
 			"holomem_on_stage":
 				text += "%s on stage: " % [HolomemNames[condition["required_member_name"]]]
+			"opponent_turn":
+				text += "Opponent's turn: "
 			"performance_target_has_damage_over_hp":
 				text += "Damage exceeds hp by %s: " % [condition["amount"]]
 			"performer_is_center":
@@ -304,8 +306,11 @@ func get_effect_text(effect):
 		"add_turn_effect":
 			var turn_effect = effect["turn_effect"]
 			text += "This Turn: %s" % [get_effect_text(turn_effect)]
+		"add_turn_effect_for_holomem":
+			var turn_effect = effect["turn_effect"]
+			text += "Choose a Holomem. This Turn: %s" % [get_effect_text(turn_effect)]
 		"attach_card_to_holomem", "attach_card_to_holomem_internal":
-			text += "Attach card to Holomem."
+			text += "Attach card to Holomem.\n"
 		"choose_cards":
 			var requirement_details = {
 				"requirement": null,
@@ -337,7 +342,7 @@ func get_effect_text(effect):
 		"deal_damage":
 			var special_str = ""
 			if "special" in effect and effect["special"]:
-				special_str = "Special "
+				special_str = " Special"
 			var target_str = "to your "
 			if "opponent" in effect and effect["opponent"]:
 				target_str += "opponent's "
@@ -346,7 +351,7 @@ func get_effect_text(effect):
 			var prevent_life_str = ""
 			if "prevent_life_loss" in effect and effect["prevent_life_loss"]:
 				prevent_life_str = " (Can't lose life)"
-			text += "Deal %s%s damage %s%s." % [special_str, effect["amount"], target_str, prevent_life_str]
+			text += "Deal %s%s damage %s%s." % [effect["amount"], special_str, target_str, prevent_life_str]
 		"draw":
 			text += "Draw %s." % [effect["amount"]]
 		"move_cheer_between_holomems":
@@ -389,6 +394,11 @@ func get_effect_text(effect):
 				text += "May send Collab back."
 			else:
 				text += "Send Collab back."
+		"set_center_hp":
+			if "opponent" in effect and effect["opponent"]:
+				text += "Reduce opponent's Center's remaining HP to %s." % [effect["amount"]]
+			else:
+				text += "Reduce your Center's remaining HP to %s." % [effect["amount"]]
 		"switch_center_with_back":
 			if effect["target_player"] == "opponent":
 				text += "Switch your opponent's Center with a Back member."
@@ -406,7 +416,21 @@ func build_english_card_text(definition):
 	var data = []
 	match definition["card_type"]:
 		"holomem_debut", "holomem_bloom", "holomem_spot":
-			if "collab_effects" in definition:
+			if "bloom_effects" in definition and len(definition["bloom_effects"]) > 0:
+				var bloom_effects = definition["bloom_effects"]
+				var text = "[b]Bloom[/b]: "
+				for i in range(len(bloom_effects)):
+					var effect = bloom_effects[i]
+					if i > 0:
+						text += " "
+					text += get_effect_text(effect)
+
+				var next_entry = {
+					"colors": [],
+					"text": text
+				}
+				data.append(next_entry)
+			if "collab_effects" in definition and len(definition["collab_effects"]) > 0:
 				var collab_effects = definition["collab_effects"]
 				var text = "[b]Collab[/b]: "
 				for i in range(len(collab_effects)):
@@ -442,6 +466,20 @@ func build_english_card_text(definition):
 					"text": text
 				}
 				data.append(next_entry)
+				if "on_kill_effects" in art and len(art["on_kill_effects"]) > 0:
+					var kill_text = "\n"
+					var on_kill_effects = art["on_kill_effects"]
+					kill_text += "[b]On Kill[/b]: "
+					for i in range(len(on_kill_effects)):
+						var effect = on_kill_effects[i]
+						if i > 0:
+							kill_text += " "
+						kill_text += get_effect_text(effect)
+					var kill_entry = {
+						"colors": colors,
+						"text": kill_text
+					}
+					data.append(kill_entry)
 			data.append({"colors": [], "text": "Baton Pass Cost: %s" % definition["baton_cost"]})
 		"support":
 			var effects = []
@@ -489,7 +527,7 @@ func build_english_card_text(definition):
 				next_entry["text"] += get_effect_text(effect)
 
 			for i in range(len(attached_effects)):
-				var effect = effects[i]
+				var effect = attached_effects[i]
 				if i > 0:
 					next_entry["text"] += " "
 				next_entry["text"] += get_effect_text(effect)
@@ -522,4 +560,10 @@ func build_english_card_text(definition):
 			pass
 		_:
 			assert(false, "Unknown card type")
+	if "tags" in definition:
+		var next_entry = {
+			"colors": [],
+			"text": "%s" % " ".join(definition["tags"])
+		}
+		data.append(next_entry)
 	return data

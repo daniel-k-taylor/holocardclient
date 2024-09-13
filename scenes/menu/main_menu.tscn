@@ -255,5 +255,6 @@ layout_mode = 0
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="DeckControls/SampleDeckButton" to="." method="_on_save_deck_button_pressed"]
 [connection signal="pressed" from="DeckControls/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
+[connection signal="item_selected" from="DeckControls/HBoxContainer/DeckSelector" to="." method="_on_deck_selector_item_selected"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
 [connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]

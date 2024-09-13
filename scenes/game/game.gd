@@ -669,7 +669,7 @@ func _on_boost_stat_event(event_data):
 	var stat = event_data["stat"]
 	var amount = event_data["amount"]
 	# TODO: Animation - show stat boost.
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "[CARD]%s[/CARD] +%s [SKILL_COLOR]%s[/SKILL_COLOR] " % [
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "[CARD]%s[/CARD] +%s [SKILL]%s[/SKILL] " % [
 		_get_card_definition_id(card_id),
 		amount,
 		stat,
@@ -1623,13 +1623,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 	for card_id in card_ids:
 		var spawn_location = player.get_card_spawn_location()
 		var ignore_log = (from == "floating" or to == "floating" or from == to)
-		if not ignore_log:
-			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s moves [CARD]%s[/CARD] from %s to %s" % [
-				player.get_name(),
-				_get_card_definition_id(card_id),
-				from,
-				to
-			])
+		var from_zone = from
 		match from:
 			"archive":
 				player.remove_from_archive(card_id)
@@ -1664,6 +1658,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				player.remove_collab(card_id)
 			_:
 				# Assume this is a holomem card.
+				from_zone = "[CARD]%s[/CARD]" % _get_card_definition_id(from)
 				var holomem_from_card = find_card_on_board(from)
 				if holomem_from_card:
 					holomem_from_card.remove_attached(card_id)
@@ -1671,6 +1666,16 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				else:
 					assert(false, "Unexpected from zone")
 
+		if not ignore_log:
+			var to_zone = to
+			if zone_card_id:
+				to_zone = "[CARD]%s[/CARD]" % _get_card_definition_id(zone_card_id)
+			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s moves [CARD]%s[/CARD] from %s to %s" % [
+				player.get_name(),
+				_get_card_definition_id(card_id),
+				from_zone,
+				to_zone
+			])
 		var card = find_card_on_board(card_id)
 		if card_id == "HIDDEN" or not card:
 			card = create_card(card_id)
@@ -1700,10 +1705,10 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			_:
 				var holomem_card = find_card_on_board(zone_card_id)
 				if holomem_card:
+					card.begin_move_to(holomem_card.position, false, true)
 					if _is_cheer_card(card_id):
 						var cheer_colors = _get_card_colors(card_id)
 						holomem_card.attach_cheer(card_id, cheer_colors)
-						card.begin_move_to(holomem_card.position, false, true)
 					else:
 						holomem_card.attach_card(card_id)
 				else:
@@ -1770,7 +1775,7 @@ func _on_perform_art_event(event_data):
 	var performer_id = event_data["performer_id"]
 	var art_id = event_data["art_id"]
 	var power = event_data["power"]
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] performs art [SKILL][%s][/SKILL]" % [
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] performs art [SKILL]%s[/SKILL] %s" % [
 		active_player.get_name(),
 		_get_card_definition_id(performer_id),
 		Strings.get_skill_string(art_id),
