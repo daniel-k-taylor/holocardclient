@@ -1081,6 +1081,7 @@
             {
                 "timing": "on_damage",
                 "conditions": [
+                    { "condition": "opponent_turn" },
                     { "condition": "attached_to", "required_member_name": "amane_kanata" },
                     { "condition": "effect_card_id_not_used_this_turn" }
                 ],
