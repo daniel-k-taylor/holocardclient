@@ -427,6 +427,8 @@ func process_game_event(event_type, event_data):
 			_on_reset_step_choose_new_center_event(event_data)
 		Enums.EventType_ResetStepCollab:
 			_on_reset_step_collab_event(event_data)
+		Enums.EventType_RestoreHP:
+			_on_restore_hp_event(event_data)
 		Enums.EventType_RollDie:
 			_on_roll_die_event(event_data)
 		Enums.EventType_ShuffleDeck:
@@ -1944,6 +1946,21 @@ func _on_reset_step_collab_event(event_data):
 			do_move_cards(active_player, "collab", "backstage", "", [card_id])
 		else:
 			assert(false, "Missing card")
+
+func _on_restore_hp_event(event_data):
+	var active_player = get_player(event_data["target_player_id"])
+	var card_id = event_data["card_id"]
+	var healed_amount = event_data["healed_amount"]
+	var new_damage = event_data["new_damage"]
+	var card = find_card_on_board(card_id)
+	card.set_damage(new_damage)
+
+	_play_popup_message("Heal: %s" % [healed_amount])
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] heals %s damage" % [
+		active_player.get_name(),
+		_get_card_definition_id(card_id),
+		healed_amount
+	])
 
 func _on_roll_die_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
