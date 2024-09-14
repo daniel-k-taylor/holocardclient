@@ -28,12 +28,12 @@ anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -296.5
-offset_top = 10.0
+offset_top = 1.0
 offset_right = 296.5
-offset_bottom = 83.0
+offset_bottom = 84.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
-text = "Holo Card Fan Game"
+text = "HoloDuel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -71,10 +71,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -73.0
-offset_top = -20.0
-offset_right = 73.0
-offset_bottom = 20.0
+offset_left = -176.0
+offset_top = -200.0
+offset_right = 176.0
+offset_bottom = 198.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -144,10 +144,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -109.0
-offset_top = 100.0
-offset_right = 109.0
-offset_bottom = 155.0
+offset_left = 297.0
+offset_top = 101.0
+offset_right = 515.0
+offset_bottom = 156.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 32
 text = "Player Name"
@@ -260,6 +260,14 @@ offset_top = 318.0
 offset_right = 177.0
 offset_bottom = 341.0
 text = "Supported Cards"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 80.0
+offset_right = 823.0
+offset_bottom = 103.0
+text = "A fan implementation of the Hololive card game"
 
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
