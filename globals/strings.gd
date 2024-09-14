@@ -119,14 +119,8 @@ func get_performance_skill(performer_position, art_id, power):
 	var position_str = get_position_string(performer_position)
 	return "%s: %s (%s)" % [position_str, skill, power]
 
-func build_choose_die_result_string(skill_name, cost):
-	var skill_name_str = ""
-	if skill_name:
-		if cost:
-			skill_name_str = "Use [b]%s[/b] (%s Holopower)?\n" % [skill_name, cost]
-		else:
-			skill_name_str = "Use [b]%s[/b]?\n" % skill_name
-	return "%sChoose the next die result." % [skill_name_str]
+func build_choose_die_result_string():
+	return "Choose the next die result."
 
 func build_use_oshi_skill_string(skill_id, cost):
 	var skill_name = get_skill_string(skill_id)
@@ -301,11 +295,18 @@ func get_action_name(action_type:String):
 		_:
 			return "Unknown Action"
 
-func get_timing_text(timing):
+func get_timing_text(timing, timing_source_requirement):
 	var text = ""
 	match timing:
 		"before_art":
 			text += "Art: "
+		"before_die_roll":
+			if "timing_source_requirement":
+				match timing_source_requirement:
+					"holomem_ability":
+						text += "Before Die Roll (Holomem Ability): "
+			else:
+				text += "Before Die Roll: "
 		"on_damage":
 			text += "When Holomem takes damage: "
 	return text
@@ -357,17 +358,22 @@ func get_condition_text(conditions):
 
 func get_effect_text(effect):
 	var text = ""
+	if "oshi_effect" in effect:
+		var limit = "1/Turn"
+		if effect["limit"] == "once_per_game":
+			limit = "1/Game"
+		text += "-%s [b]%s[/b] (%s): " % [effect["cost"], get_skill_string(effect["skill_id"]), limit]
+
 	if "full_english_text" in effect:
-		return effect["full_english_text"]
+		# Override the text with the full text.
+		return text + effect["full_english_text"]
 	if "hide_effect_text" in effect and effect["hide_effect_text"]:
 		return text
 	if "timing" in effect:
-		text += get_timing_text(effect["timing"])
+		text += get_timing_text(effect["timing"], effect.get("timing_source_requirement", ""))
 	if "conditions" in effect:
 		text += get_condition_text(effect["conditions"])
 
-	if "oshi_effect" in effect:
-		text += "-%s [b]%s[/b]: " % [effect["cost"], get_skill_string(effect["skill_id"])]
 
 	var effect_type = effect["effect_type"]
 	match effect_type:
@@ -415,7 +421,7 @@ func get_effect_text(effect):
 			)
 			text += choose_str
 		"choose_die_result":
-			text += build_choose_die_result_string("", effect["cost"])
+			text += build_choose_die_result_string()
 		"deal_damage":
 			var special_str = ""
 			if "special" in effect and effect["special"]:
@@ -633,25 +639,31 @@ func build_english_card_text(definition):
 
 			data.append(next_entry)
 		"oshi":
-			for oshi_skill in definition["oshi_skills"]:
+			for action in definition.get("actions", []):
 				var limit = "1/Turn"
-				if oshi_skill["limit"] == "once_per_game":
+				if action["limit"] == "once_per_game":
 					limit = "1/Game"
-				var text = "-%s [b]%s[/b] (%s): " % [oshi_skill["cost"], get_skill_string(oshi_skill["skill_id"]), limit]
-				match oshi_skill["timing"]:
-					"action":
-						text += "Action: "
-					"before_die_roll":
-						text += "Before Holomem ability die roll: "
-				for i in range(len(oshi_skill["effects"])):
-					var effect = oshi_skill["effects"][i]
-					if i > 0:
-						text += " "
-					text += get_effect_text(effect)
+				var text = "-%s [b]%s[/b] (%s): " % [action["cost"], get_skill_string(action["skill_id"]), limit]
+				var effects_text = ""
+				for i in range(len(action["effects"])):
+					var effect = action["effects"][i]
+					if i > 0 and effects_text:
+						effects_text += " "
+					effects_text += get_effect_text(effect)
+				text += effects_text
 
 				var next_entry = {
 					"colors": [],
 					"text": text
+				}
+				data.append(next_entry)
+			for effect in definition.get("effects", []):
+				var effects_text = ""
+				effects_text += get_effect_text(effect)
+
+				var next_entry = {
+					"colors": [],
+					"text": effects_text
 				}
 				data.append(next_entry)
 		"cheer":

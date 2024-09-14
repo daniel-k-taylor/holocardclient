@@ -220,7 +220,7 @@ func _update_stats():
 	attachment_box.visible = num_attachments > 0
 	attachment_count.text = str(num_attachments)
 
-	card_def_label.text = _definition_id
+	card_def_label.text = "%s - %s" % [_definition_id, _card_id.split("_")[1]]
 	# Use only the card_id part after _ if there is a _.
 	# This is to avoid the card_id being too long.
 	var small_id = _card_id

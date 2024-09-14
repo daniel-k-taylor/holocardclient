@@ -2008,19 +2008,12 @@ func _on_end_turn_event(event_data):
 
 func _on_force_die_result_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	var is_oshi_effect = event_data["is_oshi_effect"]
-	var oshi_skill_id = event_data["oshi_skill_id"]
-	var cost = event_data["cost"]
 	if active_player.is_me():
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose die result[/DECISION]" % active_player.get_name())
 		_begin_make_choice([], 0, 0)
-		var skill_name = ""
-		if is_oshi_effect:
-			skill_name = Strings.get_skill_string(oshi_skill_id)
-		var instructions = Strings.build_choose_die_result_string(skill_name, cost)
+		var instructions = Strings.build_choose_die_result_string()
 		action_menu_choice_info = {
 			"strings": [
-				Strings.get_string(Strings.STRING_PASS),
 				"1",
 				"2",
 				"3",
@@ -2028,8 +2021,8 @@ func _on_force_die_result_event(event_data):
 				"5",
 				"6",
 				],
-			"enabled": [true, true, true, true, true, true, true],
-			"enable_check": [_allowed, _allowed, _allowed, _allowed, _allowed, _allowed, _allowed],
+			"enabled": [true, true, true, true, true, true],
+			"enable_check": [_allowed, _allowed, _allowed, _allowed, _allowed, _allowed],
 		}
 		action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
 			# Submit the choice.
