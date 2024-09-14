@@ -27,6 +27,7 @@ const DECISION_INSTRUCTIONS_SWAP_CENTER = "Choose a Holomem to swap into the Cen
 const DECISION_INSTRUCTIONS_PERFORMANCE_ART_TARGET = "Choose a target for this Art"
 const DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM = "Choose a Holomem to remove Cheer from"
 const DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM = "Choose a Holomem to receive Cheer"
+const DECISION_INSTRUCTIONS_MAKE_CHOICE = "Choose one effect"
 
 const YOUR_ARCHIVE = "Your Archive"
 const OPPONENT_ARCHIVE = "Opponent Archive"
@@ -78,6 +79,9 @@ const HolomemNames = {
 	"azki": "AZKi",
 	"tokino_sora": "Tokino Sora",
 	"amane_kanata": "Amane Kanata",
+	"nanashi_mumei": "Nanashi Mumei",
+	"usada_pekora": "Usada Pekora",
+	"moona_hoshinova": "Moona Hoshinova",
 }
 
 # Lazy placeholder for loc
@@ -101,6 +105,14 @@ func get_position_string(position):
 		"backstage": return "Back"
 		"collab": return "Collab"
 		_: return "Unknown"
+
+func get_stat_string(stat):
+	match stat:
+		"damage_prevented":
+			return "Damage Prevented"
+		"power":
+			return "Power"
+	return "UNKNOWN"
 
 func get_performance_skill(performer_position, art_id, power):
 	var skill = get_skill_string(art_id)
@@ -138,6 +150,7 @@ func build_place_cheer_string(source:String, color:String):
 
 func build_send_cheer_string(amount_min, amount_max, source):
 	var source_str = source
+	var action_word = "Send"
 	match source:
 		"archive":
 			source_str = "your Archive"
@@ -145,13 +158,16 @@ func build_send_cheer_string(amount_min, amount_max, source):
 			source_str = "your Cheer Deck"
 		"holomem":
 			source_str = "this Holomem"
+		"opponent_holomem":
+			source_str = "opponent's Holomem"
+			action_word = "Remove"
 	var amount_str = "%s" % amount_min
 	if amount_min != amount_max:
 		if amount_max == -1:
 			amount_str = "any amount of"
 		else:
 			amount_str = "%s-%s" % [amount_min, amount_max]
-	return "Send %s Cheer from %s." % [amount_str, source_str]
+	return "%s %s Cheer from %s." % [action_word, amount_str, source_str]
 
 func build_order_cards_string(to, bottom):
 	var dir_str = "top"
@@ -233,14 +249,20 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 				main_text += "\nOnly Holomem"
 				if requirement_details["requirement_buzz_blocked"]:
 					main_text += " (no Buzz)"
+				if requirement_details["requirement_bloom_levels"]:
+					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
 			"holomem_bloom":
 				main_text += "\nOnly Bloom"
 				if requirement_details["requirement_buzz_blocked"]:
 					main_text += " (no Buzz)"
+				if requirement_details["requirement_bloom_levels"]:
+					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
 			"holomem_debut_or_bloom":
 				main_text += "\nOnly Debut/Bloom"
 				if requirement_details["requirement_buzz_blocked"]:
 					main_text += " (no Buzz)"
+				if requirement_details["requirement_bloom_levels"]:
+					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
 			"holomem_named":
 				var name_ids = requirement_details["requirement_names"]
 				var names = get_names(name_ids)
@@ -254,7 +276,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 			"cheer":
 				main_text += "\nOnly Cheer"
 		if "requirement_tags" in requirement_details and len(requirement_details["requirement_tags"]) > 0:
-			main_text += "\nOnly tags: %s" % "/".join(requirement_details["requirement_tags"])
+			main_text += "\nOnly Tag: %s" % "/".join(requirement_details["requirement_tags"])
 	return main_text
 
 
@@ -296,7 +318,7 @@ func get_condition_text(conditions):
 			"attached_to":
 				text += "If attached to %s: " % [HolomemNames[condition["required_member_name"]]]
 			"bloom_target_is_debut":
-				text += "Bloom from Debut: "
+				text += "From Debut: "
 			"cards_in_hand":
 				text += "Cards in hand (%s-%s): " % [condition["amount_min"], condition["amount_max"]]
 			"center_has_any_tag":
@@ -309,8 +331,14 @@ func get_condition_text(conditions):
 				text += "Once per turn: "
 			"holomem_on_stage":
 				text += "%s on stage: " % [HolomemNames[condition["required_member_name"]]]
+			"not_used_once_per_game_effect":
+				text += "Once per game: "
+			"not_used_once_per_turn_effect":
+				text += "Once per turn: "
 			"opponent_turn":
 				text += "Opponent's turn: "
+			"oshi_is":
+				text += "Oshi is %s: " % [HolomemNames[condition["required_member_name"]]]
 			"performance_target_has_damage_over_hp":
 				text += "Damage exceeds hp by %s: " % [condition["amount"]]
 			"performer_is_center":
@@ -323,14 +351,23 @@ func get_condition_text(conditions):
 				text += "Performer has tag %s: " % ["/".join(condition["condition_tags"])]
 			"target_color":
 				text += "Weak(%s): " % [condition["color_requirement"]]
+			"target_has_any_tag":
+				text += "Target has tag %s: " % ["/".join(condition["condition_tags"])]
 	return text
 
 func get_effect_text(effect):
 	var text = ""
+	if "full_english_text" in effect:
+		return effect["full_english_text"]
+	if "hide_effect_text" in effect and effect["hide_effect_text"]:
+		return text
 	if "timing" in effect:
 		text += get_timing_text(effect["timing"])
 	if "conditions" in effect:
 		text += get_condition_text(effect["conditions"])
+
+	if "oshi_effect" in effect:
+		text += "-%s [b]%s[/b]: " % [effect["cost"], get_skill_string(effect["skill_id"])]
 
 	var effect_type = effect["effect_type"]
 	match effect_type:
@@ -342,6 +379,13 @@ func get_effect_text(effect):
 			text += "Choose a Holomem. This Turn: %s" % [get_effect_text(turn_effect)]
 		"attach_card_to_holomem", "attach_card_to_holomem_internal":
 			text += "Attach card to Holomem.\n"
+		"choice":
+			var choices = effect["choice"]
+			var choice_texts = []
+			text += "Choose one:\n"
+			for choice in choices:
+				choice_texts.append("- " + get_effect_text(choice))
+			text += "\n".join(choice_texts)
 		"choose_cards":
 			var requirement_details = {
 				"requirement": null,
@@ -351,6 +395,7 @@ func get_effect_text(effect):
 				requirement_details["requirement_buzz_blocked"] = effect.get("requirement_buzz_blocked", false)
 				requirement_details["requirement_names"] = effect.get("requirement_names", [])
 				requirement_details["requirement_tags"] = effect.get("requirement_tags", [])
+				requirement_details["requirement_bloom_levels"] = effect.get("requirement_bloom_levels", [])
 			var from_str = effect["from"]
 			if "look_at" in effect:
 				var look_at = effect["look_at"]
@@ -389,12 +434,18 @@ func get_effect_text(effect):
 		"move_cheer_between_holomems":
 			var amount = effect["amount"]
 			text += "Move %s Cheer between your Holomems." % amount
+		"pass":
+			text += "Pass."
 		"performance_life_lost_increase":
 			text += "Increase life lost by %s." % [effect["amount"]]
 		"power_boost":
 			text += "+%s Power." % [effect["amount"]]
 		"power_boost_per_backstage":
 			text += "+%s Power per Back member." % [effect["amount"]]
+		"reduce_damage":
+			text += "Reduce damage by %s." % [effect["amount"]]
+		"repeat_art":
+			text += "Repeat this Art."
 		"roll_die":
 			text += "Roll a die: "
 			var die_effects = effect["die_effects"]
@@ -411,8 +462,12 @@ func get_effect_text(effect):
 			text += build_send_cheer_string(effect["amount_min"], effect["amount_max"], effect["from"])
 			if effect["to"] == "this_holomem":
 				text += " Only to this Holomem."
+			elif effect["to"] == "archive":
+				text += " to Archive."
 			if "from_limitation" in effect:
 				match effect["from_limitation"]:
+					"center":
+						text += " From Center."
 					"color_in":
 						text += " Only %s Cheer." % ["/".join(effect["from_limitation_colors"])]
 			if "to_limitation" in effect:
@@ -444,7 +499,12 @@ func get_effect_text(effect):
 		"shuffle_hand_to_deck":
 			text += "Shuffle your hand into your deck."
 
-	if "and" in effect:
+	if "negative_condition_effects" in effect:
+		var negative_effects = effect["negative_condition_effects"]
+		text += "\nElse: "
+		for negative_effect in negative_effects:
+			text += get_effect_text(negative_effect)
+	if "and" in effect and "hide_and_text" not in effect:
 		for and_effect in effect["and"]:
 			text += "\n" + get_effect_text(and_effect)
 	return text

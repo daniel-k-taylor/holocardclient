@@ -367,6 +367,8 @@ func process_game_event(event_type, event_data):
 			_on_collab_event(event_data)
 		Enums.EventType_DamageDealt:
 			_on_damage_dealt_event(event_data)
+		Enums.EventType_Decision_Choice:
+			_on_choice_event(event_data)
 		Enums.EventType_Decision_ChooseCards:
 			_on_choose_cards_event(event_data)
 		Enums.EventType_Decision_ChooseHolomemForEffect:
@@ -672,11 +674,14 @@ func _on_boost_stat_event(event_data):
 	var card_id = event_data["card_id"]
 	var stat = event_data["stat"]
 	var amount = event_data["amount"]
+	var card_str = ""
+	if card_id:
+		card_str = "[CARD]%s[/CARD] " % _get_card_definition_id(card_id)
 	# TODO: Animation - show stat boost.
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "[CARD]%s[/CARD] +%s [SKILL]%s[/SKILL] " % [
-		_get_card_definition_id(card_id),
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s+%s [SKILL]%s[/SKILL] " % [
+		card_str,
 		amount,
-		stat,
+		Strings.get_stat_string(stat),
 	])
 	_play_popup_message("+%s %s" % [amount, stat])
 
@@ -738,6 +743,37 @@ func _on_collab_event(event_data):
 	do_move_cards(active_player, "backstage", "collab", "", [collab_card_id])
 	active_player.generate_holopower(holopower_generated)
 
+func _on_choice_event(event_data):
+	var active_player = get_player(event_data["effect_player_id"])
+	if active_player.is_me():
+		var choices = event_data["choice"]
+		var choice_texts = []
+		var enabled = []
+		var allowed = []
+		for choice in choices:
+			choice_texts.append(Strings.get_effect_text(choice))
+			enabled.append(true)
+			allowed.append(_allowed)
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice:[/DECISION]\n- %s" % [
+			active_player.get_name(),
+			"\n- ".join(choice_texts)
+		])
+		_begin_make_choice([], 0, 0)
+		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_MAKE_CHOICE)
+		action_menu_choice_info = {
+			"strings": choice_texts,
+			"enabled": enabled,
+			"enable_check": allowed,
+		}
+		action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
+			submit_effect_resolution_make_choice(choice_index)
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		)
+
+	else:
+		# Nothing for opponent.
+		pass
+
 func _on_choose_cards_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	if active_player.is_me():
@@ -753,7 +789,7 @@ func _on_choose_cards_event(event_data):
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose Cards[/DECISION]" % [
 			active_player.get_name()
 		])
-		if active_player.are_cards_in_zone_visible(from_zone):
+		if active_player.are_cards_in_zone_visible(from_zone) and from_zone != "archive":
 			# Select from already on screen cards.
 			assert(len(cards_can_choose) == len(all_card_seen))
 			_begin_make_choice(cards_can_choose, amount_min, amount_max)
@@ -1204,41 +1240,49 @@ func _on_send_cheer_event(event_data):
 		if amount_min == 0:
 			cancel_callback = _send_no_cheer
 
-		assert(to_zone == "holomem") # Note: This is always a single holomem.
-		assert(from_zone in ["archive", "cheer_deck", "life", "holomem"])
+		assert(to_zone in ["holomem", "archive"]) # Note: This is always a single holomem or the archive.
+		assert(from_zone in ["archive", "cheer_deck", "life", "holomem", "opponent_holomem"])
 		# For from holomem, first choose a mem, then choose a cheer on them in from_options, then choose a different holomem.
 		# For archive/life/cheer deck, use the popout to select cheer, then choose a holomem.
-		if from_zone == "holomem":
+		if from_zone == "holomem" or from_zone == "opponent_holomem":
 			var unique_mems = cheer_on_each_mem.keys()
 			_show_click_cards_action_menu(
 				unique_mems,
 				func(chosen_source_mem):
 					var cheer_options = cheer_on_each_mem[chosen_source_mem]
 					var instructions = Strings.build_send_cheer_string(
-						amount_min, amount_max, "holomem"
+						amount_min, amount_max, from_zone
 					)
 					_show_popout(instructions, cheer_options, cheer_options, amount_min, amount_max,
 						func():
 							var chosen_cheer_ids = []
 							for card in selected_cards:
 								chosen_cheer_ids.append(card._card_id)
-							# Now that cheer is selected, choose the target holomem.
-							# It can't be the source holomem.
-							valid_targets.erase(chosen_source_mem)
-							_show_click_cards_action_menu(
-								valid_targets,
-								func(chosen_target_mem):
-									var placements = {}
-									for cheer_id in chosen_cheer_ids:
-										placements[cheer_id] = chosen_target_mem
-									submit_effect_resolution_move_cheer_between_holomems(placements)
-									_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
-									pass,
-								Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM,
-								cancel_callback
-							)
-							_highlight_info_cards([chosen_source_mem])
-							pass,
+							if to_zone == "archive":
+								# These cards are going to the archive, so we're done.
+								var placements = {}
+								for cheer_id in chosen_cheer_ids:
+									placements[cheer_id] = "archive"
+								submit_effect_resolution_move_cheer_between_holomems(placements)
+								_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+							else:
+								# Now that cheer is selected, choose the target holomem.
+								# It can't be the source holomem.
+								valid_targets.erase(chosen_source_mem)
+								_show_click_cards_action_menu(
+									valid_targets,
+									func(chosen_target_mem):
+										var placements = {}
+										for cheer_id in chosen_cheer_ids:
+											placements[cheer_id] = chosen_target_mem
+										submit_effect_resolution_move_cheer_between_holomems(placements)
+										_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+										pass,
+									Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM,
+									cancel_callback
+								)
+								_highlight_info_cards([chosen_source_mem])
+								pass,
 						cancel_callback
 					)
 					_highlight_info_cards([chosen_source_mem])

@@ -1,6 +1,6 @@
 [
     {
-        "NOTE": "OSHI CARDS START",
+        "NOTE": "STARTER DECK CARDS START",
 
         "card_id": "hSD01-001",
         "card_type": "oshi",
@@ -31,7 +31,7 @@
                 "effects": [
                     {
                         "effect_type": "switch_center_with_back",
-                        "target_player": "opponent"
+                        "opponent": true
                     },
                     {
                         "effect_type": "add_turn_effect",
@@ -97,60 +97,6 @@
         ]
     },
     {
-        "card_id": "hBP01-001",
-        "card_type": "oshi",
-        "oshi_name": "amane_kanata",
-        "colors": ["white"],
-        "rarity": "osr",
-        "life": 5,
-        "oshi_skills": [
-            {
-                "skill_id": "squeezesqueeze",
-                "timing": "action",
-                "cost_type": "holopower",
-                "cost": 3,
-                "limit": "once_per_turn",
-                "effects": [
-                    {
-                        "effect_type": "set_center_hp",
-                        "opponent": true,
-                        "amount": 50
-                    }
-                ]
-            },
-            {
-                "skill_id": "illcrushyou",
-                "timing": "action",
-                "cost_type": "holopower",
-                "cost": 2,
-                "limit": "once_per_game",
-                "effects": [
-                    {
-                        "effect_type": "add_turn_effect_for_holomem",
-                        "turn_effect": {
-                            "timing": "before_art",
-                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
-                            "effect_type": "power_boost",
-                            "amount": 50,
-                            "and": [
-                                {
-                                    "conditions": [{ "condition": "performer_is_color", "condition_colors": ["white"] }],
-                                    "effect_type": "power_boost",
-                                    "amount": 50
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-        ],
-
-        "NOTE": "OSHI CARDS END"
-    },
-
-    {
-        "NOTE": "STARTER DECK CARDS START",
-
         "card_id": "hSD01-003",
         "card_type": "holomem_debut",
         "holomem_names": ["tokino_sora"],
@@ -468,10 +414,7 @@
                         "timing": "before_art",
                         "effect_type": "power_boost",
                         "amount": 50,
-                        "conditions": [{
-                            "condition": "target_color",
-                            "color_requirement": "blue"
-                        }]
+                        "conditions": [{ "condition": "target_color", "color_requirement": "blue" }]
                     },
                     {
                         "timing": "before_art",
@@ -499,10 +442,7 @@
                         "timing": "before_art",
                         "effect_type": "power_boost",
                         "amount": 50,
-                        "conditions": [{
-                            "condition": "target_color",
-                            "color_requirement": "blue"
-                        }]
+                        "conditions": [{ "condition": "target_color", "color_requirement": "blue" }]
                     },
                     {
                         "timing": "before_art",
@@ -855,10 +795,124 @@
     },
 
 
-
     {
         "NOTE": "BP1 CARDS START",
 
+        "card_id": "hBP01-001",
+        "card_type": "oshi",
+        "oshi_name": "amane_kanata",
+        "colors": ["white"],
+        "rarity": "osr",
+        "life": 5,
+        "oshi_skills": [
+            {
+                "skill_id": "squeezesqueeze",
+                "timing": "action",
+                "cost_type": "holopower",
+                "cost": 3,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "effect_type": "set_center_hp",
+                        "opponent": true,
+                        "amount": 50
+                    }
+                ]
+            },
+            {
+                "skill_id": "illcrushyou",
+                "timing": "action",
+                "cost_type": "holopower",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 50,
+                            "and": [
+                                {
+                                    "conditions": [{ "condition": "performer_is_color", "condition_colors": ["white"] }],
+                                    "effect_type": "power_boost",
+                                    "amount": 50
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-002",
+        "card_type": "oshi",
+        "oshi_name": "nanashi_mumei",
+        "colors": ["white"],
+        "rarity": "osr",
+        "life": 5,
+        "oshi_skills": [
+            {
+                "skill_id": "guardianofcivilization",
+                "timing": "on_damage",
+                "cost_type": "holopower",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "full_english_text": "Can be used during your opponent's turn when one of your Holomems with #Promise takes damage: reduce that damage by 50.",
+                        "effect_type": "choice",
+                        "conditions": [
+                            { "condition": "holopower_at_least", "amount": 2 },
+                            { "condition": "not_used_once_per_turn_effect", "condition_effect_id": "guardianofcivilization" },
+                            { "condition": "opponent_turn" },
+                            { "condition": "target_has_any_tag", "condition_tags": ["#Promise"] }
+                        ],
+                        "choice": [
+                            {
+                                "effect_type": "reduce_damage",
+                                "amount": 50,
+                                "oshi_effect": "true",
+                                "skill_id": "guardianofcivilization",
+                                "cost": 2,
+                                "cost_type": "holopower",
+                                "hide_and_text": true,
+                                "pre_effects": [
+                                    { "effect_type": "spend_holopower", "amount": 2, "oshi_skill_id": "guardianofcivilization" },
+                                    { "effect_type": "record_used_once_per_turn_effect", "effect_id": "guardianofcivilization" }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            },
+            {
+                "skill_id": "amazingdrawing",
+                "timing": "action",
+                "cost_type": "holopower",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "event",
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
         "card_id": "hBP01-009",
         "card_type": "holomem_debut",
         "holomem_names": ["amane_kanata"],
@@ -1055,6 +1109,414 @@
                 "target": "center",
                 "opponent": true,
                 "amount": 50
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-016",
+        "card_type": "holomem_debut",
+        "holomem_names": ["nanashi_mumei"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "relaxtime",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "bloom_effects": [],
+        "collab_effects": [
+            {
+                "effect_type": "draw",
+                "conditions": [{ "condition": "center_has_any_tag", "condition_tags": ["#Promise"] }],
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-019",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["nanashi_mumei"],
+        "rarity": "u",
+        "colors": ["white"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "thankyouforyourcontinuedsupport",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "conditions": [{ "condition": "bloom_target_is_debut" }],
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem_debut_or_bloom",
+                "requirement_bloom_levels": [1],
+                "requirement_buzz_blocked": true,
+                "requirement_tags": ["#Promise"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle"
+            }
+        ],
+        "collab_effects": []
+    },
+    {
+        "card_id": "hBP01-020",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "holomem_names": ["nanashi_mumei"],
+        "rarity": "r",
+        "colors": ["white"],
+        "hp": 190,
+        "baton_cost": 2,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "everyonetogether",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 70,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "purple" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "effect_type": "power_boost_per_backstage",
+                            "amount": 10
+                        }
+                    },
+                    {
+                        "hide_effect_text": true,
+                        "timing": "before_art",
+                        "effect_type": "power_boost_per_backstage",
+                        "amount": 10
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [],
+        "collab_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem",
+                "requirement_bloom_levels": [1,2],
+                "requirement_tags": ["#Promise"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-021",
+        "card_type": "holomem_debut",
+        "holomem_names": ["tokino_sora"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "everyonekonsomme",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            }
+        ],
+        "bloom_effects": [],
+        "collab_effects": []
+    },
+    {
+        "card_id": "hBP01-022",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["tokino_sora"],
+        "rarity": "u",
+        "colors": ["white"],
+        "hp": 110,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "letsmakeitthebestdayever",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": []
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "draw",
+                "amount": 1
+            }
+        ],
+        "collab_effects": []
+    },
+    {
+        "card_id": "hBP01-023",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "holomem_names": ["tokino_sora"],
+        "rarity": "rr",
+        "colors": ["white"],
+        "hp": 210,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "itwontstop",
+                "costs": [
+                    { "color": "white", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 80,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "red" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "roll_die",
+                        "source": "holomem_ability",
+                        "die_effects": [
+                            {
+                                "english_values": "odd",
+                                "activate_on_values": [1,3,5],
+                                "effects": [
+                                    {
+                                        "effect_type": "repeat_art"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [],
+        "collab_effects": [
+            {
+                "effect_type": "draw",
+                "amount": 2
+            }
+        ]
+    },
+
+
+
+    {
+        "card_id": "hBP01-106",
+        "card_type": "support",
+        "sub_type": "event",
+        "support_names": ["illleaveittoyou"],
+        "rarity": "u",
+        "effects": [
+            {
+                "effect_type": "switch_center_with_back",
+                "skip_resting": true
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-107",
+        "card_type": "support",
+        "sub_type": "event",
+        "support_names": ["encore"],
+        "rarity": "u",
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "archive",
+                "look_at": -1,
+                "destination": "cheer_deck",
+                "amount_min": 1,
+                "amount_max": 3,
+                "requirement": "cheer",
+                "reveal_chosen": true,
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-108",
+        "card_type": "support",
+        "sub_type": "event",
+        "support_names": ["soyouretheenemy"],
+        "rarity": "u",
+        "limited": true,
+        "effects": [
+            {
+                "effect_type": "switch_center_with_back",
+                "opponent": true
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-109",
+        "card_type": "support",
+        "sub_type": "event",
+        "support_names": ["thestoryofthemoonandtherabbit"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [
+            {
+                "condition": "cards_in_hand",
+                "amount_min": 0,
+                "amount_max": 7
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem_named",
+                "requirement_names": ["usada_pekora", "moona_hoshinova"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-110",
+        "card_type": "support",
+        "sub_type": "event",
+        "support_names": ["clubemintonothingness"],
+        "rarity": "u",
+        "limited": true,
+        "effects": [
+            {
+                "full_english_text": "Roll a die. If the result is 3 or less, Archive one of your opponent's holomems' Cheer.\nIf your Oshi is Nanashi Mumei, you may instead perform the following effect: (Once per game) Archive 2 Cheer from your opponent's Center.",
+                "conditions": [
+                    { "condition": "not_used_once_per_game_effect", "condition_effect_id": "clubemintonothingness" },
+                    { "condition": "oshi_is", "required_member_name": "nanashi_mumei" }
+                ],
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "effect_type": "send_cheer",
+                        "amount_min": 2,
+                        "amount_max": 2,
+                        "from": "opponent_holomem",
+                        "from_limitation": "center",
+                        "to": "archive",
+                        "and": [
+                            {
+                                "effect_type": "record_used_once_per_game_effect",
+                                "effect_id": "clubemintonothingness"
+                            }
+                        ]
+                    },
+                    {
+                        "effect_type": "roll_die",
+                        "source": "support_card",
+                        "die_effects": [
+                            {
+                                "english_values": "1-3",
+                                "activate_on_values": [1,2,3],
+                                "effects": [
+                                    {
+                                        "effect_type": "send_cheer",
+                                        "amount_min": 1,
+                                        "amount_max": 1,
+                                        "from": "opponent_holomem",
+                                        "to": "archive"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "negative_condition_effects": [
+                    {
+                        "effect_type": "roll_die",
+                        "source": "support_card",
+                        "die_effects": [
+                            {
+                                "english_values": "1-3",
+                                "activate_on_values": [1,2,3],
+                                "effects": [
+                                    {
+                                        "effect_type": "send_cheer",
+                                        "amount_min": 1,
+                                        "amount_max": 1,
+                                        "from": "opponent_holomem",
+                                        "to": "archive"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },
