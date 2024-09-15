@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpprngv5b681f"]
+
+[ext_resource type="Script" path="res://scenes/misc/howtoplay.gd" id="1_3d33y"]
+[ext_resource type="Texture2D" uid="uid://b41bhlyxl6rkk" path="res://assets/howtoplay/page1.png" id="1_oxsqk"]
+[ext_resource type="Texture2D" uid="uid://brk6vsopbx4wf" path="res://assets/howtoplay/page2.png" id="3_32ymm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pid21"]
+bg_color = Color(0.362829, 0.362829, 0.362829, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Howtoplay" type="CenterContainer"]
+custom_minimum_size = Vector2(1280, 720)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3d33y")
+
+[node name="FullscreenCloseButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pid21")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HelpImage" type="TextureRect" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(922, 650)
+layout_mode = 2
+texture = ExtResource("1_oxsqk")
+expand_mode = 1
+
+[node name="HelpImage2" type="TextureRect" parent="PanelContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(922, 650)
+layout_mode = 2
+texture = ExtResource("3_32ymm")
+expand_mode = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PreviousPageButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Previous Page"
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+
+[node name="PageCountLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+
+[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = " / "
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "2"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+
+[node name="NextPageButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Next Page"
+
+[connection signal="pressed" from="FullscreenCloseButton" to="." method="_on_fullscreen_close_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/PreviousPageButton" to="." method="_on_previous_page_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/NextPageButton" to="." method="_on_next_page_button_pressed"]

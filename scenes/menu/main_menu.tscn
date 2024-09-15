@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl8ct7vpm73vm"]
+[gd_scene load_steps=8 format=3 uid="uid://dl8ct7vpm73vm"]
 
 [ext_resource type="Theme" uid="uid://dpxwceaf3f35h" path="res://themes/menubuttontheme.tres" id="1_i5wud"]
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="4_1cxk2"]
 [ext_resource type="Texture2D" uid="uid://bh0c0vkyounat" path="res://assets/icons/gear.png" id="5_rki3m"]
 [ext_resource type="PackedScene" uid="uid://dqeoyiig2xv07" path="res://scenes/misc/settings_window.tscn" id="6_gl1g0"]
+[ext_resource type="PackedScene" uid="uid://bpprngv5b681f" path="res://scenes/misc/howtoplay.tscn" id="7_nksnh"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -171,6 +172,15 @@ offset_right = 1263.0
 offset_bottom = 58.0
 texture = ExtResource("5_rki3m")
 
+[node name="HowToPlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 930.0
+offset_top = 10.0
+offset_right = 1184.0
+offset_bottom = 77.0
+theme_override_font_sizes/font_size = 43
+text = "How to Play"
+
 [node name="DeckControls" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
@@ -269,6 +279,11 @@ offset_right = 823.0
 offset_bottom = 103.0
 text = "A fan implementation of the Hololive card game"
 
+[node name="Howtoplay" parent="." instance=ExtResource("7_nksnh")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
 [connection signal="pressed" from="MainButtons/JoinQueueButton" to="." method="_on_join_queue_button_pressed"]
@@ -276,6 +291,7 @@ text = "A fan implementation of the Hololive card game"
 [connection signal="pressed" from="MainButtons/LeaveQueueButton" to="." method="_on_leave_queue_button_pressed"]
 [connection signal="toggled" from="DebugSpewButton" to="." method="_on_debug_spew_button_toggled"]
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]
 [connection signal="pressed" from="DeckControls/SampleDeckButton" to="." method="_on_save_deck_button_pressed"]
 [connection signal="pressed" from="DeckControls/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
 [connection signal="item_selected" from="DeckControls/HBoxContainer/DeckSelector" to="." method="_on_deck_selector_item_selected"]

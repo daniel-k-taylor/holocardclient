@@ -1071,6 +1071,7 @@
         ],
         "effects": [
             {
+                "full_english_text": "When your Holomem is downed on opponent's turn: Distribute all Green Cheer from that Holomem.",
                 "oshi_effect": "true",
                 "skill_id": "nousagis",
                 "cost": 2,

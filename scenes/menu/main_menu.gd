@@ -31,6 +31,7 @@ var file_load_callback
 @onready var modal_dialog = $ModalDialog
 @onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
 @onready var supported_cards_list : ItemList = $SupportedCardsList
+@onready var howtoplay = $Howtoplay
 
 enum MenuState {
 	MenuState_ConnectingToServer,
@@ -301,7 +302,9 @@ func _on_open_file_dialog_file_selected(path: String) -> void:
 func _on_settings_button_pressed() -> void:
 	$SettingsWindow.show_settings()
 
-
 func _on_deck_selector_item_selected(index: int) -> void:
 	loaded_deck = test_decks[index]
 	custom_deck_label.visible = false
+
+func _on_how_to_play_button_pressed() -> void:
+	howtoplay.show_help()
