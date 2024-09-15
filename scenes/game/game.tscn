@@ -287,6 +287,13 @@ value = 30.0
 fill_mode = 4
 texture_progress = ExtResource("12_j6jby")
 
+[node name="DebugPlayLastEvent" type="Button" parent="."]
+offset_left = 1105.0
+offset_top = 610.0
+offset_right = 1271.0
+offset_bottom = 641.0
+text = "Debug: Replay Event"
+
 [node name="GameLog" parent="." instance=ExtResource("6_xt86y")]
 visible = false
 
@@ -328,3 +335,4 @@ offset_bottom = 720.0
 [connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]
 [connection signal="zone_pressed" from="MeArchive" to="." method="_on_me_archive_zone_pressed"]
 [connection signal="zone_pressed" from="OpponentArchive" to="." method="_on_opponent_archive_zone_pressed"]
+[connection signal="pressed" from="DebugPlayLastEvent" to="." method="_on_debug_play_last_event_pressed"]

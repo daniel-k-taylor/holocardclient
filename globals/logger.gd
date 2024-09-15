@@ -16,3 +16,4 @@ func log_game(message):
 
 func log_net(message):
 	self.log(LogArea_Network, message)
+	

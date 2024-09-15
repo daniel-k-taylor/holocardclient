@@ -93,6 +93,7 @@ const SkillNameMap = {
 	"rabbitgirlonawhitesandybeach": "Rabbit girl on a white sandy beach",
 	"humanrabbitalityproject": "Human Rabbitality Project",
 	"diamondintherough": "Diamond in the rough",
+	"suichanwaaaakyoumokawaii": "Sui-chan Waaaa~ Kyou Mo Kawaii",
 }
 
 const HolomemNames = {
@@ -177,14 +178,16 @@ func build_send_cheer_string(amount_min, amount_max, source):
 			source_str = "your Archive"
 		"cheer_deck":
 			source_str = "your Cheer Deck"
+		"downed_holomem":
+			source_str = "downed Holomem"
 		"holomem":
 			source_str = "this Holomem"
 		"opponent_holomem":
 			source_str = "opponent's Holomem"
 			action_word = "Remove"
 	var amount_str = "%s" % amount_min
-	if amount_min != amount_max:
-		if amount_max == -1:
+	if str(amount_min) != str(amount_max):
+		if str(amount_max) == "all":
 			amount_str = "any amount of"
 		else:
 			amount_str = "%s-%s" % [amount_min, amount_max]
@@ -264,7 +267,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	if amount_min == 1 and amount_max == 1:
 		card_str = "card"
 	var main_text = "Choose %s %s%s to move to %s%s." % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
-	if requirement_details and requirement_details["requirement"]:
+	if "requirement" in requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
 			"specific_card":
 				var card = CardDatabase.get_card(requirement_details["requirement_id"])
@@ -447,15 +450,6 @@ func get_effect_text(effect):
 				choice_texts.append("- " + get_effect_text(choice))
 			text += "\n".join(choice_texts)
 		"choose_cards":
-			var requirement_details = {
-				"requirement": null,
-			}
-			if "requirement" in effect:
-				requirement_details["requirement"] = effect["requirement"]
-				requirement_details["requirement_buzz_blocked"] = effect.get("requirement_buzz_blocked", false)
-				requirement_details["requirement_names"] = effect.get("requirement_names", [])
-				requirement_details["requirement_tags"] = effect.get("requirement_tags", [])
-				requirement_details["requirement_bloom_levels"] = effect.get("requirement_bloom_levels", [])
 			var from_str = effect["from"]
 			if "look_at" in effect:
 				var look_at = effect["look_at"]
@@ -471,7 +465,7 @@ func get_effect_text(effect):
 				effect["amount_min"],
 				effect["amount_max"],
 				effect["remaining_cards_action"],
-				requirement_details
+				effect
 			)
 			text += choose_str
 		"choose_die_result":
@@ -484,6 +478,8 @@ func get_effect_text(effect):
 			if "opponent" in effect and effect["opponent"]:
 				target_str += "opponent's "
 			match effect["target"]:
+				"backstage":
+					target_str += "Back Holomem"
 				"center":
 					target_str += "Center"
 				"self":
@@ -511,13 +507,13 @@ func get_effect_text(effect):
 				match effect["multiplier"]:
 					"last_die_value":
 						multiplier_str = " x Dice Result "
-			text += "+%s Power." % [effect["amount"]]
+			text += "+%s Power%s." % [effect["amount"], multiplier_str]
 		"power_boost_per_backstage":
 			text += "+%s Power per Back member." % [effect["amount"]]
 		"power_boost_per_holomem":
 			var tag_str = ""
 			if "has_tag" in effect:
-				tag_str = " %s" % effect["has_tag"]
+				tag_str = "%s " % effect["has_tag"]
 			text += "+%s Power per %sHolomem." % [effect["amount"], tag_str]
 		"reduce_damage":
 			if str(effect["amount"]) == "all":
@@ -526,6 +522,22 @@ func get_effect_text(effect):
 				text += "Reduce damage by %s." % [effect["amount"]]
 		"repeat_art":
 			text += "Repeat this Art."
+		"restore_hp":
+			var amount = effect["amount"]
+			var target_str = ""
+			match effect["target"]:
+				"self":
+					target_str = "to this Holomem"
+				"center":
+					target_str = "to Center"
+				"holomem":
+					target_str = "to a Holomem"
+			var limitation_str = ""
+			if "limitation" in effect:
+				match effect["limitation"]:
+					"color_in":
+						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
+			text += "Restore %s HP %s%s" % [amount, target_str, limitation_str]
 		"roll_die":
 			text += "Roll a die: "
 			var die_effects = effect["die_effects"]
@@ -616,6 +628,20 @@ func build_english_card_text(definition):
 				var text = "[b]Collab[/b]: "
 				for i in range(len(collab_effects)):
 					var effect = collab_effects[i]
+					if i > 0:
+						text += " "
+					text += get_effect_text(effect)
+
+				var next_entry = {
+					"colors": [],
+					"text": text
+				}
+				data.append(next_entry)
+			if "gift_effects" in definition and len(definition["gift_effects"]) > 0:
+				var gift_effects = definition["gift_effects"]
+				var text = "[b]Gift[/b]: "
+				for i in range(len(gift_effects)):
+					var effect = gift_effects[i]
 					if i > 0:
 						text += " "
 					text += get_effect_text(effect)

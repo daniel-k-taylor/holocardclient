@@ -91,7 +91,7 @@
                     {
                         "effect_type": "send_cheer",
                         "amount_min": 0,
-                        "amount_max": -1,
+                        "amount_max": "all",
                         "from": "archive",
                         "to": "holomem",
                         "to_limitation": "color_in",
@@ -1000,7 +1000,6 @@
                         "from": "deck",
                         "look_at": -1,
                         "destination": "holomem",
-                        "limitation": "",
                         "to_limitation": "color_in",
                         "to_limitation_colors": ["green"],
                         "amount_min": 1,
@@ -1064,7 +1063,7 @@
                         "turn_effect": {
                             "timing": "before_die_roll",
                             "effect_type": "force_die_result",
-                            "result": 6
+                            "die_result": 6
                         }
                     }
                 ]
@@ -1090,8 +1089,8 @@
                         "skill_id": "nousagis",
                         "cost": 2,
                         "effect_type": "send_cheer",
-                        "amount_min": -1,
-                        "amount_max": -1,
+                        "amount_min": "all",
+                        "amount_max": "all",
                         "from": "downed_holomem",
                         "from_limitation": "color_in",
                         "from_limitation_colors": ["green"],
@@ -1671,12 +1670,14 @@
         ],
         "bloom_effects": [],
         "collab_effects": [],
-        "board_effects": [
+        "gift_effects": [
             {
+                "full_english_text": "1/Turn (Collab only) When a Holomem takes damage from the opponent, you may roll a die. If odd, prevent the damage.",
                 "timing": "on_damage",
                 "conditions": [
                     { "condition": "effect_card_id_not_used_this_turn" },
-                    { "condition": "this_card_is_collab"}
+                    { "condition": "this_card_is_collab"},
+                    { "condition": "damage_source_is_opponent" }
                 ],
                 "effect_type": "choice",
                 "choice": [
@@ -1915,7 +1916,7 @@
                 "amount_max": 1,
                 "requirement": "tool",
                 "reveal_chosen": true,
-                "remaining_cards_action": "shuffle"
+                "remaining_cards_action": "nothing"
             }
         ],
         "collab_effects": []
@@ -2120,6 +2121,7 @@
                 "art_effects": [
                     {
                         "full_english_text": "Roll a die. This art gains +10 Power times the result.",
+                        "timing": "before_art",
                         "effect_type": "roll_die",
                         "source": "holomem_ability",
                         "die_effects": [
@@ -2172,6 +2174,7 @@
                     },
                     {
                         "full_english_text": "Roll 3 dice. This art gains +10 Power times total result.",
+                        "timing": "before_art",
                         "effect_type": "roll_die",
                         "source": "holomem_ability",
                         "die_effects": [
@@ -2190,7 +2193,6 @@
                         "hide_and_text": true,
                         "and": [
                             {
-                                "full_english_text": "Roll a die. This art gains +10 Power times the result.",
                                 "effect_type": "roll_die",
                                 "source": "holomem_ability",
                                 "die_effects": [
@@ -2208,7 +2210,6 @@
                                 ]
                             },
                             {
-                                "full_english_text": "Roll a die. This art gains +10 Power times the result.",
                                 "effect_type": "roll_die",
                                 "source": "holomem_ability",
                                 "die_effects": [
@@ -2273,6 +2274,43 @@
                         "prevent_life_loss": true
                     }
                 ]
+            }
+        ]
+    },
+
+
+    {
+        "card_id": "hBP01-079",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["hoshimachi_suisei"],
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "suichanwaaaakyoumokawaii",
+                "costs": [
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 50,
+                "art_effects": []
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "deal_damage",
+                "special": true,
+                "amount": 20,
+                "target": "backstage",
+                "opponent": true,
+                "prevent_life_loss": true
             }
         ]
     },
@@ -2487,7 +2525,8 @@
             {
                 "timing": "on_kill",
                 "conditions": [
-                    { "condition": "attached_to", "required_member_name": "hoshimachi_suisei", "required_bloom_levels": [1,2] }
+                    { "condition": "attached_to", "required_member_name": "hoshimachi_suisei", "required_bloom_levels": [1,2] },
+                    { "condition": "downed_card_belongs_to_opponent"}
                 ],
                 "effect_type": "send_cheer",
                 "amount_min": 1,

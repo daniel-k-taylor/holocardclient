@@ -308,6 +308,8 @@ var after_animation_continuation = null
 func _ready() -> void:
 	NetworkManager.connect("disconnected_from_server", _on_disconnected)
 
+	$DebugPlayLastEvent.visible = OS.is_debug_build()
+
 	$UIOverlay.visible = true
 	action_menu.visible = false
 	thinking_spinner.visible = true
@@ -395,6 +397,8 @@ func process_game_event(event_type, event_data):
 			_on_game_over(event_data)
 		Enums.EventType_GameStartInfo:
 			_begin_game(event_data)
+		Enums.EventType_GenerateHolopower:
+			_on_generate_holopower(event_data)
 		Enums.EventType_InitialPlacementBegin:
 			_on_initial_placement_begin(event_data)
 		Enums.EventType_InitialPlacementPlaced:
@@ -1239,14 +1243,32 @@ func _on_send_cheer_event(event_data):
 		var valid_targets = event_data["to_options"]
 		var cheer_on_each_mem = event_data["cheer_on_each_mem"]
 		var cancel_callback = null
+		var multi_to = event_data.get("multi_to", false)
 		if amount_min == 0:
 			cancel_callback = _send_no_cheer
 
-		assert(to_zone in ["holomem", "archive"]) # Note: This is always a single holomem or the archive.
-		assert(from_zone in ["archive", "cheer_deck", "life", "holomem", "opponent_holomem"])
+		assert(to_zone in ["downed_holomem", "holomem", "archive"]) # Note: This is always a single holomem or the archive.
+		assert(from_zone in ["archive", "cheer_deck", "life", "holomem", "downed_holomem", "opponent_holomem"])
+		# For downed_holomem, if multi_to is set, then pick a target holomem then pick the cheers to give them, continue until all done.
 		# For from holomem, first choose a mem, then choose a cheer on them in from_options, then choose a different holomem.
 		# For archive/life/cheer deck, use the popout to select cheer, then choose a holomem.
-		if from_zone == "holomem" or from_zone == "opponent_holomem":
+		if from_zone == "downed_holomem" and multi_to:
+			var cheer_source = null
+			for mem_id in cheer_on_each_mem.keys():
+				var mem = find_card_on_board(mem_id)
+				var attached_card_ids = mem.get_attached()
+				for attached_card_id in attached_card_ids:
+					cheer_source = mem_id
+					break
+				if cheer_source:
+					break
+			multi_step_decision_info = {
+				"placements": {},
+				"remaining_cheer": cheer_to_send,
+				"source": cheer_source,
+			}
+			_multi_send_cheer_continue(valid_targets, from_zone)
+		elif from_zone == "holomem" or from_zone == "opponent_holomem":
 			var unique_mems = cheer_on_each_mem.keys()
 			_show_click_cards_action_menu(
 				unique_mems,
@@ -1336,9 +1358,40 @@ func _on_send_cheer_event(event_data):
 					pass,
 				cancel_callback
 			)
+		else:
+			Logger.log_game("Unknown from_zone %s" % from_zone)
 	else:
 		# Nothing for opponent.
 		pass
+
+func _multi_send_cheer_continue(valid_targets, from_zone):
+	_show_click_cards_action_menu(
+		valid_targets,
+		func(chosen_target_mem):
+			# Show popout with remaining unsent cheer.
+			var instructions = Strings.build_send_cheer_string(
+				0, len(multi_step_decision_info["remaining_cheer"]), from_zone
+			)
+			_show_popout(instructions, multi_step_decision_info["remaining_cheer"], multi_step_decision_info["remaining_cheer"], 0, len(multi_step_decision_info["remaining_cheer"]),
+				func():
+					for card in selected_cards:
+						multi_step_decision_info["placements"][card._card_id] = chosen_target_mem
+						multi_step_decision_info["remaining_cheer"].erase(card._card_id)
+						do_move_cards(me, multi_step_decision_info["source"], "holomem", chosen_target_mem, [card._card_id])
+						move_card_ids_already_handled.append(card._card_id)
+					if len(multi_step_decision_info["remaining_cheer"]) == 0:
+						# All cheer sent, submit the effect resolution.
+						submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
+						_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+					else:
+						# More cheer to send.
+						_multi_send_cheer_continue(valid_targets, from_zone)
+					pass,
+				null
+			),
+		Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM),
+		null
+	)
 
 func _send_cheer_continue():
 	if len(multi_step_decision_info["remaining_cheer_to_send"]) == 0:
@@ -1542,6 +1595,11 @@ func _change_ui_phase(new_ui_phase : UIPhase):
 	if new_ui_phase != UIPhase.UIPhase_WaitingOnServer:
 		thinking_spinner.visible = false
 	_update_stats_ui()
+
+func _on_generate_holopower(event_data):
+	var active_player = get_player(event_data["generating_player_id"])
+	var amount = event_data["holopower_generated"]
+	active_player.generate_holopower(amount)
 
 func _on_initial_placement_begin(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -2224,3 +2282,6 @@ func _show_archive(player : PlayerState):
 		card_copies.append(new_card)
 		new_card.copy_stats(card)
 	archive_card_popout.show_panel(instructions, archive_popout_info, card_copies, [])
+
+func _on_debug_play_last_event_pressed() -> void:
+	process_game_event(last_network_event["event_type"], last_network_event)
