@@ -74,6 +74,13 @@ layout_mode = 2
 size_flags_vertical = 0
 texture = ExtResource("3_mqvsl")
 
+[node name="CheckboxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
+layout_mode = 2
+
+[node name="ShowAllCardsToggleButton" type="CheckButton" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/CheckboxContainer"]
+layout_mode = 2
+text = "Include unchooseable cards"
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TitleBar/VBoxContainer"]
 layout_mode = 2
 
@@ -122,3 +129,4 @@ columns = 10
 
 [connection signal="pressed" from="FullScreenButtonPanel/ClickOutsideButton" to="." method="_on_click_outside_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer/MinimizeButton" to="." method="_on_minimize_button_pressed"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/TitleBar/VBoxContainer/CheckboxContainer/ShowAllCardsToggleButton" to="." method="_on_show_all_cards_toggle_button_toggled"]

@@ -6,6 +6,7 @@ extends CenterContainer
 @onready var action_button1 : MultiChoiceButton = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2/ActionButton1
 @onready var action_button2 : MultiChoiceButton = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/HBoxContainer2/ActionButton2
 @onready var action_buttons : Array[MultiChoiceButton] = [action_button1, action_button2]
+@onready var show_all_cards_toggle : CheckButton = $PanelContainer/VBoxContainer/TitleBar/VBoxContainer/CheckboxContainer/ShowAllCardsToggleButton
 
 const MaxColumns = 6
 
@@ -18,8 +19,15 @@ func _ready():
 
 	if get_parent() == get_tree().root:
 		var test_cards = []
+		var selectable_ids = []
 		for i in range(33):
-			test_cards.append(CardDatabase.test_create_card("id_" + str(i), "hSD01-003"))
+			var card_id = "hSD01-003"
+			if i % 2 == 0:
+				card_id = "hSD01-004"
+			test_cards.append(CardDatabase.test_create_card("id_" + str(i), card_id))
+			if i % 2 == 0:
+				selectable_ids.append(test_cards[i]._card_id)
+		
 
 		show_panel(
 			"[b]Test[/b] here are some instructions",
@@ -29,7 +37,7 @@ func _ready():
 				"enabled": [true, true],
 				"order_cards_mode": false,
 			},
-			test_cards, test_cards
+			test_cards, selectable_ids
 		)
 
 func remove_all_children(element):
@@ -51,6 +59,12 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 
 	var count = len(cards)
 	add_card_elements(count)
+	
+	var toggle_show_cards_mode = len(cards) != len(chooseable_card_ids)
+	if popout_choice_info.get("ignore_chooseable_checkbox", false):
+		toggle_show_cards_mode = false
+	show_all_cards_toggle.visible = toggle_show_cards_mode
+	show_all_cards_toggle.button_pressed = not toggle_show_cards_mode
 
 	if count < MaxColumns:
 		card_grid.columns = max(1, count)
@@ -78,6 +92,8 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 	init_panel(instructions, popout_choice_info)
 	for element in popout_elements:
 		element.position_card()
+		
+	_show_all_cards(not toggle_show_cards_mode)
 
 func _reorder_card_element(element, direction):
 	# Get the index of the element in the grid.
@@ -114,6 +130,10 @@ func clear_panel():
 	visible = false
 	remove_all_children(card_grid)
 
+func _show_all_cards(show_all : bool):
+	for popout_element in card_grid.get_children():
+		popout_element.visible = show_all or popout_element.is_selectable()
+
 func get_ordered_card_ids():
 	var card_ids = []
 	var popout_elements = card_grid.get_children()
@@ -132,3 +152,6 @@ func _action_button_pressed(button_value):
 
 func _on_minimize_button_pressed() -> void:
 	minimize()
+
+func _on_show_all_cards_toggle_button_toggled(toggled_on: bool) -> void:
+	_show_all_cards(toggled_on)

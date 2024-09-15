@@ -22,6 +22,10 @@ func set_top_visible(is_top):
 func add_card(card : CardBase):
 	placeholder.add_child(card)
 
+func is_selectable():
+	if placeholder.get_child_count() > 0:
+		return placeholder.get_child(0)._selectable
+
 func position_card():
 	var card = placeholder.get_child(0)
 	card.scale = Vector2(CardBase.ReferenceCardScale, CardBase.ReferenceCardScale)

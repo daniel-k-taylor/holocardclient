@@ -2269,6 +2269,7 @@ func _show_archive(player : PlayerState):
 		"enable_check": [],
 		"callback": [],
 		"order_cards_mode": false,
+		"ignore_chooseable_checkbox": true,
 	}
 
 	var instructions = Strings.get_string(Strings.OPPONENT_ARCHIVE)
