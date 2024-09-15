@@ -43,6 +43,8 @@ const SkillNameMap = {
 	"illcrushyou": "I'll crush you",
 	"guardianofcivilization": "Guardian of Civilization",
 	"amazingdrawing": "Amazing Drawing",
+	"hawkeye": "Hawkeye",
+	"executivesorder": "Executive's Order",
 
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
@@ -94,6 +96,16 @@ const SkillNameMap = {
 	"humanrabbitalityproject": "Human Rabbitality Project",
 	"diamondintherough": "Diamond in the rough",
 	"suichanwaaaakyoumokawaii": "Sui-chan Waaaa~ Kyou Mo Kawaii",
+	"didiluiveyouwaiting": "Did I Luive you waiting?",
+	"lureofthejetblackwings": "Lure of the Jet Black Wings",
+	"konluilui": "Kon-luilui",
+	"otsuluilui": "Otsu-luilui",
+	"welcometotheparty": "Welcome to the party",
+	"luisparty": "Lui's Party",
+	"followmeclosely": "Follow me closely!",
+	"hawkrave": "Hawk Rave",
+	"soulguide": "Soul Guide",
+
 }
 
 const HolomemNames = {
@@ -107,6 +119,11 @@ const HolomemNames = {
 	"vestia_zeta": "Vestia Zeta",
 	"irys": "IRyS",
 	"hoshimachi_suisei": "Hoshimachi Suisei",
+	"mori_calliope": "Mori Calliope",
+	"takanashi_kiara": "Takanashi Kiara",
+	"takane_lui": "Takane Lui",
+	"watson_amelia": "Watson Amelia",
+	"kobo_kanaeru": "Kobo Kanaeru",
 
 	# Card Names referenced directly
 	"stone_axe": "Stone Axe",
@@ -269,6 +286,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	var main_text = "Choose %s %s%s to move to %s%s." % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
 	if "requirement" in requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
+			"color_matches_holomems":
+				main_text += "\nOnly colors matching your Holomems on stage"
 			"specific_card":
 				var card = CardDatabase.get_card(requirement_details["requirement_id"])
 				var card_name = "MISSING_CARD_NAME"
@@ -299,6 +318,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 				main_text += "\nOnly Holomem (%s)" % "/".join(names)
 			"limited":
 				main_text += "\nOnly LIMITED"
+			"item":
+				main_text += "\nOnly Item"
 			"mascot":
 				main_text += "\nOnly Mascot"
 			"tool":
@@ -309,6 +330,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 				main_text += "\nOnly Cheer"
 		if "requirement_tags" in requirement_details and len(requirement_details["requirement_tags"]) > 0:
 			main_text += "\nOnly Tag: %s" % "/".join(requirement_details["requirement_tags"])
+		if "requirement_match_oshi_color" in requirement_details:
+			main_text += "\nMatches Oshi Color"
 	return main_text
 
 
@@ -367,7 +390,33 @@ func get_condition_text(conditions):
 			"bloom_target_is_debut":
 				text += "From Debut: "
 			"cards_in_hand":
-				text += "Cards in hand (%s-%s): " % [condition["amount_min"], condition["amount_max"]]
+				var amount_max = condition.get("amount_max", -1)
+				var amount_min = condition.get("amount_min", -1)
+				var amount_str = ""
+				if amount_min == 0 and amount_max == 0:
+					amount_str += "no"
+				else:
+					if amount_min == -1:
+						amount_str += "at most %s" % amount_max
+					elif amount_max == -1:
+						amount_str += "at least %s" % amount_min
+					else:
+						amount_str += "%s-%s" % [amount_min, amount_max]
+				text += "Cards in hand (%s): " % [amount_str]
+			"current_holopower":
+				var amount_max = condition.get("amount_max", -1)
+				var amount_min = condition.get("amount_min", -1)
+				var amount_str = ""
+				if amount_min == 0 and amount_max == 0:
+					amount_str += "zero"
+				else:
+					if amount_min == -1:
+						amount_str += "at most %s" % amount_max
+					elif amount_max == -1:
+						amount_str += "at least %s" % amount_min
+					else:
+						amount_str += "%s-%s" % [amount_min, amount_max]
+				text += "Holopower amount is %s: " % [amount_str]
 			"center_has_any_tag":
 				text += "Center has tag %s: " % ["/".join(condition["condition_tags"])]
 			"center_is_color":
@@ -400,6 +449,8 @@ func get_condition_text(conditions):
 				text += "Performer is chosen card: "
 			"performer_has_any_tag":
 				text += "Performer has tag %s: " % ["/".join(condition["condition_tags"])]
+			"stage_has_space":
+				text += "Room on stage: "
 			"target_color":
 				text += "Weak(%s): " % [condition["color_requirement"]]
 			"target_has_any_tag":
@@ -442,6 +493,8 @@ func get_effect_text(effect):
 					"color_in":
 						limitation_str = " (%s)" % "/".join(effect["to_limitation_colors"])
 			text += "Attach card to Holomem%s.\n" % limitation_str
+		"block_opponent_movement":
+			text += "Block opponent's Center and Collab movement next turn."
 		"choice":
 			var choices = effect["choice"]
 			var choice_texts = []
@@ -482,6 +535,10 @@ func get_effect_text(effect):
 					target_str += "Back Holomem"
 				"center":
 					target_str += "Center"
+				"collab":
+					target_str += "Collab"
+				"center_or_collab":
+					target_str += "Center or Collab"
 				"self":
 					target_str = "to this Holomem"
 			var prevent_life_str = ""
@@ -501,6 +558,8 @@ func get_effect_text(effect):
 			text += "Pass."
 		"performance_life_lost_increase":
 			text += "Increase life lost by %s." % [effect["amount"]]
+		"place_holomem":
+			text += "Place Holomem in %s" % [get_position_string(effect["location"])]
 		"power_boost":
 			var multiplier_str = ""
 			if "multiplier" in effect:
@@ -701,6 +760,8 @@ func build_english_card_text(definition):
 			}
 			if "limited" in definition and definition["limited"]:
 				data.append({"colors": [], "text": "LIMITED"})
+			if definition["sub_type"] == "item":
+				data.append({"colors": [], "text": "Item"})
 			if definition["sub_type"] == "mascot":
 				data.append({"colors": [], "text": "Mascot"})
 			if definition["sub_type"] == "tool":
@@ -712,9 +773,23 @@ func build_english_card_text(definition):
 				for condition in play_conditions:
 					match condition:
 						"cards_in_hand":
-							var amount = play_conditions["amount_max"] - 1
-							next_entry["text"] += "Must have %s or fewer cards in hand to play (excluding this).\n" % [amount]
-					data.append(next_entry)
+							var amount_max = play_conditions.get("amount_max", -1)
+							var amount_min = play_conditions.get("amount_min", -1)
+							var amount_str = ""
+							if amount_min == 0 and amount_max == 0:
+								amount_str += "no"
+							else:
+								if amount_min > 0:
+									amount_str += "at least %s" % amount_min
+									if amount_max >= 0:
+										amount_str += " and "
+								if amount_max >= 0:
+									# For play support card purposes, the max is inclusive but the text is not.
+									amount_max -= 1
+									amount_str += "at most %s" % amount_max
+							next_entry["text"] += "Must have %s cards in hand to play (excluding this).\n" % [amount_str]
+					if next_entry["text"]:
+						data.append(next_entry)
 					next_entry = {
 						"colors": [],
 						"text": ""

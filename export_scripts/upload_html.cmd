@@ -3,7 +3,7 @@ setlocal
 
 set "DirectoryPath=D:\Projects\godot\holocardclient\export"
 set "BulterPath=D:\Projects\butler"
-set "ProjectName=hololive-card-game-fan-project"
+set "ProjectName=holoduel"
 
 REM Delete the existing game.zip if it exists
 if exist "%DirectoryPath%\game.zip" (
