@@ -248,44 +248,11 @@ func _on_save_deck_button_pressed():
 		save_file_dialog.visible = true
 
 func load_deck(data):
-	var json = JSON.new()
-	if json.parse(data[0]) == OK:
-		if "oshi" not in json.data or typeof(json.data["oshi"]) != TYPE_STRING:
-			modal_dialog.set_text_fields("Invalid format:\nInvalid oshi", "OK", "")
-			return
-		if "deck" not in json.data or typeof(json.data["deck"]) != TYPE_DICTIONARY:
-			modal_dialog.set_text_fields("Invalid format:\nInvalid deck", "OK", "")
-			return
-		if "cheer_deck" not in json.data or typeof(json.data["cheer_deck"]) != TYPE_DICTIONARY:
-			modal_dialog.set_text_fields("Invalid format:\nInvalid cheer deck", "OK", "")
-			return
-		for deck_key in json.data["deck"]:
-			if typeof(deck_key) != TYPE_STRING:
-				modal_dialog.set_text_fields("Invalid format:\nDeck keys not all strings", "OK", "")
-				return
-			if typeof(json.data["deck"][deck_key]) != TYPE_FLOAT:
-				modal_dialog.set_text_fields("Invalid format:\nDeck counts not numbers", "OK", "")
-				return
-		for cheer_key in json.data["cheer_deck"]:
-			if typeof(cheer_key) != TYPE_STRING:
-				modal_dialog.set_text_fields("Invalid format:\nCheer Deck keys not all strings", "OK", "")
-				return
-			if typeof(json.data["cheer_deck"][cheer_key]) != TYPE_FLOAT:
-				modal_dialog.set_text_fields("Invalid format:\nCheer Deck counts not numbers", "OK", "")
-				return
-		var new_deck = {
-			"oshi": json.data["oshi"],
-			"deck": {},
-			"cheer_deck": {},
-		}
-		for deck_key in json.data["deck"]:
-			new_deck["deck"][deck_key] = int(json.data["deck"][deck_key])
-		for cheer_key in json.data["cheer_deck"]:
-			new_deck["cheer_deck"][cheer_key] = int(json.data["cheer_deck"][cheer_key])
-		_on_deck_loaded(new_deck)
+	var new_deck = DeckValidator.load_deck(data)
+	if new_deck.get("error", ""):
+		modal_dialog.set_text_fields(new_deck["error"], "OK", "")
 	else:
-		var error_message = "JSON Parse Error: " + json.get_error_message()
-		modal_dialog.set_text_fields(error_message, "OK", "")
+		_on_deck_loaded(new_deck)
 
 func _on_deck_loaded(new_deck):
 	loaded_deck = new_deck
