@@ -791,7 +791,7 @@ func _on_choose_cards_event(event_data):
 		var amount_max = event_data["amount_max"]
 		#var reveal_chosen = event_data["reveal_chosen"]
 		var remaining_cards_action = event_data["remaining_cards_action"]
-		var requirement_details = event_data["requirement_details"]
+		var requirement_details = event_data.get("requirement_details", {})
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose Cards[/DECISION]" % [
 			active_player.get_name()
 		])
@@ -1992,6 +1992,7 @@ func _on_reset_step_choose_new_center_event(event_data):
 func _on_reset_step_collab_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	var activated_cards = event_data["rested_card_ids"]
+	var moved_backstage_ids = event_data["moved_backstage_ids"]
 	# These cards are no longer resting.
 	for card_id in activated_cards:
 		var card = find_card_on_board(card_id)
@@ -2001,9 +2002,15 @@ func _on_reset_step_collab_event(event_data):
 				active_player.get_name(),
 				_get_card_definition_id(card_id)
 			])
-			do_move_cards(active_player, "collab", "backstage", "", [card_id])
+			if card_id not in moved_backstage_ids:
+				game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] blocked from moving back" % [
+					active_player.get_name(),
+					_get_card_definition_id(card_id)
+				])
 		else:
 			assert(false, "Missing card")
+	for card_id in moved_backstage_ids:
+		do_move_cards(active_player, "collab", "backstage", "", [card_id])
 
 func _on_restore_hp_event(event_data):
 	var active_player = get_player(event_data["target_player_id"])

@@ -296,16 +296,18 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 				main_text += "\nOnly %s" % card_name
 			"holomem":
 				main_text += "\nOnly Holomem"
-				if requirement_details["requirement_buzz_blocked"]:
+				if requirement_details.get("requirement_buzz_blocked", false):
 					main_text += " (no Buzz)"
-				if requirement_details["requirement_bloom_levels"]:
+				if requirement_details.get("requirement_bloom_levels", false):
 					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
 			"holomem_bloom":
 				main_text += "\nOnly Bloom"
-				if requirement_details["requirement_buzz_blocked"]:
+				if requirement_details.get("requirement_buzz_blocked", false):
 					main_text += " (no Buzz)"
 				if requirement_details["requirement_bloom_levels"]:
 					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
+			"holomem_debut":
+				main_text += "\nOnly Debut"
 			"holomem_debut_or_bloom":
 				main_text += "\nOnly Debut/Bloom"
 				if requirement_details["requirement_buzz_blocked"]:
@@ -330,7 +332,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 				main_text += "\nOnly Cheer"
 		if "requirement_tags" in requirement_details and len(requirement_details["requirement_tags"]) > 0:
 			main_text += "\nOnly Tag: %s" % "/".join(requirement_details["requirement_tags"])
-		if "requirement_match_oshi_color" in requirement_details:
+		if requirement_details.get("requirement_match_oshi_color", false):
 			main_text += "\nMatches Oshi Color"
 	return main_text
 
@@ -403,20 +405,6 @@ func get_condition_text(conditions):
 					else:
 						amount_str += "%s-%s" % [amount_min, amount_max]
 				text += "Cards in hand (%s): " % [amount_str]
-			"current_holopower":
-				var amount_max = condition.get("amount_max", -1)
-				var amount_min = condition.get("amount_min", -1)
-				var amount_str = ""
-				if amount_min == 0 and amount_max == 0:
-					amount_str += "zero"
-				else:
-					if amount_min == -1:
-						amount_str += "at most %s" % amount_max
-					elif amount_max == -1:
-						amount_str += "at least %s" % amount_min
-					else:
-						amount_str += "%s-%s" % [amount_min, amount_max]
-				text += "Holopower amount is %s: " % [amount_str]
 			"center_has_any_tag":
 				text += "Center has tag %s: " % ["/".join(condition["condition_tags"])]
 			"center_is_color":
@@ -486,6 +474,9 @@ func get_effect_text(effect):
 		"add_turn_effect_for_holomem":
 			var turn_effect = effect["turn_effect"]
 			text += "Choose a Holomem. This Turn: %s" % [get_effect_text(turn_effect)]
+		"archive_from_hand":
+			var amount = effect["amount"]
+			text += "Archive %s from hand." % amount
 		"attach_card_to_holomem", "attach_card_to_holomem_internal":
 			var limitation_str = ""
 			if "to_limitation" in effect:
@@ -529,7 +520,7 @@ func get_effect_text(effect):
 				special_str = " Special"
 			var target_str = "to "
 			if "opponent" in effect and effect["opponent"]:
-				target_str += "opponent's "
+				target_str += ""
 			match effect["target"]:
 				"backstage":
 					target_str += "Back Holomem"
@@ -579,6 +570,9 @@ func get_effect_text(effect):
 				text += "Reduce all damage."
 			else:
 				text += "Reduce damage by %s." % [effect["amount"]]
+		"reduce_required_archive_count":
+			var amount = effect["amount"]
+			text += "Spend %s Holopower to archive %s less from Hand" % [amount, amount]
 		"repeat_art":
 			text += "Repeat this Art."
 		"restore_hp":
@@ -771,10 +765,10 @@ func build_english_card_text(definition):
 			if "play_conditions" in definition:
 				var play_conditions = definition["play_conditions"]
 				for condition in play_conditions:
-					match condition:
+					match condition["condition"]:
 						"cards_in_hand":
-							var amount_max = play_conditions.get("amount_max", -1)
-							var amount_min = play_conditions.get("amount_min", -1)
+							var amount_max = condition.get("amount_max", -1)
+							var amount_min = condition.get("amount_min", -1)
 							var amount_str = ""
 							if amount_min == 0 and amount_max == 0:
 								amount_str += "no"
@@ -788,6 +782,9 @@ func build_english_card_text(definition):
 									amount_max -= 1
 									amount_str += "at most %s" % amount_max
 							next_entry["text"] += "Must have %s cards in hand to play (excluding this).\n" % [amount_str]
+						"holopower_at_least":
+							var amount = condition.get("amount")
+							next_entry["text"] += "Costs %s Holopower.\n" % [amount]
 					if next_entry["text"]:
 						data.append(next_entry)
 					next_entry = {
