@@ -1904,6 +1904,8 @@ func _on_damage_dealt_event(event_data):
 	var is_game_over = event_data["game_over"]
 	var life_lost = event_data["life_lost"]
 	var _life_loss_prevented = event_data["life_loss_prevented"]
+	var _archived_ids = event_data["archived_ids"]
+	var hand_ids = event_data["hand_ids"]
 
 	var card = find_card_on_board(target_id)
 	card.add_damage(damage, died)
@@ -1918,16 +1920,22 @@ func _on_damage_dealt_event(event_data):
 			target_player.get_name(),
 			_get_card_definition_id(target_id),
 		])
-		# Put the card and all attached cards in the archive.
+		# Put the card and all attached cards in the archive or hand as approrpiate.
 		var attached_card_ids = card.get_attached()
 		var attached_cheer = card.remove_all_attached_cheer()
 		for attached_id in attached_card_ids:
-			do_move_cards(target_player, target_id, "archive", "", [attached_id])
+			var attached_dest = "archive"
+			if attached_id in hand_ids:
+				attached_dest = "hand"
+			do_move_cards(target_player, target_id, attached_dest, "", [attached_id])
 		card.clear_attached()
 		for cheer_id in attached_cheer:
 			do_move_cards(target_player, target_id, "archive", "", [cheer_id])
 
-		do_move_cards(target_player, "stage", "archive", "", [target_id])
+		var dest = "archive"
+		if target_id in hand_ids:
+			dest = "hand"
+		do_move_cards(target_player, "stage", dest, "", [target_id])
 
 		if is_game_over:
 			# The event to lower the life won't occur, so do that now.
@@ -2244,6 +2252,7 @@ func _on_view_attachments(card_ids : Array):
 		"enable_check": [],
 		"callback": [],
 		"order_cards_mode": false,
+		"ignore_chooseable_checkbox": true,
 	}
 
 	var instructions = Strings.get_string(Strings.ATTACHED_CARDS)

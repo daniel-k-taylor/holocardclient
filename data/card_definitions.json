@@ -1157,6 +1157,10 @@
                 "ends_at": "archive_count_required",
                 "usage_count_restriction": "holopower",
                 "template_choice": {
+                    "oshi_effect": "true",
+                    "limit": "once_per_turn",
+                    "skill_id": "executivesorder",
+                    "cost": "X",
                     "effect_type": "reduce_required_archive_count",
                     "amount": "X",
                     "pre_effects": [
@@ -1221,6 +1225,10 @@
                 "effect_type": "choice",
                 "choice": [
                     {
+                        "oshi_effect": "true",
+                        "limit": "once_per_game",
+                        "skill_id": "risefromtheashes",
+                        "cost": 2,
                         "effect_type": "recover_downed_holomem_cards",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },

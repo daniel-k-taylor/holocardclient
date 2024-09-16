@@ -45,6 +45,8 @@ const SkillNameMap = {
 	"amazingdrawing": "Amazing Drawing",
 	"hawkeye": "Hawkeye",
 	"executivesorder": "Executive's Order",
+	"phoenixtail": "Phoenix Tail",
+	"risefromtheashes": "Rise from the Ashes",
 
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
@@ -413,6 +415,9 @@ func get_condition_text(conditions):
 				text += "Collab with %s: " % [HolomemNames[condition["required_member_name"]]]
 			"downed_card_belongs_to_opponent":
 				text += "Downed opponent's Holomem: "
+			"downed_card_is_color":
+				var color = condition["condition_color"]
+				text += "Downed Holomem is %s: " % [color]
 			"effect_card_id_not_used_this_turn":
 				text += "Once per turn: "
 			"has_attachment_of_type":
@@ -565,6 +570,8 @@ func get_effect_text(effect):
 			if "has_tag" in effect:
 				tag_str = "%s " % effect["has_tag"]
 			text += "+%s Power per %sHolomem." % [effect["amount"], tag_str]
+		"recover_downed_holomem_cards":
+			text += "Recover downed Holomem's Holomem cards."
 		"reduce_damage":
 			if str(effect["amount"]) == "all":
 				text += "Reduce all damage."
@@ -572,7 +579,7 @@ func get_effect_text(effect):
 				text += "Reduce damage by %s." % [effect["amount"]]
 		"reduce_required_archive_count":
 			var amount = effect["amount"]
-			text += "Spend %s Holopower to archive %s less from Hand" % [amount, amount]
+			text += "Archive %s less from Hand" % [amount]
 		"repeat_art":
 			text += "Repeat this Art."
 		"restore_hp":

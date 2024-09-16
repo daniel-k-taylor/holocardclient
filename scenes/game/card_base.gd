@@ -277,7 +277,7 @@ func attach_card(card_id):
 	_update_stats()
 
 func get_attached():
-	return _attached_cards
+	return _attached_cards.duplicate()
 
 func clear_attached():
 	_attached_cards = []
