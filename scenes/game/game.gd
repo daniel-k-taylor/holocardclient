@@ -1017,7 +1017,7 @@ func _highlight_info_cards(card_ids : Array):
 		if card._card_id in card_ids:
 			card.set_info_highlight(true)
 
-func _show_click_cards_action_menu(card_ids, callback, instructions : String, cancel_callback):
+func _show_click_cards_action_menu(card_ids, callback, instructions : String, cancel_callback, cancel_string_id = Strings.STRING_CANCEL):
 	_change_ui_phase(UIPhase.UIPhase_ClickCardsForAction)
 	_highlight_selectable_cards(card_ids)
 
@@ -1031,7 +1031,7 @@ func _show_click_cards_action_menu(card_ids, callback, instructions : String, ca
 		"enable_check": []
 	}
 	if cancel_callback:
-		action_menu_choice_info["strings"].append(Strings.get_string(Strings.STRING_CANCEL))
+		action_menu_choice_info["strings"].append(Strings.get_string(cancel_string_id))
 		action_menu_choice_info["enabled"].append(true)
 		action_menu_choice_info["enable_check"].append(_allowed)
 	action_menu.show_choices(instructions, action_menu_choice_info, func(_choice_index):
@@ -1048,7 +1048,8 @@ func _cancel_to_performance_step():
 	_start_performance_step_decision()
 
 func _show_popout(instructions : String, seen_card_ids : Array, chooseable_card_ids : Array,
-	amount_min, amount_max, completion_callback : Callable, cancel_callback
+	amount_min, amount_max, completion_callback : Callable, cancel_callback,
+	ok_string_id = Strings.STRING_OK, cancel_string_id = Strings.STRING_CANCEL
 	):
 	# Also show the action menu with two buttons: Show Choice and Cancel
 	_change_ui_phase(UIPhase.UIPhase_MakeChoiceCanSelectCards)
@@ -1061,7 +1062,7 @@ func _show_popout(instructions : String, seen_card_ids : Array, chooseable_card_
 		"enable_check": [_allowed]
 	}
 	if cancel_callback:
-		action_menu_choice_info["strings"].append(Strings.get_string(Strings.STRING_CANCEL))
+		action_menu_choice_info["strings"].append(Strings.get_string(cancel_string_id))
 		action_menu_choice_info["enabled"].append(true)
 		action_menu_choice_info["enable_check"].append(_allowed)
 
@@ -1069,7 +1070,7 @@ func _show_popout(instructions : String, seen_card_ids : Array, chooseable_card_
 	selection_min = amount_min
 	card_popout_choice_info = {
 		"strings": [
-			Strings.get_string(Strings.STRING_OK),
+			Strings.get_string(ok_string_id),
 		],
 		"enabled": [amount_min == 0],
 		"enable_check": [_is_selection_requirement_met],
@@ -1077,7 +1078,7 @@ func _show_popout(instructions : String, seen_card_ids : Array, chooseable_card_
 		"order_cards_mode": amount_max == 0,
 	}
 	if cancel_callback:
-		card_popout_choice_info["strings"].append(Strings.get_string(Strings.STRING_CANCEL))
+		card_popout_choice_info["strings"].append(Strings.get_string(cancel_string_id))
 		card_popout_choice_info["enabled"].append(true)
 		card_popout_choice_info["enable_check"].append(_allowed)
 		card_popout_choice_info["callback"].append(cancel_callback)
@@ -1247,25 +1248,31 @@ func _on_send_cheer_event(event_data):
 		if amount_min == 0:
 			cancel_callback = _send_no_cheer
 
-		assert(to_zone in ["downed_holomem", "holomem", "archive"]) # Note: This is always a single holomem or the archive.
+		assert(to_zone in ["holomem", "archive"])
 		assert(from_zone in ["archive", "cheer_deck", "life", "holomem", "downed_holomem", "opponent_holomem"])
-		# For downed_holomem, if multi_to is set, then pick a target holomem then pick the cheers to give them, continue until all done.
+		# For multi_to, pick a target holomem then pick the cheers to give them, continue until all done.
 		# For from holomem, first choose a mem, then choose a cheer on them in from_options, then choose a different holomem.
 		# For archive/life/cheer deck, use the popout to select cheer, then choose a holomem.
-		if from_zone == "downed_holomem" and multi_to:
+		if multi_to:
 			var cheer_source = null
-			for mem_id in cheer_on_each_mem.keys():
-				var mem = find_card_on_board(mem_id)
-				var attached_card_ids = mem.get_attached()
-				for attached_card_id in attached_card_ids:
-					cheer_source = mem_id
-					break
-				if cheer_source:
-					break
+			var max_can_place = min(amount_max, len(cheer_to_send))
+			if from_zone == "archive":
+				cheer_source = "archive"
+			else:
+				for mem_id in cheer_on_each_mem.keys():
+					var mem = find_card_on_board(mem_id)
+					var attached_card_ids = mem.get_attached()
+					for attached_card_id in attached_card_ids:
+						cheer_source = mem_id
+						break
+					if cheer_source:
+						break
 			multi_step_decision_info = {
 				"placements": {},
 				"remaining_cheer": cheer_to_send,
 				"source": cheer_source,
+				"can_stop_at": amount_min,
+				"remaining_cheer_allowed": max_can_place,
 			}
 			_multi_send_cheer_continue(valid_targets, from_zone)
 		elif from_zone == "holomem" or from_zone == "opponent_holomem":
@@ -1365,21 +1372,29 @@ func _on_send_cheer_event(event_data):
 		pass
 
 func _multi_send_cheer_continue(valid_targets, from_zone):
+	var can_stop_multi_send = multi_step_decision_info["can_stop_at"] == len(multi_step_decision_info["placements"].keys())
+	var cancel_callback = null
+	if can_stop_multi_send:
+		cancel_callback = func():
+			submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 	_show_click_cards_action_menu(
 		valid_targets,
 		func(chosen_target_mem):
 			# Show popout with remaining unsent cheer.
 			var instructions = Strings.build_send_cheer_string(
-				0, len(multi_step_decision_info["remaining_cheer"]), from_zone
+				0, multi_step_decision_info["remaining_cheer_allowed"], from_zone
 			)
-			_show_popout(instructions, multi_step_decision_info["remaining_cheer"], multi_step_decision_info["remaining_cheer"], 0, len(multi_step_decision_info["remaining_cheer"]),
+			_show_popout(instructions, multi_step_decision_info["remaining_cheer"], multi_step_decision_info["remaining_cheer"],
+				0, multi_step_decision_info["remaining_cheer_allowed"],
 				func():
 					for card in selected_cards:
 						multi_step_decision_info["placements"][card._card_id] = chosen_target_mem
 						multi_step_decision_info["remaining_cheer"].erase(card._card_id)
 						do_move_cards(me, multi_step_decision_info["source"], "holomem", chosen_target_mem, [card._card_id])
 						move_card_ids_already_handled.append(card._card_id)
-					if len(multi_step_decision_info["remaining_cheer"]) == 0:
+					multi_step_decision_info["remaining_cheer_allowed"] -= len(selected_cards)
+					if multi_step_decision_info["remaining_cheer_allowed"] == 0:
 						# All cheer sent, submit the effect resolution.
 						submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
 						_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
@@ -1387,10 +1402,13 @@ func _multi_send_cheer_continue(valid_targets, from_zone):
 						# More cheer to send.
 						_multi_send_cheer_continue(valid_targets, from_zone)
 					pass,
-				null
+				cancel_callback,
+				Strings.STRING_SELECT_CHEER,
+				Strings.STRING_END_ABILITY
 			),
 		Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM),
-		null
+		cancel_callback,
+		Strings.STRING_END_ABILITY
 	)
 
 func _send_cheer_continue():

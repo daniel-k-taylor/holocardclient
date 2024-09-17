@@ -8,6 +8,9 @@ const STRING_PASS = "Pass"
 const STRING_CANCEL = "Cancel"
 const STRING_SHOW_CHOICE = "Show Choice"
 const STRING_CLOSE = "Close"
+const STRING_DONE = "Done"
+const STRING_SELECT_CHEER = "Select Cheer"
+const STRING_END_ABILITY = "End Ability"
 
 const DECISION_INSTRUCTIONS_MULLIGAN = "Mulligan all cards?"
 const DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER = "Debut your Center!"
@@ -49,6 +52,8 @@ const SkillNameMap = {
 	"risefromtheashes": "Rise from the Ashes",
 	"comet": "Comet",
 	"shootingstar": "Shooting Star",
+	"prayingforrain": "Praying for rain",
+	"rainshamanism": "Rain Shamanism",
 
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
@@ -657,6 +662,8 @@ func get_effect_text(effect):
 						text += " Only to Center or Collab."
 					"color_in":
 						text += " Only to %s Holomem." % "/".join(effect["to_limitation_colors"])
+					"tag_in":
+						text += " Only to %s Holomem." % "/".join(effect["to_limitation_tags"])
 		"send_collab_back":
 			if "optional" in effect and effect["optional"]:
 				text += "May send Collab back."
