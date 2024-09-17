@@ -47,6 +47,8 @@ const SkillNameMap = {
 	"executivesorder": "Executive's Order",
 	"phoenixtail": "Phoenix Tail",
 	"risefromtheashes": "Rise from the Ashes",
+	"comet": "Comet",
+	"shootingstar": "Shooting Star",
 
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
@@ -107,6 +109,8 @@ const SkillNameMap = {
 	"followmeclosely": "Follow me closely!",
 	"hawkrave": "Hawk Rave",
 	"soulguide": "Soul Guide",
+	"newcostume": "New Costume",
+
 
 }
 
@@ -247,6 +251,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 			from_zone_str = " from your Collab"
 		"holopower":
 			from_zone_str = " from your Holopower"
+		"holomem":
+			from_zone_str = " from this Holomem"
 		"":
 			from_zone_str = ""
 	match to_zone:
@@ -413,6 +419,15 @@ func get_condition_text(conditions):
 				text += "Is %s: " % ["/".join(condition["condition_colors"])]
 			"collab_with":
 				text += "Collab with %s: " % [HolomemNames[condition["required_member_name"]]]
+			"damage_ability_is_color":
+				var or_oshi = ""
+				if "include_oshi_ability" in condition and condition["include_oshi_ability"]:
+					or_oshi = " or Oshi"
+				text += "Damage from %s%s: " % [condition["condition_color"], or_oshi]
+			"damaged_holomem_is_backstage":
+				text += "Damaged Holomem is Back: "
+			"damaged_holomem_is_center_or_collab":
+				text += "Damaged Holomem is Center/Collab: "
 			"downed_card_belongs_to_opponent":
 				text += "Downed opponent's Holomem: "
 			"downed_card_is_color":
@@ -479,6 +494,14 @@ func get_effect_text(effect):
 		"add_turn_effect_for_holomem":
 			var turn_effect = effect["turn_effect"]
 			text += "Choose a Holomem. This Turn: %s" % [get_effect_text(turn_effect)]
+		"archive_cheer_from_holomem":
+			var amount = effect["amount"]
+			var from = effect["from"]
+			var from_str = ""
+			match from:
+				"self":
+					from_str = "this Holomem"
+			text += "Archive %s Cheer from %s." % [amount, from_str]
 		"archive_from_hand":
 			var amount = effect["amount"]
 			text += "Archive %s from hand." % amount

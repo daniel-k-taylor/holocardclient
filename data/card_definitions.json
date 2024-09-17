@@ -947,7 +947,7 @@
                     { "condition": "opponent_turn" },
                     { "condition": "target_has_any_tag", "condition_tags": ["#Promise"] }
                 ],
-                "timing": "on_damage",
+                "timing": "on_take_damage",
                 "effect_type": "choice",
                 "choice": [
                     {
@@ -1260,12 +1260,16 @@
                     { "condition": "not_used_once_per_turn_effect", "condition_effect_id": "comet" },
                     { "condition": "holopower_at_least", "amount": 2 },
                     { "condition": "damaged_holomem_is_backstage" },
-                    { "condition": "damage_ability_is_oshi_or_color", "condition_color": "blue" }
+                    { "condition": "damage_ability_is_color", "condition_color": "blue", "include_oshi_ability": true }
                 ],
                 "timing": "after_deal_damage",
                 "effect_type": "choice",
                 "choice": [
                     {
+                        "oshi_effect": "true",
+                        "skill_id": "comet",
+                        "cost": 2,
+                        "limit": "once_per_turn",
                         "effect_type": "deal_damage",
                         "special": true,
                         "amount": 50,
@@ -1297,6 +1301,10 @@
                 "choice_populate_amount_x": "equal_to_last_damage",
                 "choice": [
                     {
+                        "oshi_effect": "true",
+                        "skill_id": "shootingstar",
+                        "cost": 2,
+                        "limit": "once_per_game",
                         "effect_type": "deal_damage",
                         "special": true,
                         "amount": "X",
@@ -1938,7 +1946,7 @@
         "gift_effects": [
             {
                 "full_english_text": "1/Turn (Collab only) When a Holomem takes damage from the opponent, you may roll a die. If odd, prevent the damage.",
-                "timing": "on_damage",
+                "timing": "on_take_damage",
                 "conditions": [
                     { "condition": "effect_card_id_not_used_this_turn" },
                     { "condition": "this_card_is_collab"},
@@ -2836,6 +2844,51 @@
             }
         ]
     },
+    {
+        "card_id": "hBP01-077",
+        "card_type": "holomem_debut",
+        "holomem_names": ["hoshimachi_suisei"],
+        "special_deck_limit": 50,
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "newcostume",
+                "costs": [
+                    { "color": "blue", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            }
+        ],
+        "collab_effects": [
+            {
+                "conditions": [
+                    { "condition": "oshi_is", "required_member_name": "hoshimachi_suisei" },
+                    { "condition": "self_has_cheer", "amount_min": 1 }
+                ],
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "effect_type": "archive_cheer_from_holomem",
+                        "from": "self",
+                        "amount": 1,
+                        "and": [
+                            { "effect_type": "draw", "amount": 2 }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
 
 
     {
@@ -3392,7 +3445,7 @@
                 "amount": 10
             },
             {
-                "timing": "on_damage",
+                "timing": "on_take_damage",
                 "conditions": [
                     { "condition": "opponent_turn" },
                     { "condition": "attached_to", "required_member_name": "amane_kanata" },
