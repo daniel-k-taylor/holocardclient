@@ -119,6 +119,27 @@ const SkillNameMap = {
 	"amomentofsunlightfilteringthroughthetrees": "A moment of sunlight filtering through the trees",
 	"thefightingmaid": "The Fighting Maid",
 	"shiningcomet": "Shining Comet",
+	"coldresponsekanataso": "Cold response Kanataso",
+	"ohhi": "Oh, Hi",
+	"goingouttogether": "Going out together",
+	"coffeebreak": "Coffee Break",
+	"piecesofmemories": "Pieces of Memories",
+	"dontdrinkonsenwater": "Don't drink onsen water",
+	"arelaxingdayattheonsen": "A relaxing day at the onsen",
+	"hirys": "HiRyS!",
+	"imaseisonephilim": "I'm a seiso nephilim!",
+	"araara": "Ara ara",
+	"mugyumugyuchat": "Mugyu Mugyu Chat",
+	"zerogravityjump": "Zero Gravity Jump!",
+	"otsupeko": "Otsupeko",
+	"konazki": "Kon-AZKi",
+	"withyouinaseasidetown": "With you in a seaside town",
+	"ivecometosuchawonderfulworld": "I've come to such a wonderful world",
+	"anewmap": "A new map",
+	"ladiesandgentlemenkazamairohadegozaru": "Ladies and gentlemen,\nKazama Iroha de gozaru",
+	"freshlypickledeggplant": "Freshly pickled eggplant",
+	"wouldyoulikeone": "Would you like one?",
+
 
 
 
@@ -140,6 +161,7 @@ const HolomemNames = {
 	"takane_lui": "Takane Lui",
 	"watson_amelia": "Watson Amelia",
 	"kobo_kanaeru": "Kobo Kanaeru",
+	"kazama_iroha": "Kazama Iroha",
 
 	# Card Names referenced directly
 	"stone_axe": "Stone Axe",
