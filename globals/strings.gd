@@ -115,6 +115,11 @@ const SkillNameMap = {
 	"hawkrave": "Hawk Rave",
 	"soulguide": "Soul Guide",
 	"newcostume": "New Costume",
+	"streetsnap": "Street Snap",
+	"amomentofsunlightfilteringthroughthetrees": "A moment of sunlight filtering through the trees",
+	"thefightingmaid": "The Fighting Maid",
+	"shiningcomet": "Shining Comet",
+
 
 
 }
@@ -569,6 +574,19 @@ func get_effect_text(effect):
 			if "prevent_life_loss" in effect and effect["prevent_life_loss"]:
 				prevent_life_str = " (Can't lose life)"
 			text += "Deal %s%s damage %s%s." % [effect["amount"], special_str, target_str, prevent_life_str]
+		"down_holomem":
+			var target_str = ""
+			if "target" in effect:
+				match effect["target"]:
+					"backstage":
+						target_str = "a Backstage"
+			var required_damage_str = ""
+			if "required_damage" in effect:
+				required_damage_str = " who has taken %s damage" % effect["required_damage"]
+			var prevent_life_str = ""
+			if "prevent_life_loss" in effect and effect["prevent_life_loss"]:
+				prevent_life_str = " (Can't lose life)"
+			text += "Down %s Holomem%s%s." % [target_str, required_damage_str, prevent_life_str]
 		"draw":
 			text += "Draw %s." % [effect["amount"]]
 		"force_die_result":
@@ -598,6 +616,8 @@ func get_effect_text(effect):
 			if "has_tag" in effect:
 				tag_str = "%s " % effect["has_tag"]
 			text += "+%s Power per %sHolomem." % [effect["amount"], tag_str]
+		"power_boost_per_stacked":
+			text += "+%s Power per stacked Holomem." % [effect["amount"]]
 		"recover_downed_holomem_cards":
 			text += "Recover downed Holomem's Holomem cards."
 		"reduce_damage":

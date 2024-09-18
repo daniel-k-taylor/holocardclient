@@ -385,6 +385,8 @@ func process_game_event(event_type, event_data):
 			_on_send_cheer_event(event_data)
 		Enums.EventType_Decision_SwapHolomemToCenter:
 			_on_swap_holomem_to_center_event(event_data)
+		Enums.EventType_DownedHolomem:
+			_on_downed_holomem_event(event_data)
 		Enums.EventType_Draw:
 			_on_draw_event(event_data)
 		Enums.EventType_EndTurn:
@@ -1917,8 +1919,45 @@ func _on_damage_dealt_event(event_data):
 	var target_player = get_player(event_data["target_player"])
 	var target_id = event_data["target_id"]
 	var damage = event_data["damage"]
-	var died = event_data["died"]
 	var _special = event_data["special"]
+
+	var card = find_card_on_board(target_id)
+	card.add_damage(damage, false)
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
+		target_player.get_name(),
+		_get_card_definition_id(target_id),
+		damage,
+	])
+
+func _process_downed_holomem(target_player, card, hand_ids, is_game_over, life_lost):
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
+		target_player.get_name(),
+		card._definition_id,
+	])
+	# Put the card and all attached cards in the archive or hand as approrpiate.
+	var attached_card_ids = card.get_attached()
+	var attached_cheer = card.remove_all_attached_cheer()
+	for attached_id in attached_card_ids:
+		var attached_dest = "archive"
+		if attached_id in hand_ids:
+			attached_dest = "hand"
+		do_move_cards(target_player, card._card_id, attached_dest, "", [attached_id])
+	card.clear_attached()
+	for cheer_id in attached_cheer:
+		do_move_cards(target_player, card._card_id, "archive", "", [cheer_id])
+
+	var dest = "archive"
+	if card._card_id in hand_ids:
+		dest = "hand"
+	do_move_cards(target_player, "stage", dest, "", [card._card_id])
+
+	if is_game_over:
+		# The event to lower the life won't occur, so do that now.
+		target_player.life_count -= life_lost
+
+func _on_downed_holomem_event(event_data):
+	var target_player = get_player(event_data["target_player"])
+	var target_id = event_data["target_id"]
 	var is_game_over = event_data["game_over"]
 	var life_lost = event_data["life_lost"]
 	var _life_loss_prevented = event_data["life_loss_prevented"]
@@ -1926,38 +1965,7 @@ func _on_damage_dealt_event(event_data):
 	var hand_ids = event_data["hand_ids"]
 
 	var card = find_card_on_board(target_id)
-	card.add_damage(damage, died)
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
-		target_player.get_name(),
-		_get_card_definition_id(target_id),
-		damage,
-	])
-
-	if died:
-		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
-			target_player.get_name(),
-			_get_card_definition_id(target_id),
-		])
-		# Put the card and all attached cards in the archive or hand as approrpiate.
-		var attached_card_ids = card.get_attached()
-		var attached_cheer = card.remove_all_attached_cheer()
-		for attached_id in attached_card_ids:
-			var attached_dest = "archive"
-			if attached_id in hand_ids:
-				attached_dest = "hand"
-			do_move_cards(target_player, target_id, attached_dest, "", [attached_id])
-		card.clear_attached()
-		for cheer_id in attached_cheer:
-			do_move_cards(target_player, target_id, "archive", "", [cheer_id])
-
-		var dest = "archive"
-		if target_id in hand_ids:
-			dest = "hand"
-		do_move_cards(target_player, "stage", dest, "", [target_id])
-
-		if is_game_over:
-			# The event to lower the life won't occur, so do that now.
-			target_player.life_count -= life_lost
+	_process_downed_holomem(target_player, card, hand_ids, is_game_over, life_lost)
 
 func _on_play_support_card_event(event_data):
 	var active_player = get_player(event_data["player_id"])
