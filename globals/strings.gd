@@ -140,6 +140,10 @@ const SkillNameMap = {
 	"ladiesandgentlemenkazamairohadegozaru": "Ladies and gentlemen,\nKazama Iroha de gozaru",
 	"freshlypickledeggplant": "Freshly pickled eggplant",
 	"wouldyoulikeone": "Would you like one?",
+	"wazzup": "WAZZUP!!",
+	"witnessme": "WITNESS ME!!",
+	"thefunbegins": "The fun begins!",
+	"disorder": "Disorder",
 
 
 
@@ -163,6 +167,8 @@ const HolomemNames = {
 	"watson_amelia": "Watson Amelia",
 	"kobo_kanaeru": "Kobo Kanaeru",
 	"kazama_iroha": "Kazama Iroha",
+	"hakos_baelz": "Hakos Baelz",
+
 
 	# Card Names referenced directly
 	"stone_axe": "Stone Axe",
@@ -375,6 +381,9 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 			main_text += "\nOnly Tag: %s" % "/".join(requirement_details["requirement_tags"])
 		if requirement_details.get("requirement_match_oshi_color", false):
 			main_text += "\nMatches Oshi Color"
+
+	if "after_choose_effect" in requirement_details:
+		main_text += "\n" + get_effect_text(requirement_details["after_choose_effect"])
 	return main_text
 
 
@@ -450,6 +459,8 @@ func get_condition_text(conditions):
 				text += "Center has tag %s: " % ["/".join(condition["condition_tags"])]
 			"center_is_color":
 				text += "Is %s: " % ["/".join(condition["condition_colors"])]
+			"chosen_card_has_tag":
+				text += "If chosen card has tag %s: " % ["/".join(condition["condition_tags"])]
 			"collab_with":
 				text += "Collab with %s: " % [HolomemNames[condition["required_member_name"]]]
 			"damage_ability_is_color":
@@ -492,6 +503,8 @@ func get_condition_text(conditions):
 				text += "Performer has tag %s: " % ["/".join(condition["condition_tags"])]
 			"played_support_this_turn":
 				text += "Played a Support card this turn: "
+			"self_has_cheer_color":
+				text += "Has %s Cheer: " % [condition["color_requirement"]]
 			"stage_has_space":
 				text += "Room on stage: "
 			"target_color":
