@@ -149,6 +149,11 @@ const SkillNameMap = {
 	"lookforwardtoit": "Look forward to it!",
 	"midnightmoon": "Midnight Moon",
 	"moonnightdiva": "Moon Night Diva",
+	"kronichiwa": "Kronichiwa",
+	"kroyasumi": "Kroyasumi",
+	"oyasumikrotime": "Oyasumi Kro-Time",
+	"letsmakethisanunforgettablefes": "Let's make this an unforgettable fes",
+	"fastforward": "Fast Forward",
 
 
 
@@ -173,6 +178,8 @@ const HolomemNames = {
 	"kobo_kanaeru": "Kobo Kanaeru",
 	"kazama_iroha": "Kazama Iroha",
 	"hakos_baelz": "Hakos Baelz",
+	"ouro_kronii": "Ouro Kronii",
+
 
 
 	# Card Names referenced directly
