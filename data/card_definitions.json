@@ -1459,6 +1459,31 @@
         ]
     },
     {
+        "card_id": "hBP01-011",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["amane_kanata"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 150,
+        "baton_cost": 0,
+        "tags": [
+            "#JP",
+            "#Gen4",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "coldresponsekanataso",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": []
+    },
+    {
         "card_id": "hBP01-012",
         "card_type": "holomem_bloom",
         "bloom_level": 1,
@@ -1593,10 +1618,43 @@
         ]
     },
     {
-        "card_id": "hBP01-016",
+        "card_id": "hBP01-015",
         "card_type": "holomem_debut",
         "holomem_names": ["nanashi_mumei"],
         "rarity": "c",
+        "special_deck_limit": 50,
+        "colors": ["white"],
+        "hp": 90,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "ohhi",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 10,
+                "art_effects": [
+                    {
+                        "conditions": [{ "condition": "played_support_this_turn" }],
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 20
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-016",
+        "card_type": "holomem_debut",
+        "holomem_names": ["nanashi_mumei"],
+        "rarity": "u",
         "colors": ["white"],
         "hp": 60,
         "baton_cost": 1,
@@ -1621,6 +1679,82 @@
                 "effect_type": "draw",
                 "conditions": [{ "condition": "center_has_any_tag", "condition_tags": ["#Promise"] }],
                 "amount": 1
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-017",
+        "card_type": "holomem_bloom",
+        "holomem_names": ["nanashi_mumei"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "goingouttogether",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 20
+            },
+            {
+                "art_id": "coffeebreak",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-018",
+        "card_type": "holomem_bloom",
+        "holomem_names": ["nanashi_mumei"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "piecesofmemories",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 20,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "reveal_top_deck",
+                                "and": [
+                                    {
+                                        "conditions": [{ "condition": "top_deck_card_has_any_tag", "condition_tags": ["#Promise"] }],
+                                        "effect_type": "power_boost",
+                                        "amount": 20,
+                                        "and": [{ "effect_type": "draw", "amount": 1 }]
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -1871,6 +2005,37 @@
         ]
     },
     {
+        "card_id": "hBP01-025",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["vestia_zeta"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 160,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen3"
+        ],
+        "arts": [
+            {
+                "art_id": "dontdrinkonsenwater",
+                "costs": [
+                    { "color": "white", "amount": 1 }
+                ],
+                "power": 40
+            },
+            {
+                "art_id": "arelaxingdayattheonsen",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
         "card_id": "hBP01-026",
         "card_type": "holomem_bloom",
         "bloom_level": 1,
@@ -1980,7 +2145,57 @@
             }
         ]
     },
-
+    {
+        "card_id": "hBP01-028",
+        "card_type": "holomem_debut",
+        "holomem_names": ["irys"],
+        "rarity": "c",
+        "special_deck_limit": 50,
+        "colors": ["white"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "hirys",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-029",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["irys"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 160,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Promise",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "imaseisonephilim",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": []
+            }
+        ]
+    },
     {
         "card_id": "hBP01-030",
         "card_type": "holomem_bloom",
@@ -2146,8 +2361,41 @@
             }
         ]
     },
-
-
+    {
+        "card_id": "hBP01-034",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["aki_rosenthal"],
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 160,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen1",
+            "#HalfElf",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "araara",
+                "costs": [
+                    { "color": "green", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            },
+            {
+                "art_id": "mugyumugyuchat",
+                "costs": [
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": []
+            }
+        ]
+    },
     {
         "card_id": "hBP01-035",
         "card_type": "holomem_bloom",
@@ -2330,7 +2578,78 @@
             }
         ]
     },
-
+    {
+        "card_id": "hBP01-039",
+        "card_type": "holomem_debut",
+        "holomem_names": ["usada_pekora"],
+        "rarity": "u",
+        "colors": ["green"],
+        "hp": 90,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "zerogravityjump",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            }
+        ],
+        "collab_effects": [
+            {
+                "conditions": [{ "condition": "oshi_is", "required_member_name": "usada_pekora" }],
+                "effect_type": "roll_die",
+                "source": "holomem_ability",
+                "die_effects": [
+                    {
+                        "english_values": "even",
+                        "activate_on_values": [2,4,6],
+                        "effects": [
+                            {
+                                "effect_type": "send_cheer",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "cheer_deck",
+                                "to": "holomem"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-040",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["usada_pekora"],
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 150,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "otsupeko",
+                "costs": [
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": []
+            }
+        ]
+    },
     {
         "card_id": "hBP01-041",
         "card_type": "holomem_bloom",
@@ -2513,6 +2832,211 @@
                 "effect_type": "restore_hp",
                 "amount": 50,
                 "target": "self"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-044",
+        "card_type": "holomem_debut",
+        "holomem_names": ["azki"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "konazki",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20,
+                "art_effects": []
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-045",
+        "card_type": "holomem_debut",
+        "holomem_names": ["azki"],
+        "bloom_level_skip": 2,
+        "bloom_level_skip_requirement": "3lifeorless",
+        "rarity": "u",
+        "colors": ["green"],
+        "hp": 50,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "withyouinaseasidetown",
+                "costs": [
+                    { "color": "green", "amount": 1 }
+                ],
+                "power": 20,
+                "art_effects": []
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-046",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["azki"],
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "ivecometosuchawonderfulworld",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "holomem",
+                "to": "holomem"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-047",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "holomem_names": ["azki"],
+        "rarity": "rr",
+        "colors": ["green"],
+        "hp": 220,
+        "baton_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen0",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "anewmap",
+                "costs": [
+                    { "color": "green", "amount": 3 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 120,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "white" }]
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "restore_hp",
+                "amount": 40,
+                "target": "self",
+                "and": [
+                    {
+                        "effect_type": "roll_die",
+                        "source": "holomem_ability",
+                        "die_effects": [
+                            {
+                                "english_values": "odd",
+                                "activate_on_values": [1,3,5],
+                                "effects": [
+                                    {
+                                        "effect_type": "send_cheer",
+                                        "amount_min": 1,
+                                        "amount_max": 1,
+                                        "from": "archive",
+                                        "to": "this_holomem",
+                                        "to_limitation": "color_in",
+                                        "to_limitation_colors": ["green"]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-048",
+        "card_type": "holomem_debut",
+        "holomem_names": ["kazama_iroha"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX"
+        ],
+        "arts": [
+            {
+                "art_id": "ladiesandgentlemenkazamairohadegozaru",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20,
+                "art_effects": []
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-049",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["kazama_iroha"],
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 180,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX"
+        ],
+        "arts": [
+            {
+                "art_id": "freshlypickledeggplant",
+                "costs": [
+                    { "color": "green", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            },
+            {
+                "art_id": "wouldyoulikeone",
+                "costs": [
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": []
             }
         ]
     },
@@ -2741,7 +3265,7 @@
         "card_type": "holomem_bloom",
         "bloom_level": 2,
         "holomem_names": ["takane_lui"],
-        "rarity": "u",
+        "rarity": "r",
         "colors": ["red"],
         "hp": 190,
         "baton_cost": 2,

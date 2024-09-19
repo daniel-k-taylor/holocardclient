@@ -127,7 +127,8 @@ func initialize_graphics():
 		overlay_root.visible = false
 		damage_indicator.visible = false
 	else:
-		var jp_path = "res://assets/cards/" + _definition_id + ".png"
+		var rarity = CardDatabase.get_card(_definition_id)["rarity"].to_upper()
+		var jp_path = "res://assets/cards/" + _definition_id + "_" + rarity + ".png"
 		var en_path = "res://assets/cards/en/" + _definition_id  + ".jpg"
 		# Check if the en card exists.
 		var use_en_proxies = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
