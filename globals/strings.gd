@@ -144,6 +144,11 @@ const SkillNameMap = {
 	"witnessme": "WITNESS ME!!",
 	"thefunbegins": "The fun begins!",
 	"disorder": "Disorder",
+	"moonmoonmoonadaiyo": "Moon Moon~ Moona Dayo!",
+	"otsumoona": "Otsumoona",
+	"lookforwardtoit": "Look forward to it!",
+	"midnightmoon": "Midnight Moon",
+	"moonnightdiva": "Moon Night Diva",
 
 
 
@@ -333,6 +338,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	var main_text = "Choose %s %s%s to move to %s%s." % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
 	if "requirement" in requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
+			"color_in":
+				main_text += "\nOnly %s" % "/".join(requirement_details["requirement_colors"])
 			"color_matches_holomems":
 				main_text += "\nOnly colors matching your Holomems on stage"
 			"specific_card":
@@ -504,7 +511,7 @@ func get_condition_text(conditions):
 			"played_support_this_turn":
 				text += "Played a Support card this turn: "
 			"self_has_cheer_color":
-				text += "Has %s Cheer: " % [condition["color_requirement"]]
+				text += "Has %s %s Cheer: " % [condition["amount_min"], "/".join(condition["condition_colors"])]
 			"stage_has_space":
 				text += "Room on stage: "
 			"target_color":
