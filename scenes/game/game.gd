@@ -435,6 +435,8 @@ func process_game_event(event_type, event_data):
 			_on_reset_step_collab_event(event_data)
 		Enums.EventType_RestoreHP:
 			_on_restore_hp_event(event_data)
+		Enums.EventType_RevealCards:
+			_on_reveal_cards_event(event_data)
 		Enums.EventType_RollDie:
 			_on_roll_die_event(event_data)
 		Enums.EventType_ShuffleDeck:
@@ -1180,7 +1182,8 @@ func _on_main_step_action_chosen(choice_index):
 								var cheer_on_each_mem = support_card_action["cheer_on_each_mem"]
 								var valid_mem_ids = []
 								for mem_id in cheer_on_each_mem.keys():
-									valid_mem_ids.append(mem_id)
+									if len(cheer_on_each_mem[mem_id]) > 0:
+										valid_mem_ids.append(mem_id)
 								# First, the user must select a holomem to pull cheer from.
 								_show_click_cards_action_menu(
 									valid_mem_ids,
@@ -1244,7 +1247,7 @@ func _on_send_cheer_event(event_data):
 		var to_zone = event_data["to_zone"]
 		var cheer_to_send = event_data["from_options"]
 		var valid_targets = event_data["to_options"]
-		var cheer_on_each_mem = event_data["cheer_on_each_mem"]
+		var holomem_to_cheer_list_map = event_data["cheer_on_each_mem"]
 		var cancel_callback = null
 		var multi_to = event_data.get("multi_to", false)
 		if amount_min == 0:
@@ -1252,22 +1255,19 @@ func _on_send_cheer_event(event_data):
 
 		assert(to_zone in ["holomem", "archive"])
 		assert(from_zone in ["archive", "cheer_deck", "life", "holomem", "downed_holomem", "opponent_holomem"])
-		# For multi_to, pick a target holomem then pick the cheers to give them, continue until all done.
+		# For multi_to, and the cheer is from a single zone (one holo or archive) pick a target holomem then pick the cheers to give them, continue until all done.
 		# For from holomem, first choose a mem, then choose a cheer on them in from_options, then choose a different holomem.
 		# For archive/life/cheer deck, use the popout to select cheer, then choose a holomem.
-		if multi_to:
+		if multi_to and from_zone in ["downed_holomem", "archive"]:
 			var cheer_source = null
 			var max_can_place = min(amount_max, len(cheer_to_send))
 			if from_zone == "archive":
 				cheer_source = "archive"
 			else:
-				for mem_id in cheer_on_each_mem.keys():
-					var mem = find_card_on_board(mem_id)
-					var attached_card_ids = mem.get_attached()
-					for attached_card_id in attached_card_ids:
+				for mem_id in holomem_to_cheer_list_map.keys():
+					var cheer_ids = holomem_to_cheer_list_map[mem_id]
+					if cheer_to_send[0] in cheer_ids:
 						cheer_source = mem_id
-						break
-					if cheer_source:
 						break
 			multi_step_decision_info = {
 				"placements": {},
@@ -1278,51 +1278,16 @@ func _on_send_cheer_event(event_data):
 			}
 			_multi_send_cheer_continue(valid_targets, from_zone)
 		elif from_zone == "holomem" or from_zone == "opponent_holomem":
-			var unique_mems = cheer_on_each_mem.keys()
-			_show_click_cards_action_menu(
-				unique_mems,
-				func(chosen_source_mem):
-					var cheer_options = cheer_on_each_mem[chosen_source_mem]
-					var instructions = Strings.build_send_cheer_string(
-						amount_min, amount_max, from_zone
-					)
-					_show_popout(instructions, cheer_options, cheer_options, amount_min, amount_max,
-						func():
-							var chosen_cheer_ids = []
-							for card in selected_cards:
-								chosen_cheer_ids.append(card._card_id)
-							if to_zone == "archive":
-								# These cards are going to the archive, so we're done.
-								var placements = {}
-								for cheer_id in chosen_cheer_ids:
-									placements[cheer_id] = "archive"
-								submit_effect_resolution_move_cheer_between_holomems(placements)
-								_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
-							else:
-								# Now that cheer is selected, choose the target holomem.
-								# It can't be the source holomem.
-								valid_targets.erase(chosen_source_mem)
-								_show_click_cards_action_menu(
-									valid_targets,
-									func(chosen_target_mem):
-										var placements = {}
-										for cheer_id in chosen_cheer_ids:
-											placements[cheer_id] = chosen_target_mem
-										submit_effect_resolution_move_cheer_between_holomems(placements)
-										_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
-										pass,
-									Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM,
-									cancel_callback
-								)
-								_highlight_info_cards([chosen_source_mem])
-								pass,
-						cancel_callback
-					)
-					_highlight_info_cards([chosen_source_mem])
-					,
-				Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM),
-				cancel_callback
-			)
+			var max_can_place = min(amount_max, len(cheer_to_send))
+
+			multi_step_decision_info = {
+				"placements": {},
+				"remaining_cheer": cheer_to_send,
+				"can_stop_at": amount_min,
+				"remaining_cheer_allowed": max_can_place,
+				"holomem_to_cheer_list_map": holomem_to_cheer_list_map,
+			}
+			_multi_source_multi_target_send_cheer_continue()
 		elif from_zone == "life" or from_zone == "cheer_deck":
 			# Distribute the cheer sequentially.
 			multi_step_decision_info = {
@@ -1411,6 +1376,79 @@ func _multi_send_cheer_continue(valid_targets, from_zone):
 		Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM),
 		cancel_callback,
 		Strings.STRING_END_ABILITY
+	)
+
+func _multi_source_multi_target_send_cheer_continue():
+	var can_stop_multi_send = multi_step_decision_info["can_stop_at"] == len(multi_step_decision_info["placements"].keys())
+	var cancel_callback = null
+	if can_stop_multi_send:
+		cancel_callback = func():
+			for cheer_id in multi_step_decision_info["placements"].keys():
+				move_card_ids_already_handled.append(cheer_id)
+			submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+
+	var unique_mems = multi_step_decision_info["holomem_to_cheer_list_map"].keys()
+	# Because cheer can move around from this original list, figure out which mems have cheer
+	# locally and only allowed those.
+	var mems_with_cheer = []
+	for mem in unique_mems:
+		var mem_card = find_card_on_board(mem)
+		if mem_card.get_cheer_count() > 0:
+			mems_with_cheer.append(mem)
+
+	_show_click_cards_action_menu(
+		mems_with_cheer,
+		func(chosen_source_mem):
+			var chosen_mem_card = find_card_on_board(chosen_source_mem)
+			var cheer_options = chosen_mem_card.get_cheer_ids()
+			var placed_count = len(multi_step_decision_info["placements"].keys())
+			var remaining_min = max(0, multi_step_decision_info["can_stop_at"] - placed_count)
+			var remaining_max = multi_step_decision_info["remaining_cheer_allowed"] - placed_count
+			var instructions = Strings.build_send_cheer_string(
+				remaining_min, remaining_max, "holomem"
+			)
+			_show_popout(instructions, cheer_options, cheer_options, remaining_min, remaining_max,
+				func():
+					var chosen_cheer_ids = []
+					for card in selected_cards:
+						chosen_cheer_ids.append(card._card_id)
+
+					# Now that cheer is selected, choose the target holomem.
+					# It can't be the source holomem.
+					var valid_targets = unique_mems.duplicate()
+					valid_targets.erase(chosen_source_mem)
+					_show_click_cards_action_menu(
+						valid_targets,
+						func(chosen_target_mem):
+							# The user has chosen to move chosen_cheer_ids from chosen_source_mem to chosen_target_mem.
+							for cheer_id in chosen_cheer_ids:
+								# Go ahead and move the cheer.
+								do_move_cards(me, chosen_source_mem, "holomem", chosen_target_mem, [cheer_id])
+								# Update the placement.
+								multi_step_decision_info["placements"][cheer_id] = chosen_target_mem
+
+							var total_moved_count = len(multi_step_decision_info["placements"].keys())
+							if total_moved_count == multi_step_decision_info["remaining_cheer_allowed"]:
+								# Done, we have placed the max allowed.
+								for cheer_id in multi_step_decision_info["placements"].keys():
+									move_card_ids_already_handled.append(cheer_id)
+								submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
+								_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+							else:
+								_multi_source_multi_target_send_cheer_continue()
+							pass,
+						Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM,
+						cancel_callback
+					)
+					_highlight_info_cards([chosen_source_mem])
+					pass,
+				cancel_callback
+			)
+			_highlight_info_cards([chosen_source_mem])
+			,
+		Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM),
+		cancel_callback
 	)
 
 func _send_cheer_continue():
@@ -1589,7 +1627,7 @@ func _baton_pass_target_selection():
 	_show_click_cards_action_menu(
 		target_card_ids,
 		_baton_pass_holomem_complete,
-		Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_BLOOM),
+		Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_BATONPASS),
 		_cancel_to_main_step
 	)
 
@@ -2060,6 +2098,21 @@ func _on_restore_hp_event(event_data):
 		_get_card_definition_id(card_id),
 		healed_amount
 	])
+func _on_reveal_cards_event(event_data):
+	var active_player = get_player(event_data["effect_player_id"])
+	var card_ids = event_data["card_ids"]
+	var source = event_data["source"]
+	var source_str = ""
+	match source:
+		"topdeck":
+			source_str = "top of deck"
+	for card_id in card_ids:
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s reveals [CARD]%s[/CARD] from %s" % [
+			active_player.get_name(),
+			_get_card_definition_id(card_id),
+			source_str
+		])
+	# TODO: Find a way to add revealed cards somewhere.
 
 func _on_roll_die_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])

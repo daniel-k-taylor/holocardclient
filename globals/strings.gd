@@ -21,6 +21,7 @@ const DECISION_INSTRUCTIONS_PERFORMANCE_STEP = "Perform an art or end your turn"
 const DECISION_INSTRUCTIONS_PLACE_HOLOMEM = "Choose a Holomem to enter the stage"
 const DECISION_INSTRUCTIONS_CHOOSE_BLOOM = "Choose a Bloom card to play"
 const DECISION_INSTRUCTIONS_CHOOSE_BLOOM_TARGET = "Choose a Holomem to Bloom"
+const DECISION_INSTRUCTIONS_CHOOSE_BATONPASS = "Choose a Holomem for the Baton Pass"
 const DECISION_INSTRUCTIONS_CHOOSE_SUPPORT_CARD = "Choose a Support card to play"
 const DECISION_INSTRUCTIONS_COLLAB = "Choose a Holomem to Collab"
 const DECISION_INSTRUCTIONS_BATON_PASS = "Choose a Holomem to Baton Pass"
@@ -230,15 +231,15 @@ func build_send_cheer_string(amount_min, amount_max, source):
 	var action_word = "Send"
 	match source:
 		"archive":
-			source_str = "your Archive"
+			source_str = "from your Archive"
 		"cheer_deck":
-			source_str = "your Cheer Deck"
+			source_str = "from your Cheer Deck"
 		"downed_holomem":
-			source_str = "downed Holomem"
+			source_str = "from downed Holomem"
 		"holomem":
-			source_str = "this Holomem"
+			source_str = "between Holomem"
 		"opponent_holomem":
-			source_str = "opponent's Holomem"
+			source_str = "from opponent's Holomem"
 			action_word = "Remove"
 	var amount_str = "%s" % amount_min
 	if str(amount_min) != str(amount_max):
@@ -246,7 +247,7 @@ func build_send_cheer_string(amount_min, amount_max, source):
 			amount_str = "any amount of"
 		else:
 			amount_str = "%s-%s" % [amount_min, amount_max]
-	return "%s %s Cheer from %s." % [action_word, amount_str, source_str]
+	return "%s %s Cheer %s." % [action_word, amount_str, source_str]
 
 func build_order_cards_string(to, bottom):
 	var dir_str = "top"
@@ -489,6 +490,8 @@ func get_condition_text(conditions):
 				text += "Performer is chosen card: "
 			"performer_has_any_tag":
 				text += "Performer has tag %s: " % ["/".join(condition["condition_tags"])]
+			"played_support_this_turn":
+				text += "Played a Support card this turn: "
 			"stage_has_space":
 				text += "Room on stage: "
 			"target_color":
@@ -497,6 +500,8 @@ func get_condition_text(conditions):
 				text += "Target has tag %s: " % ["/".join(condition["condition_tags"])]
 			"this_card_is_collab":
 				text += "Collab position: "
+			"top_deck_card_has_any_tag":
+				text += "Top deck card has tag %s: " % ["/".join(condition["condition_tags"])]
 	return text
 
 func get_effect_text(effect):
@@ -668,6 +673,8 @@ func get_effect_text(effect):
 					"color_in":
 						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
 			text += "Restore %s HP %s%s" % [amount, target_str, limitation_str]
+		"reveal_top_deck":
+			text += "Reveal the top card of your deck."
 		"roll_die":
 			text += "Roll a die: "
 			var die_effects = effect["die_effects"]
@@ -781,6 +788,17 @@ func build_english_card_text(definition):
 				var next_entry = {
 					"colors": [],
 					"text": text
+				}
+				data.append(next_entry)
+			if "bloom_level_skip" in definition:
+				var bloom_text = "Can bloom directly to level %s" % definition["bloom_level_skip"]
+				if "bloom_level_skip_requirement" in definition:
+					match definition["bloom_level_skip_requirement"]:
+						"3lifeorless":
+							bloom_text += " if you have 3 LIFE or less."
+				var next_entry = {
+					"colors": [],
+					"text": bloom_text
 				}
 				data.append(next_entry)
 			var arts = definition["arts"]

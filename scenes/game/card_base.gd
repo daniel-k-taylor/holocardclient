@@ -206,6 +206,12 @@ func get_or_create_cheer_indicator(color):
 	cheer_indicator.set_cheer(color, 0)
 	return cheer_indicator
 
+func get_cheer_count():
+	return len(_cheer.keys())
+
+func get_cheer_ids():
+	return _cheer.keys()
+
 func remove_cheer_indicator(color):
 	for cheer_indicator in cheer_indicators.get_children():
 		if cheer_indicator.color == color:

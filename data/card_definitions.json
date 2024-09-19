@@ -1685,6 +1685,7 @@
     {
         "card_id": "hBP01-017",
         "card_type": "holomem_bloom",
+        "bloom_level": 1,
         "holomem_names": ["nanashi_mumei"],
         "rarity": "c",
         "colors": ["white"],
@@ -1717,6 +1718,7 @@
     {
         "card_id": "hBP01-018",
         "card_type": "holomem_bloom",
+        "bloom_level": 1,
         "holomem_names": ["nanashi_mumei"],
         "rarity": "c",
         "colors": ["white"],
@@ -2913,10 +2915,11 @@
         "bloom_effects": [
             {
                 "effect_type": "send_cheer",
-                "amount_min": 1,
-                "amount_max": 1,
+                "amount_min": 0,
+                "amount_max": 3,
                 "from": "holomem",
-                "to": "holomem"
+                "to": "holomem",
+                "multi_to": true
             }
         ]
     },
@@ -2969,11 +2972,11 @@
                                     {
                                         "effect_type": "send_cheer",
                                         "amount_min": 1,
-                                        "amount_max": 1,
+                                        "amount_max": 3,
                                         "from": "archive",
                                         "to": "this_holomem",
-                                        "to_limitation": "color_in",
-                                        "to_limitation_colors": ["green"]
+                                        "from_limitation": "color_in",
+                                        "from_limitation_colors": ["green"]
                                     }
                                 ]
                             }
@@ -3812,7 +3815,7 @@
         "card_type": "support",
         "sub_type": "event",
         "support_names": ["encore"],
-        "rarity": "u",
+        "rarity": "c",
         "effects": [
             {
                 "effect_type": "choose_cards",
@@ -4137,21 +4140,25 @@
 
         "card_id": "hY01-001",
         "card_type": "cheer",
+        "rarity": "c",
         "colors": ["white"]
     },
     {
         "card_id": "hY02-001",
         "card_type": "cheer",
+        "rarity": "c",
         "colors": ["green"]
     },
     {
         "card_id": "hY03-001",
         "card_type": "cheer",
+        "rarity": "c",
         "colors": ["red"]
     },
     {
         "card_id": "hY04-001",
         "card_type": "cheer",
+        "rarity": "c",
         "colors": ["blue"],
 
         "NOTE": "CHEER CARDS END"

@@ -282,6 +282,12 @@ value = 30.0
 fill_mode = 4
 texture_progress = ExtResource("12_j6jby")
 
+[node name="MeDeckSpawn" type="MarginContainer" parent="."]
+offset_left = 1171.0
+offset_top = 601.0
+offset_right = 1211.0
+offset_bottom = 641.0
+
 [node name="ExitGameButton" type="Button" parent="."]
 offset_left = 1184.0
 offset_top = 13.0
@@ -322,12 +328,6 @@ is_big_card = true
 
 [node name="PopupLocation" type="Node2D" parent="."]
 position = Vector2(640, 118)
-
-[node name="MeDeckSpawn" type="MarginContainer" parent="."]
-offset_left = 1171.0
-offset_top = 601.0
-offset_right = 1211.0
-offset_bottom = 641.0
 
 [node name="ModalDialog" parent="." instance=ExtResource("9_avbnf")]
 visible = false
