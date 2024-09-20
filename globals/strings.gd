@@ -154,8 +154,24 @@ const SkillNameMap = {
 	"oyasumikrotime": "Oyasumi Kro-Time",
 	"letsmakethisanunforgettablefes": "Let's make this an unforgettable fes",
 	"fastforward": "Fast Forward",
-
-
+	"illgiveyouallmyenergy": "I'll give you all my energy",
+	"bundleupyourcheers": "Bundle up your cheers",
+	"brillianceofthewind": "Brilliance of the Wind",
+	"selamatpagi": "Selamat Pagi!",
+	"yourbelovedalien": "Your beloved alien",
+	"imlookingforwardtoit": "I'm looking forward to it!",
+	"relationsky": "Relation Sky",
+	"kikkeriki": "Kikkeriki!",
+	"mofumofutime": "Mofu mofu Time",
+	"aufweidersehen": "auf weidersehen!",
+	"iwanttoliventhingsup": "I want to liven things up!",
+	"phoenixswordprincess": "Phoenix Sword Princess",
+	"kneel": "Kneel.",
+	"flamecoloredguidance": "Flame colored guidance",
+	"majesticphoenix": "Majestic Phoenix",
+	"polkaoruyo": "Polka Oruyo!",
+	"ohapol": "Ohapol",
+	"osopol": "Osopol",
 
 
 }
@@ -179,6 +195,7 @@ const HolomemNames = {
 	"kazama_iroha": "Kazama Iroha",
 	"hakos_baelz": "Hakos Baelz",
 	"ouro_kronii": "Ouro Kronii",
+	"omaru_polka": "Omaru Polka",
 
 
 
@@ -256,6 +273,8 @@ func build_send_cheer_string(amount_min, amount_max, source):
 			source_str = "from downed Holomem"
 		"holomem":
 			source_str = "between Holomem"
+		"self":
+			source_str = "from this Holomem"
 		"opponent_holomem":
 			source_str = "from opponent's Holomem"
 			action_word = "Remove"
@@ -331,6 +350,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 	var remaining_cards_str = ""
 	if remaining_cards_action:
 		match remaining_cards_action:
+			"archive":
+				remaining_cards_str = "\nArchive the remaining cards"
 			"shuffle":
 				remaining_cards_str = "\nShuffle the remaining cards"
 			"order_on_bottom":
@@ -348,7 +369,10 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 			"color_in":
 				main_text += "\nOnly %s" % "/".join(requirement_details["requirement_colors"])
 			"color_matches_holomems":
-				main_text += "\nOnly colors matching your Holomems on stage"
+				var tag_str = ""
+				if "requirement_only_holomems_with_any_tag" in requirement_details and requirement_details["requirement_only_holomems_with_any_tag"]:
+					tag_str = "%s " % ["/".join(requirement_details["requirement_only_holomems_with_any_tag"])]
+				main_text += "\nOnly colors matching your %sHolomems on stage" % tag_str
 			"specific_card":
 				var card = CardDatabase.get_card(requirement_details["requirement_id"])
 				var card_name = "MISSING_CARD_NAME"
@@ -425,6 +449,8 @@ func get_action_name(action_type:String):
 func get_timing_text(timing, timing_source_requirement):
 	var text = ""
 	match timing:
+		"arts_targeting":
+			text += ""
 		"before_art":
 			text += "Art: "
 		"before_die_roll":
@@ -495,8 +521,15 @@ func get_condition_text(conditions):
 				text += "Once per turn: "
 			"has_attachment_of_type":
 				text += "Has %s attachment: " % [condition["condition_type"]]
+			"has_stacked_holomem":
+				text += ""
 			"holomem_on_stage":
-				text += "%s on stage: " % [HolomemNames[condition["required_member_name"]]]
+				if "required_member_name" in condition:
+					text += "%s on stage: " % [HolomemNames[condition["required_member_name"]]]
+				elif "exclude_member_name" in condition:
+					var not_str = " (Not %s)" % [HolomemNames[condition["exclude_member_name"]]]
+					if "tag_in" in condition:
+						text += "%s on stage%s: " % [HolomemNames[condition["exclude_member_name"]], "/".join(condition["tag_in"]), not_str]
 			"not_used_once_per_game_effect":
 				text += "Once per game: "
 			"not_used_once_per_turn_effect":
@@ -578,6 +611,12 @@ func get_effect_text(effect):
 			text += "Attach card to Holomem%s.\n" % limitation_str
 		"block_opponent_movement":
 			text += "Block opponent's Center and Collab movement next turn."
+		"bloom_debut_played_this_turn_to_1st":
+			var location_str = ""
+			match effect["location"]:
+				"backstage":
+					location_str = "Backstage"
+			text += "Bloom a Debut %s Holomem played this turn." % location_str
 		"choice":
 			var choices = effect["choice"]
 			var choice_texts = []
@@ -649,7 +688,13 @@ func get_effect_text(effect):
 			text += "Generate %s Holopower." % [effect["amount"]]
 		"move_cheer_between_holomems":
 			var amount = effect["amount"]
-			text += "Move %s Cheer between your Holomems." % amount
+			var to_limitation = effect.get("to_limitation", "")
+			var to_limitation_tags = effect.get("to_limitation_tags", [])
+			var limitation_str = ""
+			match to_limitation:
+				"tag_in":
+					limitation_str = " (Only to %s)" % "/".join(to_limitation_tags)
+			text += "Move %s Cheer between your Holomems%s." % [amount, limitation_str]
 		"pass":
 			text += "Pass."
 		"performance_life_lost_increase":
@@ -663,6 +708,13 @@ func get_effect_text(effect):
 					"last_die_value":
 						multiplier_str = " x Dice Result "
 			text += "+%s Power%s." % [effect["amount"], multiplier_str]
+		"power_boost_per_archived_holomem":
+			text += "+%s Power per archived Holomem." % [effect["amount"]]
+		"power_boost_per_attached_cheer":
+			var up_to_str = ""
+			if "limit" in effect:
+				up_to_str = " (up to %sx)" % effect["limit"]
+			text += "+%s Power per attached Cheer%s%s." % [effect["amount"], up_to_str]
 		"power_boost_per_backstage":
 			text += "+%s Power per Back member." % [effect["amount"]]
 		"power_boost_per_holomem":
@@ -684,6 +736,8 @@ func get_effect_text(effect):
 			text += "Archive %s less from Hand" % [amount]
 		"repeat_art":
 			text += "Repeat this Art."
+		"restrict_targets_to_collab":
+			text += "Restrict Arts targets to this card (except Special damage)."
 		"restore_hp":
 			var amount = effect["amount"]
 			var target_str = ""
@@ -700,6 +754,8 @@ func get_effect_text(effect):
 					"color_in":
 						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
 			text += "Restore %s HP %s%s" % [amount, target_str, limitation_str]
+		"return_holomem_to_debut":
+			text += "Return one of your opponent's Back Holomems to a Debut Holomem (remove Damage, leave Cheer, the rest returns to hand)"
 		"reveal_top_deck":
 			text += "Reveal the top card of your deck."
 		"roll_die":

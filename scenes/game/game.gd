@@ -1250,6 +1250,7 @@ func _on_send_cheer_event(event_data):
 		var holomem_to_cheer_list_map = event_data["cheer_on_each_mem"]
 		var cancel_callback = null
 		var multi_to = event_data.get("multi_to", false)
+		var limit_one_per_member = event_data.get("limit_one_per_member", false)
 		if amount_min == 0:
 			cancel_callback = _send_no_cheer
 
@@ -1275,6 +1276,7 @@ func _on_send_cheer_event(event_data):
 				"source": cheer_source,
 				"can_stop_at": amount_min,
 				"remaining_cheer_allowed": max_can_place,
+				"limit_one_per_member": limit_one_per_member,
 			}
 			_multi_send_cheer_continue(valid_targets, from_zone)
 		elif from_zone == "holomem" or from_zone == "opponent_holomem":
@@ -1345,6 +1347,17 @@ func _multi_send_cheer_continue(valid_targets, from_zone):
 		cancel_callback = func():
 			submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+
+	# First choose a member.
+	if multi_step_decision_info["limit_one_per_member"]:
+		# Remove any members that are in the placements values.
+		for mem_id in multi_step_decision_info["placements"].values():
+			valid_targets.erase(mem_id)
+		if len(valid_targets) == 0:
+			# All members have cheer.
+			submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+			return
 	_show_click_cards_action_menu(
 		valid_targets,
 		func(chosen_target_mem):
