@@ -196,6 +196,7 @@ const HolomemNames = {
 	"hakos_baelz": "Hakos Baelz",
 	"ouro_kronii": "Ouro Kronii",
 	"omaru_polka": "Omaru Polka",
+	"airani_iofifteen": "Airani Iofifteen",
 
 
 
@@ -395,7 +396,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remai
 				main_text += "\nOnly Debut"
 			"holomem_debut_or_bloom":
 				main_text += "\nOnly Debut/Bloom"
-				if requirement_details["requirement_buzz_blocked"]:
+				if requirement_details.get("requirement_buzz_blocked", false):
 					main_text += " (no Buzz)"
 				if requirement_details["requirement_bloom_levels"]:
 					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
@@ -529,7 +530,7 @@ func get_condition_text(conditions):
 				elif "exclude_member_name" in condition:
 					var not_str = " (Not %s)" % [HolomemNames[condition["exclude_member_name"]]]
 					if "tag_in" in condition:
-						text += "%s on stage%s: " % [HolomemNames[condition["exclude_member_name"]], "/".join(condition["tag_in"]), not_str]
+						text += "%s Holomem on stage%s: " % ["/".join(condition["tag_in"]), not_str]
 			"not_used_once_per_game_effect":
 				text += "Once per game: "
 			"not_used_once_per_turn_effect":
@@ -594,11 +595,14 @@ func get_effect_text(effect):
 		"archive_cheer_from_holomem":
 			var amount = effect["amount"]
 			var from = effect["from"]
+			var colors_str = ""
+			if "required_colors" in effect:
+				colors_str = " (%s)" % "/".join(effect["required_colors"])
 			var from_str = ""
 			match from:
 				"self":
 					from_str = "this Holomem"
-			text += "Archive %s Cheer from %s." % [amount, from_str]
+			text += "Archive %s%s Cheer from %s." % [amount, colors_str, from_str]
 		"archive_from_hand":
 			var amount = effect["amount"]
 			text += "Archive %s from hand." % amount
@@ -714,7 +718,7 @@ func get_effect_text(effect):
 			var up_to_str = ""
 			if "limit" in effect:
 				up_to_str = " (up to %sx)" % effect["limit"]
-			text += "+%s Power per attached Cheer%s%s." % [effect["amount"], up_to_str]
+			text += "+%s Power per attached Cheer%s." % [effect["amount"], up_to_str]
 		"power_boost_per_backstage":
 			text += "+%s Power per Back member." % [effect["amount"]]
 		"power_boost_per_holomem":
@@ -755,7 +759,7 @@ func get_effect_text(effect):
 						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
 			text += "Restore %s HP %s%s" % [amount, target_str, limitation_str]
 		"return_holomem_to_debut":
-			text += "Return one of your opponent's Back Holomems to a Debut Holomem (remove Damage, leave Cheer, the rest returns to hand)"
+			text += "Return one of your opponent's Back Holomems to a Debut Holomem\n(remove Damage, leave Cheer, the rest returns to hand)"
 		"reveal_top_deck":
 			text += "Reveal the top card of your deck."
 		"roll_die":
@@ -796,6 +800,10 @@ func get_effect_text(effect):
 						text += " Only to %s Holomem." % "/".join(effect["to_limitation_colors"])
 					"tag_in":
 						text += " Only to %s Holomem." % "/".join(effect["to_limitation_tags"])
+			if "to_limitation_exclude_name" in effect:
+				text += " (Not %s)" % [HolomemNames[effect["to_limitation_exclude_name"]]]
+			if "limit_one_per_member" in effect:
+				text += " (only 1 each)"
 		"send_collab_back":
 			if "optional" in effect and effect["optional"]:
 				text += "May send Collab back."
