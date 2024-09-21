@@ -4528,7 +4528,8 @@
                                         "opponent": true
                                     }
                                 ]
-                            }
+                            },
+                            { "effect_type": "pass" }
                         ]
                     }
                 ]
