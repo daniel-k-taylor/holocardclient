@@ -244,6 +244,8 @@ func get_position_string(position):
 
 func get_stat_string(stat):
 	match stat:
+		"damage_added":
+			return "Damage Added"
 		"damage_prevented":
 			return "Damage Prevented"
 		"power":
@@ -476,6 +478,13 @@ func get_timing_text(timing, timing_source_requirement):
 	match timing:
 		"arts_targeting":
 			text += ""
+		"after_die_roll":
+			if "timing_source_requirement" in timing_source_requirement:
+				match timing_source_requirement["timing_source_requirement"]:
+					"holomem_ability":
+						text += "After Die Roll (Holomem Ability): "
+			else:
+				text += "After Die Roll: "
 		"before_art":
 			text += "Art: "
 		"before_die_roll":
@@ -485,6 +494,12 @@ func get_timing_text(timing, timing_source_requirement):
 						text += "Before Die Roll (Holomem Ability): "
 			else:
 				text += "Before Die Roll: "
+		"check_cheer":
+			text += ""
+		"check_hp":
+			text += ""
+		"on_bloom_level_up":
+			text += "When Bloom Level increases: "
 		"on_damage":
 			text += "When Holomem takes damage: "
 		"on_down":
@@ -504,6 +519,12 @@ func get_condition_text(conditions):
 				if len(required_bloom_levels) > 0:
 					bloom_str = " (Bloom %s)" % "/".join(required_bloom_levels)
 				text += "If attached to %s%s: " % [HolomemNames[condition["required_member_name"]], bloom_str]
+			"attached_owner_is_location":
+				var location_str = ""
+				match condition["condition_location"]:
+					"center_or_collab":
+						location_str = "Center or Collab"
+				text += "Attached card's owner is %s." % location_str
 			"bloom_target_is_debut":
 				text += "From Debut: "
 			"cards_in_hand":
@@ -610,6 +631,9 @@ func get_effect_text(effect):
 
 	var effect_type = effect["effect_type"]
 	match effect_type:
+		"add_damage":
+			var amount = effect["amount"]
+			text += "Increase damage by %s." % amount
 		"add_turn_effect":
 			var turn_effect = effect["turn_effect"]
 			text += "This Turn: %s" % [get_effect_text(turn_effect)]
@@ -630,13 +654,23 @@ func get_effect_text(effect):
 		"archive_from_hand":
 			var amount = effect["amount"]
 			text += "Archive %s from hand." % amount
+		"archive_this_attachment":
+			text += "Archive this attachment."
 		"attach_card_to_holomem", "attach_card_to_holomem_internal":
 			var limitation_str = ""
 			if "to_limitation" in effect:
 				match effect["to_limitation"]:
 					"color_in":
 						limitation_str = " (%s)" % "/".join(effect["to_limitation_colors"])
+					"specific_member_name":
+						limitation_str = " (%s)" % HolomemNames[effect["to_limitation_name"]]
+					"tag_in":
+						limitation_str = " (%s)" % "/".join(effect["to_limitation_tags"])
 			text += "Attach card to Holomem%s.\n" % limitation_str
+		"bonus_cheer":
+			text += "Treat as %s %s Cheer for Arts." % [effect["amount"], effect["color"]]
+		"bonus_hp":
+			text += "+%s HP." % [effect["amount"]]
 		"block_opponent_movement":
 			text += "Block opponent's Center and Collab movement next turn."
 		"bloom_debut_played_this_turn_to_1st":
@@ -794,6 +828,8 @@ func get_effect_text(effect):
 			text += "Return one of your opponent's Back Holomems to a Debut Holomem\n(remove Damage, leave Cheer, the rest returns to hand)"
 		"reveal_top_deck":
 			text += "Reveal the top card of your deck."
+		"reroll_die":
+			text += "Reroll."
 		"roll_die":
 			text += "Roll a die: "
 			var die_effects = effect["die_effects"]
@@ -832,6 +868,8 @@ func get_effect_text(effect):
 						text += " Only to Center or Collab."
 					"color_in":
 						text += " Only to %s Holomem." % "/".join(effect["to_limitation_colors"])
+					"specific_member_name":
+						text += " Only to %s." % HolomemNames[effect["to_limitation_name"]]
 					"tag_in":
 						text += " Only to %s Holomem." % "/".join(effect["to_limitation_tags"])
 			if "to_limitation_exclude_name" in effect:
