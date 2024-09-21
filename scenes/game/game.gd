@@ -1306,6 +1306,7 @@ func _on_send_cheer_event(event_data):
 				"can_stop_at": amount_min,
 				"remaining_cheer_allowed": max_can_place,
 				"holomem_to_cheer_list_map": holomem_to_cheer_list_map,
+				"to_zone": to_zone,
 			}
 			_multi_source_multi_target_send_cheer_continue()
 		elif from_zone == "life" or from_zone == "cheer_deck":
@@ -1424,7 +1425,7 @@ func _multi_source_multi_target_send_cheer_continue():
 
 	var unique_mems = multi_step_decision_info["holomem_to_cheer_list_map"].keys()
 	# Because cheer can move around from this original list, figure out which mems have cheer
-	# locally and only allowed those.
+	# locally and only allow those.
 	var mems_with_cheer = []
 	for mem in unique_mems:
 		var mem_card = find_card_on_board(mem)
@@ -1451,35 +1452,51 @@ func _multi_source_multi_target_send_cheer_continue():
 					for card in selected_cards:
 						chosen_cheer_ids.append(card._card_id)
 
-					# Now that cheer is selected, choose the target holomem.
-					# It can't be the source holomem.
-					var valid_targets = unique_mems.duplicate()
-					valid_targets.erase(chosen_source_mem)
-					_show_click_cards_action_menu(
-						valid_targets,
-						func(chosen_target_mem):
-							# The user has chosen to move chosen_cheer_ids from chosen_source_mem to chosen_target_mem.
-							for cheer_id in chosen_cheer_ids:
-								# Go ahead and move the cheer.
-								do_move_cards(me, chosen_source_mem, "holomem", chosen_target_mem, [cheer_id])
-								# Update the placement.
-								multi_step_decision_info["placements"][cheer_id] = chosen_target_mem
+					if multi_step_decision_info["to_zone"] == "archive":
+						for cheer_id in chosen_cheer_ids:
+							# Go ahead and move the cheer.
+							do_move_cards(me, chosen_source_mem, "archive", "", [cheer_id])
+							# Update the placement.
+							multi_step_decision_info["placements"][cheer_id] = "archive"
+						var total_moved_count = len(multi_step_decision_info["placements"].keys())
+						if total_moved_count == multi_step_decision_info["remaining_cheer_allowed"]:
+							# Done, we have placed the max allowed.
+							for cheer_id in multi_step_decision_info["placements"].keys():
+								move_card_ids_already_handled.append(cheer_id)
+							submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
+							_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+						else:
+							_multi_source_multi_target_send_cheer_continue()
+					else:
+						# Now that cheer is selected, choose the target holomem.
+						# It can't be the source holomem.
+						var valid_targets = unique_mems.duplicate()
+						valid_targets.erase(chosen_source_mem)
+						_show_click_cards_action_menu(
+							valid_targets,
+							func(chosen_target_mem):
+								# The user has chosen to move chosen_cheer_ids from chosen_source_mem to chosen_target_mem.
+								for cheer_id in chosen_cheer_ids:
+									# Go ahead and move the cheer.
+									do_move_cards(me, chosen_source_mem, "holomem", chosen_target_mem, [cheer_id])
+									# Update the placement.
+									multi_step_decision_info["placements"][cheer_id] = chosen_target_mem
 
-							var total_moved_count = len(multi_step_decision_info["placements"].keys())
-							if total_moved_count == multi_step_decision_info["remaining_cheer_allowed"]:
-								# Done, we have placed the max allowed.
-								for cheer_id in multi_step_decision_info["placements"].keys():
-									move_card_ids_already_handled.append(cheer_id)
-								submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
-								_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
-							else:
-								_multi_source_multi_target_send_cheer_continue()
-							pass,
-						Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM,
-						cancel_callback
-					)
-					_highlight_info_cards([chosen_source_mem])
-					pass,
+								var total_moved_count = len(multi_step_decision_info["placements"].keys())
+								if total_moved_count == multi_step_decision_info["remaining_cheer_allowed"]:
+									# Done, we have placed the max allowed.
+									for cheer_id in multi_step_decision_info["placements"].keys():
+										move_card_ids_already_handled.append(cheer_id)
+									submit_effect_resolution_move_cheer_between_holomems(multi_step_decision_info["placements"])
+									_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+								else:
+									_multi_source_multi_target_send_cheer_continue()
+								pass,
+							Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM,
+							cancel_callback
+						)
+						_highlight_info_cards([chosen_source_mem])
+					pass, # End of func passed to show_popout()
 				cancel_callback
 			)
 			_highlight_info_cards([chosen_source_mem])

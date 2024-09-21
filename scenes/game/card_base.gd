@@ -297,6 +297,7 @@ func remove_all_attached_cheer():
 func get_cheer_counts():
 	var blue = 0
 	var green = 0
+	var purple = 0
 	var red = 0
 	var white = 0
 	for cheer_id in _cheer:
@@ -305,6 +306,8 @@ func get_cheer_counts():
 			blue += 1
 		if "green" in colors:
 			green += 1
+		if "purple" in colors:
+			purple += 1
 		if "red" in colors:
 			red += 1
 		if "white" in colors:
@@ -312,6 +315,7 @@ func get_cheer_counts():
 	return {
 		"blue": blue,
 		"green": green,
+		"purple": purple,
 		"red": red,
 		"white": white,
 	}

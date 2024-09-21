@@ -172,36 +172,52 @@ const SkillNameMap = {
 	"polkaoruyo": "Polka Oruyo!",
 	"ohapol": "Ohapol",
 	"osopol": "Osopol",
+	"sharedconciousness": "Shared Conciousness",
+	"polkacircus": "Polka Circus",
+	"bokobokobokobo": "Bokobokobokobo",
+	"wavesswim": "Waves! Swim!",
+	"becomingacat": "Becoming a cat",
+	"perayaan": "Perayaan",
+	"raindrops": "Raindrops",
+	"onaeru": "OnAeru",
+	"rainmantra": "Rain Mantra",
+	"wavemantra": "Wave Mantra",
+	"pekorabeyondthedoor": "Pekora ~Beyond the door~",
+	"flarebeyondthedoor": "Flare ~Beyond the door~",
+	"noelbeyondthedoor": "Noel ~Beyond the door~",
+	"marinebeyondthedoor": "Marine ~Beyond the door~",
+
 
 
 }
 
 const HolomemNames = {
-	"azki": "AZKi",
-	"tokino_sora": "Tokino Sora",
-	"amane_kanata": "Amane Kanata",
-	"nanashi_mumei": "Nanashi Mumei",
-	"usada_pekora": "Usada Pekora",
-	"moona_hoshinova": "Moona Hoshinova",
+	"airani_iofifteen": "Airani Iofifteen",
 	"aki_rosenthal": "Aki Rosenthal",
-	"vestia_zeta": "Vestia Zeta",
-	"irys": "IRyS",
+	"amane_kanata": "Amane Kanata",
+	"azki": "AZKi",
+	"hakos_baelz": "Hakos Baelz",
 	"hoshimachi_suisei": "Hoshimachi Suisei",
+	"irys": "IRyS",
+	"kazama_iroha": "Kazama Iroha",
+	"kobo_kanaeru": "Kobo Kanaeru",
+	"moona_hoshinova": "Moona Hoshinova",
 	"mori_calliope": "Mori Calliope",
+	"nanashi_mumei": "Nanashi Mumei",
+	"omaru_polka": "Omaru Polka",
+	"ouro_kronii": "Ouro Kronii",
+	"shiranui_flare": "Shiranui Flare",
+	"shirogane_noel": "Shirogane Noel",
 	"takanashi_kiara": "Takanashi Kiara",
 	"takane_lui": "Takane Lui",
+	"tokino_sora": "Tokino Sora",
+	"usada_pekora": "Usada Pekora",
+	"vestia_zeta": "Vestia Zeta",
 	"watson_amelia": "Watson Amelia",
-	"kobo_kanaeru": "Kobo Kanaeru",
-	"kazama_iroha": "Kazama Iroha",
-	"hakos_baelz": "Hakos Baelz",
-	"ouro_kronii": "Ouro Kronii",
-	"omaru_polka": "Omaru Polka",
-	"airani_iofifteen": "Airani Iofifteen",
-
-
 
 	# Card Names referenced directly
 	"stone_axe": "Stone Axe",
+	"zain": "Zain",
 }
 
 # Lazy placeholder for loc
@@ -273,7 +289,7 @@ func build_send_cheer_string(amount_min, amount_max, source):
 		"downed_holomem":
 			source_str = "from downed Holomem"
 		"holomem":
-			source_str = "between Holomem"
+			source_str = "from Holomem"
 		"self":
 			source_str = "from this Holomem"
 		"opponent_holomem":
@@ -416,6 +432,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 				main_text += "\nOnly Item"
 			"mascot":
 				main_text += "\nOnly Mascot"
+			"fan":
+				main_text += "\nOnly Fan"
 			"tool":
 				main_text += "\nOnly Tool"
 			"event":
@@ -663,6 +681,8 @@ func get_effect_text(effect):
 			var target_str = "to "
 			if "opponent" in effect and effect["opponent"]:
 				target_str += ""
+			if "multiple_targets" in effect:
+				target_str += "%s " % effect["multiple_targets"]
 			match effect["target"]:
 				"backstage":
 					target_str += "Back Holomem"
@@ -677,7 +697,10 @@ func get_effect_text(effect):
 			var prevent_life_str = ""
 			if "prevent_life_loss" in effect and effect["prevent_life_loss"]:
 				prevent_life_str = " (Can't lose life)"
-			text += "Deal %s%s damage %s%s." % [effect["amount"], special_str, target_str, prevent_life_str]
+			var amount_str = str(effect["amount"])
+			if amount_str == "total_damage_on_backstage":
+				amount_str = "sum of damage on Backstage Holomems"
+			text += "Deal %s%s damage %s%s." % [amount_str, special_str, target_str, prevent_life_str]
 		"down_holomem":
 			var target_str = ""
 			if "target" in effect:
@@ -719,6 +742,8 @@ func get_effect_text(effect):
 					"last_die_value":
 						multiplier_str = " x Dice Result "
 			text += "+%s Power%s." % [effect["amount"], multiplier_str]
+		"power_boost_per_all_fans":
+			text += "+%s Power per each Fan attached to your Holomems." % [effect["amount"]]
 		"power_boost_per_archived_holomem":
 			text += "+%s Power per archived Holomem." % [effect["amount"]]
 		"power_boost_per_attached_cheer":
@@ -793,6 +818,8 @@ func get_effect_text(effect):
 						text += " From Center."
 					"color_in":
 						text += " Only %s Cheer." % ["/".join(effect["from_limitation_colors"])]
+					"tag_in":
+						text += " Only from %s." % ["/".join(effect["from_limitation_tags"])]
 			if "to_limitation" in effect:
 				match effect["to_limitation"]:
 					"attached_owner":
@@ -910,6 +937,13 @@ func build_english_card_text(definition):
 					match art["target_condition"]:
 						"center_only":
 							text += "\nOnly targets Center."
+				if "art_requirement" in art:
+					if "art_requirement_attached_id" in art:
+						var card = CardDatabase.get_card(art["art_requirement_attached_id"])
+						var card_name = "MISSING_CARD_NAME"
+						if "support_names" in card:
+							card_name = get_names(card["support_names"])[0]
+						text += "\nRequires %s attached to use." % card_name
 				if "art_effects" in art:
 					text += "\n"
 					var arts_texts = []
@@ -953,6 +987,8 @@ func build_english_card_text(definition):
 				data.append({"colors": [], "text": "Item"})
 			if definition["sub_type"] == "mascot":
 				data.append({"colors": [], "text": "Mascot"})
+			if definition["sub_type"] == "fan":
+				data.append({"colors": [], "text": "Fan"})
 			if definition["sub_type"] == "tool":
 				data.append({"colors": [], "text": "Tool"})
 			elif definition["sub_type"] == "event":
