@@ -1112,7 +1112,7 @@
     {
         "card_id": "hBP01-005",
         "card_type": "oshi",
-        "oshi_name": "takanelui",
+        "oshi_name": "takane_lui",
         "colors": ["red"],
         "rarity": "osr",
         "life": 5,
@@ -1175,7 +1175,7 @@
     {
         "card_id": "hBP01-006",
         "card_type": "oshi",
-        "oshi_name": "takanashikiara",
+        "oshi_name": "takanashi_kiara",
         "colors": ["red"],
         "rarity": "osr",
         "life": 5,
@@ -3914,8 +3914,95 @@
             }
         ]
     },
-
-
+    {
+        "card_id": "hBP01-070",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["omaru_polka"],
+        "rarity": "u",
+        "colors": ["red"],
+        "hp": 110,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen5",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "sharedconciousness",
+                "art_requirement": "has_attached",
+                "art_requirement_attached_id": "hBP01-126",
+                "costs": [
+                    { "color": "red", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 70,
+                "art_effects": []
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "fan",
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-071",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "buzz": true,
+        "holomem_names": ["omaru_polka"],
+        "rarity": "rr",
+        "colors": ["red"],
+        "hp": 240,
+        "baton_cost": 1,
+        "down_life_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen5",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "polkacircus",
+                "costs": [
+                    { "color": "red", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost_per_all_fans",
+                        "amount": 20
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "archive",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 1,
+                "requirement": "specific_card",
+                "requirement_id": "hBP01-126",
+                "reveal_chosen": true,
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
     {
         "card_id": "hBP01-072",
         "card_type": "holomem_debut",
@@ -4361,8 +4448,294 @@
             }
         ]
     },
-
-
+    {
+        "card_id": "hBP01-082",
+        "card_type": "holomem_debut",
+        "holomem_names": ["kobo_kanaeru"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen3"
+        ],
+        "arts": [
+            {
+                "art_id": "bokobokobokobo",
+                "costs": [
+                    { "color": "blue", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": []
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-083",
+        "card_type": "holomem_debut",
+        "holomem_names": ["kobo_kanaeru"],
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen3"
+        ],
+        "arts": [
+            {
+                "art_id": "wavesswim",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10,
+                "art_effects": []
+            }
+        ],
+        "collab_effects": [
+            {
+                "conditions": [{"condition": "center_has_any_tag", "condition_tags": ["#ID"]}],
+                "effect_type": "roll_die",
+                "source": "holomem_ability",
+                "die_effects": [
+                    {
+                        "english_values": "3-6",
+                        "activate_on_values": [3,4,5,6],
+                        "effects": [
+                            {
+                                "effect_type": "send_cheer",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "cheer_deck",
+                                "to": "holomem"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-084",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["kobo_kanaeru"],
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 180,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen3"
+        ],
+        "arts": [
+            {
+                "art_id": "becomingacat",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": []
+            }
+        ],
+        "collab_effects": []
+    },
+    {
+        "card_id": "hBP01-085",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["kobo_kanaeru"],
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen3"
+        ],
+        "arts": [
+            {
+                "art_id": "perayaan",
+                "costs": [
+                    { "color": "blue", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": []
+            },
+            {
+                "art_id": "raindrops",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "deal_damage",
+                        "special": true,
+                        "amount": 10,
+                        "target": "backstage",
+                        "opponent": true,
+                        "prevent_life_loss": true,
+                        "multiple_targets": 3
+                    }
+                ]
+            }
+        ],
+        "collab_effects": []
+    },
+    {
+        "card_id": "hBP01-086",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "holomem_names": ["kobo_kanaeru"],
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 110,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen3"
+        ],
+        "arts": [
+            {
+                "art_id": "onaeru",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": []
+            }
+        ],
+        "bloom_effects": [
+            {
+                "conditions": [{ "condition": "any_tag_holomem_has_cheer", "condition_tags": ["#ID"] }],
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "effect_type": "send_cheer",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "from": "holomem",
+                        "from_limitation": "tag_in",
+                        "from_limitation_tags": ["#ID"],
+                        "to": "archive",
+                        "ability_source": "holomem_blue",
+                        "and": [
+                            {
+                                "effect_type": "deal_damage",
+                                "special": true,
+                                "amount": 10,
+                                "target": "backstage",
+                                "opponent": true,
+                                "multiple_targets": "all"
+                            }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-087",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "holomem_names": ["kobo_kanaeru"],
+        "rarity": "r",
+        "colors": ["blue"],
+        "hp": 200,
+        "baton_cost": 2,
+        "tags": [
+            "#ID",
+            "#IDGen3"
+        ],
+        "arts": [
+            {
+                "art_id": "rainmantra",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "purple" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "conditions": [{"condition": "self_has_cheer_color", "condition_colors": ["any"], "amount_min": 1}],
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "archive_cheer_from_holomem",
+                                "ability_source": "holomem_blue",
+                                "from": "self",
+                                "amount": 1,
+                                "and": [
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 20,
+                                        "target": "backstage",
+                                        "opponent": true,
+                                        "multiple_targets": "all"
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            },
+            {
+                "art_id": "wavemantra",
+                "costs": [
+                    { "color": "blue", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "purple" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "self_has_cheer_color", "condition_colors": ["any"], "amount_min": 2 }],
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "archive_cheer_from_holomem",
+                                "ability_source": "holomem_blue",
+                                "from": "self",
+                                "amount": 2,
+                                "and": [
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": "total_damage_on_backstage",
+                                        "target": "center",
+                                        "opponent": true
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
     {
         "card_id": "hBP01-088",
         "card_type": "holomem_debut",
@@ -4689,7 +5062,161 @@
             }
         ]
     },
-
+    {
+        "card_id": "hBP01-096",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "holomem_names": ["usada_pekora"],
+        "rarity": "r",
+        "colors": ["none"],
+        "hp": 80,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "pekorabeyondthedoor",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "roll_die",
+                "source": "holomem_ability",
+                "die_effects": [
+                    {
+                        "english_values": "even",
+                        "activate_on_values": [2,4,6],
+                        "effects": [
+                            {
+                                "effect_type": "choose_cards",
+                                "from": "deck",
+                                "look_at": -1,
+                                "destination": "hand",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "requirement": "buzz",
+                                "reveal_chosen": true,
+                                "remaining_cards_action": "shuffle"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-097",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "holomem_names": ["shiranui_flare"],
+        "rarity": "r",
+        "colors": ["none"],
+        "hp": 80,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#HalfElf"
+        ],
+        "arts": [
+            {
+                "art_id": "flarebeyondthedoor",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "switch_center_with_back",
+                "skip_resting": true
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-098",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "holomem_names": ["shirogane_noel"],
+        "rarity": "r",
+        "colors": ["none"],
+        "hp": 90,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "noelbeyondthedoor",
+                "costs": [
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "archive",
+                "to": "holomem"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-099",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "holomem_names": ["houshou_marine"],
+        "rarity": "r",
+        "colors": ["none"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Sea",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "marinebeyondthedoor",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "roll_die",
+                "source": "holomem_ability",
+                "die_effects": [
+                    {
+                        "english_values": "odd",
+                        "activate_on_values": [1,3,5],
+                        "effects": [
+                            {
+                                "effect_type": "switch_center_with_back",
+                                "opponent": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
     {
         "card_id": "hBP01-100",
         "card_type": "holomem_spot",
@@ -5056,7 +5583,7 @@
                 "destination": "hand",
                 "amount_min": 0,
                 "amount_max": 4,
-                "requirement": "holomem_named",
+                "requirement": "holomem",
                 "requirement_tags": ["#IDGen3"],
                 "reveal_chosen": true,
                 "remaining_cards_action": "order_on_bottom"
@@ -5113,7 +5640,7 @@
                 "destination": "hand",
                 "amount_min": 0,
                 "amount_max": 4,
-                "requirement": "holomem_named",
+                "requirement": "holomem",
                 "requirement_tags": ["#Promise"],
                 "reveal_chosen": true,
                 "remaining_cards_action": "order_on_bottom"
@@ -5219,6 +5746,330 @@
                 "target": "center",
                 "opponent": true,
                 "and": [{ "effect_type": "record_effect_card_id_used_this_turn"}]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-117",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "support_names": ["friend"],
+        "rarity": "c",
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 10
+            },
+            {
+                "timing": "on_take_damage",
+                "conditions": [
+                    { "condition": "opponent_turn" },
+                    { "condition": "attached_to", "required_member_name": "nanashi_mumei" }
+                ],
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "effect_type": "archive_this_attachment",
+                        "and": [
+                            {
+                                "effect_type": "reduce_damage",
+                                "amount": 30
+                            }
+                        ]
+
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-118",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "support_names": ["ankimo"],
+        "rarity": "c",
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 10
+            },
+            {
+                "timing": "check_cheer",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "tokino_sora" }
+                ],
+                "effect_type": "bonus_cheer",
+                "amount": 1,
+                "color": "white"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-119",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "support_names": ["jobz"],
+        "rarity": "c",
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 10
+            },
+            {
+                "timing": "before_art",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "aki_rosenthal" }
+                ],
+                "effect_type": "restore_hp",
+                "target": "holomem",
+                "amount": 10
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-120",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "support_names": ["ganmo"],
+        "rarity": "c",
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 10
+            },
+            {
+                "timing": "before_art",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "takane_lui" },
+                    { "condition": "performer_is_center" }
+                ],
+                "effect_type": "draw",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-121",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "support_names": ["kotori"],
+        "rarity": "c",
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "on_take_damage",
+                "conditions": [{"condition": "attached_owner_is_location", "condition_location": "center_or_collab" }],
+                "effect_type": "reduce_damage",
+                "amount": 10
+            },
+            {
+                "timing": "on_bloom_level_up",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "takanashi_kiara" }
+                ],
+                "effect_type": "draw",
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-122",
+        "card_type": "support",
+        "sub_type": "fan",
+        "support_names": ["rosetai"],
+        "rarity": "c",
+        "play_conditions": [
+            {
+                "condition": "holomem_on_stage", "required_member_name": "aki_rosenthal"
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "aki_rosenthal"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "on_down",
+                "conditions": [
+                    { "condition": "opponent_turn" }
+                ],
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "cheer_deck",
+                "to": "holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "aki_rosenthal"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-123",
+        "card_type": "support",
+        "sub_type": "fan",
+        "support_names": ["nousagialliance"],
+        "rarity": "c",
+        "play_conditions": [
+            {
+                "condition": "holomem_on_stage", "required_member_name": "usada_pekora"
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "usada_pekora"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "after_die_roll",
+                "timing_source_requirement": "holomem_ability",
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "effect_type": "archive_this_attachment",
+                        "and": [{
+                            "effect_type": "reroll_die"
+                        }]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-124",
+        "card_type": "support",
+        "sub_type": "fan",
+        "support_names": ["pioneer"],
+        "rarity": "c",
+        "play_conditions": [
+            {
+                "condition": "holomem_on_stage", "required_member_name": "azki"
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "azki"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "on_down",
+                "conditions": [
+                    { "condition": "opponent_turn" }
+                ],
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "downed_holomem",
+                "to": "holomem"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP01-125",
+        "card_type": "support",
+        "sub_type": "fan",
+        "support_names": ["kfp"],
+        "rarity": "c",
+        "play_conditions": [
+            {
+                "condition": "holomem_on_stage", "required_member_name": "takanashi_kiara"
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "takanashi_kiara",
+                "and": [{
+                    "effect_type": "choice",
+                    "conditions": [ { "condition": "can_archive_from_hand", "condition_source": "support_card" , "amount_min": 1 } ],
+                    "choice": [
+                        {
+                            "effect_type": "archive_from_hand",
+                            "ability_source": "support_card",
+                            "amount": 1,
+                            "and": [
+                                {
+                                    "effect_type": "draw",
+                                    "amount": 1
+                                }
+                            ]
+                        },
+                        { "effect_type": "pass" }
+                    ]
+                }]
+            }
+        ],
+        "attached_effects": [
+        ]
+    },
+    {
+        "card_id": "hBP01-126",
+        "card_type": "support",
+        "sub_type": "fan",
+        "support_names": ["zain"],
+        "rarity": "c",
+        "play_conditions": [
+            {
+                "condition": "holomem_on_stage", "required_member_name": "omaru_polka"
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "omaru_polka"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "check_cheer",
+                "effect_type": "bonus_cheer",
+                "amount": 1,
+                "color": "red"
+            },
+            {
+                "timing": "on_take_damage",
+                "effect_type": "add_damage",
+                "amount": 10
             }
         ]
     },

@@ -20,14 +20,14 @@ func _ready():
 	if get_parent() == get_tree().root:
 		var test_cards = []
 		var selectable_ids = []
-		for i in range(33):
-			var card_id = "hSD01-003"
-			if i % 2 == 0:
-				card_id = "hSD01-004"
-			test_cards.append(CardDatabase.test_create_card("id_" + str(i), card_id))
-			if i % 2 == 0:
-				selectable_ids.append(test_cards[i]._card_id)
-		
+		# Add all cards to the thing.
+		var count = 0
+		for card_id in CardDatabase.get_supported_cards():
+			test_cards.append(CardDatabase.test_create_card("id_" + str(card_id), card_id))
+			if count % 2 == 0:
+				selectable_ids.append(test_cards[count]._card_id)
+			count += 1
+
 
 		show_panel(
 			"[b]Test[/b] here are some instructions",
@@ -59,7 +59,7 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 
 	var count = len(cards)
 	add_card_elements(count)
-	
+
 	var toggle_show_cards_mode = len(cards) != len(chooseable_card_ids)
 	if popout_choice_info.get("ignore_chooseable_checkbox", false):
 		toggle_show_cards_mode = false
@@ -92,7 +92,7 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 	init_panel(instructions, popout_choice_info)
 	for element in popout_elements:
 		element.position_card()
-		
+
 	_show_all_cards(not toggle_show_cards_mode)
 
 func _reorder_card_element(element, direction):

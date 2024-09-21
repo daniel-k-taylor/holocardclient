@@ -4,7 +4,7 @@ signal settings_loaded
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
-const ClientVersionString : String = "240913.2100" # YYMMDD.HHMM
+const ClientVersionString : String = "240921.1600" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 var LoggingEnabled : bool = true

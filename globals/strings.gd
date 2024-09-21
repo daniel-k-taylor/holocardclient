@@ -391,6 +391,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	var main_text = "Choose %s %s%s to move to %s%s." % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
 	if "requirement" in requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
+			"buzz":
+				main_text += "\nOnly Buzz cards"
 			"color_in":
 				main_text += "\nOnly %s" % "/".join(requirement_details["requirement_colors"])
 			"color_matches_holomems":
@@ -500,7 +502,7 @@ func get_timing_text(timing, timing_source_requirement):
 			text += ""
 		"on_bloom_level_up":
 			text += "When Bloom Level increases: "
-		"on_damage":
+		"on_take_damage":
 			text += "When Holomem takes damage: "
 		"on_down":
 			text += "When Holomem is downed: "
@@ -597,7 +599,7 @@ func get_condition_text(conditions):
 			"played_support_this_turn":
 				text += "Played a Support card this turn: "
 			"self_has_cheer_color":
-				text += "Has %s %s Cheer: " % [condition["amount_min"], "/".join(condition["condition_colors"])]
+				text += "" #"Has %s %s Cheer: " % [condition["amount_min"], "/".join(condition["condition_colors"])]
 			"stage_has_space":
 				text += "Room on stage: "
 			"target_color":
@@ -680,9 +682,13 @@ func get_effect_text(effect):
 					location_str = "Backstage"
 			text += "Bloom a Debut %s Holomem played this turn." % location_str
 		"choice":
-			var choices = effect["choice"]
+			var choices = effect["choice"].duplicate()
 			var choice_texts = []
-			text += "Choose one:\n"
+			if len(choices) == 2 and choices[1]["effect_type"] == "pass":
+				text += "You may: "
+				choices = [choices[0]]
+			else:
+				text += "Choose one:\n"
 			for choice in choices:
 				choice_texts.append("- " + get_effect_text(choice))
 			text += "\n".join(choice_texts)
@@ -714,7 +720,7 @@ func get_effect_text(effect):
 				special_str = " Special"
 			var target_str = "to "
 			if "opponent" in effect and effect["opponent"]:
-				target_str += ""
+				target_str += "opponent's "
 			if "multiple_targets" in effect:
 				target_str += "%s " % effect["multiple_targets"]
 			match effect["target"]:
@@ -728,6 +734,8 @@ func get_effect_text(effect):
 					target_str += "Center or Collab"
 				"self":
 					target_str = "to this Holomem"
+				"holomem":
+					target_str = "any Holomem"
 			var prevent_life_str = ""
 			if "prevent_life_loss" in effect and effect["prevent_life_loss"]:
 				prevent_life_str = " (Can't lose life)"
@@ -1008,6 +1016,8 @@ func build_english_card_text(definition):
 					}
 					data.append(kill_entry)
 			data.append({"colors": [], "text": "Baton Pass Cost: %s" % definition["baton_cost"]})
+			if "down_life_cost" in definition and definition["down_life_cost"] != 1:
+				data.append({"colors": [], "text": "Life lost when downed: %s" % definition["down_life_cost"]})
 		"support":
 			var effects = []
 			if "effects" in definition:

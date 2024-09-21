@@ -702,7 +702,7 @@ func _on_boost_stat_event(event_data):
 		amount,
 		Strings.get_stat_string(stat),
 	])
-	_play_popup_message("+%s %s" % [amount, stat])
+	_play_popup_message("+%s %s" % [amount, Strings.get_stat_string(stat)])
 
 func _on_cheer_step(event_data):
 	var active_player = get_player(event_data["active_player"])
