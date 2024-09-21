@@ -302,7 +302,13 @@ func build_order_cards_string(to, bottom):
 func build_choose_holomem_for_effect_string(effect):
 	return "Choose a Holomem for:\n%s" % [get_effect_text(effect)]
 
-func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max, remaining_cards_action, requirement_details):
+func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
+	remaining_cards_action, requirement_details, special_reason):
+
+	if special_reason:
+		match special_reason:
+			"bloom_debut_played_this_turn":
+				return "You may choose a Bloom card from hand to play on a Debut you played this turn."
 	var from_zone_str = from_zone
 	var to_zone_str = to_zone
 	match from_zone:
@@ -644,7 +650,8 @@ func get_effect_text(effect):
 				effect["amount_min"],
 				effect["amount_max"],
 				effect["remaining_cards_action"],
-				effect
+				effect,
+				effect.get("special_reason", "")
 			)
 			text += choose_str
 		"choose_die_result":

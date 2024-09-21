@@ -334,8 +334,16 @@ visible = false
 offset_right = 1280.0
 offset_bottom = 720.0
 
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+initial_position = 1
+size = Vector2i(800, 400)
+use_native_dialog = true
+
 [connection signal="zone_pressed" from="MeArchive" to="." method="_on_me_archive_zone_pressed"]
 [connection signal="zone_pressed" from="OpponentArchive" to="." method="_on_opponent_archive_zone_pressed"]
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
 [connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]
 [connection signal="pressed" from="DebugPlayLastEvent" to="." method="_on_debug_play_last_event_pressed"]
+[connection signal="save_log_pressed" from="GameLog" to="." method="_on_game_log_save_log_pressed"]
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]

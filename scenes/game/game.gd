@@ -1,6 +1,10 @@
 class_name Game
 extends Node2D
 
+### Web-specific variables
+var window
+###
+
 signal returning_from_game
 
 const CardBaseScene = preload("res://scenes/game/card_base.tscn")
@@ -45,6 +49,8 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var archive_card_popout : CardPopout = $ArchiveCardPopout
 @onready var game_log : GameLog = $GameLog
 @onready var game_over_text = $UIOverlay/VBoxContainer/GameOverContainer/CenterContainer/GameOverText
+
+@onready var save_file_dialog = $SaveFileDialog
 
 @onready var big_card = $BigCard
 
@@ -303,6 +309,7 @@ var game_over = false
 var event_queue = []
 var remaining_animation_seconds = 0
 var after_animation_continuation = null
+var full_event_log = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -310,6 +317,7 @@ func _ready() -> void:
 
 	$DebugPlayLastEvent.visible = OS.is_debug_build()
 
+	save_file_dialog.visible = false
 	$UIOverlay.visible = true
 	action_menu.visible = false
 	thinking_spinner.visible = true
@@ -349,6 +357,7 @@ func begin_remote_game(event_type, event_data):
 
 func handle_game_event(event_type, event_data):
 	Logger.log_game("Received game event: %s\n%s" % [event_type, event_data])
+	full_event_log.append(event_data)
 	event_queue.append(event_data)
 
 func process_game_event(event_type, event_data):
@@ -499,7 +508,7 @@ func _on_game_error(event_data):
 	])
 	# TODO: Show a message box.
 	# Replay the last event.
-	process_game_event(last_network_event["event_type"], last_network_event)
+	#process_game_event(last_network_event["event_type"], last_network_event)
 
 func _on_game_over(event_data):
 	var winner_id = event_data["winner_id"]
@@ -796,6 +805,7 @@ func _on_choose_cards_event(event_data):
 		#var reveal_chosen = event_data["reveal_chosen"]
 		var remaining_cards_action = event_data["remaining_cards_action"]
 		var requirement_details = event_data.get("requirement_details", {})
+		var special_reason = event_data.get("special_reason", "")
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose Cards[/DECISION]" % [
 			active_player.get_name()
 		])
@@ -804,25 +814,33 @@ func _on_choose_cards_event(event_data):
 			assert(len(cards_can_choose) == len(all_card_seen))
 			_begin_make_choice(cards_can_choose, amount_min, amount_max)
 			var instructions = Strings.build_choose_cards_string(
-				from_zone, to_zone, amount_min, amount_max, remaining_cards_action, requirement_details
+				from_zone, to_zone, amount_min, amount_max,
+				remaining_cards_action, requirement_details, special_reason
 			)
 			action_menu_choice_info = {
 				"strings": [Strings.get_string(Strings.STRING_OK)],
 				"enabled": [false],
 				"enable_check": [_is_selection_requirement_met],
 			}
-			action_menu.show_choices(instructions, action_menu_choice_info, func(_choice_index):
-				# Submit the choice.
+			if amount_min == 0:
+				action_menu_choice_info["strings"].append(Strings.get_string(Strings.STRING_PASS))
+				action_menu_choice_info["enabled"].append(true)
+				action_menu_choice_info["enable_check"].append(_allowed)
+			action_menu.show_choices(instructions, action_menu_choice_info, func(choice_index):
+				# Submit the choice. 0 is OK, 1 is Pass.
+				# So on one, ignore the selected cards.
 				var selected_ids = []
-				for card in selected_cards:
-					selected_ids.append(card._card_id)
+				if choice_index == 0:
+					for card in selected_cards:
+						selected_ids.append(card._card_id)
 				submit_effect_resolution_choose_cards_for_effect(selected_ids)
 				_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 			)
 		else:
 			# Need to create cards in a popout.
 			var instructions = Strings.build_choose_cards_string(
-				from_zone, to_zone, amount_min, amount_max, remaining_cards_action, requirement_details
+				from_zone, to_zone, amount_min, amount_max,
+				remaining_cards_action, requirement_details, special_reason
 			)
 			_show_popout(instructions, all_card_seen, cards_can_choose, amount_min, amount_max,
 				func():
@@ -1365,8 +1383,11 @@ func _multi_send_cheer_continue(valid_targets, from_zone):
 			var instructions = Strings.build_send_cheer_string(
 				0, multi_step_decision_info["remaining_cheer_allowed"], from_zone
 			)
+			var amount_can_pick = 1
+			if not multi_step_decision_info["limit_one_per_member"]:
+				amount_can_pick = multi_step_decision_info["remaining_cheer_allowed"]
 			_show_popout(instructions, multi_step_decision_info["remaining_cheer"], multi_step_decision_info["remaining_cheer"],
-				0, multi_step_decision_info["remaining_cheer_allowed"],
+				0, amount_can_pick,
 				func():
 					for card in selected_cards:
 						multi_step_decision_info["placements"][card._card_id] = chosen_target_mem
@@ -1407,8 +1428,11 @@ func _multi_source_multi_target_send_cheer_continue():
 	var mems_with_cheer = []
 	for mem in unique_mems:
 		var mem_card = find_card_on_board(mem)
-		if mem_card.get_cheer_count() > 0:
-			mems_with_cheer.append(mem)
+		var cheer_on_this_mem = mem_card.get_cheer_ids()
+		for cheer_id in cheer_on_this_mem:
+			if cheer_id in multi_step_decision_info["remaining_cheer"]:
+				mems_with_cheer.append(mem)
+				break
 
 	_show_click_cards_action_menu(
 		mems_with_cheer,
@@ -2394,3 +2418,25 @@ func _show_archive(player : PlayerState):
 
 func _on_debug_play_last_event_pressed() -> void:
 	process_game_event(last_network_event["event_type"], last_network_event)
+
+func _get_game_log_data():
+	var log_data = {
+		"version": GlobalSettings.get_client_version(),
+		"all_events": full_event_log,
+		"game_log": game_log.get_text(),
+	}
+	return log_data
+
+func _on_game_log_save_log_pressed() -> void:
+	if OS.has_feature("web"):
+		window = JavaScriptBridge.get_interface("window")
+		var file_name = "gamelog.json"
+		var file_content = JSON.stringify(_get_game_log_data())
+		window.saveTextToFile(file_name, file_content)
+	else:
+		save_file_dialog.visible = true
+
+func _on_save_file_dialog_file_selected(path: String) -> void:
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	var content = JSON.stringify(_get_game_log_data())
+	file.store_string(content)

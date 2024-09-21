@@ -4511,18 +4511,23 @@
                     {
                         "timing": "before_art",
                         "conditions": [{ "condition": "self_has_cheer_color", "condition_colors": ["blue", "green"], "amount_min": 1 }],
-                        "effect_type": "archive_cheer_from_holomem",
-                        "required_colors": ["blue", "green"],
-                        "ability_source": "holomem_blue",
-                        "from": "self",
-                        "amount": 1,
-                        "and": [
+                        "effect_type": "choice",
+                        "choice": [
                             {
-                                "effect_type": "deal_damage",
-                                "special": true,
-                                "amount": 30,
-                                "target": "backstage",
-                                "opponent": true
+                                "effect_type": "archive_cheer_from_holomem",
+                                "required_colors": ["blue", "green"],
+                                "ability_source": "holomem_blue",
+                                "from": "self",
+                                "amount": 1,
+                                "and": [
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 30,
+                                        "target": "backstage",
+                                        "opponent": true
+                                    }
+                                ]
                             }
                         ]
                     }

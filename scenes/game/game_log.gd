@@ -1,6 +1,8 @@
 class_name GameLog
 extends CenterContainer
 
+signal save_log_pressed
+
 @onready var label : RichTextLabel = $PanelContainer/VBoxContainer/PanelContainer/Label
 
 @onready var debug_check = $PanelContainer/VBoxContainer/HBoxContainer/ShowDebugCheckbox
@@ -48,6 +50,9 @@ func _is_log_type_enabled(log_type):
 		_:
 			return true
 
+func get_text() -> String:
+	return label.text
+
 func _generate_full_text():
 	var text = ""
 	for logline in full_log:
@@ -57,3 +62,6 @@ func _generate_full_text():
 
 func _on_show_debug_checkbox_toggled(_toggled_on: bool) -> void:
 	_generate_full_text()
+
+func _on_save_log_button_pressed() -> void:
+	save_log_pressed.emit()

@@ -44,6 +44,10 @@ autowrap_mode = 0
 [node name="ShowDebugCheckbox" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
+[node name="SaveLogButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Save Log"
+
 [node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Close"
@@ -61,4 +65,5 @@ shortcut_keys_enabled = false
 
 [connection signal="pressed" from="FullButton" to="." method="_on_close_button_pressed"]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/HBoxContainer/ShowDebugCheckbox" to="." method="_on_show_debug_checkbox_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/SaveLogButton" to="." method="_on_save_log_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
