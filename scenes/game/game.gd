@@ -1265,8 +1265,8 @@ func _on_send_cheer_event(event_data):
 		var amount_max = event_data["amount_max"]
 		var from_zone = event_data["from_zone"]
 		var to_zone = event_data["to_zone"]
-		var cheer_to_send = event_data["from_options"]
-		var valid_targets = event_data["to_options"]
+		var cheer_to_send = event_data["from_options"].duplicate()
+		var valid_targets = event_data["to_options"].duplicate()
 		var holomem_to_cheer_list_map = event_data["cheer_on_each_mem"]
 		var cancel_callback = null
 		var multi_to = event_data.get("multi_to", false)
@@ -1363,7 +1363,7 @@ func _on_send_cheer_event(event_data):
 		pass
 
 func _multi_send_cheer_continue(valid_targets, from_zone):
-	var can_stop_multi_send = multi_step_decision_info["can_stop_at"] == len(multi_step_decision_info["placements"].keys())
+	var can_stop_multi_send = multi_step_decision_info["can_stop_at"] <= len(multi_step_decision_info["placements"].keys())
 	var cancel_callback = null
 	if can_stop_multi_send:
 		cancel_callback = func():
@@ -1417,7 +1417,7 @@ func _multi_send_cheer_continue(valid_targets, from_zone):
 	)
 
 func _multi_source_multi_target_send_cheer_continue():
-	var can_stop_multi_send = multi_step_decision_info["can_stop_at"] == len(multi_step_decision_info["placements"].keys())
+	var can_stop_multi_send = multi_step_decision_info["can_stop_at"] <= len(multi_step_decision_info["placements"].keys())
 	var cancel_callback = null
 	if can_stop_multi_send:
 		cancel_callback = func():
@@ -1473,7 +1473,7 @@ func _multi_source_multi_target_send_cheer_continue():
 					else:
 						# Now that cheer is selected, choose the target holomem.
 						# It can't be the source holomem.
-						var valid_targets = multi_step_decision_info["valid_targets"]
+						var valid_targets = multi_step_decision_info["valid_targets"].duplicate()
 						valid_targets.erase(chosen_source_mem)
 						_show_click_cards_action_menu(
 							valid_targets,
@@ -1496,16 +1496,20 @@ func _multi_source_multi_target_send_cheer_continue():
 									_multi_source_multi_target_send_cheer_continue()
 								pass,
 							Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM,
-							cancel_callback
+							cancel_callback,
+							Strings.STRING_END_ABILITY
 						)
 						_highlight_info_cards([chosen_source_mem])
 					pass, # End of func passed to show_popout()
-				cancel_callback
+				cancel_callback,
+				Strings.STRING_SELECT_CHEER,
+				Strings.STRING_END_ABILITY
 			)
 			_highlight_info_cards([chosen_source_mem])
 			,
 		Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM),
-		cancel_callback
+		cancel_callback,
+		Strings.STRING_END_ABILITY
 	)
 
 func _send_cheer_continue():

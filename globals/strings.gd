@@ -767,6 +767,11 @@ func get_effect_text(effect):
 			text += "Set next die result to %s." % [effect["die_result"]]
 		"generate_holopower":
 			text += "Generate %s Holopower." % [effect["amount"]]
+		"modify_next_life_loss":
+			var amount_str = effect["amount"]
+			if effect["amount"] > 0:
+				amount_str = "+" + amount_str
+			text += "Lose %s LIFE." % [amount_str]
 		"move_cheer_between_holomems":
 			var amount = effect["amount"]
 			var to_limitation = effect.get("to_limitation", "")

@@ -1229,7 +1229,9 @@
                         "limit": "once_per_game",
                         "skill_id": "risefromtheashes",
                         "cost": 2,
-                        "effect_type": "recover_downed_holomem_cards",
+                        "effect_type": "modify_next_life_loss",
+                        "amount": -1,
+                        "and": [{ "effect_type": "recover_downed_holomem_cards" }],
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
                             { "effect_type": "record_used_once_per_game_effect", "effect_id": "risefromtheashes" },
