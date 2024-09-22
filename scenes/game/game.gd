@@ -18,6 +18,9 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var opponent_stats : StatsGroup = $OpponentStatsGroup
 @onready var me_stats : StatsGroup = $MeStatsGroup
 
+@onready var opponent_username_label = $OpponentUsernameLabel
+@onready var me_username_label = $MeUsernameLabel
+
 @onready var opponent_hand_label = $OpponentStatsGroup/HandIndicator/HandCount
 @onready var opponent_deck_label = $OpponentStatsGroup/DeckIndicator/DeckCount
 @onready var opponent_cheer_label = $OpponentStatsGroup/CheerIndicator/CheerCount
@@ -536,6 +539,9 @@ func _begin_game(event_data):
 	var my_id = event_data["your_id"]
 	var opponent_id = event_data["opponent_id"]
 	game_card_map = event_data["game_card_map"]
+	
+	me_username_label.text = event_data["your_username"]
+	opponent_username_label.text = event_data["opponent_username"]
 
 	me = PlayerState.new(self, my_id, true,
 		me_archive, me_backstage, me_collab,

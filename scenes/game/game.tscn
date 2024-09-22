@@ -59,6 +59,24 @@ grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.8, 0.8)
 
+[node name="MeUsernameLabel" type="Label" parent="."]
+offset_left = 913.0
+offset_top = 573.0
+offset_right = 1268.0
+offset_bottom = 601.0
+theme_override_font_sizes/font_size = 20
+text = "PlayerName"
+horizontal_alignment = 2
+
+[node name="OpponentUsernameLabel" type="Label" parent="."]
+offset_left = 815.0
+offset_top = 79.0
+offset_right = 1170.0
+offset_bottom = 107.0
+theme_override_font_sizes/font_size = 20
+text = "OpponentName"
+horizontal_alignment = 2
+
 [node name="OpponentHandIndicator" type="HBoxContainer" parent="."]
 offset_left = 1050.0
 offset_top = 20.0
