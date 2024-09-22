@@ -1,6 +1,8 @@
 extends Node
 
 signal settings_loaded
+signal setting_changed_UseEnProxies
+signal setting_changed_HideEnglishCardText
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
@@ -10,10 +12,17 @@ const ReplayVersion = 1 # Increment this when you break replay compatibility.
 var LoggingEnabled : bool = true
 
 const UseEnProxies = "UseEnProxies"
+const HideEnglishCardText = "HideEnglishCardText"
 const user_settings_file = "user://settings.json"
 
 var user_settings = {
 	UseEnProxies: true,
+	HideEnglishCardText: false,
+}
+
+var setting_to_signal_map = {
+	HideEnglishCardText: setting_changed_HideEnglishCardText,
+	UseEnProxies: setting_changed_UseEnProxies,
 }
 
 func get_client_version() -> String:
@@ -46,6 +55,7 @@ func get_user_setting(setting_name : String):
 
 func save_user_setting(setting_name : String, value):
 	user_settings[setting_name] = value
+	setting_to_signal_map[setting_name].emit()
 	save_persistent_settings()
 
 func save_persistent_settings():
@@ -61,6 +71,11 @@ func load_persistent_settings() -> bool:  # returns success code
 	var text = file.get_as_text()
 	var json = JSON.parse_string(text)
 	print("Settings json: %s" % text)
-	user_settings = json
+	# Update the keys in user_settings based on this json.
+	for key in json.keys():
+		if user_settings.has(key):
+			user_settings[key] = json[key]
+		else:
+			print("Unknown setting in settings file: %s" % key)
 	settings_loaded.emit()
 	return true

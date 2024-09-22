@@ -53,6 +53,7 @@ const PositionTime = 0.8
 var target_position = Vector2.ZERO
 var position_start_time = PositionTime
 var _destroy_on_move_completion = false
+var _en_proxy_loaded = false
 
 func _ready():
 	info_highlight.visible = false
@@ -63,6 +64,18 @@ func _ready():
 	if scale.x == 1.0:
 		scale = Vector2(DefaultCardScale, DefaultCardScale)
 	attachment_box.visible = false
+	
+	GlobalSettings.connect("setting_changed_HideEnglishCardText", _hide_english_setting_updated)
+	GlobalSettings.connect("setting_changed_UseEnProxies", _en_proxy_setting_updated)
+
+func _hide_english_setting_updated():
+	if _definition_id != "HIDDEN":
+		if not _en_proxy_loaded:
+			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
+
+func _en_proxy_setting_updated():
+	if _definition_id != "HIDDEN":
+		update_card_graphic()
 
 func _process(delta: float) -> void:
 	if is_big_card:
@@ -121,12 +134,8 @@ func set_button_visible(button_visible):
 	else:
 		selection_button.modulate = Color(1, 1, 1, 0)
 
-func initialize_graphics():
-	if _definition_id == "HIDDEN":
-		card_image.texture = load("res://assets/cardbacks/holo_back.png")
-		overlay_root.visible = false
-		damage_indicator.visible = false
-	else:
+func update_card_graphic():
+	if _definition_id and _definition_id != "HIDDEN":
 		var rarity = CardDatabase.get_card(_definition_id)["rarity"].to_upper()
 		var jp_path = "res://assets/cards/" + _definition_id + "_" + rarity + ".png"
 		var en_path = "res://assets/cards/en/" + _definition_id  + ".jpg"
@@ -135,8 +144,21 @@ func initialize_graphics():
 		if use_en_proxies and FileAccess.file_exists(en_path):
 			card_image.texture = load(en_path)
 			overlay_root.visible = false
+			_en_proxy_loaded = true
 		else:
 			card_image.texture = load(jp_path)
+			_en_proxy_loaded = false
+		
+		if not _en_proxy_loaded:
+			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
+			
+func initialize_graphics():
+	if _definition_id == "HIDDEN":
+		card_image.texture = load("res://assets/cardbacks/holo_back.png")
+		overlay_root.visible = false
+		damage_indicator.visible = false
+	else:
+		update_card_graphic()
 	set_button_visible(false)
 	_update_stats()
 	_update_english_text()

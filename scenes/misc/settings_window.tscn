@@ -59,6 +59,16 @@ texture = ExtResource("3_7ubp8")
 layout_mode = 2
 text = "Use EN Proxies when available"
 
+[node name="HideEnglishCardText" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Hide English Card Text"
+
+[node name="ExitGameButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit Game"
+
 [connection signal="pressed" from="FullscreenClose" to="." method="close_window"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/TitleBar/IconButton" to="." method="close_window"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/UseEnProxies" to="." method="change_setting" binds= ["UseEnProxies"]]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HideEnglishCardText" to="." method="change_setting" binds= ["HideEnglishCardText"]]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ExitGameButton" to="." method="_on_button_pressed"]

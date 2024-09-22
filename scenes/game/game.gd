@@ -53,6 +53,7 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var save_file_dialog = $SaveFileDialog
 
 @onready var big_card = $BigCard
+@onready var settings_window = $SettingsWindow
 
 enum UIPhase {
 	UIPhase_Init,
@@ -321,6 +322,8 @@ func _ready() -> void:
 	$UIOverlay.visible = true
 	action_menu.visible = false
 	thinking_spinner.visible = true
+	settings_window.visible = false
+	settings_window.connect("exit_game_pressed", _on_exit_game_button_pressed)
 
 	me_stats.visible = false
 	opponent_stats.visible = false
@@ -2464,3 +2467,6 @@ func _on_save_file_dialog_file_selected(path: String) -> void:
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	var content = JSON.stringify(_get_game_log_data())
 	file.store_string(content)
+
+func _on_settings_button_pressed() -> void:
+	settings_window.show_settings(true)
