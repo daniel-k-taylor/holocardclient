@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b23lagjf55n65"]
+[gd_scene load_steps=8 format=3 uid="uid://b23lagjf55n65"]
 
 [ext_resource type="Script" path="res://scenes/game/popup_message.gd" id="1_eol4j"]
+[ext_resource type="Texture2D" uid="uid://bbyh2gpahtady" path="res://assets/icons/damage_counter_red.png" id="2_rj1lw"]
 
 [sub_resource type="Animation" id="Animation_fg68h"]
 length = 0.001
@@ -176,3 +177,44 @@ text = "This is a sample message"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="IconMargin" type="MarginContainer" parent="OuterContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OuterContainer/IconMargin"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterContainer/IconMargin/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DamageIcon" type="TextureRect" parent="OuterContainer/IconMargin/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_rj1lw")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterContainer/IconMargin"]
+layout_mode = 2
+theme_override_constants/margin_left = -5
+theme_override_constants/margin_top = -10
+
+[node name="NumberLabel" type="Label" parent="OuterContainer/IconMargin/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "230"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -664,6 +664,15 @@ func _play_popup_message(text :String, fast:bool = false):
 		remaining_animation_seconds = PopupMessage.FastMessageDurationSeconds
 	popup.play_message(text, fast)
 
+func _play_transient_icon_message(text : String, pos : Vector2, fast : bool = false):
+	var popup = PopupMessageScene.instantiate()
+	add_child(popup)
+	popup.position = pos
+	remaining_animation_seconds = PopupMessage.MessageDurationSeconds
+	if fast:
+		remaining_animation_seconds = PopupMessage.FastMessageDurationSeconds
+	popup.play_icon_message(text, fast)
+
 #
 # Game Event Handlers
 #
@@ -2041,13 +2050,15 @@ func _on_damage_dealt_event(event_data):
 		damage,
 	])
 
+	_play_transient_icon_message(str(damage), card.get_center_position(), true)
 
 func _process_downed_holomem(target_player, card, hand_ids, is_game_over, life_lost):
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
 		target_player.get_name(),
 		card._definition_id,
 	])
-	# TODO: Mark target dead with an icon/animation?
+
+	_play_transient_icon_message("DOWN", card.get_center_position(), true)
 
 	# Put the card and all attached cards in the archive or hand as approrpiate.
 	var attached_card_ids = card.get_attached()
