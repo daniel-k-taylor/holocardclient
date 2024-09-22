@@ -1748,9 +1748,9 @@
                                     {
                                         "conditions": [{ "condition": "top_deck_card_has_any_tag", "condition_tags": ["#Promise"] }],
                                         "effect_type": "power_boost",
-                                        "amount": 20,
-                                        "and": [{ "effect_type": "draw", "amount": 1 }]
-                                    }
+                                        "amount": 20
+                                    },
+                                    { "effect_type": "draw", "amount": 1 }
                                 ]
                             },
                             { "effect_type": "pass" }
@@ -2586,7 +2586,7 @@
         "holomem_names": ["usada_pekora"],
         "rarity": "u",
         "colors": ["green"],
-        "hp": 90,
+        "hp": 60,
         "baton_cost": 1,
         "tags": [
             "#JP",
@@ -3768,13 +3768,7 @@
                         "effect_type": "choice",
                         "choice": [
                             {
-                                "effect_type": "choose_cards",
-                                "from": "stacked_holomem",
-                                "look_at": -1,
-                                "destination": "archive",
-                                "amount_min": 1,
-                                "amount_max": 1,
-                                "remaining_cards_action": "nothing",
+                                "effect_type": "archive_top_stacked_holomem",
                                 "and": [
                                     {
                                         "effect_type": "deal_damage",
@@ -4399,7 +4393,10 @@
         ],
         "arts": [
             {
+                "full_english_text": "You may Archive 2 Blue Cheers from this Holomem to: +60 Power per Holomem under this and you can target Backstage Holomem.",
                 "art_id": "shiningcomet",
+                "target_condition": "all_if_meets_conditions",
+                "target_conditions": [{ "condition": "self_has_cheer_color", "amount_min": 2, "condition_colors": ["blue"] }],
                 "costs": [
                     { "color": "blue", "amount": 3 },
                     { "color": "any", "amount": 1 }
@@ -4414,7 +4411,25 @@
                     },
                     {
                         "timing": "before_art",
-                        "conditions": [{ "condition": "self_has_cheer_color", "amount_min": 2, "condition_colors": ["blue"] }],
+                        "conditions": [{ "condition": "target_is_backstage" }],
+                        "effect_type": "archive_cheer_from_holomem",
+                        "required_colors": ["blue"],
+                        "ability_source": "holomem_blue",
+                        "from": "self",
+                        "amount": 2,
+                        "and": [
+                            {
+                                "effect_type": "power_boost_per_stacked",
+                                "amount": 60
+                            }
+                        ]
+                    },
+                    {
+                        "timing": "before_art",
+                        "conditions": [
+                            { "condition": "target_is_not_backstage" },
+                            { "condition": "self_has_cheer_color", "amount_min": 2, "condition_colors": ["blue"] }
+                        ],
                         "effect_type": "choice",
                         "choice": [
                             {
@@ -5665,7 +5680,7 @@
                 "amount": 20
             },
             {
-                "timing": "before_art",
+                "timing": "art_cleanup",
                 "effect_type": "deal_damage",
                 "special": true,
                 "amount": 10,
@@ -5835,7 +5850,7 @@
                 "amount": 10
             },
             {
-                "timing": "before_art",
+                "timing": "art_cleanup",
                 "conditions": [
                     { "condition": "attached_to", "required_member_name": "aki_rosenthal" }
                 ],

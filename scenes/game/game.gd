@@ -862,8 +862,10 @@ func _on_choose_holomem_for_effect_event(event_data):
 	if active_player.is_me():
 		var cards_can_choose = event_data["cards_can_choose"]
 		var effect = event_data["effect"]
-		_begin_make_choice(cards_can_choose, 1, 1)
-		var instructions = Strings.build_choose_holomem_for_effect_string(effect)
+		var amount_min = event_data.get("amount_min", 1)
+		var amount_max = event_data.get("amount_max", 1)
+		_begin_make_choice(cards_can_choose, amount_min, amount_max)
+		var instructions = Strings.build_choose_holomem_for_effect_string(effect, amount_min, amount_max)
 		action_menu_choice_info = {
 			"strings": [Strings.get_string(Strings.STRING_OK)],
 			"enabled": [false],

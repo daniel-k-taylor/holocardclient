@@ -317,8 +317,11 @@ func build_order_cards_string(to, bottom):
 			to_str = "UNKNOWN ZONE"
 	return "Order these cards to place on %s of %s" % [dir_str, to_str]
 
-func build_choose_holomem_for_effect_string(effect):
-	return "Choose a Holomem for:\n%s" % [get_effect_text(effect)]
+func build_choose_holomem_for_effect_string(effect, amount_min, amount_max):
+	if amount_min == amount_max:
+		return "Choose %s Holomem for:\n%s" % [amount_min, get_effect_text(effect)]
+	else:
+		return "Choose %s-%s Holomem for:\n%s" % [amount_min, amount_max, get_effect_text(effect)]
 
 func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	remaining_cards_action, requirement_details, special_reason):
@@ -658,6 +661,8 @@ func get_effect_text(effect):
 			text += "Archive %s from hand." % amount
 		"archive_this_attachment":
 			text += "Archive this attachment."
+		"archive_top_stacked_holomem":
+			text += "Archive the Holomem under this one."
 		"attach_card_to_holomem", "attach_card_to_holomem_internal":
 			var limitation_str = ""
 			if "to_limitation" in effect:
@@ -979,23 +984,26 @@ func build_english_card_text(definition):
 					for i in range(cost["amount"]):
 						colors.append(cost["color"])
 				var text = "%s: %s" % [get_skill_string(art["art_id"]), art["power"]]
-				if "target_condition" in art:
-					match art["target_condition"]:
-						"center_only":
-							text += "\nOnly targets Center."
-				if "art_requirement" in art:
-					if "art_requirement_attached_id" in art:
-						var card = CardDatabase.get_card(art["art_requirement_attached_id"])
-						var card_name = "MISSING_CARD_NAME"
-						if "support_names" in card:
-							card_name = get_names(card["support_names"])[0]
-						text += "\nRequires %s attached to use." % card_name
-				if "art_effects" in art:
-					text += "\n"
-					var arts_texts = []
-					for art_effect in art["art_effects"]:
-						arts_texts.append(get_effect_text(art_effect))
-					text += "\n".join(arts_texts)
+				if "full_english_text" in art:
+					text = art["full_english_text"]
+				else:
+					if "target_condition" in art:
+						match art["target_condition"]:
+							"center_only":
+								text += "\nOnly targets Center."
+					if "art_requirement" in art:
+						if "art_requirement_attached_id" in art:
+							var card = CardDatabase.get_card(art["art_requirement_attached_id"])
+							var card_name = "MISSING_CARD_NAME"
+							if "support_names" in card:
+								card_name = get_names(card["support_names"])[0]
+							text += "\nRequires %s attached to use." % card_name
+					if "art_effects" in art:
+						text += "\n"
+						var arts_texts = []
+						for art_effect in art["art_effects"]:
+							arts_texts.append(get_effect_text(art_effect))
+						text += "\n".join(arts_texts)
 				var next_entry = {
 					"colors": colors,
 					"text": text
