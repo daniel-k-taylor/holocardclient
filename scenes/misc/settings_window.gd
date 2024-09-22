@@ -2,10 +2,14 @@ extends CenterContainer
 
 signal exit_game_pressed
 
+@onready var game_sound : CheckButton = $PanelContainer/MarginContainer/VBoxContainer/GameSound
+@onready var hide_english_card_text : CheckButton = $PanelContainer/MarginContainer/VBoxContainer/HideEnglishCardText
 @onready var use_en_proxies : CheckButton = $PanelContainer/MarginContainer/VBoxContainer/UseEnProxies
 @onready var exit_button = $PanelContainer/MarginContainer/VBoxContainer/ExitGameButton
 
 func load_settings():
+	game_sound.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.GameSound)
+	hide_english_card_text.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
 	use_en_proxies.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
 	
 func show_settings(exit_game_visible = false):

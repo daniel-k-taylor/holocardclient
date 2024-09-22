@@ -58,6 +58,8 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 @onready var big_card = $BigCard
 @onready var settings_window = $SettingsWindow
 
+@onready var turnstart_audio : AudioStreamPlayer2D = $TurnStartAudio
+
 enum UIPhase {
 	UIPhase_Init,
 	UIPhase_MakeChoiceCanSelectCards,
@@ -314,6 +316,9 @@ var event_queue = []
 var remaining_animation_seconds = 0
 var after_animation_continuation = null
 var full_event_log = []
+var phase_duration_time = 0
+
+const PhaseStartTimeBuffer = 0.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -333,6 +338,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	phase_duration_time += delta
 	thinking_spinner.radial_initial_angle += delta * 360
 	if is_playing_animation():
 		remaining_animation_seconds -= delta
@@ -539,7 +545,7 @@ func _begin_game(event_data):
 	var my_id = event_data["your_id"]
 	var opponent_id = event_data["opponent_id"]
 	game_card_map = event_data["game_card_map"]
-	
+
 	me_username_label.text = event_data["your_username"]
 	opponent_username_label.text = event_data["opponent_username"]
 
@@ -1731,6 +1737,13 @@ func _change_ui_phase(new_ui_phase : UIPhase):
 	_deselect_cards()
 	action_menu.hide_menu()
 	card_popout.clear_panel()
+	if new_ui_phase != ui_phase:
+		# Phase changed.
+		if phase_duration_time > PhaseStartTimeBuffer and ui_phase == UIPhase.UIPhase_WaitingOnServer:
+			# Switching to active mode.
+			if GlobalSettings.get_user_setting(GlobalSettings.GameSound):
+				turnstart_audio.play()
+		phase_duration_time = 0
 	ui_phase = new_ui_phase
 	if new_ui_phase != UIPhase.UIPhase_WaitingOnServer:
 		thinking_spinner.visible = false

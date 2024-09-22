@@ -55,6 +55,10 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("3_7ubp8")
 
+[node name="GameSound" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Game sound enabled"
+
 [node name="UseEnProxies" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Use EN Proxies when available"
@@ -69,6 +73,7 @@ text = "Exit Game"
 
 [connection signal="pressed" from="FullscreenClose" to="." method="close_window"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/TitleBar/IconButton" to="." method="close_window"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/GameSound" to="." method="change_setting" binds= ["GameSound"]]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/UseEnProxies" to="." method="change_setting" binds= ["UseEnProxies"]]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HideEnglishCardText" to="." method="change_setting" binds= ["HideEnglishCardText"]]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ExitGameButton" to="." method="_on_button_pressed"]

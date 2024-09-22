@@ -11,13 +11,16 @@ const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 var LoggingEnabled : bool = true
 
+const GameSound = "GameSound"
 const UseEnProxies = "UseEnProxies"
 const HideEnglishCardText = "HideEnglishCardText"
+
 const user_settings_file = "user://settings.json"
 
 var user_settings = {
-	UseEnProxies: true,
+	GameSound: true,
 	HideEnglishCardText: false,
+	UseEnProxies: true,
 }
 
 var setting_to_signal_map = {
@@ -55,7 +58,8 @@ func get_user_setting(setting_name : String):
 
 func save_user_setting(setting_name : String, value):
 	user_settings[setting_name] = value
-	setting_to_signal_map[setting_name].emit()
+	if setting_name in setting_to_signal_map:
+		setting_to_signal_map[setting_name].emit()
 	save_persistent_settings()
 
 func save_persistent_settings():
