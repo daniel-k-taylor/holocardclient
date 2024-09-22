@@ -467,6 +467,8 @@ func process_game_event(event_type, event_data):
 
 func _on_disconnected():
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "Lost connection to server")
+	game_over_text.visible = true
+	game_over_text.text = game_over_text.text.replace("WINNER_TEXT", "Lost connection to server")
 
 func _get_card_definition_id(card_id):
 	for key in game_card_map:
@@ -1932,6 +1934,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				card.begin_move_to(player.get_holopower_spawn_location(), false, true)
 			"hand":
 				player.add_card_to_hand(card)
+				card.clear_stats_back_to_hand()
 			_:
 				var holomem_card = find_card_on_board(zone_card_id)
 				if holomem_card:

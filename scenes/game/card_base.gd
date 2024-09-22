@@ -64,7 +64,7 @@ func _ready():
 	if scale.x == 1.0:
 		scale = Vector2(DefaultCardScale, DefaultCardScale)
 	attachment_box.visible = false
-	
+
 	GlobalSettings.connect("setting_changed_HideEnglishCardText", _hide_english_setting_updated)
 	GlobalSettings.connect("setting_changed_UseEnProxies", _en_proxy_setting_updated)
 
@@ -148,10 +148,10 @@ func update_card_graphic():
 		else:
 			card_image.texture = load(jp_path)
 			_en_proxy_loaded = false
-		
+
 		if not _en_proxy_loaded:
 			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
-			
+
 func initialize_graphics():
 	if _definition_id == "HIDDEN":
 		card_image.texture = load("res://assets/cardbacks/holo_back.png")
@@ -291,6 +291,12 @@ func add_damage(amount, is_dead : bool):
 
 func set_damage(amount):
 	damage = amount
+	_update_stats()
+
+func clear_stats_back_to_hand():
+	damage = 0
+	dead = false
+	_resting = false
 	_update_stats()
 
 func set_resting(is_resting, immediate : bool = false):

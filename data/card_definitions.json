@@ -2056,7 +2056,7 @@
             {
                 "art_id": "thewholestageismine",
                 "costs": [
-                    { "color": "white", "amount": 1 }
+                    { "color": "any", "amount": 1 }
                 ],
                 "power": 30,
                 "art_effects": []
