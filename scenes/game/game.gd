@@ -1309,6 +1309,7 @@ func _on_send_cheer_event(event_data):
 				"remaining_cheer_allowed": max_can_place,
 				"holomem_to_cheer_list_map": holomem_to_cheer_list_map,
 				"to_zone": to_zone,
+				"valid_targets": valid_targets,
 			}
 			_multi_source_multi_target_send_cheer_continue()
 		elif from_zone == "life" or from_zone == "cheer_deck":
@@ -1472,7 +1473,7 @@ func _multi_source_multi_target_send_cheer_continue():
 					else:
 						# Now that cheer is selected, choose the target holomem.
 						# It can't be the source holomem.
-						var valid_targets = unique_mems.duplicate()
+						var valid_targets = multi_step_decision_info["valid_targets"]
 						valid_targets.erase(chosen_source_mem)
 						_show_click_cards_action_menu(
 							valid_targets,
