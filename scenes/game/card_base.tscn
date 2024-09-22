@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d2fspiqdcp0p1"]
+[gd_scene load_steps=19 format=3 uid="uid://d2fspiqdcp0p1"]
 
 [ext_resource type="Script" path="res://scenes/game/card_base.gd" id="1_gln13"]
 [ext_resource type="Texture2D" uid="uid://6vtjn6xvu8je" path="res://assets/cardbacks/holo_back.png" id="2_fmpqo"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://l1rbxm47rsmf" path="res://assets/highlights/arena_border_highlight_pressed.png" id="4_ff4sg"]
 [ext_resource type="Texture2D" uid="uid://bnuol0ewqd6p8" path="res://assets/highlights/card_border_highlight_pressed.png" id="4_ovykp"]
 [ext_resource type="Texture2D" uid="uid://dogldee47qjtf" path="res://assets/highlights/arena_border_highlight_selected.png" id="5_1ualb"]
+[ext_resource type="Texture2D" uid="uid://8edpkwpdoqn6" path="res://assets/icons/crosshair062.png" id="11_x1ffy"]
+[ext_resource type="Texture2D" uid="uid://dkhi8rwbmf54j" path="res://assets/icons/musicOn.png" id="12_pe7xl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehge2"]
 bg_color = Color(0, 0, 0, 1)
@@ -22,6 +24,20 @@ bg_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igk3u"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wdc8e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7p7k"]
+bg_color = Color(0.154876, 0.154876, 0.154876, 0.670588)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.603922)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="CardBase" type="Node2D"]
 script = ExtResource("1_gln13")
@@ -277,6 +293,83 @@ mouse_filter = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "999"
+
+[node name="TargetingIndicator" type="VBoxContainer" parent="OuterMargin"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/TargetingIndicator"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 80
+
+[node name="PanelContainer" type="PanelContainer" parent="OuterMargin/TargetingIndicator"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wdc8e")
+
+[node name="CenterContainer" type="CenterContainer" parent="OuterMargin/TargetingIndicator/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TargetReticle" type="TextureRect" parent="OuterMargin/TargetingIndicator/PanelContainer/CenterContainer"]
+modulate = Color(1, 0.223529, 0.160784, 1)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("11_x1ffy")
+
+[node name="PanelContainer" type="PanelContainer" parent="OuterMargin/TargetingIndicator/PanelContainer/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TargetDamageLabel" type="Label" parent="OuterMargin/TargetingIndicator/PanelContainer/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "130"
+
+[node name="ActiveSkillIndicator" type="VBoxContainer" parent="OuterMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/ActiveSkillIndicator"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 80
+
+[node name="PanelContainer" type="PanelContainer" parent="OuterMargin/ActiveSkillIndicator"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d7p7k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OuterMargin/ActiveSkillIndicator/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = -5
+alignment = 1
+
+[node name="MusicNote" type="TextureRect" parent="OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer"]
+modulate = Color(0.4, 1, 1, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("12_pe7xl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SkillContainer" type="MarginContainer" parent="OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ActiveSkillName" type="Label" parent="OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer/SkillContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "i want you to be there for when i make the cool move name"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]

@@ -28,6 +28,10 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var overlay_root = $OuterMargin/InnerMargin/PanelContainer/Overlay
 @onready var attachment_box = $OuterMargin/AttachmentIndicator/AttachmentBox
 @onready var attachment_count = $OuterMargin/AttachmentIndicator/AttachmentBox/MarginContainer/HBox/AttachmentCount
+@onready var targeting_indicator = $OuterMargin/TargetingIndicator
+@onready var targeting_amount_label = $OuterMargin/TargetingIndicator/PanelContainer/CenterContainer/PanelContainer/TargetDamageLabel
+@onready var active_skill_indicator = $OuterMargin/ActiveSkillIndicator
+@onready var active_skill_name = $OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer/SkillContainer/ActiveSkillName
 
 @export var is_big_card : bool = false
 
@@ -64,6 +68,8 @@ func _ready():
 	if scale.x == 1.0:
 		scale = Vector2(DefaultCardScale, DefaultCardScale)
 	attachment_box.visible = false
+	targeting_indicator.visible = false
+	active_skill_indicator.visible = false
 
 	GlobalSettings.connect("setting_changed_HideEnglishCardText", _hide_english_setting_updated)
 	GlobalSettings.connect("setting_changed_UseEnProxies", _en_proxy_setting_updated)
@@ -178,6 +184,18 @@ func _update_english_text():
 		var new_info : CardTextInfo = CardTextInfoScene.instantiate()
 		card_text_info_container.add_child(new_info)
 		new_info.set_text(info_data["colors"], info_data["text"])
+
+func show_target_reticle(amount):
+	targeting_amount_label.text = str(amount)
+	targeting_indicator.visible = true
+
+func show_active_skill(skill_name):
+	active_skill_name.text = skill_name
+	active_skill_indicator.visible = true
+
+func hide_performance_skill_indicators():
+	targeting_indicator.visible = false
+	active_skill_indicator.visible = false
 
 func get_texture():
 	return card_image.texture

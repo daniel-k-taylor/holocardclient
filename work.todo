@@ -1,5 +1,4 @@
 Todo:
-  ☐ Show which member is being targeted - new event arts_target_selected (target id and skill id)
   ☐ Show revealed cards somehow
   ☐ Track them in hand?
   ☐ Better text on some choose cards like archive from hand, or bloom from hand, stacked

@@ -27,8 +27,12 @@ func replace_tag(text, tag, color):
 	return text
 
 func add_to_log(log_type, text : String):
-	text = text.replace("You", "[color=%s]You[/color]" % [DEFAULT_PLAYER_COLOR])
-	text = text.replace("Opponent", "[color=%s]Opponent[/color]" % [DEFAULT_OPPONENT_COLOR])
+	if text.begins_with("You"):
+		text = text.erase(0, 3)
+		text = "[color=%s]You[/color]" % [DEFAULT_PLAYER_COLOR] + text
+	elif text.begins_with("Opponent"):
+		text = text.erase(0, 8)
+		text = "[color=%s]Opponent[/color]" % [DEFAULT_OPPONENT_COLOR] + text
 	text = replace_tag(text, "CARD", CARD_COLOR)
 	text = replace_tag(text, "PHASE", PHASE_COLOR)
 	text = replace_tag(text, "DECISION", DECISION_COLOR)

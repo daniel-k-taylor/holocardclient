@@ -959,6 +959,7 @@ func _start_main_step_decision():
 	)
 
 func _on_performance_step_decision(event_data):
+	clear_performance_indicators()
 	var active_player = get_player(event_data["active_player"])
 	if active_player.is_me():
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Performance Step Action[/DECISION]" % [
@@ -2007,6 +2008,7 @@ func _on_perform_art_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	var performer_id = event_data["performer_id"]
 	var art_id = event_data["art_id"]
+	var target_id = event_data["target_id"]
 	var power = event_data["power"]
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] performs art [SKILL]%s[/SKILL] %s" % [
 		active_player.get_name(),
@@ -2015,10 +2017,15 @@ func _on_perform_art_event(event_data):
 		power,
 	])
 
-	# TODO: Mark performer as used an art, icon?
-	# TODO: Mark target dead with an icon?
 	_play_popup_message("Art: %s\nDamage: %s" % [Strings.get_skill_string(art_id), power])
+	var performer = find_card_on_board(performer_id)
+	var target = find_card_on_board(target_id)
+	performer.show_active_skill(Strings.get_skill_string(art_id))
+	target.show_target_reticle(power)
 
+func clear_performance_indicators():
+	for card in all_cards.get_children():
+		card.hide_performance_skill_indicators()
 
 func _on_damage_dealt_event(event_data):
 	var target_player = get_player(event_data["target_player"])
@@ -2034,11 +2041,14 @@ func _on_damage_dealt_event(event_data):
 		damage,
 	])
 
+
 func _process_downed_holomem(target_player, card, hand_ids, is_game_over, life_lost):
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
 		target_player.get_name(),
 		card._definition_id,
 	])
+	# TODO: Mark target dead with an icon/animation?
+
 	# Put the card and all attached cards in the archive or hand as approrpiate.
 	var attached_card_ids = card.get_attached()
 	var attached_cheer = card.remove_all_attached_cheer()
@@ -2235,6 +2245,7 @@ func _on_turn_start(event_data):
 	pass
 
 func _on_end_turn_event(event_data):
+	clear_performance_indicators()
 	var ending_player = get_player(event_data["ending_player_id"])
 	var _next_player_id = get_player(event_data["next_player_id"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn End**[/PHASE]" % ending_player.get_name())
