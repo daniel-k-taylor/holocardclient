@@ -21,6 +21,7 @@ var file_load_callback
 @onready var client_version = $ClientVersion/ClientVersionLabel
 @onready var player_username = $PlayerUsernameLabel
 @onready var custom_deck_label = $CustomDeckLabel
+@onready var player_count_label = $PlayerCountLabel
 
 # Other
 @onready var server_info_list : ItemList = $ServerInfoList
@@ -155,7 +156,9 @@ func _update_server_info():
 	player_username.text = NetworkManager.get_my_player_name()
 
 	match_queues = []
-	for player in NetworkManager.get_players_info():
+	var players_info = NetworkManager.get_players_info()
+	player_count_label.text = str(players_info.size())
+	for player in players_info:
 		var player_name = player["username"]
 		var queue = player["queue"]
 		var game_room = player["game_room"]
@@ -176,6 +179,7 @@ func _update_server_info():
 
 func _on_server_info():
 	server_info_list.clear()
+	player_count_label.text = ""
 	_update_server_info()
 
 func _on_server_connect_button_pressed() -> void:
