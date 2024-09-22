@@ -6085,7 +6085,7 @@
             },
             {
                 "timing": "on_take_damage",
-                "effect_type": "add_damage",
+                "effect_type": "add_damage_taken",
                 "amount": 10
             }
         ]

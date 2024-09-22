@@ -676,14 +676,14 @@ func _play_popup_message(text :String, fast:bool = false):
 		remaining_animation_seconds = PopupMessage.FastMessageDurationSeconds
 	popup.play_message(text, fast)
 
-func _play_transient_icon_message(text : String, pos : Vector2, fast : bool = false):
+func _play_transient_icon_message(text : String, pos : Vector2, icon_type : PopupMessage.IconMessageType, fast : bool = false):
 	var popup = PopupMessageScene.instantiate()
 	add_child(popup)
 	popup.position = pos
 	remaining_animation_seconds = PopupMessage.MessageDurationSeconds
 	if fast:
 		remaining_animation_seconds = PopupMessage.FastMessageDurationSeconds
-	popup.play_icon_message(text, fast)
+	popup.play_icon_message(text, icon_type, fast)
 
 #
 # Game Event Handlers
@@ -728,7 +728,13 @@ func _on_boost_stat_event(event_data):
 		amount,
 		Strings.get_stat_string(stat),
 	])
-	_play_popup_message("+%s %s" % [amount, Strings.get_stat_string(stat)])
+
+	if stat == "damage_prevented":
+		var card = find_card_on_board(card_id)
+		_play_transient_icon_message(str(amount), card.get_center_position(), PopupMessage.IconMessageType.Shield, true)
+	else:
+		_play_popup_message("+%s %s" % [amount, Strings.get_stat_string(stat)])
+
 
 func _on_cheer_step(event_data):
 	var active_player = get_player(event_data["active_player"])
@@ -1851,7 +1857,8 @@ func _on_modify_hp_event(event_data):
 	var card = find_card_on_board(card_id)
 	card.set_damage(new_damage)
 
-	_play_popup_message("Damage: %s" % [damage_done])
+	_play_transient_icon_message(str(damage_done), card.get_center_position(), PopupMessage.IconMessageType.Damage, true)
+	#_play_popup_message("Damage: %s" % [damage_done])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
 		active_player.get_name(),
 		_get_card_definition_id(card_id),
@@ -2069,7 +2076,7 @@ func _on_damage_dealt_event(event_data):
 		damage,
 	])
 
-	_play_transient_icon_message(str(damage), card.get_center_position(), true)
+	_play_transient_icon_message(str(damage), card.get_center_position(), PopupMessage.IconMessageType.Damage, true)
 
 func _process_downed_holomem(target_player, card, hand_ids, is_game_over, life_lost):
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
@@ -2077,7 +2084,7 @@ func _process_downed_holomem(target_player, card, hand_ids, is_game_over, life_l
 		card._definition_id,
 	])
 
-	_play_transient_icon_message("DOWN", card.get_center_position(), true)
+	_play_transient_icon_message("DOWN", card.get_center_position(), PopupMessage.IconMessageType.Damage,true)
 
 	# Put the card and all attached cards in the archive or hand as approrpiate.
 	var attached_card_ids = card.get_attached()
@@ -2199,12 +2206,14 @@ func _on_restore_hp_event(event_data):
 	var card = find_card_on_board(card_id)
 	card.set_damage(new_damage)
 
-	_play_popup_message("Heal: %s" % [healed_amount])
+	_play_transient_icon_message(str(healed_amount), card.get_center_position(), PopupMessage.IconMessageType.Heart, true)
+	#_play_popup_message("Heal: %s" % [healed_amount])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] heals %s damage" % [
 		active_player.get_name(),
 		_get_card_definition_id(card_id),
 		healed_amount
 	])
+
 func _on_reveal_cards_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	var card_ids = event_data["card_ids"]

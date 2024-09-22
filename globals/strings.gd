@@ -245,7 +245,7 @@ func get_position_string(position):
 func get_stat_string(stat):
 	match stat:
 		"damage_added":
-			return "Damage Added"
+			return "Additional Damage"
 		"damage_prevented":
 			return "Damage Prevented"
 		"power":
@@ -636,7 +636,7 @@ func get_effect_text(effect):
 
 	var effect_type = effect["effect_type"]
 	match effect_type:
-		"add_damage":
+		"add_damage_taken":
 			var amount = effect["amount"]
 			text += "Increase damage by %s." % amount
 		"add_turn_effect":

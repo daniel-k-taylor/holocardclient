@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b23lagjf55n65"]
+[gd_scene load_steps=10 format=3 uid="uid://b23lagjf55n65"]
 
 [ext_resource type="Script" path="res://scenes/game/popup_message.gd" id="1_eol4j"]
 [ext_resource type="Texture2D" uid="uid://bbyh2gpahtady" path="res://assets/icons/damage_counter_red.png" id="2_rj1lw"]
+[ext_resource type="Texture2D" uid="uid://b60h4ltr5e3xx" path="res://assets/icons/tile_heart.png" id="3_f1n73"]
+[ext_resource type="Texture2D" uid="uid://feoht3s2ddpa" path="res://assets/icons/shield_silver.png" id="3_hwote"]
 
 [sub_resource type="Animation" id="Animation_fg68h"]
 length = 0.001
@@ -201,9 +203,26 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="DamageIcon" type="TextureRect" parent="OuterContainer/IconMargin/VBoxContainer/MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("2_rj1lw")
+expand_mode = 1
+
+[node name="HeartIcon" type="TextureRect" parent="OuterContainer/IconMargin/VBoxContainer/MarginContainer"]
+visible = false
+modulate = Color(0.152941, 0.376471, 0.227451, 1)
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_f1n73")
+expand_mode = 1
+
+[node name="ShieldIcon" type="TextureRect" parent="OuterContainer/IconMargin/VBoxContainer/MarginContainer"]
+visible = false
+modulate = Color(0.207843, 0.207843, 0.454902, 1)
+layout_mode = 2
+texture = ExtResource("3_hwote")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="OuterContainer/IconMargin"]
