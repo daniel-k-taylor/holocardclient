@@ -1,0 +1,125 @@
+[gd_scene load_steps=7 format=3 uid="uid://chj2nl5gj2ac6"]
+
+[ext_resource type="Script" path="res://scenes/menu/deck_view.gd" id="1_4sucw"]
+[ext_resource type="PackedScene" uid="uid://cdh1c0yenr2w4" path="res://scenes/game/popout_element.tscn" id="1_bekbn"]
+[ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="2_wkc6b"]
+[ext_resource type="Texture2D" uid="uid://ohmonvyuqeuf" path="res://assets/icons/minus.png" id="3_pe2q2"]
+[ext_resource type="Texture2D" uid="uid://cbrksgiwkrwu2" path="res://assets/cheer_icons/any.png" id="4_e2ppb"]
+[ext_resource type="Texture2D" uid="uid://5snhawao5bym" path="res://assets/icons/plus.png" id="5_3myvo"]
+
+[node name="DeckView" type="MarginContainer"]
+custom_minimum_size = Vector2(850, 600)
+script = ExtResource("1_4sucw")
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="OshiElement" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_bekbn")]
+layout_mode = 2
+
+[node name="CheerBox" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Cheer:"
+
+[node name="CheerCount" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "19"
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox"]
+layout_mode = 2
+columns = 2
+
+[node name="CheerGroup" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+
+[node name="Minus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup" instance=ExtResource("2_wkc6b")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_pe2q2")
+
+[node name="Icon" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("4_e2ppb")
+expand_mode = 1
+
+[node name="Count" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "13"
+
+[node name="Plus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup" instance=ExtResource("2_wkc6b")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_3myvo")
+
+[node name="CheerGroup2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+
+[node name="Minus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2" instance=ExtResource("2_wkc6b")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_pe2q2")
+
+[node name="Icon" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("4_e2ppb")
+expand_mode = 1
+
+[node name="Count" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "13"
+
+[node name="Plus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2" instance=ExtResource("2_wkc6b")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_3myvo")
+
+[node name="DeckGrid" type="GridContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 5
+
+[node name="PopoutElement" parent="ScrollContainer/MarginContainer/VBoxContainer/DeckGrid" instance=ExtResource("1_bekbn")]
+layout_mode = 2
+
+[node name="PopoutElement2" parent="ScrollContainer/MarginContainer/VBoxContainer/DeckGrid" instance=ExtResource("1_bekbn")]
+layout_mode = 2
+
+[node name="PopoutElement3" parent="ScrollContainer/MarginContainer/VBoxContainer/DeckGrid" instance=ExtResource("1_bekbn")]
+layout_mode = 2
+
+[node name="PopoutElement4" parent="ScrollContainer/MarginContainer/VBoxContainer/DeckGrid" instance=ExtResource("1_bekbn")]
+layout_mode = 2
+
+[node name="PopoutElement5" parent="ScrollContainer/MarginContainer/VBoxContainer/DeckGrid" instance=ExtResource("1_bekbn")]
+layout_mode = 2
+
+[node name="PopoutElement6" parent="ScrollContainer/MarginContainer/VBoxContainer/DeckGrid" instance=ExtResource("1_bekbn")]
+layout_mode = 2

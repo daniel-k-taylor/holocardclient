@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvhny66vw8bs"]
+
+[ext_resource type="Script" path="res://scenes/menu/deckbuilder.gd" id="1_hiyso"]
+
+[node name="Deckbuilder" type="Node2D"]
+script = ExtResource("1_hiyso")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0.466667, 0.545098, 1)
+
+[node name="TabContainer" type="TabContainer" parent="."]
+offset_left = 4.0
+offset_top = 66.0
+offset_right = 802.0
+offset_bottom = 713.0
+
+[node name="ReturnToMenuButton" type="Button" parent="."]
+offset_left = 938.0
+offset_top = 6.0
+offset_right = 1275.0
+offset_bottom = 59.0
+theme_override_font_sizes/font_size = 32
+text = "Return to Main Menu"
+
+[connection signal="pressed" from="ReturnToMenuButton" to="." method="back_to_main_menu"]

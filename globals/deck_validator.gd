@@ -2,6 +2,7 @@ extends Node
 
 func load_deck(data) -> Dictionary:
 	var loaded_deck = {
+		"deck_name": "",
 		"oshi": "",
 		"deck": {},
 		"cheer_deck": {},
@@ -12,6 +13,10 @@ func load_deck(data) -> Dictionary:
 	if json.parse(data[0]) == OK:
 		if "cheerDeck" in json.data:
 			return load_deck_holodelta(json)
+		if "deck_name" in json.data and typeof(json.data["deck_name"]) == TYPE_STRING:
+			loaded_deck["deck_name"] = json.data["deck_name"]
+		else:
+			loaded_deck["deck_name"] = "New Deck"
 		if "oshi" not in json.data or typeof(json.data["oshi"]) != TYPE_STRING:
 			error_message = "Invalid format:\nInvalid oshi"
 		elif "deck" not in json.data or typeof(json.data["deck"]) != TYPE_DICTIONARY:
@@ -48,12 +53,17 @@ func load_deck(data) -> Dictionary:
 
 func load_deck_holodelta(json):
 	var loaded_deck = {
+		"deck_name": "",
 		"oshi": "",
 		"deck": {},
 		"cheer_deck": {},
 		"error": "",
 	}
 	var error_message = ""
+	if "deckName" in json.data and typeof(json.data["deckName"]) == TYPE_STRING:
+		loaded_deck["deck_name"] = json.data["deckName"]
+	else:
+		loaded_deck["deck_name"] = "New Deck"
 	if "oshi" not in json.data or typeof(json.data["oshi"]) != TYPE_ARRAY:
 		error_message = "Invalid format:\nInvalid oshi"
 	elif "deck" not in json.data or typeof(json.data["deck"]) != TYPE_ARRAY:

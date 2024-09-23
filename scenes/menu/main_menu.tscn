@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dl8ct7vpm73vm"]
+[gd_scene load_steps=11 format=3 uid="uid://dl8ct7vpm73vm"]
 
 [ext_resource type="Theme" uid="uid://dpxwceaf3f35h" path="res://themes/menubuttontheme.tres" id="1_i5wud"]
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bpprngv5b681f" path="res://scenes/misc/howtoplay.tscn" id="7_nksnh"]
 [ext_resource type="AudioStream" uid="uid://c8gq118r05gw8" path="res://assets/sounds/match_available.mp3" id="8_myxxr"]
 [ext_resource type="AudioStream" uid="uid://corg1ley43ot1" path="res://assets/sounds/match_notification.mp3" id="9_2ujf4"]
+[ext_resource type="PackedScene" uid="uid://bvhny66vw8bs" path="res://scenes/menu/deckbuilder.tscn" id="10_b34kr"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -305,6 +306,9 @@ stream = ExtResource("8_myxxr")
 
 [node name="MatchJoinedSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_2ujf4")
+
+[node name="Deckbuilder" parent="." instance=ExtResource("10_b34kr")]
+visible = false
 
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]

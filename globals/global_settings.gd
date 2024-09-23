@@ -14,6 +14,7 @@ var LoggingEnabled : bool = true
 const GameSound = "GameSound"
 const UseEnProxies = "UseEnProxies"
 const HideEnglishCardText = "HideEnglishCardText"
+const SavedDecks = "SavedDecks"
 
 const user_settings_file = "user://settings.json"
 
@@ -21,6 +22,7 @@ var user_settings = {
 	GameSound: true,
 	HideEnglishCardText: false,
 	UseEnProxies: true,
+	SavedDecks: [],
 }
 
 var setting_to_signal_map = {
