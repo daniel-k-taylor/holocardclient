@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcu3sccxoxwbv"]
+
+[ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="1_2pkqm"]
+[ext_resource type="Script" path="res://scenes/menu/cheer_group.gd" id="1_lf7lk"]
+[ext_resource type="Texture2D" uid="uid://ohmonvyuqeuf" path="res://assets/icons/minus.png" id="2_ynvqf"]
+[ext_resource type="Texture2D" uid="uid://cbrksgiwkrwu2" path="res://assets/cheer_icons/any.png" id="3_gyvld"]
+[ext_resource type="Texture2D" uid="uid://5snhawao5bym" path="res://assets/icons/plus.png" id="4_1m1lg"]
+
+[node name="CheerGroup" type="HBoxContainer"]
+custom_minimum_size = Vector2(80, 32)
+script = ExtResource("1_lf7lk")
+
+[node name="Minus" parent="." instance=ExtResource("1_2pkqm")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_ynvqf")
+
+[node name="Icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("3_gyvld")
+expand_mode = 1
+
+[node name="Count" type="Label" parent="."]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "13"
+
+[node name="Plus" parent="." instance=ExtResource("1_2pkqm")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_1m1lg")
+
+[connection signal="pressed" from="Minus" to="." method="_on_minus_pressed"]
+[connection signal="pressed" from="Plus" to="." method="_on_plus_pressed"]

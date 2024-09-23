@@ -1,8 +1,12 @@
+Deckbuilder:
+  ☐ Card popout to select from card db
+  ☐ Single click to add a card
+  ☐ Big card hover
+
 Todo:
   ☐ Show revealed cards somehow
     - Track them in hand?
   ☐ Better text on some choose cards like archive from hand, or bloom from hand, stacked
-  ☐ DeckBuilder
 
 Polish:
   ☐ Lui's oshi ability text in the choice with holopower usage

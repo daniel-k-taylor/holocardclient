@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://chj2nl5gj2ac6"]
+[gd_scene load_steps=6 format=3 uid="uid://chj2nl5gj2ac6"]
 
 [ext_resource type="Script" path="res://scenes/menu/deck_view.gd" id="1_4sucw"]
 [ext_resource type="PackedScene" uid="uid://cdh1c0yenr2w4" path="res://scenes/game/popout_element.tscn" id="1_bekbn"]
-[ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="2_wkc6b"]
-[ext_resource type="Texture2D" uid="uid://ohmonvyuqeuf" path="res://assets/icons/minus.png" id="3_pe2q2"]
-[ext_resource type="Texture2D" uid="uid://cbrksgiwkrwu2" path="res://assets/cheer_icons/any.png" id="4_e2ppb"]
-[ext_resource type="Texture2D" uid="uid://5snhawao5bym" path="res://assets/icons/plus.png" id="5_3myvo"]
+[ext_resource type="Texture2D" uid="uid://bnuol0ewqd6p8" path="res://assets/highlights/card_border_highlight_pressed.png" id="3_0o0ea"]
+[ext_resource type="PackedScene" uid="uid://bcr5jfstov5er" path="res://scenes/menu/cheer_box.tscn" id="3_6rtgs"]
+[ext_resource type="Texture2D" uid="uid://yfm3tk3pgk1i" path="res://assets/highlights/card_border_highlight_selected.png" id="4_kgxms"]
 
 [node name="DeckView" type="MarginContainer"]
 custom_minimum_size = Vector2(850, 600)
@@ -24,85 +23,76 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="OshiElement" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_bekbn")]
+[node name="OshiMargin" type="MarginContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="CheerBox" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="OshiElement" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/OshiMargin" instance=ExtResource("1_bekbn")]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox"]
+[node name="OshiButton" type="TextureButton" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/OshiMargin"]
 layout_mode = 2
-alignment = 1
+texture_pressed = ExtResource("3_0o0ea")
+texture_hover = ExtResource("4_kgxms")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/HBoxContainer"]
+[node name="CheerBox" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_6rtgs")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Deck Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="DeckNameEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Deck Name"
+alignment = 2
+max_length = 20
+
+[node name="CardLabels" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 10
+alignment = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CardLabels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "Cheer:"
+text = "Cards:"
 
-[node name="CheerCount" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/HBoxContainer"]
+[node name="CardCount" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CardLabels"]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "19"
+text = "3"
+horizontal_alignment = 2
 
-[node name="GridContainer" type="GridContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox"]
+[node name="Label4" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CardLabels"]
 layout_mode = 2
-columns = 2
+theme_override_font_sizes/font_size = 32
+text = "/"
 
-[node name="CheerGroup" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer"]
-custom_minimum_size = Vector2(80, 32)
+[node name="Label3" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CardLabels"]
 layout_mode = 2
-
-[node name="Minus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup" instance=ExtResource("2_wkc6b")]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("3_pe2q2")
-
-[node name="Icon" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("4_e2ppb")
-expand_mode = 1
-
-[node name="Count" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "13"
-
-[node name="Plus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup" instance=ExtResource("2_wkc6b")]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("5_3myvo")
-
-[node name="CheerGroup2" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer"]
-custom_minimum_size = Vector2(80, 32)
-layout_mode = 2
-
-[node name="Minus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2" instance=ExtResource("2_wkc6b")]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("3_pe2q2")
-
-[node name="Icon" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("4_e2ppb")
-expand_mode = 1
-
-[node name="Count" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "13"
-
-[node name="Plus" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox/GridContainer/CheerGroup2" instance=ExtResource("2_wkc6b")]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("5_3myvo")
+theme_override_font_sizes/font_size = 32
+text = "50"
 
 [node name="DeckGrid" type="GridContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(630, 0)
 layout_mode = 2
 columns = 5
 
@@ -123,3 +113,7 @@ layout_mode = 2
 
 [node name="PopoutElement6" parent="ScrollContainer/MarginContainer/VBoxContainer/DeckGrid" instance=ExtResource("1_bekbn")]
 layout_mode = 2
+
+[connection signal="pressed" from="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/OshiMargin/OshiButton" to="." method="_on_oshi_button_pressed"]
+[connection signal="cheer_changed" from="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/CheerBox" to="." method="_on_cheer_box_cheer_changed"]
+[connection signal="text_changed" from="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/DeckNameEdit" to="." method="_on_deck_name_edit_text_changed"]

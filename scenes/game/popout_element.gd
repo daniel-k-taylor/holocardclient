@@ -47,6 +47,9 @@ func position_card():
 func get_card_id():
 	return placeholder.get_child(0)._card_id
 
+func get_definition_id():
+	return placeholder.get_child(0)._definition_id
+
 func _on_minus_button_pressed() -> void:
 	_move_callback.call(self, -1)
 

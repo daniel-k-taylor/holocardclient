@@ -31,6 +31,13 @@ func get_supported_cards():
 		card_ids.append(card["card_id"])
 	return card_ids
 
+func get_cards_of_types(types):
+	var card_ids = []
+	for card in card_data:
+		if card["card_type"] in types:
+			card_ids.append(card["card_id"])
+	return card_ids
+
 func get_card(definition_id) -> Dictionary:
 	for card in card_data:
 		if card['card_id'] == definition_id:
