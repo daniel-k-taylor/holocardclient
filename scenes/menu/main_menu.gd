@@ -1,5 +1,8 @@
 extends Control
 
+const MatchmakingQueueName = "main_matchmaking_normal"
+const AIQueueName = "main_matchmaking_ai"
+
 var oshi_sora = "hSD01-001"
 var oshi_azki = "hSD01-002"
 
@@ -46,6 +49,9 @@ var menu_state : MenuState = MenuState.MenuState_ConnectingToServer
 var match_queues : Array = []
 var loaded_deck
 var test_decks = []
+var seen_joinable_match = false
+var queued_for_ai = false
+var in_game = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -101,8 +107,8 @@ func _update_buttons() -> void:
 		MenuState.MenuState_Connected_Default:
 			_update_element(play_ai_button, true, true)
 			_update_element(server_connect_button, false, false)
-			_update_element(join_queue_button, true, true)
-			_update_element(join_match_button, false, false)
+			_update_element(join_queue_button, not seen_joinable_match, not seen_joinable_match)
+			_update_element(join_match_button, seen_joinable_match, seen_joinable_match)
 			_update_element(leave_queue_button, false, false)
 			_update_element(deck_controls, true, true)
 			_update_element(join_custom_box, true, true)
@@ -130,12 +136,20 @@ func _update_buttons() -> void:
 			pass
 
 func returned_from_game():
+	in_game = false
+	seen_joinable_match = false
 	if NetworkManager.is_server_connected():
 		menu_state = MenuState.MenuState_Connected_Default
 		_update_server_info()
 	else:
 		menu_state = MenuState.MenuState_Disconnected
 	_update_buttons()
+
+func starting_game():
+	in_game = true
+	if menu_state == MenuState.MenuState_Queued and not queued_for_ai:
+		if GlobalSettings.get_user_setting(GlobalSettings.GameSound):
+			$MatchJoinedSound.play()
 
 func settings_loaded():
 	pass
@@ -177,6 +191,20 @@ func _update_server_info():
 	for queue in NetworkManager.get_queue_info():
 		match_queues.append(queue)
 
+	# Check if a match is joinable.
+	var joinable_match = false
+	for queue in match_queues:
+		if queue["queue_name"] == MatchmakingQueueName:
+			joinable_match = queue["players_count"] > 0
+	if joinable_match and not seen_joinable_match:
+		seen_joinable_match = true
+		if not in_game and GlobalSettings.get_user_setting(GlobalSettings.GameSound):
+			$MatchAvailableSound.play()
+	if not joinable_match:
+		seen_joinable_match = false
+
+	_update_buttons()
+
 func _on_server_info():
 	server_info_list.clear()
 	player_count_label.text = ""
@@ -198,10 +226,13 @@ func get_player_cheer_deck():
 
 func _on_join_queue_button_pressed() -> void:
 	menu_state = MenuState.MenuState_Queued
+	queued_for_ai = false
+	seen_joinable_match = true
 	_update_buttons()
-	join_match_queue("main_matchmaking_normal")
+	join_match_queue(MatchmakingQueueName)
 
 func _on_join_custom_button_pressed() -> void:
+	queued_for_ai = false
 	var desired_room : String = custom_room_entry.text
 	desired_room = desired_room.strip_edges(true, true)
 	if desired_room:
@@ -223,6 +254,7 @@ func _on_join_failed(error_id) -> void:
 	_update_buttons()
 
 func _on_leave_queue_button_pressed() -> void:
+	queued_for_ai = false
 	menu_state = MenuState.MenuState_Connected_Default
 	_update_buttons()
 	NetworkManager.leave_match_queue()
@@ -231,9 +263,10 @@ func _on_debug_spew_button_toggled(toggled_on: bool) -> void:
 	GlobalSettings.toggle_logging(toggled_on)
 
 func _on_play_ai_button_pressed() -> void:
+	queued_for_ai = true
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()
-	join_match_queue("main_matchmaking_ai")
+	join_match_queue(AIQueueName)
 
 
 func _on_load_deck_button_pressed():

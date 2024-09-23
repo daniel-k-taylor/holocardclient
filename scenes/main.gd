@@ -25,6 +25,7 @@ func _on_return_from_game():
 func _on_game_event(event_type:String, event_data:Dictionary):
 	if event_type == Enums.EventType_GameStartInfo:
 		# Start the game!
+		main_menu.starting_game()
 		game = GameScene.instantiate()
 		add_child(game)
 		game.connect("returning_from_game", _on_return_from_game)

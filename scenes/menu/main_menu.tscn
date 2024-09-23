@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl8ct7vpm73vm"]
+[gd_scene load_steps=10 format=3 uid="uid://dl8ct7vpm73vm"]
 
 [ext_resource type="Theme" uid="uid://dpxwceaf3f35h" path="res://themes/menubuttontheme.tres" id="1_i5wud"]
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bh0c0vkyounat" path="res://assets/icons/gear.png" id="5_rki3m"]
 [ext_resource type="PackedScene" uid="uid://dqeoyiig2xv07" path="res://scenes/misc/settings_window.tscn" id="6_gl1g0"]
 [ext_resource type="PackedScene" uid="uid://bpprngv5b681f" path="res://scenes/misc/howtoplay.tscn" id="7_nksnh"]
+[ext_resource type="AudioStream" uid="uid://c8gq118r05gw8" path="res://assets/sounds/match_available.mp3" id="8_myxxr"]
+[ext_resource type="AudioStream" uid="uid://corg1ley43ot1" path="res://assets/sounds/match_notification.mp3" id="9_2ujf4"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -96,13 +98,13 @@ text = "Connect to Server"
 layout_mode = 2
 theme = ExtResource("1_i5wud")
 disabled = true
-text = "Join Queue"
+text = "Enter Queue"
 
 [node name="JoinMatchButton" type="Button" parent="MainButtons"]
 layout_mode = 2
 theme = ExtResource("1_i5wud")
 disabled = true
-text = "Join Match"
+text = "Join Match Now"
 
 [node name="JoinCustomBox" type="HBoxContainer" parent="MainButtons"]
 layout_mode = 2
@@ -298,9 +300,16 @@ offset_bottom = 720.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="MatchAvailableSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_myxxr")
+
+[node name="MatchJoinedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_2ujf4")
+
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
 [connection signal="pressed" from="MainButtons/JoinQueueButton" to="." method="_on_join_queue_button_pressed"]
+[connection signal="pressed" from="MainButtons/JoinMatchButton" to="." method="_on_join_queue_button_pressed"]
 [connection signal="pressed" from="MainButtons/JoinCustomBox/JoinCustomButton" to="." method="_on_join_custom_button_pressed"]
 [connection signal="pressed" from="MainButtons/LeaveQueueButton" to="." method="_on_leave_queue_button_pressed"]
 [connection signal="toggled" from="DebugSpewButton" to="." method="_on_debug_spew_button_toggled"]
