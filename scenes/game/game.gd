@@ -20,6 +20,8 @@ const PopupMessageScene = preload("res://scenes/game/popup_message.tscn")
 
 @onready var opponent_username_label = $OpponentUsernameLabel
 @onready var me_username_label = $MeUsernameLabel
+@onready var opponent_clock = $OpponentClock
+@onready var me_clock = $MeClock
 
 @onready var opponent_hand_label = $OpponentStatsGroup/HandIndicator/HandCount
 @onready var opponent_deck_label = $OpponentStatsGroup/DeckIndicator/DeckCount
@@ -317,6 +319,8 @@ var remaining_animation_seconds = 0
 var after_animation_continuation = null
 var full_event_log = []
 var phase_duration_time = 0
+var me_clock_value = 0
+var opponent_clock_value = 0
 
 const PhaseStartTimeBuffer = 0.5
 
@@ -354,6 +358,12 @@ func _process(delta: float) -> void:
 				thinking_spinner.visible = true
 			else:
 				thinking_spinner.visible = false
+	if ui_phase == UIPhase.UIPhase_WaitingOnServer:
+		opponent_clock_value += delta
+	else:
+		me_clock_value += delta
+	update_clock(me_clock, me_clock_value)
+	update_clock(opponent_clock, opponent_clock_value)
 
 func is_playing_animation():
 	return remaining_animation_seconds > 0
@@ -367,8 +377,20 @@ func begin_remote_game(event_type, event_data):
 	Logger.log_game("Starting game!")
 	handle_game_event(event_type, event_data)
 
+func update_clock(clock_label, clock_value):
+	var minutes = int(clock_value / 60)
+	var seconds = int(clock_value) % 60
+	clock_label.text = "%02d:%02d" % [minutes, seconds]
+
+func update_clocks_from_event(event_data):
+	if "your_clock_used" in event_data:
+		me_clock_value = event_data["your_clock_used"]
+	if "opponent_clock_used" in event_data:
+		opponent_clock_value = event_data["opponent_clock_used"]
+
 func handle_game_event(event_type, event_data):
 	Logger.log_game("Received game event: %s\n%s" % [event_type, event_data])
+	update_clocks_from_event(event_data)
 	full_event_log.append(event_data)
 	event_queue.append(event_data)
 
