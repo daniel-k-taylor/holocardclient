@@ -35,8 +35,6 @@ var file_load_callback
 
 var all_cards = []
 
-var thread: Thread
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if get_parent() == get_tree().root:
@@ -52,15 +50,9 @@ func _ready() -> void:
 
 	oshi_slot.hover.connect(_on_hover_slot)
 
-	thread = Thread.new()
-	thread.start(_thread_function.bind())
-
 func show_deck_builder(selected_index):
 	visible = true
 	populate_deck_list(selected_index)
-	#load_card_list()
-
-func _thread_function():
 	load_card_list()
 
 func load_card_list():
@@ -79,7 +71,7 @@ func load_card_list():
 		new_card.set_selectable(true)
 		new_card.clicked_card.connect(_on_clicked_card)
 		new_card.hover_card.connect(_on_hover_card)
-		
+
 		card_grid.call_deferred("add_child", new_placeholder)
 
 func set_deck_index(index):
