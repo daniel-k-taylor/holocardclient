@@ -376,16 +376,16 @@ func get_compare_value():
 	match card_type:
 		"holomem_spot":
 			compare_value = 10000
-			card_name = _definition["holomem_names"][0]
+			card_name = _definition["card_names"][0]
 		"holomem_debut":
 			compare_value = 20000
-			card_name = _definition["holomem_names"][0]
+			card_name = _definition["card_names"][0]
 		"holomem_bloom":
 			compare_value = 30000
-			card_name = _definition["holomem_names"][0]
+			card_name = _definition["card_names"][0]
 		"support":
 			compare_value = 40000
-			card_name = _definition["support_names"][0]
+			card_name = _definition["card_names"][0]
 	if "bloom_level" in _definition:
 		compare_value += _definition["bloom_level"] * 1000
 	if "limited" not in _definition or not _definition["limited"]:

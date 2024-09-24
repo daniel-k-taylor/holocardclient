@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvhny66vw8bs"]
+[gd_scene load_steps=5 format=3 uid="uid://bvhny66vw8bs"]
 
 [ext_resource type="Script" path="res://scenes/menu/deckbuilder.gd" id="1_hiyso"]
-[ext_resource type="PackedScene" uid="uid://b7di8plutlm5b" path="res://scenes/game/card_popout.tscn" id="2_vg3i0"]
+[ext_resource type="PackedScene" uid="uid://wfg3ofoom22s" path="res://scenes/menu/deck_card_slot.tscn" id="2_ntnpi"]
+[ext_resource type="PackedScene" uid="uid://bcr5jfstov5er" path="res://scenes/menu/cheer_box.tscn" id="3_hu4c7"]
+[ext_resource type="PackedScene" uid="uid://wmclosx28ofb" path="res://scenes/misc/modal_dialog.tscn" id="4_wbqxh"]
 
 [node name="Deckbuilder" type="Node2D"]
 script = ExtResource("1_hiyso")
@@ -12,46 +14,144 @@ offset_right = 40.0
 offset_bottom = 40.0
 color = Color(0, 0.466667, 0.545098, 1)
 
-[node name="TabContainer" type="TabContainer" parent="."]
-offset_left = 4.0
-offset_top = 66.0
-offset_right = 802.0
-offset_bottom = 713.0
-
 [node name="ReturnToMenuButton" type="Button" parent="."]
-offset_left = 938.0
-offset_top = 6.0
-offset_right = 1275.0
-offset_bottom = 59.0
+offset_left = 936.0
+offset_top = 657.0
+offset_right = 1273.0
+offset_bottom = 710.0
 theme_override_font_sizes/font_size = 32
 text = "Return to Main Menu"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 20.0
-offset_top = 10.0
-offset_right = 503.0
-offset_bottom = 52.0
-theme_override_constants/separation = 50
+offset_left = 321.0
+offset_top = 11.0
+offset_right = 1263.0
+offset_bottom = 115.0
+theme_override_constants/separation = 10
+alignment = 2
 
-[node name="LoadDeckButton" type="Button" parent="HBoxContainer"]
+[node name="DecksOptionButton" type="OptionButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 24
+selected = 0
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="LoadDeckButton" type="Button" parent="HBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Load Deck"
 
-[node name="NewDeckButton" type="Button" parent="HBoxContainer"]
+[node name="NewDeckButton" type="Button" parent="HBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "New Deck"
 
-[node name="DeleteDeckButton" type="Button" parent="HBoxContainer"]
+[node name="DeleteDeckButton" type="Button" parent="HBoxContainer/GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Delete Deck"
 
-[node name="CardPopout" parent="." instance=ExtResource("2_vg3i0")]
+[node name="SaveDeckButton" type="Button" parent="HBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Export Deck"
+
+[node name="DeckList" type="VBoxContainer" parent="."]
+offset_left = 7.0
+offset_top = 10.0
+offset_right = 302.0
+offset_bottom = 707.0
+
+[node name="DeckName" type="LineEdit" parent="DeckList"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+placeholder_text = "DeckName"
+max_length = 20
+
+[node name="OshiSlot" parent="DeckList" instance=ExtResource("2_ntnpi")]
+layout_mode = 2
+
+[node name="CheerBox" parent="DeckList" instance=ExtResource("3_hu4c7")]
+layout_mode = 2
+
+[node name="CardLabels" type="HBoxContainer" parent="DeckList"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+alignment = 2
+
+[node name="Label" type="Label" parent="DeckList/CardLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Cards:"
+
+[node name="CardCount" type="Label" parent="DeckList/CardLabels"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "3"
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="DeckList/CardLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "/"
+
+[node name="Label3" type="Label" parent="DeckList/CardLabels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "50"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DeckList"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DeckCards" type="VBoxContainer" parent="DeckList/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeckCardSlot" parent="DeckList/ScrollContainer/DeckCards" instance=ExtResource("2_ntnpi")]
+layout_mode = 2
+
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+initial_position = 1
+size = Vector2i(800, 400)
+use_native_dialog = true
+
+[node name="OpenFileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 1
+size = Vector2i(800, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+use_native_dialog = true
+
+[node name="ModalDialog" parent="." instance=ExtResource("4_wbqxh")]
 visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="pressed" from="ReturnToMenuButton" to="." method="back_to_main_menu"]
-[connection signal="pressed" from="HBoxContainer/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/NewDeckButton" to="." method="_on_new_deck_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/DeleteDeckButton" to="." method="_on_delete_deck_button_pressed"]
+[connection signal="item_selected" from="HBoxContainer/DecksOptionButton" to="." method="_on_decks_option_button_item_selected"]
+[connection signal="pressed" from="HBoxContainer/GridContainer/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/GridContainer/NewDeckButton" to="." method="_on_new_deck_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/GridContainer/DeleteDeckButton" to="." method="_on_delete_deck_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/GridContainer/SaveDeckButton" to="." method="_on_save_deck_button_pressed"]
+[connection signal="text_changed" from="DeckList/DeckName" to="." method="_on_deck_name_text_changed"]
+[connection signal="cheer_changed" from="DeckList/CheerBox" to="." method="_on_cheer_box_cheer_changed"]
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
+[connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]

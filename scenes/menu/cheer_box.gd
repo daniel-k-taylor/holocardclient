@@ -16,6 +16,11 @@ var all_cheer_ids = [
 ]
 
 func create_groups(cheer_deck):
+	while cheer_grid.get_child_count():
+		var child = cheer_grid.get_child(0)
+		child.visible = false
+		cheer_grid.remove_child(child)
+		child.queue_free()
 	for cheer_id in all_cheer_ids:
 		var count = 0
 		if cheer_id in cheer_deck:

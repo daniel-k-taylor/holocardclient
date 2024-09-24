@@ -197,7 +197,9 @@ const HolomemNames = {
 	"amane_kanata": "Amane Kanata",
 	"azki": "AZKi",
 	"hakos_baelz": "Hakos Baelz",
+	"hakui_koyori": "Hakui Koyori",
 	"hoshimachi_suisei": "Hoshimachi Suisei",
+	"houshou_marine": "Houshou Marine",
 	"irys": "IRyS",
 	"kazama_iroha": "Kazama Iroha",
 	"kobo_kanaeru": "Kobo Kanaeru",
@@ -208,6 +210,7 @@ const HolomemNames = {
 	"ouro_kronii": "Ouro Kronii",
 	"shiranui_flare": "Shiranui Flare",
 	"shirogane_noel": "Shirogane Noel",
+	"soraz": "SorAZ",
 	"takanashi_kiara": "Takanashi Kiara",
 	"takane_lui": "Takane Lui",
 	"tokino_sora": "Tokino Sora",
@@ -215,8 +218,37 @@ const HolomemNames = {
 	"vestia_zeta": "Vestia Zeta",
 	"watson_amelia": "Watson Amelia",
 
-	# Card Names referenced directly
+	# Support Cards
+	"amazingpc": "Amazing PC",
+	"ankimo": "Ankimo",
+	"clubemintonothingness": "Club 'em into nothingness",
+	"encore": "Encore",
+	"excitingpranktime": "Exciting Prank Time",
+	"first_gravity": "First Gravity",
+	"friend": "Friend",
+	"gamingpc": "Gaming PC",
+	"ganmo": "Ganmo",
+	"harusaki_nodoka": "Harusaki Nodoka",
+	"holofan_circle": "Holofan Circle",
+	"hololiveid3rdgeneration": "Hololive ID 3rd Gen",
+	"hoshimachi_suiseis_mic": "Suisei's Mic",
+	"idolmic": "Idol Mic",
+	"illleaveittoyou": "I'll leave it to you",
+	"jobz": "Jobz",
+	"kfp": "KFP",
+	"kotori": "Kotori",
+	"manechan": "Mane-chan",
+	"nousagialliance": "Nousagi Alliance",
+	"penlight": "Penlight",
+	"pioneer": "Pioneer",
+	"promise": "Promise",
+	"rosetai": "Rosetai",
+	"soyouretheenemy": "So, you're the enemy?",
+	"standardpc": "Standard PC",
 	"stone_axe": "Stone Axe",
+	"subpc": "Sub PC",
+	"thestoryofthemoonandtherabbit": "Story of Moon&Rabbit",
+	"upao": "Upao",
 	"zain": "Zain",
 }
 
@@ -406,8 +438,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			"specific_card":
 				var card = CardDatabase.get_card(requirement_details["requirement_id"])
 				var card_name = "MISSING_CARD_NAME"
-				if "support_names" in card:
-					card_name = get_names(card["support_names"])[0]
+				if "card_names" in card:
+					card_name = get_names(card["card_names"])[0]
 				main_text += "\nOnly %s" % card_name
 			"holomem":
 				main_text += "\nOnly Holomem"
@@ -1000,8 +1032,8 @@ func build_english_card_text(definition):
 						if "art_requirement_attached_id" in art:
 							var card = CardDatabase.get_card(art["art_requirement_attached_id"])
 							var card_name = "MISSING_CARD_NAME"
-							if "support_names" in card:
-								card_name = get_names(card["support_names"])[0]
+							if "card_names" in card:
+								card_name = get_names(card["card_names"])[0]
 							text += "\nRequires %s attached to use." % card_name
 					if "art_effects" in art:
 						text += "\n"

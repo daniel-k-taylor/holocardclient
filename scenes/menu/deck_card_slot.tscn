@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://wfg3ofoom22s"]
+
+[ext_resource type="Texture2D" uid="uid://i5w1qshffgiq" path="res://assets/icons/cardicon_1st.webp" id="1_h4qdg"]
+[ext_resource type="Script" path="res://scenes/menu/deck_card_slot.gd" id="1_yiirw"]
+[ext_resource type="Texture2D" uid="uid://ohmonvyuqeuf" path="res://assets/icons/minus.png" id="2_4kc5s"]
+[ext_resource type="Texture2D" uid="uid://ca7fc8bn5qmw6" path="res://assets/cheer_icons/white.png" id="2_lsbep"]
+[ext_resource type="Texture2D" uid="uid://l1rbxm47rsmf" path="res://assets/highlights/arena_border_highlight_pressed.png" id="3_rbjrn"]
+[ext_resource type="Texture2D" uid="uid://dogldee47qjtf" path="res://assets/highlights/arena_border_highlight_selected.png" id="4_n8agl"]
+[ext_resource type="Texture2D" uid="uid://5snhawao5bym" path="res://assets/icons/plus.png" id="5_ir0ci"]
+
+[node name="DeckCardSlot" type="PanelContainer"]
+script = ExtResource("1_yiirw")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ColorIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_lsbep")
+expand_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_h4qdg")
+expand_mode = 2
+
+[node name="CardName" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Tokino Sora"
+
+[node name="Spacing" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlusMinusButtons" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Minus" type="MarginContainer" parent="MarginContainer/HBoxContainer/PlusMinusButtons"]
+layout_mode = 2
+
+[node name="MinusTexture" type="TextureRect" parent="MarginContainer/HBoxContainer/PlusMinusButtons/Minus"]
+layout_mode = 2
+texture = ExtResource("2_4kc5s")
+expand_mode = 2
+
+[node name="MinusButton" type="TextureButton" parent="MarginContainer/HBoxContainer/PlusMinusButtons/Minus"]
+layout_mode = 2
+texture_pressed = ExtResource("3_rbjrn")
+texture_hover = ExtResource("4_n8agl")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CardCount" type="Label" parent="MarginContainer/HBoxContainer/PlusMinusButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "3"
+
+[node name="Plus" type="MarginContainer" parent="MarginContainer/HBoxContainer/PlusMinusButtons"]
+layout_mode = 2
+
+[node name="PlusTexture" type="TextureRect" parent="MarginContainer/HBoxContainer/PlusMinusButtons/Plus"]
+layout_mode = 2
+texture = ExtResource("5_ir0ci")
+expand_mode = 2
+
+[node name="PlusButton" type="TextureButton" parent="MarginContainer/HBoxContainer/PlusMinusButtons/Plus"]
+layout_mode = 2
+texture_pressed = ExtResource("3_rbjrn")
+texture_hover = ExtResource("4_n8agl")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/PlusMinusButtons/Minus/MinusButton" to="." method="_on_minus_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/PlusMinusButtons/Plus/PlusButton" to="." method="_on_plus_button_pressed"]

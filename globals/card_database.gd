@@ -38,11 +38,12 @@ func get_cards_of_types(types):
 			card_ids.append(card["card_id"])
 	return card_ids
 
-func get_card(definition_id) -> Dictionary:
+func get_card(definition_id, allow_missing = false) -> Dictionary:
 	for card in card_data:
 		if card['card_id'] == definition_id:
 			return card
-	assert(false, "Missing card definition: " + definition_id)
+	if not allow_missing:
+		assert(false, "Missing card definition: " + definition_id)
 	return {}
 
 func test_create_card(card_id : String, definition_id : String) -> CardBase:
