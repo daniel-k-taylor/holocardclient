@@ -604,7 +604,6 @@ func create_card(card_id : String, definition_id_for_oshi : String = "", skip_ad
 		new_card.connect("view_attachments", _on_view_attachments)
 	if not skip_add_to_all:
 		all_cards.add_child(new_card)
-		new_card.initialize_graphics()
 	return new_card
 
 func destroy_card(card : CardBase) -> void:
@@ -896,7 +895,7 @@ func _on_choose_cards_event(event_data):
 				from_zone, to_zone, amount_min, amount_max,
 				remaining_cards_action, requirement_details, special_reason
 			)
-			_show_popout(instructions, all_card_seen, cards_can_choose, amount_min, amount_max,
+			_show_popout(instructions, all_card_seen, cards_can_choose, amount_min, amount_max, false,
 				func():
 					var card_ids = []
 					for card in selected_cards:
@@ -949,7 +948,7 @@ func _on_order_cards_event(event_data):
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Order Cards[/DECISION]" % [
 			active_player.get_name()
 		])
-		_show_popout(instructions, card_ids, card_ids, 0, 0,
+		_show_popout(instructions, card_ids, card_ids, 0, 0, true,
 			func():
 				var ordered_card_ids = card_popout.get_ordered_card_ids()
 				submit_effect_resolution_order_cards(ordered_card_ids)
@@ -1127,7 +1126,7 @@ func _cancel_to_performance_step():
 	_start_performance_step_decision()
 
 func _show_popout(instructions : String, seen_card_ids : Array, chooseable_card_ids : Array,
-	amount_min, amount_max, completion_callback : Callable, cancel_callback,
+	amount_min, amount_max, order_cards_mode : bool, completion_callback : Callable, cancel_callback,
 	ok_string_id = Strings.STRING_OK, cancel_string_id = Strings.STRING_CANCEL
 	):
 	# Also show the action menu with two buttons: Show Choice and Cancel
@@ -1154,7 +1153,7 @@ func _show_popout(instructions : String, seen_card_ids : Array, chooseable_card_
 		"enabled": [amount_min == 0],
 		"enable_check": [_is_selection_requirement_met],
 		"callback": [completion_callback],
-		"order_cards_mode": amount_max == 0,
+		"order_cards_mode": order_cards_mode,
 	}
 	if cancel_callback:
 		card_popout_choice_info["strings"].append(Strings.get_string(cancel_string_id))
@@ -1266,7 +1265,7 @@ func _on_main_step_action_chosen(choice_index):
 										# Now that the holomem with cheer is chosen, show the popout to pick cheer from them to archive.
 										var cheer_options = cheer_on_each_mem[chosen_mem_id]
 										var instructions = Strings.build_archive_cheer_string(amount)
-										_show_popout(instructions, cheer_options, cheer_options, 1, 1,
+										_show_popout(instructions, cheer_options, cheer_options, 1, 1, false,
 											func():
 												var chosen_cheer_ids = []
 												for card in selected_cards:
@@ -1300,7 +1299,7 @@ func _on_main_step_action_chosen(choice_index):
 			var cost = valid_actions[0]["cost"]
 			var available_cheer = valid_actions[0]["available_cheer"]
 			var instructions = Strings.build_archive_cheer_string(cost)
-			_show_popout(instructions, available_cheer, available_cheer, cost, cost, _baton_pass_target_selection, _cancel_to_main_step)
+			_show_popout(instructions, available_cheer, available_cheer, cost, cost, false, _baton_pass_target_selection, _cancel_to_main_step)
 		Enums.GameAction_MainStepBeginPerformance:
 			submit_main_step_begin_performance()
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
@@ -1382,7 +1381,7 @@ func _on_send_cheer_event(event_data):
 			var instructions = Strings.build_send_cheer_string(
 				amount_min, amount_max, from_zone
 			)
-			_show_popout(instructions, cheer_to_send, cheer_to_send, amount_min, amount_max,
+			_show_popout(instructions, cheer_to_send, cheer_to_send, amount_min, amount_max, false,
 				func():
 					var chosen_cheer_ids = []
 					for card in selected_cards:
@@ -1446,7 +1445,7 @@ func _multi_send_cheer_continue(valid_targets, from_zone):
 			if not multi_step_decision_info["limit_one_per_member"]:
 				amount_can_pick = multi_step_decision_info["remaining_cheer_allowed"]
 			_show_popout(instructions, multi_step_decision_info["remaining_cheer"], multi_step_decision_info["remaining_cheer"],
-				0, amount_can_pick,
+				0, amount_can_pick, false,
 				func():
 					for card in selected_cards:
 						multi_step_decision_info["placements"][card._card_id] = chosen_target_mem
@@ -1504,7 +1503,7 @@ func _multi_source_multi_target_send_cheer_continue():
 			var instructions = Strings.build_send_cheer_string(
 				remaining_min, remaining_max, "holomem"
 			)
-			_show_popout(instructions, cheer_options, cheer_options, remaining_min, remaining_max,
+			_show_popout(instructions, cheer_options, cheer_options, remaining_min, remaining_max, false,
 				func():
 					var chosen_cheer_ids = []
 					for card in selected_cards:

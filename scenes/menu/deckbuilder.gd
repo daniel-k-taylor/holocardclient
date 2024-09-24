@@ -34,7 +34,8 @@ var file_load_callback
 ###
 
 var all_cards = []
-var loaded_card_list = false
+
+var thread: Thread
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -51,31 +52,35 @@ func _ready() -> void:
 
 	oshi_slot.hover.connect(_on_hover_slot)
 
+	thread = Thread.new()
+	thread.start(_thread_function.bind())
+
 func show_deck_builder(selected_index):
 	visible = true
 	populate_deck_list(selected_index)
+	#load_card_list()
+
+func _thread_function():
 	load_card_list()
 
 func load_card_list():
-	if not loaded_card_list:
-		loaded_card_list = true
-		for card_id in CardDatabase.get_supported_cards():
-			var definition = CardDatabase.get_card(card_id)
-			if definition["card_type"] == "cheer":
-				continue
-			var new_card : CardBase = CardDatabase.test_create_card(card_id, card_id)
-			all_cards.append(new_card)
-			var new_placeholder = CardPlaceholderScene.instantiate()
-			card_grid.add_child(new_placeholder)
-			new_placeholder.add_child(new_card)
-			new_card.initialize_graphics()
-			new_card.scale = Vector2(CardBase.ReferenceCardScale, CardBase.ReferenceCardScale)
-			var desired_pos = CardBase.ReferenceCardScale * (CardBase.DefaultCardSize / 2)
-			new_card.begin_move_to(desired_pos, true)
+	for card_id in CardDatabase.get_supported_cards():
+		var definition = CardDatabase.get_card(card_id)
+		if definition["card_type"] == "cheer":
+			continue
+		var new_card : CardBase = CardDatabase.test_create_card(card_id, card_id)
+		all_cards.append(new_card)
+		var new_placeholder = CardPlaceholderScene.instantiate()
+		new_placeholder.add_child(new_card)
+		new_card.scale = Vector2(CardBase.ReferenceCardScale, CardBase.ReferenceCardScale)
+		var desired_pos = CardBase.ReferenceCardScale * (CardBase.DefaultCardSize / 2)
+		new_card.begin_move_to(desired_pos, true)
 
-			new_card.set_selectable(true)
-			new_card.clicked_card.connect(_on_clicked_card)
-			new_card.hover_card.connect(_on_hover_card)
+		new_card.set_selectable(true)
+		new_card.clicked_card.connect(_on_clicked_card)
+		new_card.hover_card.connect(_on_hover_card)
+		
+		card_grid.call_deferred("add_child", new_placeholder)
 
 func set_deck_index(index):
 	_current_index = index

@@ -74,6 +74,9 @@ func _ready():
 	GlobalSettings.connect("setting_changed_HideEnglishCardText", _hide_english_setting_updated)
 	GlobalSettings.connect("setting_changed_UseEnProxies", _en_proxy_setting_updated)
 
+	initialize_graphics()
+	set_button_visible(_selectable)
+
 func _hide_english_setting_updated():
 	if _definition_id != "HIDDEN":
 		if not _en_proxy_loaded:
@@ -138,10 +141,11 @@ func create_card(definition, definition_id, card_id, card_type):
 	_card_type = card_type
 
 func set_button_visible(button_visible):
-	if button_visible:
-		selection_button.modulate = Color(1, 1, 1, 1)
-	else:
-		selection_button.modulate = Color(1, 1, 1, 0)
+	if selection_button:
+		if button_visible:
+			selection_button.modulate = Color(1, 1, 1, 1)
+		else:
+			selection_button.modulate = Color(1, 1, 1, 0)
 
 func update_card_graphic():
 	if _definition_id and _definition_id != "HIDDEN":
@@ -173,7 +177,7 @@ func initialize_graphics():
 	_update_english_text()
 
 func _update_english_text():
-	if _definition_id == "HIDDEN":
+	if _definition_id == "HIDDEN" or not _card_id:
 		return
 
 	# Remove any previous text.
@@ -263,7 +267,7 @@ func remove_cheer_indicator(color):
 			break
 
 func _update_stats():
-	if _definition_id == "HIDDEN":
+	if _definition_id == "HIDDEN" or not _card_id:
 		return
 
 	var num_attachments = len(_attached_cards)

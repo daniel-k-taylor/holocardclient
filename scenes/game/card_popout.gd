@@ -78,7 +78,6 @@ func show_panel(instructions, popout_choice_info, cards, chooseable_card_ids : A
 		var card = cards[i]
 		var element: PopoutElement = popout_elements[i]
 		element.add_card(card)
-		card.initialize_graphics()
 		if order_cards_mode:
 			element.set_card_controls(true, _reorder_card_element)
 			if i == 0:
