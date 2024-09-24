@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvhny66vw8bs"]
+[gd_scene load_steps=6 format=3 uid="uid://bvhny66vw8bs"]
 
 [ext_resource type="Script" path="res://scenes/menu/deckbuilder.gd" id="1_hiyso"]
 [ext_resource type="PackedScene" uid="uid://wfg3ofoom22s" path="res://scenes/menu/deck_card_slot.tscn" id="2_ntnpi"]
 [ext_resource type="PackedScene" uid="uid://bcr5jfstov5er" path="res://scenes/menu/cheer_box.tscn" id="3_hu4c7"]
 [ext_resource type="PackedScene" uid="uid://wmclosx28ofb" path="res://scenes/misc/modal_dialog.tscn" id="4_wbqxh"]
+[ext_resource type="PackedScene" uid="uid://d2fspiqdcp0p1" path="res://scenes/game/card_base.tscn" id="5_u0cvo"]
 
 [node name="Deckbuilder" type="Node2D"]
 script = ExtResource("1_hiyso")
@@ -15,15 +16,15 @@ offset_bottom = 40.0
 color = Color(0, 0.466667, 0.545098, 1)
 
 [node name="ReturnToMenuButton" type="Button" parent="."]
-offset_left = 936.0
-offset_top = 657.0
-offset_right = 1273.0
-offset_bottom = 710.0
+offset_left = 315.0
+offset_top = 11.0
+offset_right = 522.0
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 32
-text = "Return to Main Menu"
+text = "Main Menu"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 321.0
+offset_left = 554.0
 offset_top = 11.0
 offset_right = 1263.0
 offset_bottom = 115.0
@@ -36,7 +37,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
-selected = 0
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -144,6 +144,36 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 385.0
+offset_top = 124.0
+offset_right = 1274.0
+offset_bottom = 713.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Cards" type="MarginContainer" parent="PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="CardGrid" type="GridContainer" parent="PanelContainer/MarginContainer/ScrollContainer/Cards"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="BigCard" parent="." instance=ExtResource("5_u0cvo")]
+visible = false
+position = Vector2(1000, 280)
+scale = Vector2(1.5, 1.5)
+is_big_card = true
 
 [connection signal="pressed" from="ReturnToMenuButton" to="." method="back_to_main_menu"]
 [connection signal="item_selected" from="HBoxContainer/DecksOptionButton" to="." method="_on_decks_option_button_item_selected"]

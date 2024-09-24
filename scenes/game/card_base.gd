@@ -270,7 +270,10 @@ func _update_stats():
 	attachment_box.visible = num_attachments > 0
 	attachment_count.text = str(num_attachments)
 
-	card_def_label.text = "%s - %s" % [_definition_id, _card_id.split("_")[1]]
+	if _card_id.contains("_"):
+		card_def_label.text = "%s - %s" % [_definition_id, _card_id.split("_")[1]]
+	else:
+		card_def_label.text = _definition_id
 	# Use only the card_id part after _ if there is a _.
 	# This is to avoid the card_id being too long.
 	var small_id = _card_id
@@ -370,30 +373,7 @@ func get_cheer_counts():
 	}
 
 func get_compare_value():
-	var compare_value = 0
-	var card_type = _definition["card_type"]
-	var card_name = ""
-	match card_type:
-		"holomem_spot":
-			compare_value = 10000
-			card_name = _definition["card_names"][0]
-		"holomem_debut":
-			compare_value = 20000
-			card_name = _definition["card_names"][0]
-		"holomem_bloom":
-			compare_value = 30000
-			card_name = _definition["card_names"][0]
-		"support":
-			compare_value = 40000
-			card_name = _definition["card_names"][0]
-	if "bloom_level" in _definition:
-		compare_value += _definition["bloom_level"] * 1000
-	if "limited" not in _definition or not _definition["limited"]:
-		compare_value += 1000
-
-	var compare_str = "%s_%s_%s" % [compare_value, card_name, _definition_id]
-
-	return compare_str
+	return CardDatabase.get_compare_value(_definition)
 
 func compare(other : CardBase):
 	return get_compare_value() < other.get_compare_value()

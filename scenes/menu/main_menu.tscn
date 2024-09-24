@@ -132,7 +132,7 @@ layout_mode = 0
 offset_left = 859.0
 offset_top = 226.0
 offset_right = 1260.0
-offset_bottom = 514.0
+offset_bottom = 627.0
 item_count = 1
 max_columns = 3
 item_0/text = "disconnected"
@@ -192,26 +192,31 @@ offset_bottom = 77.0
 theme_override_font_sizes/font_size = 43
 text = "How to Play"
 
+[node name="DeckBuilderButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 34.0
+offset_right = 272.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 32
+text = "Deck Builder"
+
+[node name="DebugDeckSelector" type="OptionButton" parent="."]
+layout_mode = 2
+offset_left = 306.0
+offset_top = 33.0
+offset_right = 373.0
+offset_bottom = 73.0
+selected = 0
+item_count = 2
+popup/item_0/text = "Sora"
+popup/item_1/text = "Azki"
+popup/item_1/id = 1
+
 [node name="DeckControls" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="SampleDeckButton" type="Button" parent="DeckControls"]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 10.0
-offset_right = 162.0
-offset_bottom = 41.0
-text = "Save Sample Deck"
-
-[node name="LoadDeckButton" type="Button" parent="DeckControls"]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 54.0
-offset_right = 131.0
-offset_bottom = 85.0
-text = "Load Deck"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DeckControls"]
 layout_mode = 0
@@ -226,25 +231,6 @@ text = "Deck:"
 
 [node name="DeckSelector" type="OptionButton" parent="DeckControls/HBoxContainer"]
 layout_mode = 2
-selected = 0
-item_count = 2
-popup/item_0/text = "Sora"
-popup/item_1/text = "Azki"
-popup/item_1/id = 1
-
-[node name="SaveFileDialog" type="FileDialog" parent="."]
-initial_position = 1
-size = Vector2i(800, 400)
-use_native_dialog = true
-
-[node name="OpenFileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-initial_position = 1
-size = Vector2i(800, 400)
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-use_native_dialog = true
 
 [node name="ModalDialog" parent="." instance=ExtResource("3_6lbr4")]
 visible = false
@@ -254,14 +240,6 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
-
-[node name="CustomDeckLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 146.0
-offset_top = 59.0
-offset_right = 309.0
-offset_bottom = 82.0
-text = "Custom Deck Loaded"
 
 [node name="SettingsWindow" parent="." instance=ExtResource("6_gl1g0")]
 visible = false
@@ -319,8 +297,7 @@ visible = false
 [connection signal="toggled" from="DebugSpewButton" to="." method="_on_debug_spew_button_toggled"]
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]
-[connection signal="pressed" from="DeckControls/SampleDeckButton" to="." method="_on_save_deck_button_pressed"]
-[connection signal="pressed" from="DeckControls/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
+[connection signal="pressed" from="DeckBuilderButton" to="." method="_on_deck_builder_button_pressed"]
+[connection signal="item_selected" from="DebugDeckSelector" to="." method="_on_debug_deck_selector_item_selected"]
 [connection signal="item_selected" from="DeckControls/HBoxContainer/DeckSelector" to="." method="_on_deck_selector_item_selected"]
-[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
-[connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
+[connection signal="exit_deck_builder" from="Deckbuilder" to="." method="_on_deckbuilder_exit_deck_builder"]

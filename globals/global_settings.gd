@@ -15,6 +15,7 @@ const GameSound = "GameSound"
 const UseEnProxies = "UseEnProxies"
 const HideEnglishCardText = "HideEnglishCardText"
 const SavedDecks = "SavedDecks"
+const SelectedDeckIndex = "SelectedDeckIndex"
 
 const user_settings_file = "user://settings.json"
 
@@ -23,6 +24,7 @@ var user_settings = {
 	HideEnglishCardText: false,
 	UseEnProxies: true,
 	SavedDecks: [],
+	SelectedDeckIndex: 0,
 }
 
 var setting_to_signal_map = {

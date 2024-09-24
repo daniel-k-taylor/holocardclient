@@ -11,8 +11,13 @@
 [node name="DeckCardSlot" type="PanelContainer"]
 script = ExtResource("1_yiirw")
 
+[node name="FullButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -20,28 +25,53 @@ theme_override_constants/margin_bottom = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="ColorIcon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ColorIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("2_lsbep")
 expand_mode = 2
 
-[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="ColorIcon2" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_lsbep")
+expand_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("1_h4qdg")
 expand_mode = 2
 
-[node name="CardName" type="Label" parent="MarginContainer/HBoxContainer"]
+[node name="BuzzIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_h4qdg")
+expand_mode = 2
+
+[node name="CardName" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Tokino Sora"
 
-[node name="Spacing" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="Spacing" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="PlusMinusButtons" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Minus" type="MarginContainer" parent="MarginContainer/HBoxContainer/PlusMinusButtons"]
 layout_mode = 2
@@ -78,5 +108,7 @@ texture_hover = ExtResource("4_n8agl")
 ignore_texture_size = true
 stretch_mode = 0
 
+[connection signal="mouse_entered" from="FullButton" to="." method="_on_full_button_mouse_entered"]
+[connection signal="mouse_exited" from="FullButton" to="." method="_on_full_button_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/PlusMinusButtons/Minus/MinusButton" to="." method="_on_minus_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/PlusMinusButtons/Plus/PlusButton" to="." method="_on_plus_button_pressed"]

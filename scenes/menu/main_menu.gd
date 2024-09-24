@@ -6,11 +6,6 @@ const AIQueueName = "main_matchmaking_ai"
 var oshi_sora = "hSD01-001"
 var oshi_azki = "hSD01-002"
 
-### Web-specific variables
-var window
-var file_load_callback
-###
-
 # Buttons
 @onready var play_ai_button = $MainButtons/PlayAIButton
 @onready var server_connect_button = $MainButtons/ServerConnectButton
@@ -23,19 +18,19 @@ var file_load_callback
 @onready var server_status = $ServerStatus/ServerStatusLabel
 @onready var client_version = $ClientVersion/ClientVersionLabel
 @onready var player_username = $PlayerUsernameLabel
-@onready var custom_deck_label = $CustomDeckLabel
 @onready var player_count_label = $PlayerCountLabel
 
 # Other
 @onready var server_info_list : ItemList = $ServerInfoList
 @onready var deck_selector = $DeckControls/HBoxContainer/DeckSelector
+@onready var debug_deck_selector = $DebugDeckSelector
 @onready var deck_controls = $DeckControls
-@onready var save_file_dialog = $SaveFileDialog
-@onready var open_file_dialog = $OpenFileDialog
 @onready var modal_dialog = $ModalDialog
 @onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
 @onready var supported_cards_list : ItemList = $SupportedCardsList
 @onready var howtoplay = $Howtoplay
+
+@onready var deck_builder : DeckBuilder = $Deckbuilder
 
 enum MenuState {
 	MenuState_ConnectingToServer,
@@ -64,29 +59,21 @@ func _ready() -> void:
 
 	client_version.text = GlobalSettings.get_client_version()
 
-	save_file_dialog.visible = false
-	open_file_dialog.visible = false
-	custom_deck_label.visible = false
-
-	test_decks = CardDatabase.get_test_decks()
 	var supported_cards = CardDatabase.get_supported_cards()
 	# Sort supported cards by alpha.
 	supported_cards.sort()
 	for card in supported_cards:
 		supported_cards_list.add_item(card)
-	deck_selector.clear()
-	for i in range(len(test_decks)):
-		var deck = test_decks[i]
-		deck_selector.add_item(deck["deck_name"], i)
-	deck_selector.selected = 0
-	loaded_deck = test_decks[0]
-
-	if OS.has_feature("web"):
-		#setupFileLoad defined in the HTML5 export header
-		#calls load_deck when file gets user-selected by window.input.click()
-		window = JavaScriptBridge.get_interface("window")
-		file_load_callback = JavaScriptBridge.create_callback(load_deck)
-		window.setupFileLoad(file_load_callback)
+		
+	if OS.is_debug_build():
+		test_decks = CardDatabase.get_test_decks()
+		debug_deck_selector.clear()
+		for i in range(len(test_decks)):
+			var deck = test_decks[i]
+			debug_deck_selector.add_item(deck["deck_name"], i)
+		debug_deck_selector.selected = -1
+	else:
+		debug_deck_selector.visible = false
 
 func _update_element(button, enabled_value, visibility_value):
 	if button is Button:
@@ -152,8 +139,19 @@ func starting_game():
 			$MatchJoinedSound.play()
 
 func settings_loaded():
-	pass
+	deck_builder.load_decks()
+	load_user_decks()
 
+func load_user_decks():
+	var decks = deck_builder.get_decks()
+	deck_selector.clear()
+	for i in range(len(decks)):
+		var deck = decks[i]
+		deck_selector.add_item(deck["deck_name"], i)
+	deck_selector.selected = deck_builder.get_current_deck_index()
+	loaded_deck = decks[deck_selector.selected]
+	deck_selector.text = loaded_deck["deck_name"]
+	
 func _on_connected():
 	menu_state = MenuState.MenuState_Connected_Default
 	_update_buttons()
@@ -268,47 +266,21 @@ func _on_play_ai_button_pressed() -> void:
 	_update_buttons()
 	join_match_queue(AIQueueName)
 
-
-func _on_load_deck_button_pressed():
-	if OS.has_feature("web"):
-		window.input.click()
-	else:
-		open_file_dialog.visible = true
-
-func _on_save_deck_button_pressed():
-	if OS.has_feature("web"):
-		window = JavaScriptBridge.get_interface("window")
-		var file_name = "%s.json" % loaded_deck["deck_name"]
-		var file_content = JSON.stringify(loaded_deck)
-		window.saveTextToFile(file_name, file_content)
-	else:
-		save_file_dialog.visible = true
-
-func load_deck(data):
-	var new_deck = DeckValidator.load_deck(data)
-	if new_deck.get("error", ""):
-		modal_dialog.set_text_fields(new_deck["error"], "OK", "")
-	else:
-		_on_deck_loaded(new_deck)
-
-func _on_deck_loaded(new_deck):
-	loaded_deck = new_deck
-	custom_deck_label.visible = true
-
-func _on_save_file_dialog_file_selected(path: String) -> void:
-	var file = FileAccess.open(path, FileAccess.WRITE)
-	var content = JSON.stringify(loaded_deck)
-	file.store_string(content)
-
-func _on_open_file_dialog_file_selected(path: String) -> void:
-	load_deck([FileAccess.get_file_as_string(path)])
-
 func _on_settings_button_pressed() -> void:
 	$SettingsWindow.show_settings()
 
 func _on_deck_selector_item_selected(index: int) -> void:
-	loaded_deck = test_decks[index]
-	custom_deck_label.visible = false
+	deck_builder.set_deck_index(index)
+	loaded_deck = deck_builder.get_decks()[index]
 
+func _on_debug_deck_selector_item_selected(index: int) -> void:
+	loaded_deck = test_decks[index]
+	
 func _on_how_to_play_button_pressed() -> void:
 	howtoplay.show_help()
+
+func _on_deck_builder_button_pressed() -> void:
+	deck_builder.show_deck_builder(deck_selector.selected)
+
+func _on_deckbuilder_exit_deck_builder() -> void:
+	load_user_decks()
