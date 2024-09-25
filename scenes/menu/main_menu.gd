@@ -13,6 +13,8 @@ var oshi_azki = "hSD01-002"
 @onready var join_match_button = $MainButtons/JoinMatchButton
 @onready var leave_queue_button = $MainButtons/LeaveQueueButton
 @onready var join_custom_box = $MainButtons/JoinCustomBox
+@onready var deck_builder_button = $DeckBuilderButton
+@onready var how_to_play_button = $HowToPlayButton
 
 # Labels
 @onready var server_status = $ServerStatus/ServerStatusLabel
@@ -28,7 +30,7 @@ var oshi_azki = "hSD01-002"
 @onready var modal_dialog = $ModalDialog
 @onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
 @onready var supported_cards_list : ItemList = $SupportedCardsList
-@onready var howtoplay = $Howtoplay
+@onready var howtoplay = $HowToPlayButton
 
 @onready var deck_builder : DeckBuilder = $Deckbuilder
 
@@ -64,7 +66,7 @@ func _ready() -> void:
 	supported_cards.sort()
 	for card in supported_cards:
 		supported_cards_list.add_item(card)
-		
+
 	if OS.is_debug_build():
 		test_decks = CardDatabase.get_test_decks()
 		debug_deck_selector.clear()
@@ -90,6 +92,8 @@ func _update_buttons() -> void:
 			_update_element(leave_queue_button, false, false)
 			_update_element(deck_controls, true, true)
 			_update_element(join_custom_box, false, false)
+			_update_element(deck_builder_button, true, true)
+			_update_element(how_to_play_button, true, true)
 			server_status.text = "Connecting to server..."
 		MenuState.MenuState_Connected_Default:
 			_update_element(play_ai_button, true, true)
@@ -99,6 +103,8 @@ func _update_buttons() -> void:
 			_update_element(leave_queue_button, false, false)
 			_update_element(deck_controls, true, true)
 			_update_element(join_custom_box, true, true)
+			_update_element(deck_builder_button, true, true)
+			_update_element(how_to_play_button, true, true)
 			server_status.text = "Connected"
 		MenuState.MenuState_Disconnected:
 			_update_element(play_ai_button, false, false)
@@ -108,6 +114,8 @@ func _update_buttons() -> void:
 			_update_element(leave_queue_button, false, false)
 			_update_element(deck_controls, true, true)
 			_update_element(join_custom_box, false, false)
+			_update_element(deck_builder_button, true, true)
+			_update_element(how_to_play_button, true, true)
 			server_status.text = "Disconnected from server"
 			player_username.text = "Player Name"
 		MenuState.MenuState_Queued:
@@ -118,6 +126,8 @@ func _update_buttons() -> void:
 			_update_element(leave_queue_button, true, true)
 			_update_element(deck_controls, false, false)
 			_update_element(join_custom_box, false, false)
+			_update_element(deck_builder_button, false, false)
+			_update_element(how_to_play_button, false, false)
 		_:
 			assert(false, "Unimplemented menu state")
 			pass
@@ -151,7 +161,7 @@ func load_user_decks():
 	deck_selector.selected = deck_builder.get_current_deck_index()
 	loaded_deck = decks[deck_selector.selected]
 	deck_selector.text = loaded_deck["deck_name"]
-	
+
 func _on_connected():
 	menu_state = MenuState.MenuState_Connected_Default
 	_update_buttons()
@@ -275,7 +285,7 @@ func _on_deck_selector_item_selected(index: int) -> void:
 
 func _on_debug_deck_selector_item_selected(index: int) -> void:
 	loaded_deck = test_decks[index]
-	
+
 func _on_how_to_play_button_pressed() -> void:
 	howtoplay.show_help()
 

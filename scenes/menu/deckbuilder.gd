@@ -55,7 +55,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	var current_name_text = deck_name_label.text
 	if current_name_text and current_name_text != last_deck_name_text:
-		print("Saving!")
 		_current_deck["deck_name"] = current_name_text
 		deck_option_button.set_item_text(_current_index, current_name_text)
 		deck_option_button.text = current_name_text
@@ -368,8 +367,8 @@ func _on_filter_options_filter_settings_changed(filter_settings: Dictionary) -> 
 				if not found_color:
 					placeholder.visible = false
 			var check_name = filter_settings["name"].to_lower()
-			
-			
+
+
 			if check_name:
 				var names = Strings.get_names(definition["card_names"])
 				for i in range(len(names)):
