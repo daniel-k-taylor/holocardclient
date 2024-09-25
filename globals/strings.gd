@@ -186,6 +186,8 @@ const SkillNameMap = {
 	"flarebeyondthedoor": "Flare ~Beyond the door~",
 	"noelbeyondthedoor": "Noel ~Beyond the door~",
 	"marinebeyondthedoor": "Marine ~Beyond the door~",
+	"elementaryisntit": "Elementary, isn't it?",
+
 
 
 
