@@ -259,6 +259,8 @@ func _on_join_failed(error_id) -> void:
 		_:
 			modal_dialog.set_text_fields("Join failed", "OK", "")
 	menu_state = MenuState.MenuState_Connected_Default
+	seen_joinable_match = false
+	_update_server_info()
 	_update_buttons()
 
 func _on_leave_queue_button_pressed() -> void:
