@@ -305,8 +305,8 @@ func _on_clicked_card(card_id, card : CardBase):
 		if card_id in _current_deck["deck"]:
 			_current_deck["deck"][card_id] += 1
 			var max_allowed = Enums.MAX_CARD_COPIES
-			if "special_deck_limit" in card:
-				max_allowed = card["special_deck_limit"]
+			if "special_deck_limit" in definition:
+				max_allowed = definition["special_deck_limit"]
 			if _current_deck["deck"][card_id] > max_allowed:
 				_current_deck["deck"][card_id] = max_allowed
 				return
