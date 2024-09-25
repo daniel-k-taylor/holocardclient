@@ -1,0 +1,251 @@
+[gd_scene load_steps=15 format=3 uid="uid://3x1tuvhtn1gv"]
+
+[ext_resource type="Texture2D" uid="uid://du0ue8rwu8qhu" path="res://assets/icons/cardicon_debut.webp" id="1_eecor"]
+[ext_resource type="Script" path="res://scenes/menu/filter_options.gd" id="1_l0ass"]
+[ext_resource type="Texture2D" uid="uid://i5w1qshffgiq" path="res://assets/icons/cardicon_1st.webp" id="2_p5u7l"]
+[ext_resource type="Texture2D" uid="uid://by0thioapncst" path="res://assets/icons/cardicon_2nd.webp" id="3_ff4yq"]
+[ext_resource type="Texture2D" uid="uid://c6eydychgbsf4" path="res://assets/icons/cardicon_spot.webp" id="4_vyw6u"]
+[ext_resource type="Texture2D" uid="uid://c0y41xqs5wsxa" path="res://assets/icons/cardicon_buzz.webp" id="5_0kx3f"]
+[ext_resource type="Texture2D" uid="uid://ca7fc8bn5qmw6" path="res://assets/cheer_icons/white.png" id="6_djjap"]
+[ext_resource type="Texture2D" uid="uid://g7c3ggybjx2b" path="res://assets/cheer_icons/green.png" id="7_iq25s"]
+[ext_resource type="Texture2D" uid="uid://d01l21fs55m6c" path="res://assets/cheer_icons/red.png" id="8_v0i8a"]
+[ext_resource type="Texture2D" uid="uid://ikkj7mbwyh2i" path="res://assets/cheer_icons/blue.png" id="9_2agkj"]
+[ext_resource type="Texture2D" uid="uid://ddqmmwvsmcf2f" path="res://assets/cheer_icons/yellow.png" id="10_a6ia1"]
+[ext_resource type="Texture2D" uid="uid://d0mtye7658mxh" path="res://assets/cheer_icons/purple.png" id="11_y0nbi"]
+[ext_resource type="Texture2D" uid="uid://rrm8bxes2ibu" path="res://assets/cheer_icons/none.png" id="12_mhv37"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n1qdc"]
+bg_color = Color(0.152941, 0.152941, 0.152941, 0.898039)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="FilterOptions" type="CenterContainer"]
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_l0ass")
+
+[node name="FullscreenCloseButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+
+[node name="FilterPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n1qdc")
+
+[node name="Margin" type="MarginContainer" parent="FilterPanel"]
+layout_mode = 2
+
+[node name="LayoutVBox" type="VBoxContainer" parent="FilterPanel/Margin"]
+layout_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="FilterPanel/Margin/LayoutVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="FilterPanel/Margin/LayoutVBox/Title"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Filters"
+
+[node name="MainFilters" type="HBoxContainer" parent="FilterPanel/Margin/LayoutVBox"]
+layout_mode = 2
+
+[node name="HolomemCardTypes" type="VBoxContainer" parent="FilterPanel/Margin/LayoutVBox/MainFilters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Holomem Card Type"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "All"
+
+[node name="Button2" type="Button" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "None"
+
+[node name="Oshi" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+text = "Oshi"
+expand_icon = true
+
+[node name="Debut" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+text = "Debut"
+icon = ExtResource("1_eecor")
+expand_icon = true
+
+[node name="Bloom1" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+text = "1st Bloom"
+icon = ExtResource("2_p5u7l")
+expand_icon = true
+
+[node name="Bloom2" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+text = "2nd Bloom"
+icon = ExtResource("3_ff4yq")
+expand_icon = true
+
+[node name="Spot" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+text = "Spot"
+icon = ExtResource("4_vyw6u")
+expand_icon = true
+
+[node name="Buzz" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes"]
+layout_mode = 2
+text = "Buzz"
+icon = ExtResource("5_0kx3f")
+expand_icon = true
+
+[node name="SupportCardTypes" type="VBoxContainer" parent="FilterPanel/Margin/LayoutVBox/MainFilters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Support Card Type"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "All"
+
+[node name="Button2" type="Button" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "None"
+
+[node name="Event" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+text = "Event"
+expand_icon = true
+
+[node name="Fan" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+text = "Fan"
+expand_icon = true
+
+[node name="Item" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+text = "Item"
+expand_icon = true
+
+[node name="Mascot" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+text = "Mascot"
+expand_icon = true
+
+[node name="Staff" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+text = "Staff"
+expand_icon = true
+
+[node name="Tool" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
+layout_mode = 2
+text = "Tool"
+expand_icon = true
+
+[node name="Colors" type="VBoxContainer" parent="FilterPanel/Margin/LayoutVBox/MainFilters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Colors"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "All"
+
+[node name="Button2" type="Button" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "None"
+
+[node name="White" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+text = "White"
+icon = ExtResource("6_djjap")
+expand_icon = true
+
+[node name="Green" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+text = "Green"
+icon = ExtResource("7_iq25s")
+expand_icon = true
+
+[node name="Red" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+text = "Red"
+icon = ExtResource("8_v0i8a")
+expand_icon = true
+
+[node name="Blue" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+text = "Blue"
+icon = ExtResource("9_2agkj")
+expand_icon = true
+
+[node name="Yellow" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+text = "Yellow"
+icon = ExtResource("10_a6ia1")
+expand_icon = true
+
+[node name="Purple" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+text = "Purple"
+icon = ExtResource("11_y0nbi")
+expand_icon = true
+
+[node name="None" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
+layout_mode = 2
+text = "None"
+icon = ExtResource("12_mhv37")
+expand_icon = true
+
+[node name="ClearFiltersButton" type="Button" parent="FilterPanel/Margin/LayoutVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Reset Filters"
+
+[connection signal="pressed" from="FullscreenCloseButton" to="." method="_on_fullscreen_close_button_pressed"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes/HBoxContainer/Button" to="." method="_on_all_holomem_button_pressed"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes/HBoxContainer/Button2" to="." method="_on_none_holomem_button_pressed"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes/HBoxContainer/Button" to="." method="_on_all_support_button_pressed"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes/HBoxContainer/Button2" to="." method="_on_none_support_button_pressed"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/Colors/HBoxContainer/Button" to="." method="_on_all_colors_button_pressed"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/Colors/HBoxContainer/Button2" to="." method="_on_none_colors_button_pressed"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/ClearFiltersButton" to="." method="_on_clear_filters_button_pressed"]

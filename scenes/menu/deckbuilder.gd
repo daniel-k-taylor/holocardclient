@@ -330,3 +330,40 @@ func _on_hover_card(_card_id, card, is_hover):
 
 func _on_deck_name_focus_entered() -> void:
 	deck_name_label.caret_column = deck_name_label.text.length()
+
+func _on_filters_button_pressed() -> void:
+	$FilterOptions.visible = true
+
+func _on_filter_options_filter_settings_changed(filter_settings: Dictionary) -> void:
+	for placeholder in card_grid.get_children():
+		var card : CardBase = placeholder.get_child(0)
+		if card:
+			var definition = card._definition
+			match definition["card_type"]:
+				"holomem_debut":
+					placeholder.visible = filter_settings["debut"]
+				"holomem_bloom":
+					match int(definition["bloom_level"]):
+						1:
+							placeholder.visible = filter_settings["bloom1"]
+						2:
+							placeholder.visible = filter_settings["bloom2"]
+				"holomem_spot":
+					placeholder.visible = filter_settings["spot"]
+				"support":
+					var sub_type = definition["sub_type"]
+					placeholder.visible = filter_settings[sub_type]
+				"oshi":
+					placeholder.visible = filter_settings["oshi"]
+
+			if "buzz" in definition and definition["buzz"] and not filter_settings["buzz"]:
+				placeholder.visible = false
+
+			if "colors" in definition:
+				var found_color = false
+				for color in definition["colors"]:
+					if filter_settings[color]:
+						found_color = true
+						break
+				if not found_color:
+					placeholder.visible = false

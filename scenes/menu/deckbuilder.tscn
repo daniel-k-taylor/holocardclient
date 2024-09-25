@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvhny66vw8bs"]
+[gd_scene load_steps=7 format=3 uid="uid://bvhny66vw8bs"]
 
 [ext_resource type="Script" path="res://scenes/menu/deckbuilder.gd" id="1_hiyso"]
 [ext_resource type="PackedScene" uid="uid://wfg3ofoom22s" path="res://scenes/menu/deck_card_slot.tscn" id="2_ntnpi"]
 [ext_resource type="PackedScene" uid="uid://bcr5jfstov5er" path="res://scenes/menu/cheer_box.tscn" id="3_hu4c7"]
 [ext_resource type="PackedScene" uid="uid://wmclosx28ofb" path="res://scenes/misc/modal_dialog.tscn" id="4_wbqxh"]
 [ext_resource type="PackedScene" uid="uid://d2fspiqdcp0p1" path="res://scenes/game/card_base.tscn" id="5_u0cvo"]
+[ext_resource type="PackedScene" uid="uid://3x1tuvhtn1gv" path="res://scenes/menu/filter_options.tscn" id="6_pqu3n"]
 
 [node name="Deckbuilder" type="Node2D"]
 script = ExtResource("1_hiyso")
@@ -23,11 +24,20 @@ offset_bottom = 64.0
 theme_override_font_sizes/font_size = 32
 text = "Main Menu"
 
+[node name="FiltersButton" type="Button" parent="."]
+offset_left = 640.0
+offset_top = 66.0
+offset_right = 832.0
+offset_bottom = 118.0
+theme_override_font_sizes/font_size = 32
+text = "Filter"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 554.0
 offset_top = 11.0
 offset_right = 1263.0
 offset_bottom = 115.0
+mouse_filter = 2
 theme_override_constants/separation = 10
 alignment = 2
 
@@ -176,7 +186,11 @@ position = Vector2(1000, 280)
 scale = Vector2(1.5, 1.5)
 is_big_card = true
 
+[node name="FilterOptions" parent="." instance=ExtResource("6_pqu3n")]
+visible = false
+
 [connection signal="pressed" from="ReturnToMenuButton" to="." method="back_to_main_menu"]
+[connection signal="pressed" from="FiltersButton" to="." method="_on_filters_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/DecksOptionButton" to="." method="_on_decks_option_button_item_selected"]
 [connection signal="pressed" from="HBoxContainer/GridContainer/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/GridContainer/NewDeckButton" to="." method="_on_new_deck_button_pressed"]
@@ -186,3 +200,4 @@ is_big_card = true
 [connection signal="cheer_changed" from="DeckList/CheerBox" to="." method="_on_cheer_box_cheer_changed"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
 [connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
+[connection signal="filter_settings_changed" from="FilterOptions" to="." method="_on_filter_options_filter_settings_changed"]
