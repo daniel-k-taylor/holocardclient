@@ -327,3 +327,6 @@ func _on_hover_card(_card_id, card, is_hover):
 	big_card.visible = is_hover
 	if is_hover:
 		big_card.copy_graphics(card)
+
+func _on_deck_name_focus_entered() -> void:
+	deck_name_label.caret_column = deck_name_label.text.length()
