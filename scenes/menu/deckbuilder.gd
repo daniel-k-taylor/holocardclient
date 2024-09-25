@@ -35,6 +35,7 @@ var file_load_callback
 
 var all_cards = []
 var loaded_card_list = false
+var last_deck_name_text = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -50,6 +51,16 @@ func _ready() -> void:
 		window.setupFileLoad(file_load_callback)
 
 	oshi_slot.hover.connect(_on_hover_slot)
+
+func _process(_delta: float) -> void:
+	var current_name_text = deck_name_label.text
+	if current_name_text and current_name_text != last_deck_name_text:
+		print("Saving!")
+		_current_deck["deck_name"] = current_name_text
+		deck_option_button.set_item_text(_current_index, current_name_text)
+		deck_option_button.text = current_name_text
+		last_deck_name_text = current_name_text
+		save_decks_to_settings()
 
 func show_deck_builder(selected_index):
 	visible = true
@@ -128,6 +139,7 @@ func populate_deck_list(index):
 	_current_deck = _all_decks[index]
 	deck_name_label.text = _current_deck["deck_name"]
 	deck_option_button.text = _current_deck["deck_name"]
+	last_deck_name_text = _current_deck["deck_name"]
 	deck_option_button.selected = index
 
 	# Oshi
@@ -283,12 +295,6 @@ func _on_save_deck_button_pressed() -> void:
 
 func _on_decks_option_button_item_selected(index: int) -> void:
 	populate_deck_list(index)
-
-func _on_deck_name_text_changed(new_text: String) -> void:
-	_current_deck["deck_name"] = new_text
-	deck_option_button.set_item_text(_current_index, new_text)
-	deck_option_button.text = new_text
-	save_decks_to_settings()
 
 func _on_clicked_card(card_id, card : CardBase):
 	var definition = card._definition
