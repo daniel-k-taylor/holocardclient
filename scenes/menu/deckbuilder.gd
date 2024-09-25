@@ -34,6 +34,7 @@ var file_load_callback
 ###
 
 var all_cards = []
+var loaded_card_list = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -56,23 +57,25 @@ func show_deck_builder(selected_index):
 	load_card_list()
 
 func load_card_list():
-	for card_id in CardDatabase.get_supported_cards():
-		var definition = CardDatabase.get_card(card_id)
-		if definition["card_type"] == "cheer":
-			continue
-		var new_card : CardBase = CardDatabase.test_create_card(card_id, card_id)
-		all_cards.append(new_card)
-		var new_placeholder = CardPlaceholderScene.instantiate()
-		new_placeholder.add_child(new_card)
-		new_card.scale = Vector2(CardBase.ReferenceCardScale, CardBase.ReferenceCardScale)
-		var desired_pos = CardBase.ReferenceCardScale * (CardBase.DefaultCardSize / 2)
-		new_card.begin_move_to(desired_pos, true)
+	if not loaded_card_list:
+		loaded_card_list = true
+		for card_id in CardDatabase.get_supported_cards():
+			var definition = CardDatabase.get_card(card_id)
+			if definition["card_type"] == "cheer":
+				continue
+			var new_card : CardBase = CardDatabase.test_create_card(card_id, card_id)
+			all_cards.append(new_card)
+			var new_placeholder = CardPlaceholderScene.instantiate()
+			new_placeholder.add_child(new_card)
+			new_card.scale = Vector2(CardBase.ReferenceCardScale, CardBase.ReferenceCardScale)
+			var desired_pos = CardBase.ReferenceCardScale * (CardBase.DefaultCardSize / 2)
+			new_card.begin_move_to(desired_pos, true)
 
-		new_card.set_selectable(true)
-		new_card.clicked_card.connect(_on_clicked_card)
-		new_card.hover_card.connect(_on_hover_card)
+			new_card.set_selectable(true)
+			new_card.clicked_card.connect(_on_clicked_card)
+			new_card.hover_card.connect(_on_hover_card)
 
-		card_grid.call_deferred("add_child", new_placeholder)
+			card_grid.call_deferred("add_child", new_placeholder)
 
 func set_deck_index(index):
 	_current_index = index
@@ -254,7 +257,8 @@ func _on_load_deck_button_pressed() -> void:
 
 func _on_save_file_dialog_file_selected(path: String) -> void:
 	var file = FileAccess.open(path, FileAccess.WRITE)
-	var content = JSON.stringify(_current_deck)
+	var deck_contents = DeckValidator.export_deck_holodelta(_current_deck)
+	var content = JSON.stringify(deck_contents)
 	file.store_string(content)
 
 func _on_open_file_dialog_file_selected(path: String) -> void:
@@ -271,7 +275,8 @@ func _on_save_deck_button_pressed() -> void:
 	if OS.has_feature("web"):
 		window = JavaScriptBridge.get_interface("window")
 		var file_name = "%s.json" % _current_deck["deck_name"]
-		var file_content = JSON.stringify(_current_deck)
+		var deck_contents = DeckValidator.export_deck_holodelta(_current_deck)
+		var file_content = JSON.stringify(deck_contents)
 		window.saveTextToFile(file_name, file_content)
 	else:
 		save_file_dialog.visible = true

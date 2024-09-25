@@ -1098,6 +1098,7 @@ func build_english_card_text(definition):
 								amount_str += "no"
 							else:
 								if amount_min > 0:
+									amount_min -= 1
 									amount_str += "at least %s" % amount_min
 									if amount_max >= 0:
 										amount_str += " and "

@@ -101,16 +101,40 @@ func load_deck_holodelta(json):
 				elif typeof(cheer_entry[2]) != TYPE_FLOAT:
 					error_message = "Invalid format:\nCheer entry alt art not numbers"
 		if not error_message:
-			var new_deck = {
-				"oshi": oshi_info[0],
-				"deck": {},
-				"cheer_deck": {},
-			}
+			loaded_deck["oshi"] = oshi_info[0]
 			for deck_entry in json.data["deck"]:
-				new_deck["deck"][deck_entry[0]] = int(deck_entry[1])
+				loaded_deck["deck"][deck_entry[0]] = int(deck_entry[1])
 			for cheer_entry in json.data["cheerDeck"]:
-				new_deck["cheer_deck"][cheer_entry[0]] = int(cheer_entry[1])
-			loaded_deck = new_deck
+				loaded_deck["cheer_deck"][cheer_entry[0]] = int(cheer_entry[1])
 
 	loaded_deck["error"] = error_message
 	return loaded_deck
+
+func export_deck_holodelta(deck):
+	# HoloDelta format is:
+	#{
+	#  "deckName": "Deck Name",
+	#  "oshi": ["oshi_card_id", alt_art],
+	#  "deck": [["card_id", count, alt_art], ...],
+	#  "cheerDeck": [["card_id", count, alt_art], ...]
+	#}
+	#
+	# Simple deck format passed in is:
+	# {
+	# 	"deck_name": "",
+	# 	"oshi": "",
+	# 	"deck": {},
+	# 	"cheer_deck": {},
+	# 	"error": "",
+	# }
+	var holo_delta_deck = {
+		"deckName": deck["deck_name"],
+		"oshi": [deck["oshi"], 0],
+		"deck": [],
+		"cheerDeck": [],
+	}
+	for card_id in deck["deck"]:
+		holo_delta_deck["deck"].append([card_id, deck["deck"][card_id], 0])
+	for card_id in deck["cheer_deck"]:
+		holo_delta_deck["cheerDeck"].append([card_id, deck["cheer_deck"][card_id], 0])
+	return holo_delta_deck
