@@ -367,3 +367,17 @@ func _on_filter_options_filter_settings_changed(filter_settings: Dictionary) -> 
 						break
 				if not found_color:
 					placeholder.visible = false
+			var check_name = filter_settings["name"].to_lower()
+			
+			
+			if check_name:
+				var names = Strings.get_names(definition["card_names"])
+				for i in range(len(names)):
+					names[i] = names[i].to_lower()
+				var found_match = false
+				for card_name in names:
+					if card_name.contains(check_name):
+						found_match = true
+						break
+				if not found_match:
+					placeholder.visible = false

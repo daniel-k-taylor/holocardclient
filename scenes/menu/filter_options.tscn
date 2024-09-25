@@ -57,6 +57,26 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Filters"
 
+[node name="NameFilter" type="HBoxContainer" parent="FilterPanel/Margin/LayoutVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="FilterByNameLabel" type="Label" parent="FilterPanel/Margin/LayoutVBox/NameFilter"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Filter By Name: "
+
+[node name="NameFilterLineEdit" type="LineEdit" parent="FilterPanel/Margin/LayoutVBox/NameFilter"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter partial name"
+max_length = 20
+select_all_on_focus = true
+
+[node name="ClearName" type="Button" parent="FilterPanel/Margin/LayoutVBox/NameFilter"]
+layout_mode = 2
+text = "Clear Name"
+
 [node name="MainFilters" type="HBoxContainer" parent="FilterPanel/Margin/LayoutVBox"]
 layout_mode = 2
 
@@ -242,6 +262,8 @@ theme_override_font_sizes/font_size = 24
 text = "Reset Filters"
 
 [connection signal="pressed" from="FullscreenCloseButton" to="." method="_on_fullscreen_close_button_pressed"]
+[connection signal="focus_entered" from="FilterPanel/Margin/LayoutVBox/NameFilter/NameFilterLineEdit" to="." method="_on_name_filter_line_edit_focus_entered"]
+[connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/NameFilter/ClearName" to="." method="_on_clear_name_pressed"]
 [connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes/HBoxContainer/Button" to="." method="_on_all_holomem_button_pressed"]
 [connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/HolomemCardTypes/HBoxContainer/Button2" to="." method="_on_none_holomem_button_pressed"]
 [connection signal="pressed" from="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes/HBoxContainer/Button" to="." method="_on_all_support_button_pressed"]

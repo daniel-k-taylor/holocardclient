@@ -24,6 +24,8 @@ signal filter_settings_changed(filter_settings : Dictionary)
 @onready var yellow = $FilterPanel/Margin/LayoutVBox/MainFilters/Colors/Yellow
 @onready var none = $FilterPanel/Margin/LayoutVBox/MainFilters/Colors/None
 
+@onready var name_filter = $FilterPanel/Margin/LayoutVBox/NameFilter/NameFilterLineEdit
+
 @onready var key_check_map = {
 	"oshi": oshi,
 	"debut": debut,
@@ -70,15 +72,21 @@ var filter_settings = {
 	"purple": true,
 	"yellow": true,
 	"none": true,
+	
+	"name": "",
 }
 
 var holomem_options = ["oshi", "debut", "bloom1", "bloom2", "spot", "buzz"]
 var support_options = ["event", "fan", "item", "mascot", "staff", "tool"]
 var color_options = ["white", "red", "blue", "green", "purple", "yellow", "none"]
 
+var last_name_filter = ""
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for key in filter_settings.keys():
+		if key == "name":
+			continue
 		var button : CheckButton = key_check_map[key]
 		button.button_pressed = filter_settings[key]
 		button.connect("toggled", func(toggled_on : bool):
@@ -86,13 +94,24 @@ func _ready() -> void:
 			filter_settings_changed.emit(filter_settings)
 		)
 
+func _process(_delta: float) -> void:
+	var current_name_text = name_filter.text
+	if current_name_text and current_name_text != last_name_filter:
+		filter_settings["name"] = current_name_text
+		last_name_filter = current_name_text
+		filter_settings_changed.emit(filter_settings)
+
 func _on_fullscreen_close_button_pressed() -> void:
 	visible = false
 
 func _on_clear_filters_button_pressed() -> void:
+	name_filter.text = ""
 	for key in filter_settings.keys():
-		filter_settings[key] = true
-		key_check_map[key].button_pressed = true
+		if key == "name":
+			filter_settings[key] = ""
+		else:
+			filter_settings[key] = true
+			key_check_map[key].button_pressed = true
 	filter_settings_changed.emit(filter_settings)
 
 
@@ -106,23 +125,37 @@ func _on_none_holomem_button_pressed() -> void:
 	for key in holomem_options:
 		filter_settings[key] = false
 		key_check_map[key].button_pressed = false
+	filter_settings_changed.emit(filter_settings)
 
 func _on_all_support_button_pressed() -> void:
 	for key in support_options:
 		filter_settings[key] = true
 		key_check_map[key].button_pressed = true
+	filter_settings_changed.emit(filter_settings)
 
 func _on_none_support_button_pressed() -> void:
 	for key in support_options:
 		filter_settings[key] = false
 		key_check_map[key].button_pressed = false
+	filter_settings_changed.emit(filter_settings)
 
 func _on_all_colors_button_pressed() -> void:
 	for key in color_options:
 		filter_settings[key] = true
 		key_check_map[key].button_pressed = true
+	filter_settings_changed.emit(filter_settings)
 
 func _on_none_colors_button_pressed() -> void:
 	for key in color_options:
 		filter_settings[key] = false
 		key_check_map[key].button_pressed = false
+	filter_settings_changed.emit(filter_settings)
+
+func _on_clear_name_pressed() -> void:
+	filter_settings["name"] = ""
+	name_filter.text = ""
+	last_name_filter = ""
+	filter_settings_changed.emit(filter_settings)
+
+func _on_name_filter_line_edit_focus_entered() -> void:
+	name_filter.caret_column = name_filter.text.length()
