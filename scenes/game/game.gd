@@ -81,6 +81,8 @@ class PlayerState:
 	var cheer_count = Enums.CHEER_SIZE
 	var holopower_count = 0
 	var played_limited_this_turn = false
+	var used_oshi_turn_skill = false
+	var used_oshi_game_skill = false
 
 	var _archive_zone : CardZone
 	var _backstage_zone : CardZone
@@ -124,6 +126,7 @@ class PlayerState:
 
 	func clear_played_this_turn():
 		played_limited_this_turn = false
+		used_oshi_turn_skill = false
 
 	func draw_cards(count, cards : Array):
 		hand_count += count
@@ -530,6 +533,8 @@ func _update_player_stats(player, stats_group):
 		"life": player.life_count,
 		"cheer": player.cheer_count,
 		"limited_available": not player.played_limited_this_turn,
+		"oshi_turn_available": not player.used_oshi_turn_skill,
+		"oshi_game_available": not player.used_oshi_game_skill,
 	}
 	stats_group.update_stats(stats_info)
 	player._hand_indicator.text = str(player.hand_count)
@@ -2289,6 +2294,11 @@ func _on_oshi_skill_activation(event_data):
 		active_player.get_name(),
 		Strings.get_skill_string(skill_id)
 	]
+	match event_data["limit"]:
+		"once_per_turn":
+			active_player.used_oshi_turn_skill = true
+		"once_per_game":
+			active_player.used_oshi_game_skill = true
 	game_log.add_to_log(GameLog.GameLogLine.Detail, logline)
 	# TODO: Animation - show oshi skill activate and mark once per game/turn somehow.
 	if not active_player.is_me():

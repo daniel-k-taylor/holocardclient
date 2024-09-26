@@ -8,6 +8,8 @@ extends GridContainer
 @onready var cheer = $CheerIndicator/CheerCount
 @onready var holopower = $HolopowerIndicator/HolopowerCount
 @onready var xoverlay = $LimitedIndicator/XOverlay
+@onready var turnxoverlay = $OshiSkillIndicators/Turn/TurnX
+@onready var gamexoverlay = $OshiSkillIndicators/Game/GameX
 
 func update_stats(stats_info : Dictionary):
 	archive.text = "%s" % stats_info["archive"]
@@ -17,3 +19,5 @@ func update_stats(stats_info : Dictionary):
 	holopower.text = "%s" % stats_info["holopower"]
 	life.text = "%s" % stats_info["life"]
 	xoverlay.visible = not stats_info["limited_available"]
+	turnxoverlay.visible = not stats_info["oshi_turn_available"]
+	gamexoverlay.visible = not stats_info["oshi_game_available"]

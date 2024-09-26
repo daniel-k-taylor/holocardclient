@@ -182,3 +182,37 @@ modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 texture = ExtResource("10_1b5pq")
 expand_mode = 1
+
+[node name="OshiSkillIndicators" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="Turn" type="PanelContainer" parent="OshiSkillIndicators"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="OshiSkillIndicators/Turn"]
+layout_mode = 2
+text = "TURN"
+horizontal_alignment = 1
+
+[node name="TurnX" type="TextureRect" parent="OshiSkillIndicators/Turn"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("10_1b5pq")
+expand_mode = 1
+
+[node name="Game" type="PanelContainer" parent="OshiSkillIndicators"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="OshiSkillIndicators/Game"]
+layout_mode = 2
+text = "GAME"
+horizontal_alignment = 1
+
+[node name="GameX" type="TextureRect" parent="OshiSkillIndicators/Game"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("10_1b5pq")
+expand_mode = 1

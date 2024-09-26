@@ -17,6 +17,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
                         "skill_id": "replacement",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 1 },
@@ -37,6 +38,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "soyouretheenemy",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
@@ -82,6 +84,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "micintherighthand",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 3 },
@@ -123,6 +126,7 @@
                         "effect_type": "choose_die_result",
                         "pre_effects": [{
                             "effect_type": "oshi_activation",
+                            "limit": "once_per_turn",
                             "skill_id": "mapinthelefthand",
                             "pre_effects": [
                                 { "effect_type": "spend_holopower", "amount": 3 },
@@ -850,6 +854,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
                         "skill_id": "squeezesqueeze",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 3 },
@@ -871,6 +876,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "illcrushyou",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
@@ -914,6 +920,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "amazingdrawing",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
@@ -959,6 +966,7 @@
                         "amount": 50,
                         "pre_effects": [{
                             "effect_type": "oshi_activation",
+                            "limit": "once_per_turn",
                             "skill_id": "guardianofcivilization",
                             "pre_effects": [
                                 { "effect_type": "spend_holopower", "amount": 2 },
@@ -987,6 +995,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
                         "skill_id": "survivalpower",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
@@ -1017,6 +1026,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "songoftheearth",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
@@ -1050,6 +1060,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "luckyrabbit",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 3 },
@@ -1097,6 +1108,7 @@
                         "multi_to": true,
                         "pre_effects": [{
                             "effect_type": "oshi_activation",
+                            "limit": "once_per_turn",
                             "skill_id": "nousagis",
                             "pre_effects": [
                                 { "effect_type": "spend_holopower", "amount": 2 },
@@ -1126,6 +1138,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "hawkeye",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
@@ -1166,7 +1179,7 @@
                     "pre_effects": [
                         { "effect_type": "spend_holopower", "amount": "X" },
                         { "effect_type": "record_used_once_per_turn_effect", "effect_id": "executivesorder" },
-                        { "effect_type": "oshi_activation", "skill_id": "executivesorder" }
+                        { "effect_type": "oshi_activation", "limit": "once_per_turn", "skill_id": "executivesorder" }
                     ]
                 }
             }
@@ -1188,6 +1201,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
                         "skill_id": "phoenixtail",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
@@ -1235,7 +1249,7 @@
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
                             { "effect_type": "record_used_once_per_game_effect", "effect_id": "risefromtheashes" },
-                            { "effect_type": "oshi_activation", "skill_id": "risefromtheashes" }
+                            { "effect_type": "oshi_activation", "limit": "once_per_game", "skill_id": "risefromtheashes" }
                         ]
                     },
                     { "effect_type": "pass" }
@@ -1280,7 +1294,7 @@
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
                             { "effect_type": "record_used_once_per_turn_effect", "effect_id": "comet" },
-                            { "effect_type": "oshi_activation", "skill_id": "comet" }
+                            { "effect_type": "oshi_activation", "limit": "once_per_turn", "skill_id": "comet" }
                         ]
                     },
                     { "effect_type": "pass" }
@@ -1315,7 +1329,7 @@
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 2 },
                             { "effect_type": "record_used_once_per_game_effect", "effect_id": "shootingstar" },
-                            { "effect_type": "oshi_activation", "skill_id": "shootingstar" }
+                            { "effect_type": "oshi_activation", "limit": "once_per_game", "skill_id": "shootingstar" }
                         ]
                     },
                     { "effect_type": "pass" }
@@ -1339,6 +1353,7 @@
                     {
                         "hide_effect_text": true,
                         "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
                         "skill_id": "prayingforrain",
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 3 },
@@ -1386,7 +1401,7 @@
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 1 },
                             { "effect_type": "record_used_once_per_turn_effect", "effect_id": "rainshamanism" },
-                            { "effect_type": "oshi_activation", "skill_id": "rainshamanism" }
+                            { "effect_type": "oshi_activation", "limit": "once_per_turn", "skill_id": "rainshamanism" }
                         ]
                     },
                     { "effect_type": "pass" }
@@ -4703,7 +4718,8 @@
                                         "amount": 20,
                                         "target": "backstage",
                                         "opponent": true,
-                                        "multiple_targets": "all"
+                                        "multiple_targets": "all",
+                                        "prevent_life_loss": true
                                     }
                                 ]
                             },
