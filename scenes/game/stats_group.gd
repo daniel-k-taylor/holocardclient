@@ -7,6 +7,7 @@ extends GridContainer
 @onready var life = $LifeIndicator/LifeCount
 @onready var cheer = $CheerIndicator/CheerCount
 @onready var holopower = $HolopowerIndicator/HolopowerCount
+@onready var xoverlay = $LimitedIndicator/XOverlay
 
 func update_stats(stats_info : Dictionary):
 	archive.text = "%s" % stats_info["archive"]
@@ -15,3 +16,4 @@ func update_stats(stats_info : Dictionary):
 	hand.text = "%s" % stats_info["hand"]
 	holopower.text = "%s" % stats_info["holopower"]
 	life.text = "%s" % stats_info["life"]
+	xoverlay.visible = not stats_info["limited_available"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://nn3fa22gm0m0"]
+[gd_scene load_steps=11 format=3 uid="uid://nn3fa22gm0m0"]
 
 [ext_resource type="Script" path="res://scenes/game/stats_group.gd" id="1_2nl5y"]
 [ext_resource type="Texture2D" uid="uid://drsem2ah7hjbj" path="res://assets/icons/cards.png" id="1_egjg1"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dt5gfu6i5xljk" path="res://assets/icons/battery-charging.svg" id="6_2jxq8"]
 [ext_resource type="Texture2D" uid="uid://dlqyskv1syjk6" path="res://assets/icons/discard.png" id="7_h2fck"]
 [ext_resource type="Texture2D" uid="uid://cbrksgiwkrwu2" path="res://assets/cheer_icons/any.png" id="9_01wyk"]
+[ext_resource type="Texture2D" uid="uid://63xxuqrx3q1s" path="res://assets/icons/thickx.png" id="10_1b5pq"]
 
 [node name="StatsGroup" type="GridContainer"]
 offset_right = 214.0
@@ -167,3 +168,17 @@ theme_override_constants/margin_left = 3
 layout_mode = 2
 theme = ExtResource("3_er6l1")
 text = "20"
+
+[node name="LimitedIndicator" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="LimitedIndicator"]
+layout_mode = 2
+text = "LIMITED"
+horizontal_alignment = 1
+
+[node name="XOverlay" type="TextureRect" parent="LimitedIndicator"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("10_1b5pq")
+expand_mode = 1

@@ -80,6 +80,7 @@ class PlayerState:
 	var life_count = 0
 	var cheer_count = Enums.CHEER_SIZE
 	var holopower_count = 0
+	var played_limited_this_turn = false
 
 	var _archive_zone : CardZone
 	var _backstage_zone : CardZone
@@ -120,6 +121,9 @@ class PlayerState:
 	func get_name() -> String:
 		if _is_me: return "You"
 		return "Opponent"
+
+	func clear_played_this_turn():
+		played_limited_this_turn = false
 
 	func draw_cards(count, cards : Array):
 		hand_count += count
@@ -525,6 +529,7 @@ func _update_player_stats(player, stats_group):
 		"deck": player.deck_count,
 		"life": player.life_count,
 		"cheer": player.cheer_count,
+		"limited_available": not player.played_limited_this_turn,
 	}
 	stats_group.update_stats(stats_info)
 	player._hand_indicator.text = str(player.hand_count)
@@ -2147,6 +2152,7 @@ func _on_play_support_card_event(event_data):
 	var limited_str = ""
 	if _limited:
 		limited_str = " (LIMITED)"
+		active_player.played_limited_this_turn = true
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s plays Support - [CARD]%s[/CARD]%s" % [
 		active_player.get_name(),
 		_get_card_definition_id(card_id),
@@ -2306,6 +2312,8 @@ func _on_turn_start(event_data):
 
 func _on_end_turn_event(event_data):
 	clear_performance_indicators()
+	me.clear_played_this_turn()
+	opponent.clear_played_this_turn()
 	var ending_player = get_player(event_data["ending_player_id"])
 	var _next_player_id = get_player(event_data["next_player_id"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn End**[/PHASE]" % ending_player.get_name())
