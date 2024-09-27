@@ -328,6 +328,7 @@ var full_event_log = []
 var phase_duration_time = 0
 var me_clock_value = 0
 var opponent_clock_value = 0
+var active_targeted_damage_showing = null
 
 const PhaseStartTimeBuffer = 0.5
 
@@ -832,7 +833,17 @@ func _on_choice_event(event_data):
 		var choice_texts = []
 		var enabled = []
 		var allowed = []
+		var incoming_damage_str = ""
 		for choice in choices:
+			if "incoming_damage_info" in choice:
+				incoming_damage_str = "\n" + Strings.get_incoming_damage_str(
+					choice["incoming_damage_info"]["amount"],
+					choice["incoming_damage_info"]["special"],
+					choice["incoming_damage_info"]["prevent_life_loss"],
+				)
+				var target_card = find_card_on_board(choice["incoming_damage_info"]["target_id"])
+				target_card.show_targeted_damage()
+				active_targeted_damage_showing = target_card
 			choice_texts.append(Strings.get_effect_text(choice))
 			enabled.append(true)
 			allowed.append(_allowed)
@@ -841,7 +852,7 @@ func _on_choice_event(event_data):
 			"\n- ".join(choice_texts)
 		])
 		_begin_make_choice([], 0, 0)
-		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_MAKE_CHOICE)
+		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_MAKE_CHOICE) + incoming_damage_str
 		action_menu_choice_info = {
 			"strings": choice_texts,
 			"enabled": enabled,
@@ -1784,6 +1795,11 @@ func _change_ui_phase(new_ui_phase : UIPhase):
 	ui_phase = new_ui_phase
 	if new_ui_phase != UIPhase.UIPhase_WaitingOnServer:
 		thinking_spinner.visible = false
+	else:
+		# Clear anything based on what we might have just submitted to the server.
+		if active_targeted_damage_showing:
+			active_targeted_damage_showing.hide_targeted_damage()
+			active_targeted_damage_showing = null
 	_update_stats_ui()
 
 func _on_generate_holopower(event_data):

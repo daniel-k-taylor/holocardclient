@@ -32,6 +32,7 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var targeting_amount_label = $OuterMargin/TargetingIndicator/PanelContainer/CenterContainer/PanelContainer/TargetDamageLabel
 @onready var active_skill_indicator = $OuterMargin/ActiveSkillIndicator
 @onready var active_skill_name = $OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer/SkillContainer/ActiveSkillName
+@onready var targeted_damage_indicator = $OuterMargin/TargetedDamageIndicator
 
 @export var is_big_card : bool = false
 
@@ -70,6 +71,7 @@ func _ready():
 	attachment_box.visible = false
 	targeting_indicator.visible = false
 	active_skill_indicator.visible = false
+	targeted_damage_indicator.visible = false
 
 	GlobalSettings.connect("setting_changed_HideEnglishCardText", _hide_english_setting_updated)
 	GlobalSettings.connect("setting_changed_UseEnProxies", _en_proxy_setting_updated)
@@ -203,6 +205,12 @@ func show_active_skill(skill_name):
 func hide_performance_skill_indicators():
 	targeting_indicator.visible = false
 	active_skill_indicator.visible = false
+
+func show_targeted_damage():
+	targeted_damage_indicator.visible = true
+	
+func hide_targeted_damage():
+	targeted_damage_indicator.visible = false
 
 func get_texture():
 	return card_image.texture

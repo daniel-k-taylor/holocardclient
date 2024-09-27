@@ -286,6 +286,15 @@ func get_stat_string(stat):
 			return "Power"
 	return "UNKNOWN"
 
+func get_incoming_damage_str(amount, special, prevent_life_loss):
+	var special_str = ""
+	var prevent_str = ""
+	if special:
+		special_str = "Special "
+	if prevent_life_loss:
+		prevent_str = " (Can't lose LIFE)"
+	return "Incoming %sDamage: %s%s" % [special_str, amount, prevent_str]
+
 func get_performance_skill(performer_position, art_id, power):
 	var skill = get_skill_string(art_id)
 	var position_str = get_position_string(performer_position)
