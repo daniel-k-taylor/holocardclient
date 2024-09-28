@@ -329,6 +329,7 @@ var phase_duration_time = 0
 var me_clock_value = 0
 var opponent_clock_value = 0
 var active_targeted_damage_showing = null
+var current_performance_target_card = null
 
 const PhaseStartTimeBuffer = 0.5
 
@@ -751,6 +752,7 @@ func _on_boost_stat_event(event_data):
 	var card_id = event_data["card_id"]
 	var stat = event_data["stat"]
 	var amount = event_data["amount"]
+	var for_art = event_data["for_art"]
 	var card_str = ""
 	if card_id:
 		card_str = "[CARD]%s[/CARD] " % _get_card_definition_id(card_id)
@@ -760,6 +762,9 @@ func _on_boost_stat_event(event_data):
 		amount,
 		Strings.get_stat_string(stat),
 	])
+
+	if for_art:
+		current_performance_target_card.update_target_reticle(amount)
 
 	if stat == "damage_prevented":
 		var card = find_card_on_board(card_id)
@@ -2099,13 +2104,15 @@ func _on_perform_art_event(event_data):
 		power,
 	])
 
-	_play_popup_message("Art: %s\nDamage: %s" % [Strings.get_skill_string(art_id), power])
+	_play_popup_message("Art: %s\nBase Power: %s" % [Strings.get_skill_string(art_id), power])
 	var performer = find_card_on_board(performer_id)
 	var target = find_card_on_board(target_id)
 	performer.show_active_skill(Strings.get_skill_string(art_id))
 	target.show_target_reticle(power)
+	current_performance_target_card = target
 
 func clear_performance_indicators():
+	current_performance_target_card  = null
 	for card in all_cards.get_children():
 		card.hide_performance_skill_indicators()
 

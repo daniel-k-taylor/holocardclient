@@ -533,7 +533,7 @@ func get_timing_text(timing, timing_source_requirement):
 						text += "After Die Roll (Holomem Ability): "
 			else:
 				text += "After Die Roll: "
-		"after_take_damage"
+		"after_take_damage":
 			text += "After taking damage: "
 		"before_art":
 			text += "Art: "

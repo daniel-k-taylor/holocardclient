@@ -198,6 +198,10 @@ func show_target_reticle(amount):
 	targeting_amount_label.text = str(amount)
 	targeting_indicator.visible = true
 
+func update_target_reticle(change_amount):
+	var current_amount = int(targeting_amount_label.text)
+	targeting_amount_label.text = str(current_amount + change_amount)
+
 func show_active_skill(skill_name):
 	active_skill_name.text = skill_name
 	active_skill_indicator.visible = true
@@ -208,7 +212,7 @@ func hide_performance_skill_indicators():
 
 func show_targeted_damage():
 	targeted_damage_indicator.visible = true
-	
+
 func hide_targeted_damage():
 	targeted_damage_indicator.visible = false
 
