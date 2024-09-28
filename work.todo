@@ -6,10 +6,7 @@ Todo:
   ☐ Better text on some choose cards like archive from hand, or bloom from hand, stacked
 
 Polish:
-  ☐ Lui's oshi ability text in the choice with holopower usage
   ☐ Hawkeye visual effect - maybe some chains around the center/collab slots?
-  ☐ Pekora 041 blooming over a center with no collab, the cheer looks like it goes to hand because both cards set their destinations at the same time.
-     - potential fix is updating the cheer's destination to the bloom card's destination instead of it's current position
 
 Later:
   ☐ Consider Exceed style hover, probably still use big card just put it closer to the actual card?

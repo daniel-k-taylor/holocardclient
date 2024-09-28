@@ -2036,7 +2036,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				var holomem_from_card = find_card_on_board(from)
 				if holomem_from_card:
 					holomem_from_card.remove_attached(card_id)
-					spawn_location = holomem_from_card.position
+					spawn_location = holomem_from_card.get_center_position()
 				else:
 					assert(false, "Unexpected from zone")
 
@@ -2080,7 +2080,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			_:
 				var holomem_card = find_card_on_board(zone_card_id)
 				if holomem_card:
-					card.begin_move_to(holomem_card.position, false, true)
+					card.begin_move_to(holomem_card.get_center_position(), false, true)
 					if _is_cheer_card(card_id):
 						var cheer_colors = _get_card_colors(card_id)
 						holomem_card.attach_cheer(card_id, cheer_colors)

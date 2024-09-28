@@ -6031,7 +6031,8 @@
                 "amount_min": 1,
                 "amount_max": 1,
                 "from": "downed_holomem",
-                "to": "holomem"
+                "to": "holomem",
+                "multi_to": true
             }
         ]
     },

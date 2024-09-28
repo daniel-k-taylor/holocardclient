@@ -134,7 +134,7 @@ func begin_move_to(target, immediate : bool, destroy_on_completion : bool = fals
 		position_start_time = 0
 
 func get_center_position():
-	return position
+	return target_position
 
 func create_card(definition, definition_id, card_id, card_type):
 	_definition = definition
