@@ -32,6 +32,7 @@ const EventType_MoveCard = "move_card"
 const EventType_MoveAttachedCard = "move_attached_card"
 const EventType_MulliganDecision = "mulligan_decision"
 const EventType_MulliganReveal = "mulligan_reveal"
+const EventType_ObserverCaughtUp = "observer_caught_up"
 const EventType_OshiSkillActivation = "oshi_skill_activation"
 const EventType_PerformanceStepStart = "performance_step_start"
 const EventType_PerformArt = "perform_art"
@@ -46,18 +47,18 @@ const EventType_ShuffleDeck = "shuffle_deck"
 const EventType_TurnStart = "turn_start"
 
 const DecisionEventTypes = [
-    EventType_CheerStep,
-    EventType_Choice_SendCollabBack,
-    EventType_Decision_Choice,
-    EventType_Decision_ChooseCards,
-    EventType_Decision_ChooseHolomemForEffect,
-    EventType_Decision_MainStep,
-    EventType_Decision_OrderCards,
-    EventType_Decision_PerformanceStep,
-    EventType_Decision_SendCheer,
-    EventType_Decision_SwapHolomemToCenter,
-    EventType_ForceDieResult,
-    EventType_ResetStepChooseNewCenter,
+	EventType_CheerStep,
+	EventType_Choice_SendCollabBack,
+	EventType_Decision_Choice,
+	EventType_Decision_ChooseCards,
+	EventType_Decision_ChooseHolomemForEffect,
+	EventType_Decision_MainStep,
+	EventType_Decision_OrderCards,
+	EventType_Decision_PerformanceStep,
+	EventType_Decision_SendCheer,
+	EventType_Decision_SwapHolomemToCenter,
+	EventType_ForceDieResult,
+	EventType_ResetStepChooseNewCenter,
 ]
 
 const GameAction_Mulligan = "mulligan"

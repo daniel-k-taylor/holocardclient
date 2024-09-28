@@ -32,6 +32,7 @@ const ClientMessage_LeaveMatchmakingQueue = "leave_matchmaking_queue"
 const ClientMessage_JoinMatchmakingQueue = "join_matchmaking_queue"
 const ClientMessage_JoinServer = "join_server"
 const ClientMessage_ObserveRoom = "observe_room"
+const ClientMessage_ObserverGetEvents = "observer_get_events"
 
 func is_server_connected() -> bool:
 	return _socket != null
@@ -132,9 +133,12 @@ func _handle_server_error(message):
 			pass
 
 func _handle_game_event(message):
-	var event_type = message["event_data"]["event_type"]
+	_handle_game_event_internal(message["event_data"])
+
+func _handle_game_event_internal(event):
+	var event_type = event["event_type"]
 	#Logger.log(Logger.LogArea_Network, "Game event (%s): %s" % [event_type, message["event_data"]])
-	game_event.emit(event_type, message["event_data"])
+	game_event.emit(event_type, event)
 
 func _send_join_server():
 	var message = {
@@ -194,5 +198,12 @@ func observe_room(room_index):
 	var message = {
 		"message_type": ClientMessage_ObserveRoom,
 		"room_id": room_id,
+	}
+	_send_message(message)
+
+func observer_get_events(event_index):
+	var message = {
+		"message_type": ClientMessage_ObserverGetEvents,
+		"next_event_index": event_index,
 	}
 	_send_message(message)

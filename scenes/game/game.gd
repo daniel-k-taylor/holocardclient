@@ -317,6 +317,8 @@ var opponent : PlayerState
 
 var observer_mode : bool = false
 var catch_up_mode : bool = false
+var catch_up_mode_end_when_caught_up : bool = false
+var catch_up_last_requested_event_index : int = 0
 var starting_player_id : String
 var game_card_map
 
@@ -400,7 +402,12 @@ func _process_next_event():
 		while true:
 			var event = event_queue.pop_front()
 			if not event:
-				catch_up_mode = false
+				if catch_up_mode_end_when_caught_up:
+					catch_up_mode = false
+					break
+				if catch_up_last_requested_event_index < len(full_event_log):
+					NetworkManager.observer_get_events(len(full_event_log))
+					catch_up_last_requested_event_index = len(full_event_log)
 				break
 			update_clocks_from_event(event)
 			process_game_event(event["event_type"], event)
@@ -435,6 +442,12 @@ func check_switch_decision_owner(event_data):
 
 func handle_game_event(event_type, event_data):
 	Logger.log_game("Received game event: %s\n%s" % [event_type, event_data])
+	if event_type == Enums.EventType_ObserverCaughtUp:
+		catch_up_mode_end_when_caught_up = true
+		return
+	if len(full_event_log) > 0 and event_data["event_number"] <= full_event_log[-1]["event_number"]:
+		Logger.log_game("Ignoring event %s because it has already been processed" % event_data["event_number"])
+		return
 	update_clocks_from_event(event_data)
 	full_event_log.append(event_data)
 	event_queue.append(event_data)
