@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://5p855osm4gsi"]
+
+[ext_resource type="Script" path="res://scenes/misc/match_row.gd" id="1_qdj6e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qls5"]
+bg_color = Color(0, 0.174479, 0.174479, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukowd"]
+bg_color = Color(2.52686e-07, 0.235457, 0.235457, 1)
+
+[node name="MatchRow" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_0qls5")
+script = ExtResource("1_qdj6e")
+
+[node name="LighterBackground" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ukowd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Player1" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Unksing filng 2"
+horizontal_alignment = 1
+
+[node name="Player2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BadKoolaidKiller6"
+horizontal_alignment = 1
+
+[node name="RoomName" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Room Name"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ObserveButton" type="Button" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Observe"
+
+[connection signal="pressed" from="HBoxContainer/MarginContainer/ObserveButton" to="." method="_on_observe_button_pressed"]

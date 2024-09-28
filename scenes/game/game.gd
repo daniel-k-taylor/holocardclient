@@ -74,6 +74,8 @@ class PlayerState:
 	var _player_id : String
 	var _is_me : bool
 	var _game
+	var _username : String
+	var _observer_mode : bool
 
 	var hand_count = 0
 	var deck_count = Enums.DECK_SIZE
@@ -96,14 +98,16 @@ class PlayerState:
 
 	var stage_zones = []
 
-	func _init(game, player_id:String, is_local_player : bool,
+	func _init(game, player_id:String, is_local_player : bool, username : String,
 		archive_zone, backstage_zone, collab_zone,
 		center_zone, oshi_zone, hand_zone, hand_indicator,
 		floating_zone, deck_spawn_zone
 	):
 		_game = game
+		_observer_mode = _game.observer_mode
 		_player_id = player_id
 		_is_me = is_local_player
+		_username = username
 
 		_archive_zone = archive_zone
 		_hand_zone = hand_zone
@@ -121,8 +125,13 @@ class PlayerState:
 		return _is_me
 
 	func get_name() -> String:
-		if _is_me: return "You"
-		return "Opponent"
+		return _username
+
+	func get_name_decorated() -> String:
+		var color = GameLog.DEFAULT_PLAYER_COLOR
+		if not is_me():
+			color = GameLog.DEFAULT_OPPONENT_COLOR
+		return "[color=%s]%s[/color]" % [color, _username]
 
 	func clear_played_this_turn():
 		played_limited_this_turn = false
@@ -132,7 +141,7 @@ class PlayerState:
 		hand_count += count
 		deck_count -= count
 
-		if _hand_zone and is_me():
+		if _hand_zone and is_me() and not _observer_mode:
 			for card in cards:
 				_hand_zone.add_card(card)
 			_game._put_cards_on_top(_hand_zone.cards)
@@ -172,7 +181,7 @@ class PlayerState:
 
 	func add_card_to_hand(card : CardBase):
 		hand_count += 1
-		if is_me():
+		if is_me() and not _observer_mode:
 			_hand_zone.add_card(card)
 			_game._put_cards_on_top(_hand_zone.cards)
 		else:
@@ -210,7 +219,7 @@ class PlayerState:
 	func are_cards_in_zone_visible(to_zone : String):
 		if to_zone in ["archive", "backstage", "center", "collab", "floating", "oshi"]:
 			return true
-		if to_zone == "hand" and is_me():
+		if to_zone == "hand" and is_me() and not _observer_mode:
 			return true
 		return false
 
@@ -254,7 +263,7 @@ class PlayerState:
 		# The bloom card will always show up, so find/create it.
 		var bloom_card = _game.find_card_on_board(bloom_card_id)
 		if not bloom_card:
-			assert(not is_me())
+			assert(not is_me() or _observer_mode)
 			bloom_card = _game.create_card(bloom_card_id)
 			var spawn_at = get_hand_placeholder_location()
 			bloom_card.begin_move_to(spawn_at, true)
@@ -303,6 +312,8 @@ class PlayerState:
 var me : PlayerState
 var opponent : PlayerState
 
+var observer_mode : bool = false
+var catch_up_mode : bool = false
 var starting_player_id : String
 var game_card_map
 
@@ -330,6 +341,7 @@ var me_clock_value = 0
 var opponent_clock_value = 0
 var active_targeted_damage_showing = null
 var current_performance_target_card = null
+var current_clock_player_id = ""
 
 const PhaseStartTimeBuffer = 0.5
 
@@ -368,7 +380,10 @@ func _process(delta: float) -> void:
 			else:
 				thinking_spinner.visible = false
 	if ui_phase == UIPhase.UIPhase_WaitingOnServer:
-		opponent_clock_value += delta
+		if observer_mode and current_clock_player_id == me._player_id:
+			me_clock_value += delta
+		else:
+			opponent_clock_value += delta
 	else:
 		me_clock_value += delta
 	update_clock(me_clock, me_clock_value)
@@ -378,9 +393,18 @@ func is_playing_animation():
 	return remaining_animation_seconds > 0
 
 func _process_next_event():
-	var event = event_queue.pop_front()
-	if event:
-		process_game_event(event["event_type"], event)
+	if catch_up_mode:
+		while true:
+			var event = event_queue.pop_front()
+			if not event:
+				catch_up_mode = false
+				break
+			update_clocks_from_event(event)
+			process_game_event(event["event_type"], event)
+	else:
+		var event = event_queue.pop_front()
+		if event:
+			process_game_event(event["event_type"], event)
 
 func begin_remote_game(event_type, event_data):
 	Logger.log_game("Starting game!")
@@ -397,6 +421,15 @@ func update_clocks_from_event(event_data):
 	if "opponent_clock_used" in event_data:
 		opponent_clock_value = event_data["opponent_clock_used"]
 
+func check_switch_decision_owner(event_data):
+	if event_data["event_type"] in Enums.DecisionEventTypes:
+		var active_player = null
+		if "effect_player_id" in event_data:
+			active_player = get_player(event_data["effect_player_id"])
+		elif "active_player" in event_data:
+			active_player = get_player(event_data["active_player"])
+		current_clock_player_id = active_player._player_id
+
 func handle_game_event(event_type, event_data):
 	Logger.log_game("Received game event: %s\n%s" % [event_type, event_data])
 	update_clocks_from_event(event_data)
@@ -405,6 +438,8 @@ func handle_game_event(event_type, event_data):
 
 func process_game_event(event_type, event_data):
 	game_log.add_to_log(GameLog.GameLogLine.Debug, "Event: %s" % event_type)
+
+	check_switch_decision_owner(event_data)
 
 	match event_type:
 		Enums.EventType_AddTurnEffect:
@@ -564,18 +599,25 @@ func _on_game_over(event_data):
 	var _loser_id = event_data["loser_id"]
 	var _reason_id = event_data["reason_id"]
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "[PHASE]Winner:[/PHASE] %s!" % [
-		winner_player.get_name(),
+		winner_player.get_name_decorated(),
 	])
 	game_over_text.visible = true
-	if winner_player.is_me():
+	if observer_mode:
+		game_over_text.text = game_over_text.text.replace("WINNER_TEXT", "%s Wins!" % [winner_player.get_name()])
+	elif winner_player.is_me():
 		game_over_text.text = game_over_text.text.replace("WINNER_TEXT", "YOU WIN!")
 	else:
 		game_over_text.text = game_over_text.text.replace("WINNER_TEXT", "YOU LOSE!")
 	thinking_spinner.visible = false
 	game_over = true
+	action_menu.visible = false
+	card_popout.visible = false
 
 func _begin_game(event_data):
 	starting_player_id = event_data["starting_player"]
+	observer_mode = event_data["event_player_id"] == "observer"
+	if observer_mode:
+		catch_up_mode = true
 	var my_id = event_data["your_id"]
 	var opponent_id = event_data["opponent_id"]
 	game_card_map = event_data["game_card_map"]
@@ -583,12 +625,12 @@ func _begin_game(event_data):
 	me_username_label.text = event_data["your_username"]
 	opponent_username_label.text = event_data["opponent_username"]
 
-	me = PlayerState.new(self, my_id, true,
+	me = PlayerState.new(self, my_id, true, event_data["your_username"],
 		me_archive, me_backstage, me_collab,
 		me_center, me_oshi, me_hand, me_hand_indicator,
 		floating_zone, me_deck_spawn
 	)
-	opponent = PlayerState.new(self, opponent_id, false,
+	opponent = PlayerState.new(self, opponent_id, false, event_data["opponent_username"],
 		opponent_archive, opponent_backstage, opponent_collab,
 		opponent_center, opponent_oshi, opponent_hand, opponent_hand_indicator,
 		floating_zone, opponent_deck_spawn
@@ -701,6 +743,8 @@ func _allowed():
 	return true
 
 func _play_popup_message(text :String, fast:bool = false):
+	if catch_up_mode:
+		return
 	var popup = PopupMessageScene.instantiate()
 	add_child(popup)
 	popup.position = $PopupLocation.position
@@ -710,6 +754,8 @@ func _play_popup_message(text :String, fast:bool = false):
 	popup.play_message(text, fast)
 
 func _play_transient_icon_message(text : String, pos : Vector2, icon_type : PopupMessage.IconMessageType, fast : bool = false):
+	if catch_up_mode:
+		return
 	var popup = PopupMessageScene.instantiate()
 	add_child(popup)
 	popup.position = pos
@@ -727,7 +773,7 @@ func _on_add_turn_effect(event_data):
 	var turn_effect = event_data["turn_effect"]
 	var effect_text = "This Turn: " + Strings.get_effect_text(turn_effect)
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s %s" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		effect_text
 	])
 	_play_popup_message(effect_text)
@@ -740,11 +786,11 @@ func _on_bloom_event(event_data):
 	var target_card_id = event_data["target_card_id"]
 	var bloom_from_zone = event_data["bloom_from_zone"]
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] blooms into [CARD]%s[/CARD]" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		_get_card_definition_id(target_card_id),
 		_get_card_definition_id(bloom_card_id)
 	])
-	if not active_player.is_me():
+	if not active_player.is_me() or observer_mode:
 		_play_popup_message("Bloom!", true)
 	active_player.bloom(bloom_card_id, target_card_id, bloom_from_zone)
 
@@ -776,7 +822,7 @@ func _on_boost_stat_event(event_data):
 func _on_cheer_step(event_data):
 	var active_player = get_player(event_data["active_player"])
 	# TODO: Animation for Cheer Step
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		var cheer_to_place = event_data["cheer_to_place"]
 		var source = event_data["source"]
 		var options = event_data["options"]
@@ -800,7 +846,7 @@ func _on_cheer_step(event_data):
 
 func _on_send_collab_back_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Send Collab back[/DECISION]" % [
 			active_player.get_name()
 		])
@@ -823,17 +869,17 @@ func _on_collab_event(event_data):
 	var collab_card_id = event_data["collab_card_id"]
 	var holopower_generated = event_data["holopower_generated"]
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] collabs" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		_get_card_definition_id(collab_card_id)
 	])
-	if not active_player.is_me():
+	if not active_player.is_me() or observer_mode:
 		_play_popup_message("Collab!", true)
 	do_move_cards(active_player, "backstage", "collab", "", [collab_card_id])
 	active_player.generate_holopower(holopower_generated)
 
 func _on_choice_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		var choices = event_data["choice"]
 		var choice_texts = []
 		var enabled = []
@@ -853,7 +899,7 @@ func _on_choice_event(event_data):
 			enabled.append(true)
 			allowed.append(_allowed)
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice:[/DECISION]\n- %s" % [
-			active_player.get_name(),
+			active_player.get_name_decorated(),
 			"\n- ".join(choice_texts)
 		])
 		_begin_make_choice([], 0, 0)
@@ -874,7 +920,7 @@ func _on_choice_event(event_data):
 
 func _on_choose_cards_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		var all_card_seen = event_data["all_card_seen"]
 		var cards_can_choose = event_data["cards_can_choose"]
 		var from_zone = event_data["from_zone"]
@@ -938,7 +984,7 @@ func _on_choose_cards_event(event_data):
 
 func _on_choose_holomem_for_effect_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		var cards_can_choose = event_data["cards_can_choose"]
 		var effect = event_data["effect"]
 		var amount_min = event_data.get("amount_min", 1)
@@ -964,7 +1010,7 @@ func _on_choose_holomem_for_effect_event(event_data):
 
 func _on_order_cards_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		var card_ids = event_data["card_ids"]
 		#var from_zone = event_data["from_zone"]
 		var to_zone = event_data["to_zone"]
@@ -988,7 +1034,7 @@ func _on_order_cards_event(event_data):
 
 func _on_main_step_decision(event_data):
 	var active_player = get_player(event_data["active_player"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Main Step Action[/DECISION]" % [
 			me.get_name()
 		])
@@ -1035,7 +1081,7 @@ func _start_main_step_decision():
 func _on_performance_step_decision(event_data):
 	clear_performance_indicators()
 	var active_player = get_player(event_data["active_player"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Performance Step Action[/DECISION]" % [
 			me.get_name()
 		])
@@ -1337,7 +1383,7 @@ func _on_main_step_action_chosen(choice_index):
 
 func _on_send_cheer_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Send Cheer[/DECISION]" % [
 			me.get_name()
 		])
@@ -1620,12 +1666,12 @@ func _on_swap_holomem_to_center_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	var cards_can_choose = event_data["cards_can_choose"]
 	var is_opponent = event_data["swap_opponent_cards"]
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		var player_str = "your"
 		if is_opponent:
 			player_str = "opponent's"
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Swap %s Holomem with Center[/DECISION]" % [
-			active_player.get_name(), player_str
+			active_player.get_name_decorated(), player_str
 		])
 		_begin_make_choice(cards_can_choose, 1, 1)
 		var instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_SWAP_CENTER)
@@ -1665,12 +1711,12 @@ func _on_draw_event(event_data):
 		created_cards.append(new_card)
 		new_card.begin_move_to(active_player.get_card_spawn_location(), true)
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s draws %s cards%s" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		len(drawn_card_ids),
 		get_card_logline(drawn_card_ids)
 	])
-	if not active_player.is_me():
-		_play_popup_message("Opponent draws %s" % len(drawn_card_ids), true)
+	if not active_player.is_me() or observer_mode:
+		_play_popup_message("%s draws %s" % [active_player.get_name(), len(drawn_card_ids)], true)
 
 	active_player.draw_cards(len(drawn_card_ids), created_cards)
 
@@ -1814,7 +1860,7 @@ func _on_generate_holopower(event_data):
 
 func _on_initial_placement_begin(event_data):
 	var active_player = get_player(event_data["active_player"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Initial Placement[/DECISION]" % active_player.get_name())
 		initial_placement_state = {}
 		# First, choose the center member.
@@ -1856,7 +1902,7 @@ func _on_initial_placement_placed(event_data):
 	var center_id = event_data["center_card_id"]
 	var backstage_ids = event_data["backstage_card_ids"]
 	var hand_count = event_data["hand_count"]
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		# The initial placement should have probably already moved and updated everything.
 		# So there should be nothing to do here.
 		pass
@@ -1879,7 +1925,13 @@ func _on_initial_placement_revealed(event_data):
 		var cheer_deck_count = info["cheer_deck_count"]
 		var life_count = info["life_count"]
 
-		if not active_player.is_me():
+		if observer_mode:
+			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Initial Placement*[/PHASE]" % active_player.get_name())
+			do_move_cards(active_player, "hand", "center", "", [center_card_id])
+			do_move_cards(active_player, "hand", "backstage", "", backstage_card_ids)
+			active_player.hand_count = hand_count
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		elif not active_player.is_me():
 			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Initial Placement*[/PHASE]" % active_player.get_name())
 			# Local player is done on initial placement
 			do_move_cards(active_player, "hand", "center", "", [center_card_id])
@@ -1889,7 +1941,6 @@ func _on_initial_placement_revealed(event_data):
 		active_player.set_oshi(oshi_id)
 		active_player.set_starting_cheer(cheer_deck_count)
 		active_player.set_starting_life(life_count)
-		print("Mine: %s  Info: %s" % [active_player.hand_count, hand_count])
 		assert(active_player.hand_count == hand_count)
 	me_stats.visible = true
 	opponent_stats.visible = true
@@ -1897,7 +1948,7 @@ func _on_initial_placement_revealed(event_data):
 func _on_main_step_start(event_data):
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Main Step*[/PHASE]" % active_player.get_name())
-	if not active_player.is_me():
+	if not active_player.is_me() or observer_mode:
 		_play_popup_message("Main Step", true)
 
 func _on_modify_hp_event(event_data):
@@ -1912,7 +1963,7 @@ func _on_modify_hp_event(event_data):
 	_play_transient_icon_message(str(damage_done), card.get_center_position(), PopupMessage.IconMessageType.Damage, true)
 	#_play_popup_message("Damage: %s" % [damage_done])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		_get_card_definition_id(card_id),
 		damage_done
 	])
@@ -1932,7 +1983,7 @@ func _on_move_card_event(event_data):
 		move_card_ids_already_handled.erase(card_id)
 		already_handled = true
 
-	if not active_player.is_me() and from_zone == "hand" and to_zone == "backstage":
+	if (observer_mode or not active_player.is_me()) and from_zone == "hand" and to_zone == "backstage":
 		# Play a popup message informing what opponent is doing.
 		_play_popup_message("Place Holomem", true)
 
@@ -1965,7 +2016,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 				player.remove_floating(card_id)
 			"hand":
 				player.remove_from_hand(card_id)
-				if not player.is_me():
+				if not player.is_me() or observer_mode:
 					spawn_location = player.get_hand_placeholder_location()
 			"holopower":
 				player.remove_holopower(1)
@@ -1991,7 +2042,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 			if zone_card_id:
 				to_zone = "[CARD]%s[/CARD]" % _get_card_definition_id(zone_card_id)
 			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s moves [CARD]%s[/CARD] from %s to %s" % [
-				player.get_name(),
+				player.get_name_decorated(),
 				_get_card_definition_id(card_id),
 				from_zone,
 				to_zone
@@ -2052,9 +2103,9 @@ func _on_move_attached_card_event(event_data):
 
 func _on_mulligan_decision_event(event_data):
 	var active_player = get_player(event_data["active_player"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Mulligan[/DECISION]" % [
-			active_player.get_name(),
+			active_player.get_name_decorated(),
 		])
 		action_menu_choice_info = {
 			"strings": [
@@ -2079,12 +2130,12 @@ func _on_mulligan_decision_event(event_data):
 func _on_mulligan_reveal_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	var revealed_card_ids = event_data["revealed_card_ids"]
-	if not active_player.is_me():
+	if not active_player.is_me() or observer_mode:
 		var card_def_list = []
 		for card_id in revealed_card_ids:
 			card_def_list.append(_get_card_definition_id(card_id))
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s mulligans revealing [%s]" % [
-			active_player.get_name(),
+			active_player.get_name_decorated(),
 			", ".join(card_def_list)
 		])
 		# The opponent is revealing us cards they mulliganed from a forced mulligan.
@@ -2098,7 +2149,7 @@ func _on_perform_art_event(event_data):
 	var target_id = event_data["target_id"]
 	var power = event_data["power"]
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] performs art [SKILL]%s[/SKILL] %s" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		_get_card_definition_id(performer_id),
 		Strings.get_skill_string(art_id),
 		power,
@@ -2125,7 +2176,7 @@ func _on_damage_dealt_event(event_data):
 	var card = find_card_on_board(target_id)
 	card.add_damage(damage, false)
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
-		target_player.get_name(),
+		target_player.get_name_decorated(),
 		_get_card_definition_id(target_id),
 		damage,
 	])
@@ -2134,7 +2185,7 @@ func _on_damage_dealt_event(event_data):
 
 func _process_downed_holomem(target_player, card, hand_ids, is_game_over, life_lost):
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] is downed" % [
-		target_player.get_name(),
+		target_player.get_name_decorated(),
 		card._definition_id,
 	])
 
@@ -2182,13 +2233,13 @@ func _on_play_support_card_event(event_data):
 		limited_str = " (LIMITED)"
 		active_player.played_limited_this_turn = true
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s plays Support - [CARD]%s[/CARD]%s" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		_get_card_definition_id(card_id),
 		limited_str,
 	])
 	do_move_cards(active_player, "hand", "floating", "", [card_id])
 	# TODO: Mark limited use somewhere
-	if not active_player.is_me():
+	if not active_player.is_me() or observer_mode:
 		_play_popup_message("Playing Support Card", true)
 	pass
 
@@ -2200,7 +2251,7 @@ func _on_reset_step_activate_event(event_data):
 		var card = find_card_on_board(card_id)
 		if card:
 			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] no longer resting" % [
-				active_player.get_name(),
+				active_player.get_name_decorated(),
 				_get_card_definition_id(card_id)
 			])
 			card.set_resting(false)
@@ -2210,9 +2261,9 @@ func _on_reset_step_activate_event(event_data):
 func _on_reset_step_choose_new_center_event(event_data):
 	var active_player = get_player(event_data["active_player"])
 	var center_options = event_data["center_options"]
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose new Center[/DECISION]" % [
-			active_player.get_name(),
+			active_player.get_name_decorated(),
 		])
 		_begin_make_choice(center_options, 1, 1)
 		action_menu_choice_info = {
@@ -2240,12 +2291,12 @@ func _on_reset_step_collab_event(event_data):
 		if card:
 			card.set_resting(true)
 			game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] resting from Collab" % [
-				active_player.get_name(),
+				active_player.get_name_decorated(),
 				_get_card_definition_id(card_id)
 			])
 			if card_id not in moved_backstage_ids:
 				game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] blocked from moving back" % [
-					active_player.get_name(),
+					active_player.get_name_decorated(),
 					_get_card_definition_id(card_id)
 				])
 		else:
@@ -2264,7 +2315,7 @@ func _on_restore_hp_event(event_data):
 	_play_transient_icon_message(str(healed_amount), card.get_center_position(), PopupMessage.IconMessageType.Heart, true)
 	#_play_popup_message("Heal: %s" % [healed_amount])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] heals %s damage" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		_get_card_definition_id(card_id),
 		healed_amount
 	])
@@ -2279,7 +2330,7 @@ func _on_reveal_cards_event(event_data):
 			source_str = "top of deck"
 	for card_id in card_ids:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s reveals [CARD]%s[/CARD] from %s" % [
-			active_player.get_name(),
+			active_player.get_name_decorated(),
 			_get_card_definition_id(card_id),
 			source_str
 		])
@@ -2293,7 +2344,7 @@ func _on_roll_die_event(event_data):
 	if rigged:
 		rigged_str = " (RIGGED)"
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s die roll = %s%s" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		die_result,
 		rigged_str,
 	])
@@ -2314,7 +2365,7 @@ func _on_oshi_skill_activation(event_data):
 	var active_player = get_player(event_data["oshi_player_id"])
 	var skill_id = event_data["skill_id"]
 	var logline = "%s Oshi Skill [SKILL][%s][/SKILL] activated" % [
-		active_player.get_name(),
+		active_player.get_name_decorated(),
 		Strings.get_skill_string(skill_id)
 	]
 	match event_data["limit"]:
@@ -2324,7 +2375,7 @@ func _on_oshi_skill_activation(event_data):
 			active_player.used_oshi_game_skill = true
 	game_log.add_to_log(GameLog.GameLogLine.Detail, logline)
 	# TODO: Animation - show oshi skill activate and mark once per game/turn somehow.
-	if not active_player.is_me():
+	if not active_player.is_me() or observer_mode:
 		_play_popup_message("Oshi Skill: %s" % Strings.get_skill_string(skill_id))
 	pass
 
@@ -2332,7 +2383,7 @@ func on_performance_step_start(event_data):
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Performance Step*[/PHASE]" % active_player.get_name())
 	# TODO: Animation - performance start
-	if not active_player.is_me():
+	if not active_player.is_me() or observer_mode:
 		_play_popup_message("Performance Step", true)
 	pass
 
@@ -2351,12 +2402,12 @@ func _on_end_turn_event(event_data):
 	var _next_player_id = get_player(event_data["next_player_id"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn End**[/PHASE]" % ending_player.get_name())
 	# TODO: Animation - show turn phase change
-	if not ending_player.is_me():
+	if not ending_player.is_me() or observer_mode:
 		_play_popup_message("Turn End", true)
 
 func _on_force_die_result_event(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
-	if active_player.is_me():
+	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Choose die result[/DECISION]" % active_player.get_name())
 		_begin_make_choice([], 0, 0)
 		var instructions = Strings.build_choose_die_result_string()
@@ -2585,3 +2636,7 @@ func _on_save_file_dialog_file_selected(path: String) -> void:
 
 func _on_settings_button_pressed() -> void:
 	settings_window.show_settings(true)
+
+
+func _on_observer_next_event_pressed() -> void:
+	_process_next_event()

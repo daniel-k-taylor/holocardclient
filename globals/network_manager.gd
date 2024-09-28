@@ -24,12 +24,14 @@ const ServerMessageType_Error = "error"
 const ServerMessageType_ServerInfo = "server_info"
 
 const ServerError_JoinInvalidDeck = "joinmatch_invaliddeck"
+const ServerError_InvalidRoom = "invalid_room"
 
 const ClientMessage_GameAction = "game_action"
 const ClientMessage_LeaveGame = "leave_game"
 const ClientMessage_LeaveMatchmakingQueue = "leave_matchmaking_queue"
 const ClientMessage_JoinMatchmakingQueue = "join_matchmaking_queue"
 const ClientMessage_JoinServer = "join_server"
+const ClientMessage_ObserveRoom = "observe_room"
 
 func is_server_connected() -> bool:
 	return _socket != null
@@ -108,6 +110,9 @@ func get_players_info():
 func get_queue_info():
 	return cached_server_info["queue_info"]
 
+func get_room_info():
+	return cached_server_info["room_info"]
+
 func get_my_player_id():
 	return cached_server_info["your_id"]
 
@@ -120,6 +125,8 @@ func _handle_server_error(message):
 	match message["error_id"]:
 		ServerError_JoinInvalidDeck:
 			join_operation_failed.emit(ServerError_JoinInvalidDeck)
+		ServerError_InvalidRoom:
+			join_operation_failed.emit(ServerError_InvalidRoom)
 		_:
 			# No special error handling.
 			pass
@@ -180,4 +187,12 @@ func send_game_message(action_type:String, action_data :Dictionary):
 		"action_data": action_data,
 	}
 	Logger.log_net("Sending game message - %s: %s" % [action_type, message])
+	_send_message(message)
+
+func observe_room(room_index):
+	var room_id = cached_server_info["room_info"][room_index]["room_id"]
+	var message = {
+		"message_type": ClientMessage_ObserveRoom,
+		"room_id": room_id,
+	}
 	_send_message(message)

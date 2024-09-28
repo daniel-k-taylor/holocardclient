@@ -45,6 +45,21 @@ const EventType_RollDie = "roll_die"
 const EventType_ShuffleDeck = "shuffle_deck"
 const EventType_TurnStart = "turn_start"
 
+const DecisionEventTypes = [
+    EventType_CheerStep,
+    EventType_Choice_SendCollabBack,
+    EventType_Decision_Choice,
+    EventType_Decision_ChooseCards,
+    EventType_Decision_ChooseHolomemForEffect,
+    EventType_Decision_MainStep,
+    EventType_Decision_OrderCards,
+    EventType_Decision_PerformanceStep,
+    EventType_Decision_SendCheer,
+    EventType_Decision_SwapHolomemToCenter,
+    EventType_ForceDieResult,
+    EventType_ResetStepChooseNewCenter,
+]
+
 const GameAction_Mulligan = "mulligan"
 #"do_mulligan": bool,
 

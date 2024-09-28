@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dl8ct7vpm73vm"]
+[gd_scene load_steps=12 format=3 uid="uid://dl8ct7vpm73vm"]
 
 [ext_resource type="Theme" uid="uid://dpxwceaf3f35h" path="res://themes/menubuttontheme.tres" id="1_i5wud"]
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://c8gq118r05gw8" path="res://assets/sounds/match_available.mp3" id="8_myxxr"]
 [ext_resource type="AudioStream" uid="uid://corg1ley43ot1" path="res://assets/sounds/match_notification.mp3" id="9_2ujf4"]
 [ext_resource type="PackedScene" uid="uid://bvhny66vw8bs" path="res://scenes/menu/deckbuilder.tscn" id="10_b34kr"]
+[ext_resource type="PackedScene" uid="uid://bmhrys6ja8i7y" path="res://scenes/misc/match_list.tscn" id="11_76glj"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -55,9 +56,9 @@ text = "Uninitialized"
 [node name="ClientVersion" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 1000.0
-offset_top = 650.0
-offset_right = 1107.0
-offset_bottom = 690.0
+offset_top = 680.0
+offset_right = 1213.0
+offset_bottom = 720.0
 
 [node name="ClientVersionHeader" type="Label" parent="ClientVersion"]
 layout_mode = 2
@@ -129,10 +130,10 @@ text = "Leave Queue"
 
 [node name="ServerInfoList" type="ItemList" parent="."]
 layout_mode = 0
-offset_left = 859.0
-offset_top = 226.0
-offset_right = 1260.0
-offset_bottom = 627.0
+offset_left = 864.0
+offset_top = 274.0
+offset_right = 1265.0
+offset_bottom = 675.0
 item_count = 1
 max_columns = 3
 item_0/text = "disconnected"
@@ -148,30 +149,29 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 297.0
-offset_top = 101.0
-offset_right = 515.0
-offset_bottom = 156.0
+offset_left = -624.0
+offset_top = 12.0
+offset_right = -308.0
+offset_bottom = 67.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 32
 text = "Player Name"
-horizontal_alignment = 1
 
 [node name="PlayersLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 861.0
-offset_top = 175.0
-offset_right = 973.0
-offset_bottom = 220.0
+offset_left = 872.0
+offset_top = 218.0
+offset_right = 1003.0
+offset_bottom = 263.0
 theme_override_font_sizes/font_size = 32
 text = "Players -"
 
 [node name="PlayerCountLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 999.0
-offset_top = 175.0
-offset_right = 1111.0
-offset_bottom = 220.0
+offset_left = 1010.0
+offset_top = 218.0
+offset_right = 1122.0
+offset_bottom = 263.0
 theme_override_font_sizes/font_size = 32
 
 [node name="SettingsButton" parent="." instance=ExtResource("4_1cxk2")]
@@ -194,10 +194,10 @@ text = "How to Play"
 
 [node name="DeckBuilderButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 68.0
-offset_top = 34.0
-offset_right = 272.0
-offset_bottom = 87.0
+offset_left = 27.0
+offset_top = 82.0
+offset_right = 231.0
+offset_bottom = 135.0
 theme_override_font_sizes/font_size = 32
 text = "Deck Builder"
 
@@ -221,9 +221,9 @@ offset_bottom = 40.0
 [node name="HBoxContainer" type="HBoxContainer" parent="DeckControls"]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 100.0
+offset_top = 150.0
 offset_right = 134.0
-offset_bottom = 140.0
+offset_bottom = 190.0
 
 [node name="Label" type="Label" parent="DeckControls/HBoxContainer"]
 layout_mode = 2
@@ -288,6 +288,28 @@ stream = ExtResource("9_2ujf4")
 [node name="Deckbuilder" parent="." instance=ExtResource("10_b34kr")]
 visible = false
 
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 120.0
+offset_right = 1039.0
+offset_bottom = 173.0
+theme_override_constants/separation = 10
+
+[node name="ViewMatchListButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Match List"
+
+[node name="MatchCount" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="MatchList" parent="." instance=ExtResource("11_76glj")]
+visible = false
+layout_mode = 0
+
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
 [connection signal="pressed" from="MainButtons/JoinQueueButton" to="." method="_on_join_queue_button_pressed"]
@@ -301,3 +323,5 @@ visible = false
 [connection signal="item_selected" from="DebugDeckSelector" to="." method="_on_debug_deck_selector_item_selected"]
 [connection signal="item_selected" from="DeckControls/HBoxContainer/DeckSelector" to="." method="_on_deck_selector_item_selected"]
 [connection signal="exit_deck_builder" from="Deckbuilder" to="." method="_on_deckbuilder_exit_deck_builder"]
+[connection signal="pressed" from="HBoxContainer/ViewMatchListButton" to="." method="_on_view_match_list_button_pressed"]
+[connection signal="observe_match" from="MatchList" to="." method="_on_match_list_observe_match"]

@@ -21,6 +21,7 @@ var oshi_azki = "hSD01-002"
 @onready var client_version = $ClientVersion/ClientVersionLabel
 @onready var player_username = $PlayerUsernameLabel
 @onready var player_count_label = $PlayerCountLabel
+@onready var match_count_label = $HBoxContainer/MatchCount
 
 # Other
 @onready var server_info_list : ItemList = $ServerInfoList
@@ -31,6 +32,8 @@ var oshi_azki = "hSD01-002"
 @onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
 @onready var supported_cards_list : ItemList = $SupportedCardsList
 @onready var howtoplay = $HowToPlayButton
+@onready var match_list = $MatchList
+@onready var match_list_button = $HBoxContainer/ViewMatchListButton
 
 @onready var deck_builder : DeckBuilder = $Deckbuilder
 
@@ -94,6 +97,7 @@ func _update_buttons() -> void:
 			_update_element(join_custom_box, false, false)
 			_update_element(deck_builder_button, true, true)
 			_update_element(how_to_play_button, true, true)
+			_update_element(match_list_button, false, true)
 			server_status.text = "Connecting to server..."
 		MenuState.MenuState_Connected_Default:
 			_update_element(play_ai_button, true, true)
@@ -105,6 +109,7 @@ func _update_buttons() -> void:
 			_update_element(join_custom_box, true, true)
 			_update_element(deck_builder_button, true, true)
 			_update_element(how_to_play_button, true, true)
+			_update_element(match_list_button, true, true)
 			server_status.text = "Connected"
 		MenuState.MenuState_Disconnected:
 			_update_element(play_ai_button, false, false)
@@ -116,6 +121,7 @@ func _update_buttons() -> void:
 			_update_element(join_custom_box, false, false)
 			_update_element(deck_builder_button, true, true)
 			_update_element(how_to_play_button, true, true)
+			_update_element(match_list_button, false, true)
 			server_status.text = "Disconnected from server"
 			player_username.text = "Player Name"
 		MenuState.MenuState_Queued:
@@ -128,6 +134,7 @@ func _update_buttons() -> void:
 			_update_element(join_custom_box, false, false)
 			_update_element(deck_builder_button, false, false)
 			_update_element(how_to_play_button, false, false)
+			_update_element(match_list_button, false, true)
 		_:
 			assert(false, "Unimplemented menu state")
 			pass
@@ -186,11 +193,22 @@ func _update_server_info():
 		var game_room = player["game_room"]
 		if queue:
 			game_room = ""
-		if game_room.begins_with("Match_"):
-			queue = "in"
-			game_room = "Match"
-		if game_room == "AI":
-			queue = "playing"
+		else:
+			if game_room == "Lobby":
+				queue = "in"
+			elif game_room == "AI":
+				queue = "playing"
+			elif game_room.begins_with("Match_"):
+				if player["observing"]:
+					queue = "watching"
+				else:
+					queue = "in"
+				game_room = "Match"
+			else:
+				queue = ""
+				if player["observing"]:
+					queue = "watching"
+		
 
 		server_info_list.add_item(player_name, null, false)
 		server_info_list.add_item(queue, null, false)
@@ -210,6 +228,10 @@ func _update_server_info():
 			$MatchAvailableSound.play()
 	if not joinable_match:
 		seen_joinable_match = false
+
+	var match_info = get_match_list_info()
+	match_count_label.text = str(len(match_info))
+	match_list.update_match_list(match_info)
 
 	_update_buttons()
 
@@ -296,3 +318,27 @@ func _on_deck_builder_button_pressed() -> void:
 
 func _on_deckbuilder_exit_deck_builder() -> void:
 	load_user_decks()
+
+func get_match_list_info():
+	var match_list_info = []
+	for info in NetworkManager.cached_server_info["room_info"]:
+		var room :String = info["room_name"]
+		if room.begins_with("Match"):
+			room = "Match"
+		elif room.begins_with("Custom"):
+			room = room.replace("Custom_", "")
+		match_list_info.append({
+			"room_name": room,
+			"player1": info["players"][0]["username"],
+			"player2": info["players"][1]["username"],
+		})
+	return match_list_info
+
+func _on_view_match_list_button_pressed() -> void:
+	match_list.visible = true
+
+func _on_match_list_observe_match(match_index: Variant) -> void:
+	queued_for_ai = true
+	menu_state = MenuState.MenuState_Queued
+	_update_buttons()
+	NetworkManager.observe_room(match_index)
