@@ -201,6 +201,29 @@ offset_bottom = 135.0
 theme_override_font_sizes/font_size = 32
 text = "Deck Builder"
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 80.0
+offset_right = 823.0
+offset_bottom = 103.0
+text = "A fan implementation of the Hololive card game"
+
+[node name="SupportedCardsList" type="ItemList" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 350.0
+offset_right = 300.0
+offset_bottom = 640.0
+
+[node name="SupportedCardsLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 318.0
+offset_right = 177.0
+offset_bottom = 341.0
+text = "Supported Cards"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 900.0
@@ -258,6 +281,17 @@ layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
+[node name="Howtoplay" parent="." instance=ExtResource("7_nksnh")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="ModalDialog" parent="." instance=ExtResource("3_6lbr4")]
 visible = false
 layout_mode = 0
@@ -270,40 +304,6 @@ grow_vertical = 1
 [node name="SettingsWindow" parent="." instance=ExtResource("6_gl1g0")]
 visible = false
 layout_mode = 0
-
-[node name="SupportedCardsList" type="ItemList" parent="."]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 350.0
-offset_right = 300.0
-offset_bottom = 640.0
-
-[node name="SupportedCardsLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 47.0
-offset_top = 318.0
-offset_right = 177.0
-offset_bottom = 341.0
-text = "Supported Cards"
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 452.0
-offset_top = 80.0
-offset_right = 823.0
-offset_bottom = 103.0
-text = "A fan implementation of the Hololive card game"
-
-[node name="Howtoplay" parent="." instance=ExtResource("7_nksnh")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 1280.0
-offset_bottom = 720.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="MatchAvailableSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_myxxr")
