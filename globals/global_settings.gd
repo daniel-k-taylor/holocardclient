@@ -6,7 +6,7 @@ signal setting_changed_HideEnglishCardText
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
-const ClientVersionString : String = "240927.0130" # YYMMDD.HHMM
+const ClientVersionString : String = "240928.0130" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 var LoggingEnabled : bool = true
