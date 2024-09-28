@@ -390,7 +390,7 @@ mouse_filter = 2
 [node name="MarginContainer" type="MarginContainer" parent="OuterMargin/TargetedDamageIndicator"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_top = 130
+theme_override_constants/margin_top = 230
 
 [node name="PanelContainer" type="PanelContainer" parent="OuterMargin/TargetedDamageIndicator"]
 layout_mode = 2

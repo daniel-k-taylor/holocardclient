@@ -5767,7 +5767,7 @@
                 "amount": 10
             },
             {
-                "timing": "on_take_damage",
+                "timing": "after_take_damage",
                 "conditions": [
                     { "condition": "opponent_turn" },
                     { "condition": "attached_to", "required_member_name": "amane_kanata" },
