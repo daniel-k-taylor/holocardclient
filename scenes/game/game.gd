@@ -225,6 +225,9 @@ class PlayerState:
 
 	func add_backstage(card : CardBase):
 		_backstage_zone.add_card(card)
+		for back_card in _backstage_zone.get_cards_in_zone():
+			# Always order them near the front because they can't show over the hand cards.
+			_game.all_cards.move_child(back_card, 0)
 
 	func remove_backstage(card_id : String):
 		_backstage_zone.remove_card(card_id)
