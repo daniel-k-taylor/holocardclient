@@ -26,7 +26,19 @@ size_flags_horizontal = 3
 text = "Unksing filng 2"
 horizontal_alignment = 1
 
+[node name="Player1Oshi" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Unksing filng 2"
+horizontal_alignment = 1
+
 [node name="Player2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BadKoolaidKiller6"
+horizontal_alignment = 1
+
+[node name="Player2Oshi" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "BadKoolaidKiller6"

@@ -33,7 +33,7 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jebsj")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-custom_minimum_size = Vector2(800, 600)
+custom_minimum_size = Vector2(1000, 600)
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
@@ -81,10 +81,22 @@ size_flags_horizontal = 3
 text = "Player1"
 horizontal_alignment = 1
 
+[node name="Label5" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Headers/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Oshi"
+horizontal_alignment = 1
+
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Headers/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Player2"
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Headers/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Oshi"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Headers/HBoxContainer"]

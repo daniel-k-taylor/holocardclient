@@ -18,7 +18,7 @@ func update_match_list(match_list) -> void:
 		var new_row : MatchRow = MatchRowScene.instantiate()
 		match_box.add_child(new_row)
 		var saved_index = index
-		new_row.populate(info["player1"], info["player2"], info["room_name"], index)
+		new_row.populate(info["player1"], info["player1_oshi"], info["player2"], info["player2_oshi"], info["room_name"], index)
 		new_row.observe_pressed.connect(func():
 			visible = false
 			observe_match.emit(saved_index)

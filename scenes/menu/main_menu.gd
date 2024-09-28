@@ -208,7 +208,7 @@ func _update_server_info():
 				queue = ""
 				if player["observing"]:
 					queue = "watching"
-		
+
 
 		server_info_list.add_item(player_name, null, false)
 		server_info_list.add_item(queue, null, false)
@@ -327,10 +327,15 @@ func get_match_list_info():
 			room = "Match"
 		elif room.begins_with("Custom"):
 			room = room.replace("Custom_", "")
+
+		var p1oshi = CardDatabase.get_card(info["players"][0]["oshi_id"])
+		var p2oshi = CardDatabase.get_card(info["players"][1]["oshi_id"])
 		match_list_info.append({
 			"room_name": room,
 			"player1": info["players"][0]["username"],
+			"player1_oshi": Strings.get_names(p1oshi["card_names"])[0],
 			"player2": info["players"][1]["username"],
+			"player2_oshi": Strings.get_names(p2oshi["card_names"])[0],
 		})
 	return match_list_info
 
