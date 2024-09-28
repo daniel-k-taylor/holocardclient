@@ -40,7 +40,7 @@ func set_details(card, card_count):
 		"support":
 			icon_str = DeckCardIcon_support
 	_card_id = card["card_id"]
-	if "colors" in card:
+	if card.get("colors", []):
 		color_icon.texture = load("res://assets/cheer_icons/%s.png" % card["colors"][0])
 		if len(card["colors"]) == 2:
 			color_icon2.texture = load("res://assets/cheer_icons/%s.png" % card["colors"][1])

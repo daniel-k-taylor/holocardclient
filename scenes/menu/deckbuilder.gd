@@ -358,7 +358,7 @@ func _on_filter_options_filter_settings_changed(filter_settings: Dictionary) -> 
 			if "buzz" in definition and definition["buzz"] and not filter_settings["buzz"]:
 				placeholder.visible = false
 
-			if "colors" in definition:
+			if definition.get("colors", []):
 				var found_color = false
 				for color in definition["colors"]:
 					if filter_settings[color]:

@@ -55,6 +55,14 @@ const SkillNameMap = {
 	"shootingstar": "Shooting Star",
 	"prayingforrain": "Praying for rain",
 	"rainshamanism": "Rain Shamanism",
+	"whitebaton": "White Baton",
+	"greenbaton": "Green Baton",
+	"bluebaton": "Blue Baton",
+	"redbaton": "Red Baton",
+	"quickguard": "Quick Guard",
+	"letsdoourbesteveryone": "Let's do our best, everyone!",
+	"comeonagain": "Come on! Again!",
+	"backshot": "Back Shot",
 
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
@@ -638,6 +646,8 @@ func get_condition_text(conditions):
 				text += "Damage exceeds hp by %s: " % [condition["amount"]]
 			"performer_is_center":
 				text += "Center: "
+			"performer_is_collab":
+				text += "Collab: "
 			"performer_is_color":
 				text += "Performer is %s: " % ["/".join(condition["condition_colors"])]
 			"performer_is_specific_id":
@@ -880,13 +890,18 @@ func get_effect_text(effect):
 				"center":
 					target_str = "to Center"
 				"holomem":
-					target_str = "to a Holomem"
+					if effect.get("hit_all_targets", false):
+						target_str = "to all of your Holomems"
+					else:
+						target_str = "to a Holomem"
 			var limitation_str = ""
 			if "limitation" in effect:
 				match effect["limitation"]:
 					"color_in":
 						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
 			text += "Restore %s HP %s%s" % [amount, target_str, limitation_str]
+		"restore_hp_INTERNAL":
+			text += "Restore HP."
 		"return_holomem_to_debut":
 			text += "Return one of your opponent's Back Holomems to a Debut Holomem\n(remove Damage, leave Cheer, the rest returns to hand)"
 		"reveal_top_deck":

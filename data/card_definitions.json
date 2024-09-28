@@ -683,6 +683,7 @@
     {
         "card_id": "hSD01-016",
         "card_type": "support",
+        "colors": [],
         "sub_type": "staff",
         "card_names": ["harusaki_nodoka"],
         "rarity": "c",
@@ -697,6 +698,7 @@
     {
         "card_id": "hSD01-017",
         "card_type": "support",
+        "colors": [],
         "sub_type": "staff",
         "card_names": ["manechan"],
         "rarity": "c",
@@ -720,6 +722,7 @@
     {
         "card_id": "hSD01-018",
         "card_type": "support",
+        "colors": [],
         "sub_type": "item",
         "card_names": ["subpc"],
         "rarity": "c",
@@ -741,6 +744,7 @@
     {
         "card_id": "hSD01-019",
         "card_type": "support",
+        "colors": [],
         "sub_type": "item",
         "card_names": ["amazingpc"],
         "rarity": "c",
@@ -778,6 +782,7 @@
     {
         "card_id": "hSD01-020",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["holofan_circle"],
         "rarity": "c",
@@ -807,6 +812,7 @@
     {
         "card_id": "hSD01-021",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["first_gravity"],
         "rarity": "c",
@@ -5326,6 +5332,7 @@
     {
         "card_id": "hBP01-102",
         "card_type": "support",
+        "colors": [],
         "sub_type": "item",
         "card_names": ["idolmic"],
         "rarity": "u",
@@ -5354,6 +5361,7 @@
     {
         "card_id": "hBP01-103",
         "card_type": "support",
+        "colors": [],
         "sub_type": "item",
         "card_names": ["gamingpc"],
         "rarity": "u",
@@ -5388,6 +5396,7 @@
     {
         "card_id": "hBP01-104",
         "card_type": "support",
+        "colors": [],
         "sub_type": "item",
         "card_names": ["standardpc"],
         "rarity": "c",
@@ -5413,6 +5422,7 @@
     {
         "card_id": "hBP01-105",
         "card_type": "support",
+        "colors": [],
         "sub_type": "item",
         "card_names": ["penlight"],
         "rarity": "u",
@@ -5444,6 +5454,7 @@
     {
         "card_id": "hBP01-106",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["illleaveittoyou"],
         "rarity": "u",
@@ -5462,6 +5473,7 @@
     {
         "card_id": "hBP01-107",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["encore"],
         "rarity": "c",
@@ -5482,6 +5494,7 @@
     {
         "card_id": "hBP01-108",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["soyouretheenemy"],
         "rarity": "u",
@@ -5496,6 +5509,7 @@
     {
         "card_id": "hBP01-109",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["thestoryofthemoonandtherabbit"],
         "rarity": "u",
@@ -5524,6 +5538,7 @@
     {
         "card_id": "hBP01-110",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["clubemintonothingness"],
         "rarity": "u",
@@ -5598,6 +5613,7 @@
     {
         "card_id": "hBP01-111",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["hololiveid3rdgeneration"],
         "rarity": "u",
@@ -5626,6 +5642,7 @@
     {
         "card_id": "hBP01-112",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["excitingpranktime"],
         "rarity": "u",
@@ -5655,6 +5672,7 @@
     {
         "card_id": "hBP01-113",
         "card_type": "support",
+        "colors": [],
         "sub_type": "event",
         "card_names": ["promise"],
         "rarity": "u",
@@ -5683,6 +5701,7 @@
     {
         "card_id": "hBP01-114",
         "card_type": "support",
+        "colors": [],
         "sub_type": "tool",
         "card_names": ["stone_axe"],
         "rarity": "c",
@@ -5720,6 +5739,7 @@
     {
         "card_id": "hBP01-115",
         "card_type": "support",
+        "colors": [],
         "sub_type": "tool",
         "card_names": ["hoshimachi_suiseis_mic"],
         "rarity": "u",
@@ -5752,6 +5772,7 @@
     {
         "card_id": "hBP01-116",
         "card_type": "support",
+        "colors": [],
         "sub_type": "mascot",
         "card_names": ["upao"],
         "rarity": "c",
@@ -5785,6 +5806,7 @@
     {
         "card_id": "hBP01-117",
         "card_type": "support",
+        "colors": [],
         "sub_type": "mascot",
         "card_names": ["friend"],
         "rarity": "c",
@@ -5825,6 +5847,7 @@
     {
         "card_id": "hBP01-118",
         "card_type": "support",
+        "colors": [],
         "sub_type": "mascot",
         "card_names": ["ankimo"],
         "rarity": "c",
@@ -5853,6 +5876,7 @@
     {
         "card_id": "hBP01-119",
         "card_type": "support",
+        "colors": [],
         "sub_type": "mascot",
         "card_names": ["jobz"],
         "rarity": "c",
@@ -5881,6 +5905,7 @@
     {
         "card_id": "hBP01-120",
         "card_type": "support",
+        "colors": [],
         "sub_type": "mascot",
         "card_names": ["ganmo"],
         "rarity": "c",
@@ -5909,6 +5934,7 @@
     {
         "card_id": "hBP01-121",
         "card_type": "support",
+        "colors": [],
         "sub_type": "mascot",
         "card_names": ["kotori"],
         "rarity": "c",
@@ -5937,6 +5963,7 @@
     {
         "card_id": "hBP01-122",
         "card_type": "support",
+        "colors": [],
         "sub_type": "fan",
         "card_names": ["rosetai"],
         "rarity": "c",
@@ -5971,6 +5998,7 @@
     {
         "card_id": "hBP01-123",
         "card_type": "support",
+        "colors": [],
         "sub_type": "fan",
         "card_names": ["nousagialliance"],
         "rarity": "c",
@@ -6006,6 +6034,7 @@
     {
         "card_id": "hBP01-124",
         "card_type": "support",
+        "colors": [],
         "sub_type": "fan",
         "card_names": ["pioneer"],
         "rarity": "c",
@@ -6039,6 +6068,7 @@
     {
         "card_id": "hBP01-125",
         "card_type": "support",
+        "colors": [],
         "sub_type": "fan",
         "card_names": ["kfp"],
         "rarity": "c",
@@ -6078,6 +6108,7 @@
     {
         "card_id": "hBP01-126",
         "card_type": "support",
+        "colors": [],
         "sub_type": "fan",
         "card_names": ["zain"],
         "rarity": "c",
@@ -6104,6 +6135,292 @@
                 "timing": "on_take_damage",
                 "effect_type": "add_damage_taken",
                 "amount": 10
+            }
+        ]
+    },
+
+    {
+        "NOTE": "CHEER SET OSHI CARDS START",
+
+        "card_id": "hYS01-001",
+        "card_type": "oshi",
+        "card_names": ["nanashi_mumei"],
+        "colors": ["white"],
+        "rarity": "oc",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "whitebaton",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "whitebaton",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "whitebaton" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [
+                                { "condition": "performer_is_collab" },
+                                { "condition": "performer_is_color", "condition_colors": ["white"] }
+                            ],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            }
+        ],
+        "effects": [
+            {
+                "full_english_text": "Can be used during your opponent's turn when one of your White Holomems takes damage: reduce that damage by 20.",
+                "oshi_effect": "true",
+                "skill_id": "quickguard",
+                "cost": 1,
+                "limit": "once_per_game",
+                "conditions": [
+                    { "condition": "not_used_once_per_game_effect", "condition_effect_id": "quickguard" },
+                    { "condition": "holopower_at_least", "amount": 1 },
+                    { "condition": "opponent_turn" },
+                    { "condition": "target_color", "color_requirement": "white" }
+                ],
+                "timing": "on_take_damage",
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "oshi_effect": "true",
+                        "limit": "once_per_game",
+                        "skill_id": "quickguard",
+                        "cost": 1,
+                        "effect_type": "reduce_damage",
+                        "amount": 20,
+                        "pre_effects": [{
+                            "effect_type": "oshi_activation",
+                            "limit": "once_per_game",
+                            "skill_id": "quickguard",
+                            "pre_effects": [
+                                { "effect_type": "spend_holopower", "amount": 1 },
+                                { "effect_type": "record_used_once_per_game_effect", "effect_id": "quickguard" }
+                            ]
+                        }]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hYS01-002",
+        "card_type": "oshi",
+        "card_names": ["usada_pekora"],
+        "colors": ["green"],
+        "rarity": "oc",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "greenbaton",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "greenbaton",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "greenbaton" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [
+                                { "condition": "performer_is_collab" },
+                                { "condition": "performer_is_color", "condition_colors": ["green"] }
+                            ],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "letsdoourbesteveryone",
+                "cost": 1,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "letsdoourbesteveryone",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 1 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "letsdoourbesteveryone" }
+                        ]
+                    },
+                    {
+                        "effect_type": "restore_hp",
+                        "target": "holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["green"],
+                        "amount": 20,
+                        "hit_all_targets": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hYS01-003",
+        "card_type": "oshi",
+        "card_names": ["takanashi_kiara"],
+        "colors": ["red"],
+        "rarity": "oc",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "redbaton",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "redbaton",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "redbaton" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [
+                                { "condition": "performer_is_collab" },
+                                { "condition": "performer_is_color", "condition_colors": ["red"] }
+                            ],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "comeonagain",
+                "cost": 1,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "comeonagain",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 1 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "comeonagain" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "archive",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["red"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "nothing"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hYS01-004",
+        "card_type": "oshi",
+        "card_names": ["hoshimachi_suisei"],
+        "colors": ["blue"],
+        "rarity": "oc",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "bluebaton",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "bluebaton",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "bluebaton" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [
+                                { "condition": "performer_is_collab" },
+                                { "condition": "performer_is_color", "condition_colors": ["blue"] }
+                            ],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            }
+        ],
+        "effects": [
+            {
+                "full_english_text": "When one of your Blue Holomems deals damage to your opponent's Back Holomem: deal 50 damage to one of your opponent's Back Holomem",
+                "oshi_effect": "true",
+                "skill_id": "backshot",
+                "cost": 1,
+                "limit": "once_per_game",
+                "conditions": [
+                    { "condition": "not_used_once_per_game_effect", "condition_effect_id": "backshot" },
+                    { "condition": "holopower_at_least", "amount": 1 },
+                    { "condition": "damaged_holomem_is_backstage" },
+                    { "condition": "damage_ability_is_color", "condition_color": "blue", "include_oshi_ability": false }
+                ],
+                "timing": "after_deal_damage",
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "oshi_effect": "true",
+                        "skill_id": "backshot",
+                        "cost": 1,
+                        "limit": "once_per_game",
+                        "effect_type": "deal_damage",
+                        "special": true,
+                        "amount": 50,
+                        "target": "backstage",
+                        "opponent": true,
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 1 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "backshot" },
+                            { "effect_type": "oshi_activation", "limit": "once_per_game", "skill_id": "backshot" }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
             }
         ]
     },
