@@ -3,6 +3,7 @@ extends Node
 var card_data = []
 var card_definitions_path = "res://data/card_definitions.json"
 var test_decks_path = "res://data/test_decks.json"
+var sample_decks_path = "res://data/sample_decks.json"
 
 const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 
@@ -24,6 +25,14 @@ func get_test_decks():
 		return json
 	else:
 		print("Test decks file doesn't exist")
+
+func get_sample_decks():
+	if FileAccess.file_exists(sample_decks_path):
+		var data = FileAccess.open(sample_decks_path, FileAccess.READ)
+		var json = JSON.parse_string(data.get_as_text())
+		return json
+	else:
+		print("Sample decks file doesn't exist")
 
 func get_supported_cards():
 	var card_ids = []

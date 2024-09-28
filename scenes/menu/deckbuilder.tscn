@@ -17,17 +17,17 @@ offset_bottom = 40.0
 color = Color(0, 0.466667, 0.545098, 1)
 
 [node name="ReturnToMenuButton" type="Button" parent="."]
-offset_left = 315.0
-offset_top = 11.0
-offset_right = 522.0
-offset_bottom = 64.0
+offset_left = 308.0
+offset_top = 7.0
+offset_right = 503.0
+offset_bottom = 60.0
 theme_override_font_sizes/font_size = 32
 text = "Main Menu"
 
 [node name="FiltersButton" type="Button" parent="."]
-offset_left = 640.0
-offset_top = 66.0
-offset_right = 832.0
+offset_left = 386.0
+offset_top = 65.0
+offset_right = 578.0
 offset_bottom = 118.0
 theme_override_font_sizes/font_size = 32
 text = "Filter"
@@ -41,12 +41,42 @@ mouse_filter = 2
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="DecksOptionButton" type="OptionButton" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Your Decks ("
+
+[node name="YourDecksCount" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "10"
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "/10)"
+
+[node name="DecksOptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 24
+text_overrun_behavior = 1
+
+[node name="SampleDecksOption" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 24
+selected = 0
+item_count = 1
+popup/item_0/text = "Load Sample Decks"
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -191,7 +221,8 @@ visible = false
 
 [connection signal="pressed" from="ReturnToMenuButton" to="." method="back_to_main_menu"]
 [connection signal="pressed" from="FiltersButton" to="." method="_on_filters_button_pressed"]
-[connection signal="item_selected" from="HBoxContainer/DecksOptionButton" to="." method="_on_decks_option_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/HBoxContainer/DecksOptionButton" to="." method="_on_decks_option_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/SampleDecksOption" to="." method="_on_sample_decks_option_item_selected"]
 [connection signal="pressed" from="HBoxContainer/GridContainer/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/GridContainer/NewDeckButton" to="." method="_on_new_deck_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/GridContainer/DeleteDeckButton" to="." method="_on_delete_deck_button_pressed"]

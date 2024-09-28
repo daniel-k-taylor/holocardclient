@@ -248,7 +248,9 @@ layout_mode = 2
 text = "Deck:"
 
 [node name="DeckSelector" type="OptionButton" parent="DeckControls/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+text_overrun_behavior = 1
 
 [node name="MatchList" parent="." instance=ExtResource("11_76glj")]
 visible = false

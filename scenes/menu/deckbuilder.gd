@@ -11,7 +11,9 @@ const CardPlaceholderScene = preload("res://scenes/menu/card_placholder.tscn")
 @onready var cheer_box : CheerBox = $DeckList/CheerBox
 @onready var deck_card_count : Label = $DeckList/CardLabels/CardCount
 @onready var deck_card_slots : VBoxContainer = $DeckList/ScrollContainer/DeckCards
-@onready var deck_option_button : OptionButton = $HBoxContainer/DecksOptionButton
+@onready var deck_option_button : OptionButton = $HBoxContainer/VBoxContainer/HBoxContainer/DecksOptionButton
+@onready var your_deck_count_label : Label = $HBoxContainer/VBoxContainer/HBoxContainer/YourDecksCount
+@onready var sample_deck_button : OptionButton = $HBoxContainer/VBoxContainer/SampleDecksOption
 @onready var card_grid : GridContainer = $PanelContainer/MarginContainer/ScrollContainer/Cards/CardGrid
 
 @onready var save_file_dialog = $SaveFileDialog
@@ -36,6 +38,7 @@ var file_load_callback
 var all_cards = []
 var loaded_card_list = false
 var last_deck_name_text = ""
+var sample_decks = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -51,6 +54,13 @@ func _ready() -> void:
 		window.setupFileLoad(file_load_callback)
 
 	oshi_slot.hover.connect(_on_hover_slot)
+	
+	_load_sample_decks()
+
+func _load_sample_decks():
+	sample_decks = CardDatabase.get_sample_decks()
+	for sample in sample_decks:
+		sample_deck_button.add_item(sample["deckName"])
 
 func _process(_delta: float) -> void:
 	var current_name_text = deck_name_label.text
@@ -132,6 +142,8 @@ func update_buttons():
 	var reached_deck_max = len(_all_decks) >= MaxDecksAllowed
 	new_deck_button.disabled = reached_deck_max
 	load_deck_button.disabled = reached_deck_max
+	sample_deck_button.disabled = reached_deck_max
+	your_deck_count_label.text = str(len(_all_decks))
 
 func populate_deck_list(index):
 	_current_index = index
@@ -380,3 +392,10 @@ func _on_filter_options_filter_settings_changed(filter_settings: Dictionary) -> 
 						break
 				if not found_match:
 					placeholder.visible = false
+
+func _on_sample_decks_option_item_selected(index: int) -> void:
+	if index > 0:
+		var deck = DeckValidator.load_deck_holodelta(sample_decks[index - 1])
+		add_deck_to_selector(deck, true)
+		sample_deck_button.selected = 0
+		sample_deck_button.text = sample_deck_button.get_item_text(0)
