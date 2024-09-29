@@ -490,6 +490,8 @@ func process_game_event(event_type, event_data):
 			_on_swap_holomem_to_center_event(event_data)
 		Enums.EventType_DownedHolomem:
 			_on_downed_holomem_event(event_data)
+		Enums.EventType_DownedHolomem_Before:
+			_on_downed_holomem_before_event(event_data)
 		Enums.EventType_Draw:
 			_on_draw_event(event_data)
 		Enums.EventType_EndTurn:
@@ -2241,7 +2243,14 @@ func _on_downed_holomem_event(event_data):
 	var hand_ids = event_data["hand_ids"]
 
 	var card = find_card_on_board(target_id)
+	card.hide_targeted_down()
 	_process_downed_holomem(target_player, card, hand_ids, is_game_over, life_lost)
+
+func _on_downed_holomem_before_event(event_data):
+	#var target_player = get_player(event_data["target_player"])
+	var target_id = event_data["target_id"]
+	var card = find_card_on_board(target_id)
+	card.show_targeted_down()
 
 func _on_play_support_card_event(event_data):
 	var active_player = get_player(event_data["player_id"])

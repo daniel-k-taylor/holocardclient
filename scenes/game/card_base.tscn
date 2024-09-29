@@ -403,6 +403,26 @@ text = "INCOMING
 DAMAGE"
 horizontal_alignment = 1
 
+[node name="TargetedDownIndicator" type="VBoxContainer" parent="OuterMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OuterMargin/TargetedDownIndicator"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 230
+
+[node name="PanelContainer" type="PanelContainer" parent="OuterMargin/TargetedDownIndicator"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y7j06")
+
+[node name="Label" type="Label" parent="OuterMargin/TargetedDownIndicator/PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "GOING
+DOWN"
+horizontal_alignment = 1
+
 [connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="OuterMargin/Button" to="." method="_on_button_pressed"]
