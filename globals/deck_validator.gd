@@ -100,12 +100,19 @@ func load_deck_holodelta(data):
 					error_message = "Invalid format:\nCheer entry card counts not numbers"
 				elif typeof(cheer_entry[2]) != TYPE_FLOAT:
 					error_message = "Invalid format:\nCheer entry alt art not numbers"
+
 		if not error_message:
 			loaded_deck["oshi"] = oshi_info[0]
 			for deck_entry in data["deck"]:
-				loaded_deck["deck"][deck_entry[0]] = int(deck_entry[1])
+				if deck_entry[0] in loaded_deck["deck"]:
+					loaded_deck["deck"][deck_entry[0]] += int(deck_entry[1])
+				else:
+					loaded_deck["deck"][deck_entry[0]] = int(deck_entry[1])
 			for cheer_entry in data["cheerDeck"]:
-				loaded_deck["cheer_deck"][cheer_entry[0]] = int(cheer_entry[1])
+				if cheer_entry[0] in loaded_deck["cheer_deck"]:
+					loaded_deck["cheer_deck"][cheer_entry[0]] += int(cheer_entry[1])
+				else:
+					loaded_deck["cheer_deck"][cheer_entry[0]] = int(cheer_entry[1])
 
 	loaded_deck["error"] = error_message
 	return loaded_deck
