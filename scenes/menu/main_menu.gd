@@ -31,7 +31,7 @@ var oshi_azki = "hSD01-002"
 @onready var modal_dialog = $ModalDialog
 @onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
 @onready var supported_cards_list : ItemList = $SupportedCardsList
-@onready var howtoplay = $HowToPlayButton
+@onready var howtoplay = $Howtoplay
 @onready var match_list = $MatchList
 @onready var match_list_button = $HBoxContainer/ViewMatchListButton
 
