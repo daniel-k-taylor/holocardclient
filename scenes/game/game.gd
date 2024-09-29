@@ -826,7 +826,10 @@ func _on_boost_stat_event(event_data):
 	])
 
 	if for_art:
-		current_performance_target_card.update_target_reticle(amount)
+		var change_amount = amount
+		if stat == "damage_prevented":
+			change_amount = -amount
+		current_performance_target_card.update_target_reticle(change_amount)
 
 	if stat == "damage_prevented":
 		var card = find_card_on_board(card_id)
