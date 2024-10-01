@@ -3700,7 +3700,7 @@
         "rarity": "c",
         "colors": ["red"],
         "hp": 130,
-        "baton_cost": 1,
+        "baton_cost": 0,
         "tags": [
             "#EN",
             "#Myth",
@@ -4416,7 +4416,7 @@
         ],
         "arts": [
             {
-                "full_english_text": "You may Archive 2 Blue Cheers from this Holomem to: +60 Power per Holomem under this and you can target Backstage Holomem.",
+                "full_english_text": "Shining Comet: 60 (+50 vs Red)\nYou may Archive 2 Blue Cheers from this Holomem to: +60 Power per Holomem under this and you can target Backstage Holomem.",
                 "art_id": "shiningcomet",
                 "target_condition": "all_if_meets_conditions",
                 "target_conditions": [{ "condition": "self_has_cheer_color", "amount_min": 2, "condition_colors": ["blue"] }],
