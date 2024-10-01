@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6xxhwthh4dka"]
+
+[ext_resource type="Script" path="res://scenes/playfab/login.gd" id="1_qmg82"]
+
+[node name="Login" type="MarginContainer"]
+custom_minimum_size = Vector2(1280, 720)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qmg82")
+
+[node name="Login" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Username" type="HBoxContainer" parent="Login"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Login/Username"]
+layout_mode = 2
+text = "Username (3-20 chars) "
+
+[node name="Input" type="LineEdit" parent="Login/Username"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+placeholder_text = "username"
+max_length = 20
+
+[node name="Email" type="HBoxContainer" parent="Login"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Login/Email"]
+layout_mode = 2
+text = "Email"
+
+[node name="Input" type="LineEdit" parent="Login/Email"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+placeholder_text = "user1@example.com"
+
+[node name="Password" type="HBoxContainer" parent="Login"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Login/Password"]
+layout_mode = 2
+text = "Password (6-20 chars)"
+
+[node name="Input" type="LineEdit" parent="Login/Password"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+placeholder_text = "password"
+max_length = 20
+virtual_keyboard_type = 6
+
+[node name="StayLoggedInCheckbox" type="CheckBox" parent="Login"]
+layout_mode = 2
+button_pressed = true
+text = "Stay logged in"
+
+[node name="LoginButton" type="Button" parent="Login"]
+layout_mode = 2
+text = "Login"
+
+[node name="RegisterButton" type="Button" parent="Login"]
+layout_mode = 2
+text = "Register"
+
+[node name="AnonymousLoginButton" type="Button" parent="Login"]
+layout_mode = 2
+text = "Anonymous Login"
+
+[node name="Output" type="RichTextLabel" parent="Login"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[node name="LoggingInLoader" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+mouse_filter = 0
+
+[node name="LoadingIndicator" type="Label" parent="LoggingInLoader"]
+layout_mode = 2
+text = "Logging in..."
+
+[connection signal="toggled" from="Login/StayLoggedInCheckbox" to="." method="_on_stay_logged_in_checkbox_toggled"]
+[connection signal="pressed" from="Login/LoginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="Login/RegisterButton" to="." method="_on_register_button_pressed"]
+[connection signal="pressed" from="Login/AnonymousLoginButton" to="." method="_on_anonymous_login_button_pressed"]

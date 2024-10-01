@@ -25,6 +25,7 @@ Enums="*res://globals/enums.gd"
 Strings="*res://globals/strings.gd"
 CardDatabase="*res://globals/card_database.gd"
 DeckValidator="*res://globals/deck_validator.gd"
+Playfab="*res://globals/playfab.gd"
 
 [display]
 

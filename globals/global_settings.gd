@@ -9,6 +9,8 @@ const UseAzureServerAlways = false # If true, always defaults to the azure serve
 const ClientVersionString : String = "240928.1330" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
+const PlayfabTitleId = "57B37"
+
 var LoggingEnabled : bool = true
 
 const GameSound = "GameSound"
@@ -16,6 +18,9 @@ const UseEnProxies = "UseEnProxies"
 const HideEnglishCardText = "HideEnglishCardText"
 const SavedDecks = "SavedDecks"
 const SelectedDeckIndex = "SelectedDeckIndex"
+const PlayfabId = "PlayfabId"
+const PlayfabSessionTicket = "PlayfabSessionTicket"
+const PlayfabUsername = "PlayfabUsername"
 
 const user_settings_file = "user://settings.json"
 
@@ -25,6 +30,9 @@ var user_settings = {
 	UseEnProxies: true,
 	SavedDecks: [],
 	SelectedDeckIndex: 0,
+	PlayfabId: "",
+	PlayfabSessionTicket: "",
+	PlayfabUsername: ""
 }
 
 var setting_to_signal_map = {
