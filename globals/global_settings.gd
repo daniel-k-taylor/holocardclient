@@ -92,6 +92,8 @@ func get_user_setting(setting_name : String):
 
 func save_user_setting(setting_name : String, value):
 	user_settings[setting_name] = value
+	if setting_name == GlobalSettings.Language:
+		TranslationServer.set_locale(value)
 	if setting_name in setting_to_signal_map:
 		setting_to_signal_map[setting_name].emit()
 	save_persistent_settings()
@@ -115,6 +117,7 @@ func load_persistent_settings() -> bool:  # returns success code
 			user_settings[key] = json[key]
 		else:
 			print("Unknown setting in settings file: %s" % key)
+	TranslationServer.set_locale(user_settings[GlobalSettings.Language])
 	settings_loaded.emit()
 	return true
 

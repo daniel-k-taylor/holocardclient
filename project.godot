@@ -44,6 +44,10 @@ texture={
 "compress/mode": 1
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/loc/translations.en.translation", "res://assets/loc/translations.kr.translation")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -274,7 +274,7 @@ func get_names(name_ids):
 
 func get_skill_string(skill_id):
 	if skill_id in SkillNameMap:
-		return SkillNameMap[skill_id]
+		return tr(SkillNameMap[skill_id])
 	return skill_id
 
 func get_position_string(position):
@@ -316,7 +316,7 @@ func build_use_oshi_skill_string(skill_id, cost):
 	var cost_str = ""
 	if cost:
 		cost_str = " (%s Holopower)" % cost
-	return "Oshi: [b]%s[/b]%s" % [skill_name, cost_str]
+	return tr("Oshi: [b]%s[/b]%s") % [skill_name, cost_str]
 
 func build_archive_cheer_string(count):
 	return "Choose %s Cheer to Archive." % count
