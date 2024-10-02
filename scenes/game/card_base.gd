@@ -59,7 +59,7 @@ const PositionTime = 0.8
 var target_position = Vector2.ZERO
 var position_start_time = PositionTime
 var _destroy_on_move_completion = false
-var _en_proxy_loaded = false
+var proxy_card_loaded = false
 
 func _ready():
 	info_highlight.visible = false
@@ -77,13 +77,14 @@ func _ready():
 
 	GlobalSettings.connect("setting_changed_HideEnglishCardText", _hide_english_setting_updated)
 	GlobalSettings.connect("setting_changed_UseEnProxies", _en_proxy_setting_updated)
+	GlobalSettings.connect("settings_changed_Language", _en_proxy_setting_updated)
 
 	initialize_graphics()
 	set_button_visible(_selectable)
 
 func _hide_english_setting_updated():
 	if _definition_id != "HIDDEN":
-		if not _en_proxy_loaded:
+		if not proxy_card_loaded:
 			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
 
 func _en_proxy_setting_updated():
@@ -156,17 +157,34 @@ func update_card_graphic():
 		var rarity = CardDatabase.get_card(_definition_id)["rarity"].to_upper()
 		var jp_path = "res://assets/cards/" + _definition_id + "_" + rarity + ".png"
 		var en_path = "res://assets/cards/en/" + _definition_id  + ".jpg"
-		# Check if the en card exists.
-		var use_en_proxies = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
-		if use_en_proxies and FileAccess.file_exists(en_path):
-			card_image.texture = load(en_path)
-			overlay_root.visible = false
-			_en_proxy_loaded = true
+		var language_code = GlobalSettings.get_user_setting(GlobalSettings.Language)
+		proxy_card_loaded = false
+		if language_code == "en":
+			# Check if the en card exists.
+			var use_en_proxies = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
+			if use_en_proxies and FileAccess.file_exists(en_path):
+				card_image.texture = load(en_path)
+				overlay_root.visible = false
+				proxy_card_loaded = true
+			else:
+				card_image.texture = load(jp_path)
+				proxy_card_loaded = false
 		else:
-			card_image.texture = load(jp_path)
-			_en_proxy_loaded = false
+			# Load the card from the card pack.
+			var image_path = "%s/%s_%s.png" % [
+				GlobalSettings.get_card_language_path(),
+				_definition_id,
+				rarity
+			]
+			if FileAccess.file_exists(image_path):
+				var image = Image.load_from_file(image_path)
+				card_image.texture = ImageTexture.create_from_image(image)
+				overlay_root.visible = false
+				proxy_card_loaded = true
+			else:
+				print("File didn't exist: %s" % image_path)
 
-		if not _en_proxy_loaded:
+		if not proxy_card_loaded:
 			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
 
 func initialize_graphics():

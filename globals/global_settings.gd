@@ -3,6 +3,7 @@ extends Node
 signal settings_loaded
 signal setting_changed_UseEnProxies
 signal setting_changed_HideEnglishCardText
+signal settings_changed_Language
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
@@ -21,6 +22,10 @@ const SelectedDeckIndex = "SelectedDeckIndex"
 const PlayfabId = "PlayfabId"
 const PlayfabSessionTicket = "PlayfabSessionTicket"
 const PlayfabUsername = "PlayfabUsername"
+const Language = "Language"
+
+const language_dir = "user://card_assets"
+const language_details_file = "details.json"
 
 const user_settings_file = "user://settings.json"
 
@@ -32,12 +37,29 @@ var user_settings = {
 	SelectedDeckIndex: 0,
 	PlayfabId: "",
 	PlayfabSessionTicket: "",
-	PlayfabUsername: ""
+	PlayfabUsername: "",
+	Language: "en",
 }
 
 var setting_to_signal_map = {
 	HideEnglishCardText: setting_changed_HideEnglishCardText,
 	UseEnProxies: setting_changed_UseEnProxies,
+	Language: settings_changed_Language,
+}
+
+const SupportedLanguages = {
+	"en": {
+		"name": "English",
+		"code": "en",
+		"version": 1,
+		"download_url": ""
+	},
+	"kr": {
+		"name": "한국어",
+		"code": "kr",
+		"version": 1,
+		"download_url": "https://fightingcardsstorage.blob.core.windows.net/cardpacks/kr.zip"
+	},
 }
 
 func get_client_version() -> String:
@@ -95,3 +117,72 @@ func load_persistent_settings() -> bool:  # returns success code
 			print("Unknown setting in settings file: %s" % key)
 	settings_loaded.emit()
 	return true
+
+func has_card_language_pack(language_code) -> bool:
+	if language_code == "en":
+		return true
+	var expected_version = SupportedLanguages[language_code]["version"]
+	var language_details_file_path = language_dir + "/" + language_code + "/" + language_details_file
+	if FileAccess.file_exists(language_details_file_path):
+		var file = FileAccess.open(language_details_file_path, FileAccess.READ)
+		var text = file.get_as_text()
+		var json = JSON.parse_string(text)
+		return json.has("version") and json["version"] == expected_version
+	return false
+
+func get_card_language_path() -> String:
+	return language_dir + "/" + get_user_setting(Language)
+
+func download_card_pack(language_code, callback : Callable):
+	var url = SupportedLanguages[language_code]["download_url"]
+	var download_dir = language_dir + "/" + language_code
+	var download_file = download_dir + ".zip"
+	# Make sure download_dir exists.
+	if DirAccess.make_dir_recursive_absolute(download_dir) != OK:
+		print("Failed to create directory: %s" % download_dir)
+		callback.call(false)
+		return
+		
+	print("Downloading card pack for %s from %s to %s" % [language_code, url, download_file])
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.download_file = download_file
+	var custom_headers = []
+	http_request.request_completed.connect(func(result, response_code, _headers, body):
+		_on_card_pack_download_complete(result, response_code, body, callback, language_code)
+	)
+	var error = http_request.request(url, custom_headers, HTTPClient.METHOD_GET)
+	if error != OK:
+		callback.call(false)
+
+func _on_card_pack_download_complete(result, response_code, _body, callback, language_code):
+	if result != OK or response_code != 200:
+		print("ERROR: Result (%s) - %s" % [result, response_code])
+		callback.call(false)
+		return
+	var download_dir = language_dir + "/" + language_code
+	var download_file = download_dir + ".zip"
+	# var file = FileAccess.open(download_file, FileAccess.WRITE)
+	# file.store_buffer(body)
+	# file.close()
+	_unpack_zip_file(download_file, download_dir)
+
+	# Write the updated details file.
+	var details_file_path = download_dir + "/" + language_details_file
+	var details_file = FileAccess.open(details_file_path, FileAccess.WRITE)
+	details_file.store_line(JSON.stringify(SupportedLanguages[language_code]))
+	details_file.close()
+
+	callback.call(true)
+
+func _unpack_zip_file(zip_file, destination_dir):
+	var zip = ZIPReader.new()
+	zip.open(zip_file)
+	var files = zip.get_files()
+	for file in files:
+		var data = zip.read_file(file)
+		var file_path = destination_dir + "/" + file
+		var file_access = FileAccess.open(file_path, FileAccess.WRITE)
+		file_access.store_buffer(data)
+		file_access.close()
+	zip.close()
