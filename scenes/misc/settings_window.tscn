@@ -111,6 +111,34 @@ layout_mode = 2
 text = "Downloading Card Pack...."
 horizontal_alignment = 1
 
+[node name="Progress" type="HBoxContainer" parent="DownloadingPanel/CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BytesDownloaded" type="Label" parent="DownloadingPanel/CenterContainer/PanelContainer/VBox/Progress"]
+layout_mode = 2
+text = "1234"
+
+[node name="Label" type="Label" parent="DownloadingPanel/CenterContainer/PanelContainer/VBox/Progress"]
+layout_mode = 2
+text = "/"
+
+[node name="TotalBytes" type="Label" parent="DownloadingPanel/CenterContainer/PanelContainer/VBox/Progress"]
+layout_mode = 2
+text = "1234"
+
+[node name="ProgressPercent" type="HBoxContainer" parent="DownloadingPanel/CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Value" type="Label" parent="DownloadingPanel/CenterContainer/PanelContainer/VBox/ProgressPercent"]
+layout_mode = 2
+text = "1"
+
+[node name="Label" type="Label" parent="DownloadingPanel/CenterContainer/PanelContainer/VBox/ProgressPercent"]
+layout_mode = 2
+text = "%"
+
 [node name="ModalDialog" parent="." instance=ExtResource("4_2kdkh")]
 visible = false
 layout_mode = 2

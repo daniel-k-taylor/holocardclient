@@ -52,13 +52,15 @@ const SupportedLanguages = {
 		"name": "English",
 		"code": "en",
 		"version": 1,
-		"download_url": ""
+		"download_url": "",
+		"size": 0,
 	},
 	"kr": {
 		"name": "한국어",
 		"code": "kr",
 		"version": 1,
-		"download_url": "https://fightingcardsstorage.blob.core.windows.net/cardpacks/kr.zip"
+		"download_url": "https://fightingcardsstorage.blob.core.windows.net/cardpacks/kr.zip",
+		"size": 175355917
 	},
 }
 
@@ -136,6 +138,9 @@ func has_card_language_pack(language_code) -> bool:
 func get_card_language_path() -> String:
 	return language_dir + "/" + get_user_setting(Language)
 
+func get_card_pack_size(language_code) -> int:
+	return SupportedLanguages[language_code]["size"]
+
 func download_card_pack(language_code, callback : Callable):
 	var url = SupportedLanguages[language_code]["download_url"]
 	var download_dir = language_dir + "/" + language_code
@@ -145,7 +150,7 @@ func download_card_pack(language_code, callback : Callable):
 		print("Failed to create directory: %s" % download_dir)
 		callback.call(false)
 		return
-		
+
 	print("Downloading card pack for %s from %s to %s" % [language_code, url, download_file])
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
@@ -157,6 +162,8 @@ func download_card_pack(language_code, callback : Callable):
 	var error = http_request.request(url, custom_headers, HTTPClient.METHOD_GET)
 	if error != OK:
 		callback.call(false)
+		return null
+	return http_request
 
 func _on_card_pack_download_complete(result, response_code, _body, callback, language_code):
 	if result != OK or response_code != 200:
