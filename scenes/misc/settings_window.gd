@@ -15,7 +15,7 @@ func _ready():
 	for language_code in GlobalSettings.SupportedLanguages:
 		language_select.add_item(GlobalSettings.SupportedLanguages[language_code]["name"], index)
 		index += 1
-	
+
 func load_settings():
 	game_sound.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.GameSound)
 	hide_english_card_text.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
@@ -48,4 +48,5 @@ func _on_language_select_item_selected(index: int) -> void:
 				GlobalSettings.save_user_setting(GlobalSettings.Language, language_code)
 			else:
 				modal.set_text_fields("Failed to download card pack.", "", "OK")
+				language_select.selected = GlobalSettings.SupportedLanguages.keys().find(GlobalSettings.get_user_setting(GlobalSettings.Language))
 		)

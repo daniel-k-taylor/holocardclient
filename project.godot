@@ -33,6 +33,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
+[gui]
+
+theme/custom_font="res://assets/fonts/NotoSans-VariableFont_wdth,wght.ttf"
+
 [importer_defaults]
 
 texture={
