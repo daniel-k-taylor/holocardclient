@@ -53,7 +53,7 @@ func _on_button_pressed() -> void:
 
 func _on_language_select_item_selected(index: int) -> void:
 	var language_code = GlobalSettings.SupportedLanguages.keys()[index]
-	if GlobalSettings.has_card_language_pack(language_code):
+	if language_code: #GlobalSettings.has_card_language_pack(language_code):
 		GlobalSettings.save_user_setting(GlobalSettings.Language, language_code)
 	else:
 		downloading_panel.visible = true

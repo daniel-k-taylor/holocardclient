@@ -1,0 +1,11 @@
+[gd_resource type="FontVariation" load_steps=3 format=3 uid="uid://5sykbiuh8u27"]
+
+[ext_resource type="FontFile" uid="uid://c1r82bxdrx04i" path="res://assets/fonts/NotoSans-VariableFont_wdth,wght.ttf" id="1_gt7p6"]
+[ext_resource type="FontFile" uid="uid://dwaktlva07uph" path="res://assets/fonts/kr/HYGTRE.TTF" id="2_dbqru"]
+
+[resource]
+fallbacks = Array[Font]([ExtResource("2_dbqru")])
+base_font = ExtResource("1_gt7p6")
+opentype_features = {
+1667329140: 0
+}

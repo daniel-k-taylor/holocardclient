@@ -58,9 +58,9 @@ const SupportedLanguages = {
 	"kr": {
 		"name": "한국어",
 		"code": "kr",
-		"version": 1,
+		"version": 2,
 		"download_url": "https://fightingcardsstorage.blob.core.windows.net/cardpacks/kr.zip",
-		"size": 175355917
+		"size": 167517404
 	},
 }
 

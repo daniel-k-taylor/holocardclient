@@ -35,7 +35,7 @@ window/stretch/mode="canvas_items"
 
 [gui]
 
-theme/custom_font="res://assets/fonts/NotoSans-VariableFont_wdth,wght.ttf"
+theme/custom_font="res://assets/fonts/notosansen_variation.tres"
 
 [importer_defaults]
 
