@@ -279,19 +279,19 @@ func get_skill_string(skill_id):
 
 func get_position_string(position):
 	match position:
-		"center": return "Center"
-		"backstage": return "Back"
-		"collab": return "Collab"
+		"center": return tr("Center")
+		"backstage": return tr("Back")
+		"collab": return tr("Collab")
 		_: return "Unknown"
 
 func get_stat_string(stat):
 	match stat:
 		"damage_added":
-			return "Additional Damage"
+			return tr("Additional Damage")
 		"damage_prevented":
-			return "Damage Prevented"
+			return tr("Damage Prevented")
 		"power":
-			return "Power"
+			return tr("Power")
 	return "UNKNOWN"
 
 func get_incoming_damage_str(amount, special, prevent_life_loss):
@@ -316,37 +316,37 @@ func build_use_oshi_skill_string(skill_id, cost):
 	var cost_str = ""
 	if cost:
 		cost_str = " (%s Holopower)" % cost
-	return tr("Oshi: [b]%s[/b]%s") % [skill_name, cost_str]
+	return tr("Oshi:") + "[b]%s[/b]%s" % [skill_name, cost_str]
 
 func build_archive_cheer_string(count):
-	return "Choose %s Cheer to Archive." % count
+	return tr("Choose %s Cheer to Archive.") % count
 
 func build_place_cheer_string(source:String, color:String):
 	var color_str = color.to_upper()
 	var source_str = source
 	match source:
 		"cheer_deck":
-			source_str = "your Cheer Deck"
+			source_str = tr("YOUR_CHEER_DECK")
 		"life":
-			source_str = "your Life"
-	return "Place 1 %s Cheer from %s." % [color_str, source_str]
+			source_str = tr("YOUR_LIFE")
+	return tr("Place 1 {COLOR} Cheer from {SOURCE}.").format({COLOR = color_str, SOURCE = source_str})
 
 func build_send_cheer_string(amount_min, amount_max, source):
 	var source_str = source
-	var action_word = "Send"
+	var action_word = tr("Send")
 	match source:
 		"archive":
-			source_str = "from your Archive"
+			source_str = tr("FROM_YOUR_ARCHIVE")
 		"cheer_deck":
-			source_str = "from your Cheer Deck"
+			source_str = tr("FROM_YOUR_CHEER_DECK")
 		"downed_holomem":
-			source_str = "from downed Holomem"
+			source_str = tr("FROM_DOWNED_HOLOMEM")
 		"holomem":
-			source_str = "from Holomem"
+			source_str = tr("FROM_HOLOMEM")
 		"self":
-			source_str = "from this Holomem"
+			source_str = tr("FROM_THIS_HOLOMEM")
 		"opponent_holomem":
-			source_str = "from opponent's Holomem"
+			source_str = tr("FROM_OPPONENT_HOLOMEM")
 			action_word = "Remove"
 	var amount_str = "%s" % amount_min
 	if str(amount_min) != str(amount_max):
@@ -354,25 +354,24 @@ func build_send_cheer_string(amount_min, amount_max, source):
 			amount_str = "any amount of"
 		else:
 			amount_str = "%s-%s" % [amount_min, amount_max]
-	return "%s %s Cheer %s." % [action_word, amount_str, source_str]
-
+	return tr("{ACTION} {AMOUNT} Cheer {SOURCE}.").format({ACTION = action_word, AMOUNT = amount_str, SOURCE = source_str})
 func build_order_cards_string(to, bottom):
-	var dir_str = "top"
+	var dir_str = tr("top")
 	if bottom:
-		dir_str = "the bottom"
+		dir_str = tr("the bottom")
 	var to_str = ""
 	match to:
 		"deck":
-			to_str = "your deck"
+			to_str = tr("your deck")
 		_:
 			to_str = "UNKNOWN ZONE"
-	return "Order these cards to place on %s of %s" % [dir_str, to_str]
+	return tr("Order these cards to place on {DIR} of {DECK}").format({DIR = dir_str, DECK = to_str})
 
 func build_choose_holomem_for_effect_string(effect, amount_min, amount_max):
 	if amount_min == amount_max:
-		return "Choose %s Holomem for:\n%s" % [amount_min, get_effect_text(effect)]
+		return tr("Choose {MIN} Holomem for:").format({MIN = amount_min}) + "\n" + "{EFFECT}".format({EFFECT = get_effect_text(effect)})
 	else:
-		return "Choose %s-%s Holomem for:\n%s" % [amount_min, amount_max, get_effect_text(effect)]
+		return tr("Choose {MIN}-{MAX} Holomem for:").format({MIN = amount_min, MAX = amount_max}) + "\n" + "{EFFECT}".format({EFFECT = get_effect_text(effect)})
 
 func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	remaining_cards_action, requirement_details, special_reason):
@@ -385,44 +384,44 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	var to_zone_str = to_zone
 	match from_zone:
 		"hand":
-			from_zone_str = " from your Hand"
+			from_zone_str = tr("FROM_YOUR_HAND")
 		"deck":
-			from_zone_str = " from your Deck"
+			from_zone_str = tr("FROM_YOUR_DECK")
 		"archive":
-			from_zone_str = " from your Archive"
+			from_zone_str = tr("FROM_YOUR_ARCHIVE")
 		"backstage":
-			from_zone_str = " from your Backstage"
+			from_zone_str = tr("FROM_YOUR_BACKSTAGE")
 		"center":
-			from_zone_str = " from your Center"
+			from_zone_str = tr("FROM_YOUR_CENTER")
 		"cheer_deck":
-			from_zone_str = " from your Cheer Deck"
+			from_zone_str = tr("FROM_YOUR_CHEER_DECK")
 		"collab":
-			from_zone_str = " from your Collab"
+			from_zone_str = tr("FROM_YOUR_COLLAB")
 		"holopower":
-			from_zone_str = " from your Holopower"
+			from_zone_str = tr("FROM_YOUR_HOLOPOWER")
 		"holomem":
-			from_zone_str = " from this Holomem"
+			from_zone_str = tr("FROM_THIS_HOLOMEM")
 		"":
 			from_zone_str = ""
 	match to_zone:
 		"archive":
-			to_zone_str = "your Archive"
+			to_zone_str = tr("YOUR_ARCHIVE")
 		"backstage":
-			to_zone_str = "your Backstage"
+			to_zone_str = tr("YOUR_BACKSTAGE")
 		"center":
-			to_zone_str = "your Center"
+			to_zone_str = tr("YOUR_CENTER")
 		"cheer_deck":
-			to_zone_str = "your Cheer Deck"
+			to_zone_str = tr("YOUR_CHEER_DECK")
 		"collab":
-			to_zone_str = "your Collab"
+			to_zone_str = tr("YOUR_COLLAB")
 		"deck":
-			to_zone_str = "your Deck"
+			to_zone_str = tr("YOUR_DECK")
 		"hand":
-			to_zone_str = "your Hand"
+			to_zone_str = tr("YOUR_HAND")
 		"holomem":
-			to_zone_str = "a Holomem"
+			to_zone_str = tr("A_HOLOMEM")
 		"holopower":
-			to_zone_str = "your Holopower"
+			to_zone_str = tr("YOUR_HOLOPOWER")
 	var amount_str = "%s" % amount_min
 	if amount_min != amount_max:
 		amount_str = "%s-%s" % [amount_min, amount_max]
@@ -430,52 +429,52 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	if remaining_cards_action:
 		match remaining_cards_action:
 			"archive":
-				remaining_cards_str = "\nArchive the remaining cards"
+				remaining_cards_str = "\n" + tr("Archive the remaining cards")
 			"shuffle":
-				remaining_cards_str = "\nShuffle the remaining cards"
+				remaining_cards_str = "\n" + tr("Shuffle the remaining cards")
 			"order_on_bottom":
-				remaining_cards_str = "\nOrder the rest on bottom"
+				remaining_cards_str = "\n" + tr("Order the rest on bottom")
 			"nothing":
 				remaining_cards_str = ""
 			_:
 				remaining_cards_str = "\nUNKNOWN REMAINING CARDS ACTION"
-	var card_str = "cards"
+	var card_str = tr("cards")
 	if amount_min == 1 and amount_max == 1:
-		card_str = "card"
-	var main_text = "Choose %s %s%s to move to %s%s." % [amount_str, card_str, from_zone_str, to_zone_str, remaining_cards_str]
+		card_str = tr("card")
+	var main_text = tr("Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.").format({AMOUNT = amount_str, CARD = card_str, FROMZONE = from_zone_str, TOZONE = to_zone_str, REMAIN = remaining_cards_str})
 	if "requirement" in requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
 			"buzz":
-				main_text += "\nOnly Buzz cards"
+				main_text += "\n" + tr("ONLY_BUZZ")
 			"color_in":
-				main_text += "\nOnly %s" % "/".join(requirement_details["requirement_colors"])
+				main_text += "\n" + tr("ONLY_COLOR %s") % "/".join(requirement_details["requirement_colors"])
 			"color_matches_holomems":
 				var tag_str = ""
 				if "requirement_only_holomems_with_any_tag" in requirement_details and requirement_details["requirement_only_holomems_with_any_tag"]:
 					tag_str = "%s " % ["/".join(requirement_details["requirement_only_holomems_with_any_tag"])]
-				main_text += "\nOnly colors matching your %sHolomems on stage" % tag_str
+				main_text += "\n" + tr("Only colors matching your %sHolomems on stage") % tag_str
 			"specific_card":
 				var card = CardDatabase.get_card(requirement_details["requirement_id"])
 				var card_name = "MISSING_CARD_NAME"
 				if "card_names" in card:
 					card_name = get_names(card["card_names"])[0]
-				main_text += "\nOnly %s" % card_name
+				main_text += "\n" + tr("ONLY_CARD %s") % card_name
 			"holomem":
-				main_text += "\nOnly Holomem"
+				main_text += "\n" + tr("ONLY_HOLOMEM")
 				if requirement_details.get("requirement_buzz_blocked", false):
 					main_text += " (no Buzz)"
 				if requirement_details.get("requirement_bloom_levels", false):
 					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
 			"holomem_bloom":
-				main_text += "\nOnly Bloom"
+				main_text += "\n" + tr("ONLY_BLOOM")
 				if requirement_details.get("requirement_buzz_blocked", false):
 					main_text += " (no Buzz)"
 				if requirement_details["requirement_bloom_levels"]:
 					main_text += " (Bloom %s)" % "/".join(requirement_details["requirement_bloom_levels"])
 			"holomem_debut":
-				main_text += "\nOnly Debut"
+				main_text += "\n" + tr("ONLY_DEBUT")
 			"holomem_debut_or_bloom":
-				main_text += "\nOnly Debut/Bloom"
+				main_text += "\n" + tr("ONLY_DEBUT_BLOOM")
 				if requirement_details.get("requirement_buzz_blocked", false):
 					main_text += " (no Buzz)"
 				if requirement_details["requirement_bloom_levels"]:
@@ -483,21 +482,21 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			"holomem_named":
 				var name_ids = requirement_details["requirement_names"]
 				var names = get_names(name_ids)
-				main_text += "\nOnly Holomem (%s)" % "/".join(names)
+				main_text += "\n" + tr("ONLY_HOLOMEM (%s)") % "/".join(names)
 			"limited":
-				main_text += "\nOnly LIMITED"
+				main_text += "\n" + tr("ONLY_LIMITED")
 			"item":
-				main_text += "\nOnly Item"
+				main_text += "\n" + tr("ONLY_ITEM")
 			"mascot":
-				main_text += "\nOnly Mascot"
+				main_text += "\n" + tr("ONLY_MASCOT")
 			"fan":
-				main_text += "\nOnly Fan"
+				main_text += "\n" + tr("ONLY_FAN")
 			"tool":
-				main_text += "\nOnly Tool"
+				main_text += "\n" + tr("ONLY_TOOL")
 			"event":
-				main_text += "\nOnly Event"
+				main_text += "\n" + tr("ONLY_EVENT")
 			"cheer":
-				main_text += "\nOnly Cheer"
+				main_text += "\n" + tr("ONLY_CHEER")
 		if "requirement_tags" in requirement_details and len(requirement_details["requirement_tags"]) > 0:
 			main_text += "\nOnly Tag: %s" % "/".join(requirement_details["requirement_tags"])
 		if requirement_details.get("requirement_match_oshi_color", false):
@@ -728,7 +727,7 @@ func get_effect_text(effect):
 						limitation_str = " (%s)" % HolomemNames[effect["to_limitation_name"]]
 					"tag_in":
 						limitation_str = " (%s)" % "/".join(effect["to_limitation_tags"])
-			text += "Attach card to Holomem%s.\n" % limitation_str
+			text += tr("Attach card to Holomem%s.") % limitation_str + "\n"
 		"bonus_cheer":
 			text += "Treat as %s %s Cheer for Arts." % [effect["amount"], effect["color"]]
 		"bonus_hp":

@@ -1737,7 +1737,7 @@ func _on_draw_event(event_data):
 		get_card_logline(drawn_card_ids)
 	])
 	if not active_player.is_me() or observer_mode:
-		_play_popup_message("%s draws %s" % [active_player.get_name(), len(drawn_card_ids)], true)
+		_play_popup_message(tr("{PLAYER} draws {AMOUNT}").format({PLAYER = active_player.get_name(), AMOUNT = len(drawn_card_ids)}), true)
 
 	active_player.draw_cards(len(drawn_card_ids), created_cards)
 
@@ -1982,7 +1982,7 @@ func _on_modify_hp_event(event_data):
 	card.set_damage(new_damage)
 
 	_play_transient_icon_message(str(damage_done), card.get_center_position(), PopupMessage.IconMessageType.Damage, true)
-	#_play_popup_message("Damage: %s" % [damage_done])
+	#_play_popup_message(tr("Damage:") + "%s" % [damage_done])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] takes %s damage" % [
 		active_player.get_name_decorated(),
 		_get_card_definition_id(card_id),
@@ -2176,7 +2176,7 @@ func _on_perform_art_event(event_data):
 		power,
 	])
 
-	_play_popup_message("Art: %s\nBase Power: %s" % [Strings.get_skill_string(art_id), power])
+	_play_popup_message(tr("Art:") + "%s" % [Strings.get_skill_string(art_id)] + "\n" + tr("Base Power:") + "%s" % [power])
 	var performer = find_card_on_board(performer_id)
 	var target = find_card_on_board(target_id)
 	performer.show_active_skill(Strings.get_skill_string(art_id))
@@ -2341,7 +2341,7 @@ func _on_restore_hp_event(event_data):
 	card.set_damage(new_damage)
 
 	_play_transient_icon_message(str(healed_amount), card.get_center_position(), PopupMessage.IconMessageType.Heart, true)
-	#_play_popup_message("Heal: %s" % [healed_amount])
+	#_play_popup_message(tr("Heal:") + "%s" % [healed_amount])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [CARD]%s[/CARD] heals %s damage" % [
 		active_player.get_name_decorated(),
 		_get_card_definition_id(card_id),
@@ -2376,7 +2376,7 @@ func _on_roll_die_event(event_data):
 		die_result,
 		rigged_str,
 	])
-	_play_popup_message("Rolled die: %s%s" % [die_result, rigged_str])
+	_play_popup_message(tr("Rolled die:") + "%s%s" % [die_result, rigged_str])
 	# TODO: Animation of die roll.
 	pass
 
@@ -2404,7 +2404,7 @@ func _on_oshi_skill_activation(event_data):
 	game_log.add_to_log(GameLog.GameLogLine.Detail, logline)
 	# TODO: Animation - show oshi skill activate and mark once per game/turn somehow.
 	if not active_player.is_me() or observer_mode:
-		_play_popup_message("Oshi Skill: %s" % Strings.get_skill_string(skill_id))
+		_play_popup_message(tr("Oshi Skill:") + "%s" % Strings.get_skill_string(skill_id))
 	pass
 
 func on_performance_step_start(event_data):

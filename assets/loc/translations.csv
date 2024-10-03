@@ -21,6 +21,7 @@ Game sound enabled,Game sound enabled,게임 사운드 켜기
 Use EN Proxies when available,Use EN Proxies when available,사용 가능한 EN 프록시 사용
 Hide English Card Text,Hide English Card Text,영문 텍스트 가리기
 Language,Language,언어
+Exit Game,Exit Game,게임 나가기
 
 Match List,Match List,진행중인 게임
 Active Matches,Active Matches,진행중인 게임 목록
@@ -68,6 +69,11 @@ Purple,Purple,자색
 None-Color,None,무색
 Reset Filters,Reset Filters,필터 초기화
 
+Backstage,Backstage,백 스테이지
+Collab,Collab,콜라보
+Center,Center,센터
+Archive,Archive,아카이브
+
 OK,OK,확인
 Yes,Yes,네
 No,No,아니요
@@ -81,28 +87,28 @@ End Ability,End Ability,End Ability
 
 Mulligan all cards?,Mulligan all cards?,손패를 전부 멀리건 하시겠습니까?
 Debut your Center!,Debut your Center!,센터 포지션으로 데뷔!
-Select 0-5 backup members (debut","spot),Select 0-5 backup members (debut","spot),백 스테이지에 (debut","spot) 홀로멤을 5장까지 두세요
+Select 0-5 backup members (debut/spot),Select 0-5 backup members (debut/spot),백 스테이지에 (debut/spot) 홀로멤을 5장까지 두세요
 
 Main Step - Choose an action,Main Step - Choose an action,메인 스텝 - 진행할 행동을 고르세요
 Perform an art or end your turn,Perform an art or end your turn,아츠를 사용하거나 턴을 종료하세요
 Choose a Holomem to enter the stage,Choose a Holomem to enter the stage,스테이지에 설 홀로멤을 선택하세요
-Choose a Bloom card to play,Choose a Bloom card to play,Choose a Bloom card to play
-Choose a Holomem to Bloom,Choose a Holomem to Bloom,Choose a Holomem to Bloom
-Choose a Holomem for the Baton Pass,Choose a Holomem for the Baton Pass,배톤 터치할 홀로멤을 선택하세요
+Choose a Bloom card to play,Choose a Bloom card to play,Bloom할 카드를 선택하세요
+Choose a Holomem to Bloom,Choose a Holomem to Bloom,Bloom할 홀로멤을 선택하세요
+Choose a Holomem for the Baton Pass,Choose a Holomem for the Baton Pass,배턴 터치할 홀로멤을 선택하세요
 Choose a Support card to play,Choose a Support card to play,사용할 서포트 카드를 선택하세요
 Choose a Holomem to Collab,Choose a Holomem to Collab,콜라보할 홀로멤을 선택하세요
-Choose a Holomem to Baton Pass,Choose a Holomem to Baton Pass,Choose a Holomem to Baton Pass 
-Send Collab back?,Send Collab back?,Send Collab back?
+Choose a Holomem to Baton Pass,Choose a Holomem to Baton Pass,배턴 터치할 홀로멤을 선택하세요
+Send Collab back?,Send Collab back?,콜라보 홀로멤을 되돌리시겠습니까?
 Choose a new Center,Choose a new Center,새로 등장할 센터 홀로멤을 선택하세요
 Choose a Holomem to swap into the Center,Choose a Holomem to swap into the Center,교체할 홀로멤을 선택하세요
-Choose a target for this Art,Choose a target for this Art,Choose a target for this Art
+Choose a target for this Art,Choose a target for this Art,아츠의 대상을 선택하세요
 Choose a Holomem to remove Cheer from,Choose a Holomem to remove Cheer from,옐을 제거할 홀로멤을 선택하세요
 Choose a Holomem to receive Cheer,Choose a Holomem to receive Cheer,옐을 받을 홀로멤을 선택하세요
 Choose one effect,Choose one effect,효과를 하나 선택하세요
 
 Your Archive,Your Archive,당신의 아카이브
 Opponent Archive,Opponent Archive,상대의 아카이브
-Attached Cards,Attached Cards,Attached Cards
+Attached Cards,Attached Cards,붙어있는 카드
 
 Replacement,Replacement,리플레이스먼트
 So"," you're the enemy?,So"," you're the enemy?,그럼 적이네?
@@ -316,3 +322,113 @@ Sub PC,Sub PC,서브 컴퓨터
 Story of Moon&Rabbit,Story of Moon&Rabbit,달과 토끼의 이야기
 Upao,Upao,우파오
 Zain,Zain,좌원
+
+Additional Damage,Additional Damage,추가 데미지
+Damage Prevented,Damage Prevented,데미지 감소
+Power,Power,파워
+
+Oshi:,Oshi:,오시:
+Choose %s Cheer to Archive.,Choose %s Cheer to Archive.,아카이브로 보낼 옐을 %s장 선택하세요
+
+YOUR_LIFE,your Life,라이프
+Place 1 {COLOR} Cheer from {SOURCE}.,Place 1 {COLOR} Cheer from {SOURCE}.,{SOURCE}에서 {COLOR} 옐 1장을 놓는다.
+Send,Send,보낸다
+
+FROM_YOUR_ARCHIVE,from your Archive,아카이브에서
+FROM_YOUR_CHEER_DECK,from your Cheer Deck,옐 덱에서
+FROM_DOWNED_HOLOMEM,from downed Holomem,다운된 홀로멤에서
+FROM_HOLOMEM,from Holomem,홀로멤에서
+FROM_THIS_HOLOMEM,from this Holomem,이 홀로멤에서
+FROM_OPPONENT_HOLOMEM,from opponent's Holomem,상대 홀로멤에서
+Remove,Remove,제거한다
+
+"{ACTION} {AMOUNT} Cheer {SOURCE}.","{ACTION} {AMOUNT} Cheer {SOURCE}.","{SOURCE} {AMOUNT} 옐을 {ACTION}."
+
+top,top,맨위
+the bottom,the bottom,아래
+your deck,your deck,덱
+Order these cards to place on {DIR} of {DECK},Order these cards to place on {DIR} of {DECK},이 카드들을 원하는 순서대로 {DECK} {DIR}로 되돌린다
+
+Choose {MIN} Holomem for:,Choose {MIN} Holomem for:,홀로멤 {MIN}명을 선택하세요
+Choose {MIN}-{MAX} Holomem for:,Choose {MIN}-{MAX} Holomem for:,홀로멤 {MIN}-{MAX}명을 선택하세요
+
+FROM_YOUR_HAND, from your Hand, 패에서
+FROM_YOUR_DECK, from your Deck, 덱에서
+FROM_YOUR_BACKSTAGE, from your Backstage, 백 스테이지에서
+FROM_YOUR_CENTER, from your Center, 센터에서
+FROM_YOUR_COLLAB, from your Collab, 콜라보 멤버중에서
+FROM_YOUR_HOLOPOWER, from your Holopower, 홀로 파워에서
+
+YOUR_ARCHIVE,your Archive,아카이브
+YOUR_BACKSTAGE,your Backstage,백 스테이지
+YOUR_CENTER,your Center,센터
+YOUR_CHEER_DECK,your Cheer Deck,옐 덱
+YOUR_COLLAB,your Collab,콜라보
+YOUR_DECK,your Deck,덱
+YOUR_HAND,your Hand,패
+A_HOLOMEM,a Holomem,이 홀로멤
+YOUR_HOLOPOWER,your Holopower,홀로 파워
+
+Archive the remaining cards,Archive the remaining cards,남은 카드는 아카이브로 보낸다
+Shuffle the remaining cards,Shuffle the remaining cards,남은 카드는 셔플한다
+Order the rest on bottom,Order the rest on bottom,남은 카드는 덱 아래로 되돌린다
+
+cards,cards,카드
+card,card,카드
+Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.
+
+ (no Buzz), (no Buzz), (Buzz 없음)
+ONLY_BUZZ,Only Buzz cards,Buzz 카드만 선택 가능
+ONLY_COLOR %s,Only %s,%s만 선택 가능
+Only colors matching your %sHolomems on stage,Only colors matching your %sHolomems on stage,스테이지에 있는 당신의 %s 홀로멤만 선택 가능
+ONLY_CARD %s,Only %s,$s만 선택 가능
+ONLY_HOLOMEM,Only Holomem,홀로멤만 선택 가능
+ONLY_BLOOM,Only Bloom,Bloom 홀로멤만 선택 가능
+ONLY_DEBUT,Only Debut,Debut 홀로멤만 선택 가능
+ONLY_DEBUT_BLOOM,Only Debut/Bloom,Debut/Bloom 홀로멤만 선택 가능
+
+ONLY_HOLOMEM (%s),Only Holomem (%s),(%s) 홀로멤만 선택 가능
+ONLY_LIMITED,Only LIMITED,LIMITED 카드만 선택 가능
+ONLY_ITEM,Only Item,아이템 카드만 선택 가능
+ONLY_MASCOT,Only Mascot,마스코트 카드만 선택 가능
+ONLY_FAN,Only Fan,팬 카드만 선택 가능
+ONLY_TOOL,Only Tool,툴 카드만 선택 가능
+ONLY_EVENT,Only Event,이벤트 카드만 선택 가능
+ONLY_CHEER,Only Cheer,옐 카드만 선택 가능
+
+Place Holomem,Place Holomem,홀로멤을 놓는다
+Bloom,Bloom,Bloom
+Collab,Collab,콜라보
+Oshi Skill,Oshi Skill,오시 스킬
+Play Support,Play Support,서포트카드사용
+Baton Pass,Baton Pass,배턴 터치
+Begin Performance,Begin Performance,퍼포먼스 시작
+End Turn,End Turn,턴 종료
+Unknown Action,Unknown Action,알수없는 행동
+
+Collab!,Collab!,콜라보!
+{PLAYER} draws {AMOUNT},{PLAYER} draws {AMOUNT},{PLAYER} {AMOUNT}장 드로우
+Main Step,Main Step,메인 스텝
+Damage:,Damage:,데미지:
+Art:,Art:,아츠:
+Base Power:,Base Power:,기본 파워:
+Playing Support Card,Playing Support Card,서포트카드사용
+Reset Step - Choose Center,Reset Step - Choose Center,리셋 스텝 - 센터를 교체한다
+Heal:,Heal:,회복:
+Rolled die:,Rolled die:,나온 주사위 눈:
+Shuffling Deck,Shuffling Deck,덱을 섞는다
+Oshi Skill:,Oshi Skill:,오시 스킬:
+Performance Step,Performance Step,퍼포먼스 스텝
+Turn Start,Turn Start,턴 시작
+Turn End,Turn End,턴 종료
+
+Cards in hand (%s): ,Cards in hand (%s): ,패에 넣을 카드 (%s)장: 
+
+Attach card to Holomem%s.,Attach card to Holomem%s.,이 카드를 붙일 홀로멤%s 중에서.
+
+BACKHOLOMEM_POSION,Back Holomem,백 스테이지 홀로멤
+CENTER_POSION,Center,센터 홀로멤
+COLLAB_POSION,Collab,콜라보 홀로멤
+CEN_COL_POSION,Center or Collab,센터 또는 콜라보 홀로멤
+THIS_HOLOMEM_POSION,to this Holomem,이 홀로멤에
+ANY_HOLOMEM_POSION,any Holomem,아무 홀로멤이나
