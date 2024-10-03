@@ -252,7 +252,7 @@ expand_icon = true
 
 [node name="None" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/Colors"]
 layout_mode = 2
-text = "None"
+text = "None-Color"
 icon = ExtResource("12_mhv37")
 expand_icon = true
 
