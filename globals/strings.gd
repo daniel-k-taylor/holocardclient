@@ -333,11 +333,7 @@ func build_use_oshi_skill_string(skill_id, cost):
 	var skill_name = get_skill_string(skill_id)
 	var cost_str = ""
 	if cost:
-<<<<<<< HEAD
-		cost_str = " (%s Holopower)" % cost
-=======
 		cost_str = " " + tr("({HoloPowerAmount} Holopower)").format({HoloPowerAmount = cost})
->>>>>>> upstream/main
 	return tr("Oshi:") + "[b]%s[/b]%s" % [skill_name, cost_str]
 
 func build_archive_cheer_string(count):
@@ -369,11 +365,7 @@ func build_send_cheer_string(amount_min, amount_max, source):
 			source_str = tr("FROM_THIS_HOLOMEM")
 		"opponent_holomem":
 			source_str = tr("FROM_OPPONENT_HOLOMEM")
-<<<<<<< HEAD
-			action_word = "Remove"
-=======
 			action_word = tr("REMOVE_CHEER_ACTION_WORD")
->>>>>>> upstream/main
 	var amount_str = "%s" % amount_min
 	if str(amount_min) != str(amount_max):
 		if str(amount_max) == "all":
@@ -395,15 +387,9 @@ func build_order_cards_string(to, bottom):
 
 func build_choose_holomem_for_effect_string(effect, amount_min, amount_max):
 	if amount_min == amount_max:
-<<<<<<< HEAD
-		return tr("Choose {MIN} Holomem for:").format({MIN = amount_min}) + "\n" + "{EFFECT}".format({EFFECT = get_effect_text(effect)})
-	else:
-		return tr("Choose {MIN}-{MAX} Holomem for:").format({MIN = amount_min, MAX = amount_max}) + "\n" + "{EFFECT}".format({EFFECT = get_effect_text(effect)})
-=======
 		return tr("Choose {MIN} Holomem for:").format({MIN = amount_min}) + "\n" + get_effect_text(effect)
 	else:
 		return tr("Choose {MIN}-{MAX} Holomem for:").format({MIN = amount_min, MAX = amount_max}) + "\n" + get_effect_text(effect)
->>>>>>> upstream/main
 
 func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	remaining_cards_action, requirement_details, special_reason):
@@ -479,11 +465,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			"buzz":
 				main_text += "\n" + tr("ONLY_BUZZ")
 			"color_in":
-<<<<<<< HEAD
-				main_text += "\n" + tr("ONLY_COLOR %s") % "/".join(requirement_details["requirement_colors"])
-=======
 				main_text += "\n" + tr("ONLY_COLOR %s") % "/".join(get_color_strings(requirement_details["requirement_colors"]))
->>>>>>> upstream/main
 			"color_matches_holomems":
 				var tag_str = ""
 				if "requirement_only_holomems_with_any_tag" in requirement_details and requirement_details["requirement_only_holomems_with_any_tag"]:
