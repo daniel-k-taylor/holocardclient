@@ -162,7 +162,7 @@ func update_card_graphic():
 		if language_code == "en":
 			# Check if the en card exists.
 			var use_en_proxies = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
-			if use_en_proxies and FileAccess.file_exists(en_path):
+			if use_en_proxies and ResourceLoader.exists(en_path):
 				card_image.texture = load(en_path)
 				overlay_root.visible = false
 				proxy_card_loaded = true

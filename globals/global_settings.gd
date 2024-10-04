@@ -172,9 +172,6 @@ func _on_card_pack_download_complete(result, response_code, _body, callback, lan
 		return
 	var download_dir = language_dir + "/" + language_code
 	var download_file = download_dir + ".zip"
-	# var file = FileAccess.open(download_file, FileAccess.WRITE)
-	# file.store_buffer(body)
-	# file.close()
 	_unpack_zip_file(download_file, download_dir)
 
 	# Write the updated details file.
