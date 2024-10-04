@@ -1,47 +1,454 @@
 keys,en,kr
-Play vs AI,Play vs AI,플레이 대 AI
-Deck Builder,Deck Builder,덱 빌더
-Match List,Match List,매치 목록
-Players,Players,플레이어
-Enter Queue,Enter Queue,큐에 들어가기
-Leave Queue,Leave Queue,큐에서 나가기
-Join Match Now,Join Match Now,지금 매치에 참여하기
-Custom,Custom,사용자 정의
-Supported Cards,Supported Cards,지원 카드
-Deck,Deck,덱
-Deck:,Deck:,덱:
-Settings,Settings,설정
-Game sound enabled,Game sound enabled,게임 사운드 사용
+Player Name,Player Name,플레이어 이름
+Deck Builder,Deck Builder,덱 편집
+Deck:,Deck:,사용 덱:
+Supported Cards,Supported Cards,지원되는 카드
+,,
+Play vs AI,Play vs AI,플레이어 대 AI
+Connect to Server,Connect to Server,서버 접속
+Enter Queue,Enter Queue,대기열 참여
+Join Match Now,Join Match Now,매칭 참가하기
+Enter Custom Room,Enter Custom Room,커스텀 룸 번호 입력
+Custom,Custom,커스텀
+Leave Queue,Leave Queue,대기열 떠나기
+,,
+How to Play,How to Play,게임 방법
+Previous Page,Previous Page,이전 페이지
+Next Page,Next Page,다음 페이지
+,,
+Settings,Settings,환경설정
+Game sound enabled,Game sound enabled,게임 사운드 켜기
+Use EN Proxies when available,Use EN Proxies when available,사용 가능한 EN 프록시 사용
+Hide English Card Text,Hide English Card Text,영문 텍스트 가리기
 Language,Language,언어
-Enter Custom Room,Enter Custom Room,사용자 정의 방 입력
-Active Matches,Active Matches,활성 매치
-Observe,Observe,관찰
+Exit Game,Exit Game,게임 나가기
+,,
+Match List,Match List,진행중인 게임
+Active Matches,Active Matches,진행중인 게임 목록
+Oshi,Oshi,오시
+Room Name,Room Name,방 이름
+Observe?,Observe?,관전 참여하기
+,,
+Are you sure you want to quit?,Are you sure you want to quit?,정말 나가시겠습니까?
+QUIT TO MENU,QUIT TO MENU,메뉴로 나가기
+CANCEL,CANCEL,취소
+,,
 Main Menu,Main Menu,메인 메뉴
 Filter,Filter,필터
-Filters,Filters,필터들
+Your Decks (,Your Decks (,덱 개수(
 Load Deck,Load Deck,덱 불러오기
-New Deck,New Deck,새 덱
+New Deck,New Deck,새로운 덱
 Delete Deck,Delete Deck,덱 삭제
 Export Deck,Export Deck,덱 내보내기
 Load Sample Decks,Load Sample Decks,샘플 덱 불러오기
-All,All,모두
-None,None,없음
-Card Type,Card Type,카드 종류
-Colors,Colors,색상
+Cheer:,Cheer:,옐:
+Cards:,Cards:,카드:
+,,
+Filters,Filters,필터
+Filter By Name:,Filter By Name:,카드명 필터:
+Enter partial name,Enter partial name,일부 카드명 입력
+Clear Name,Clear Name,카드명 지우기
+Holomem Card Type,Holomem Card Type,홀로멤 카드 타입
+Support Card Type,Support Card Type,서포트 카드 타입
+Colors,Colors,색
+All,All,전부체크
+None,None,체크해제
+Oshi,Oshi,오시
+Event,Event,이벤트
+Fan,Fan,팬
+Item,Item,아이템
+Mascot,Mascot,마스코트
+Staff,Staff,스태프
+Tool,Tool,툴
+White,White,백색
+Green,Green,녹색
+Red,Red,적색
+Blue,Blue,청색
+Yellow,Yellow,황색
+Purple,Purple,자색
+None-Color,None,무색
 Reset Filters,Reset Filters,필터 초기화
-Yes,Yes,예
-No,No,아니오
-Pass,Pass,패스
+,,
+Backstage,Backstage,백 스테이지
+Collab,Collab,콜라보
+Center,Center,센터
+Archive,Archive,아카이브
+,,
 OK,OK,확인
-Close,Close,닫기
+Yes,Yes,네
+No,No,아니요
+Pass,Pass,패스
 Cancel,Cancel,취소
-Game Log,Game Log,게임 로그
-Show Choice,Show Choice,선택 표시
-LIMITED,LIMITED,제한됨
+Show Choice,Show Choice,대상 확인
+Close,Close,닫기
+Done,Done,완료
+Select Cheer,Select Cheer,옐 선택하기
+End Ability,End Ability,End Ability
+,,
+Mulligan all cards?,Mulligan all cards?,손패를 전부 멀리건 하시겠습니까?
+Debut your Center!,Debut your Center!,센터 포지션으로 데뷔!
+Select 0-5 backup members (Debut/Spot),Select 0-5 backup members (Debut/Spot),백 스테이지에 (Debut/Spot) 홀로멤을 5장까지 두세요
+,,
+Main Step - Choose an action,Main Step - Choose an action,메인 스텝 - 진행할 행동을 고르세요
+Perform an art or end your turn,Perform an art or end your turn,아츠를 사용하거나 턴을 종료하세요
+Choose a Holomem to enter the stage,Choose a Holomem to enter the stage,스테이지에 설 홀로멤을 선택하세요
+Choose a Bloom card to play,Choose a Bloom card to play,Bloom할 카드를 선택하세요
+Choose a Holomem to Bloom,Choose a Holomem to Bloom,Bloom할 홀로멤을 선택하세요
+Choose a Holomem for the Baton Pass,Choose a Holomem for the Baton Pass,배턴 터치할 홀로멤을 선택하세요
+Choose a Support card to play,Choose a Support card to play,사용할 서포트 카드를 선택하세요
+Choose a Holomem to Collab,Choose a Holomem to Collab,콜라보할 홀로멤을 선택하세요
+Choose a Holomem to Baton Pass,Choose a Holomem to Baton Pass,배턴 터치할 홀로멤을 선택하세요
+Send Collab back?,Send Collab back?,콜라보 홀로멤을 되돌리시겠습니까?
+Choose a new Center,Choose a new Center,새로 등장할 센터 홀로멤을 선택하세요
+Choose a Holomem to swap into the Center,Choose a Holomem to swap into the Center,교체할 홀로멤을 선택하세요
+Choose a target for this Art,Choose a target for this Art,아츠의 대상을 선택하세요
+Choose a Holomem to remove Cheer from,Choose a Holomem to remove Cheer from,옐을 제거할 홀로멤을 선택하세요
+Choose a Holomem to receive Cheer,Choose a Holomem to receive Cheer,옐을 받을 홀로멤을 선택하세요
+Choose one effect,Choose one effect,효과를 하나 선택하세요
+,,
+Your Archive,Your Archive,당신의 아카이브
+Opponent Archive,Opponent Archive,상대의 아카이브
+Attached Cards,Attached Cards,붙어있는 카드
+,,
+Replacement,Replacement,리플레이스먼트
+"So, you're the enemy?","So, you're the enemy?",그럼 적이네?
+Map in the left hand,Map in the left hand,왼손엔 지도
+Mic in the right hand,Mic in the right hand,오른손엔 마이크
+Squeeze squeeze,Squeeze squeeze,꾸욱 꾸욱
+I'll crush you,I'll crush you,쥐어짜버릴 거야
+Guardian of Civilization,Guardian of Civilization,문명의 수호자
+Amazing Drawing,Amazing Drawing,어메이징 드로잉
+Hawkeye,Hawkeye,호크 아이
+Executive's Order,Executive's Order,여간부의 지휘
+Phoenix Tail,Phoenix Tail,피닉스 테일
+Rise from the Ashes,Rise from the Ashes,Rise from the ashes
+Comet,Comet,혜성
+Shooting Star,Shooting Star,슈팅스타
+Praying for rain,Praying for rain,기우
+Rain Shamanism,Rain Shamanism,레인 샤머니즘
+White Baton,White Baton,화이트 배턴
+Green Baton,Green Baton,그린 배턴
+Blue Baton,Blue Baton,블루 배턴
+Red Baton,Red Baton,레드 배턴
+Quick Guard,Quick Guard,퀵 가드
+"Let's do our best, everyone!","Let's do our best, everyone!",모두 힘내~!
+Come on! Again!,Come on! Again!,자아! 다시 한 번!
+Back Shot,Back Shot,백샷
+,,
+(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹)눈눈
+On stage!,On stage!,온 스테이지!
+nun nun shiyo,nun nun shiyo,눈눈하자
+Your heart is cloudy... then clear!,Your heart is cloudy... then clear!,당신의 마음은... 흐린 뒤 맑음!
+Dream Live,Dream Live,드림 라이브
+SorAZ Sympathy,SorAZ Sympathy,SorAZ 심퍼시
+Embodiment of Hope,Embodiment of Hope,희망의 화신
+Keep working hard!,Keep working hard!,열심히 해서 대단해!
+"Where next, where next!","Where next, where next!",그라고 그라고!
+An aimless journey with you,An aimless journey with you,너와 목적지 없는 여행
+SorAZ Gravity,SorAZ Gravity,SorAZ 그래비티
+Destiny Song,Destiny Song,데스티니 송
+I had fun drawing!,I had fun drawing!,그림그리기 즐거워~!
+Brighter Future,Brighter Future,뛰어넘고 싶은 미래
+Hey,Hey,헤이
+Pure Pure Pure~,Pure Pure Pure~,퓨어 퓨어 퓨어~
+Relax Time,Relax Time,릴렉스 타임
+Konkanata,Konkanata,콘카나타~
+I'm off now,I'm off now,다녀오겠습니다
+Please give lots of support!,Please give lots of support!,잔~뜩 응원해줘!
+Angel Stage,Angel Stage,엔젤 스테이지
+Jet Black Wings,Jet Black Wings,칠흑의 날개
+Thank you for your continued support!,Thank you for your continued support!,언제나 응원해줘서 고마워!
+Everyone together,Everyone together,모두 함께
+Everyone! Kon-somme!,Everyone! Kon-somme!,모두~ 콘소메~
+Let's make it the best day ever,Let's make it the best day ever,최고의 하루로하자
+It won't stop,It won't stop,멈추지 않아
+Survival Power,Survival Power,서바이벌 파워
+Song of the Earth,Song of the Earth,대지의 노래
+Nousagis~,Nousagis~,노우사기들~
+Lucky Rabbit,Lucky Rabbit,행운 토끼
+Mission Start!,Mission Start!,미션 스타트!
+The whole stage is mine,The whole stage is mine,스테이지는 모두「내꺼」
+Access Code: ID,Access Code: ID,액세스 코드: ID
+I'll sing my best so watch me!,I'll sing my best so watch me!,열심히 노래할 테니까 보고 있어줘!
+Power of Promise,Power of Promise,약속의 힘
+Alona!,Alona!,아로~나!
+Afterparty,Afterparty,애프터 파티
+Akirose Fantasy,Akirose Fantasy,아키로제 환상곡
+Ganbarose for today!,Ganbarose for today!,오늘도 힘내로제!
+Secret Key,Secret Key,비밀의 합건
+Konpeko!,Konpeko!,콘페코!
+Don't miss it peko!,Don't miss it peko!,놓치면 안돼 페코!
+Ki-t-raaaa,Ki-t-raaaa,키-라아아아
+Rabbit girl on a white sandy beach,Rabbit girl on a white sandy beach,하얀 모래사장과 토끼 소녀
+Human Rabbitality Project,Human Rabbitality Project,전인류 토끼화 계획
+Diamond in the rough,Diamond in the rough,스타의 원석
+Sui-chan Waaaa~ Kyou Mo Kawaii,Sui-chan Waaaa~ Kyou Mo Kawaii,스이짱은~ 오늘도 귀여워~~!!
+Did I Luive you waiting?,Did I Luive you waiting?,"모두, 맛타카네?"
+Lure of the Jet Black Wings,Lure of the Jet Black Wings,칠흑의 날개로 감싸 안아주지
+Kon-luilui,Kon-luilui,콘루이루이
+Otsu-luilui,Otsu-luilui,오츠루이루이
+Welcome to the party,Welcome to the party,파티에 어서 오세요
+Lui's Party,Lui's Party,Lui's Party
+Follow me closely!,Follow me closely!,제대로 따라와야 해!
+Hawk Rave,Hawk Rave,호크 레이브
+Soul Guide,Soul Guide,소울 안내
+New Costume,New Costume,새로운 의상
+Street Snap,Street Snap,스트리트 스냅
+A moment of sunlight filtering through the trees,A moment of sunlight filtering through the trees,나무 사이로 비추는 햇빛의 한 때
+The Fighting Maid,The Fighting Maid,싸우는 메이드씨
+Shining Comet,Shining Comet,빛나는 혜성
+Cold response Kanataso,Cold response Kanataso,냉담 대응 카나타쇼
+"Oh, Hi","Oh, Hi","Oh, Hi"
+Going out together,Going out together,함께 외출
+Coffee Break,Coffee Break,커피 브레이크
+Pieces of Memories,Pieces of Memories,추억의 조각
+Don't drink onsen water,Don't drink onsen water,온천은 마시면 안 돼!
+A relaxing day at the onsen,A relaxing day at the onsen,온천에서 편안한 하루를
+HiRyS!,HiRyS!,하이RyS!
+I'm a seiso nephilim!,I'm a seiso nephilim!,청초한 네피림이에요!
+Ara ara,Ara ara,아라 아라
+Mugyu Mugyu Chat,Mugyu Mugyu Chat,무규무규 잡담
+Zero Gravity Jump!,Zero Gravity Jump!,무중력 점프!
+Otsupeko,Otsupeko,오츠페코였습니다
+Kon-AZKi,Kon-AZKi,콘아즈키~
+With you in a seaside town,With you in a seaside town,해변 거리에서 당신과
+I've come to such a wonderful world,I've come to such a wonderful world,이런 멋진 세게에 올 수 있었습니다!
+A new map,A new map,새로운 지도
+"Ladies and gentlemen,\nKazama Iroha de gozaru","Ladies and gentlemen,\nKazama Iroha de gozaru,모두","카자마 이로하이외다~"""
+Freshly pickled eggplant,Freshly pickled eggplant,갓 딴 가지
+Would you like one?,Would you like one?,하나 어떠시오?
+WAZZUP!!,WAZZUP!!,WAZZUP!!
+WITNESS ME!!,WITNESS ME!!,WITNESS ME!!
+The fun begins!,The fun begins!,즐거운 시간의 시작이다!
+Disorder,Disorder,Disorder
+Moon Moon~ Moona Dayo!,Moon Moon~ Moona Dayo!,문 문 무나야!
+Otsumoona,Otsumoona,오츠무나
+Look forward to it!,Look forward to it!,기대하고 있어줘!
+Midnight Moon,Midnight Moon,달은 밤에
+Moon Night Diva,Moon Night Diva,문 나이트 디바
+Kronichiwa,Kronichiwa,크로니치와
+Kroyasumi,Kroyasumi,크로야스미~
+Oyasumi Kro-Time,Oyasumi Kro-Time,휴식 크로타임
+Let's make this an unforgettable fes,Let's make this an unforgettable fes,잊지 못할 fes로 만들자!
+Fast Forward,Fast Forward,빨리 감기
+I'll give you all my energy,I'll give you all my energy,기운을 전력으로 전해드릴게요!
+Bundle up your cheers,Bundle up your cheers,옐을 묶어서
+Brilliance of the Wind,Brilliance of the Wind,풍화의 반짝임
+Selamat Pagi!,Selamat Pagi!,슬라맛파기!
+Your beloved alien,Your beloved alien,당신의 사랑스러운 외계인
+I'm looking forward to it!,I'm looking forward to it!,기대하고 있어!
+Relation Sky,Relation Sky,릴레이션 스카이
+Kikkeriki!,Kikkeriki!,킷케리키~!
+Mofu mofu Time,Mofu mofu Time,푹신푹신 타임
+auf weidersehen!,auf weidersehen!,auf Wiedersehen!
+I want to liven things up!,I want to liven things up!,고조시키려고 합니다!
+Phoenix Sword Princess,Phoenix Sword Princess,불사조 검희
+Kneel.,Kneel.,무릎 꿇거라.
+Flame colored guidance,Flame colored guidance,불꽃 색 인도
+Majestic Phoenix,Majestic Phoenix,마제스틱 피닉스
+Polka Oruyo!,Polka Oruyo!,폴카 있어!
+Ohapol,Ohapol,안녕폴
+Osopol,Osopol,잘자폴
+Shared Conciousness,Shared Conciousness,공의존
+Polka Circus,Polka Circus,폴카 서커스
+Bokobokobokobo,Bokobokobokobo,보코보코보코보
+Waves! Swim!,Waves! Swim!,바다다~! 헤엄쳐~!
+Becoming a cat,Becoming a cat,고양이가 될게~
+Perayaan,Perayaan,Perayaan
+Raindrops,Raindrops,레인 드롭스
+OnAeru,OnAeru,OnAeru
+Rain Mantra,Rain Mantra,비의 만트라
+Wave Mantra,Wave Mantra,파도의 만트라
+Pekora ~Beyond the door~,Pekora ~Beyond the door~,페코라~ 문 저편으로~
+Flare ~Beyond the door~,Flare ~Beyond the door~,후레아~ 문 저편으로~
+Noel ~Beyond the door~,Noel ~Beyond the door~,노엘~ 문 저편으로~
+Marine ~Beyond the door~,Marine ~Beyond the door~,마린~ 문 저편으로~
+"Elementary, isn't it?","Elementary, isn't it?",초보적인 거잖아?
+,,
+Airani Iofifteen,Airani Iofifteen,아이라니 이오피프틴
+Aki Rosenthal,Aki Rosenthal,아키 로젠탈
+Amane Kanata,Amane Kanata,아마네 카나타
+AZKi,AZKi,AZKi
+Hakos Baelz,Hakos Baelz,하코스 벨즈
+Hakui Koyori,Hakui Koyori,하쿠이 코요리
+Hoshimachi Suisei,Hoshimachi Suisei,호시마치 스이세이
+Houshou Marine,Houshou Marine,호쇼 마린
+IRyS,IRyS,IRyS
+Kazama Iroha,Kazama Iroha,카자마 이로하
+Kobo Kanaeru,Kobo Kanaeru,코보 카나에루
+Moona Hoshinova,Moona Hoshinova,무나 호시노바
+Mori Calliope,Mori Calliope,모리 칼리오페
+Nanashi Mumei,Nanashi Mumei,나나시 무메이
+Omaru Polka,Omaru Polka,오마루 폴카
+Ouro Kronii,Ouro Kronii,오로 크로니
+Shiranui Flare,Shiranui Flare,시라누이 후레아
+Shirogane Noel,Shirogane Noel,시로가네 노엘
+SorAZ,SorAZ,SorAZ
+Takanashi Kiara,Takanashi Kiara,타카나시 키아라
+Takane Lui,Takane Lui,타카네 루이
+Tokino Sora,Tokino Sora,토키노 소라
+Usada Pekora,Usada Pekora,우사다 페코라
+Vestia Zeta,Vestia Zeta,베스티아 제타
+Watson Amelia,Watson Amelia,왓슨 아멜리아
+,,
+Amazing PC,Amazing PC,굉장한 컴퓨터
+Ankimo,Ankimo,안키모
+Club 'em into nothingness,Club 'em into nothingness,모두 박살 내주겠어!
+Encore,Encore,앙코르
+Exciting Prank Time,Exciting Prank Time,두근두근 장난 타임
+First Gravity,First Gravity,First Gravity
+Friend,Friend,프렌드
+Gaming PC,Gaming PC,게이밍 컴퓨터
+Ganmo,Ganmo,간모
+Harusaki Nodoka,Harusaki Nodoka,하루사키 노도카
+Holofan Circle,Holofan Circle,홀로리스의 고리
+Hololive ID 3rd Gen,Hololive ID 3rd Gen,홀로라이브 인도네시아 3기생
+Suisei's Mic,Suisei's Mic,호시마치 스이세이의 마이크
+Idol Mic,Idol Mic,아이돌 마이크
+I'll leave it to you,I'll leave it to you,뒤는 맡길게!
+Jobz,Jobz,잡스
+KFP,KFP,KFP
+Kotori,Kotori,Kotori
+Mane-chan,Mane-chan,마네짱
+Nousagi Alliance,Nousagi Alliance,노우사기 동맹
+Penlight,Penlight,펜라이트
+Pioneer,Pioneer,개척자
+Promise,Promise,Promise
+Rosetai,Rosetai,로제대
+Standard PC,Standard PC,보통 컴퓨터
+Stone Axe,Stone Axe,돌 도끼
+Sub PC,Sub PC,서브 컴퓨터
+Story of Moon&Rabbit,Story of Moon&Rabbit,달과 토끼의 이야기
+Upao,Upao,우파오
+Zain,Zain,좌원
+,,
+Additional Damage,Additional Damage,추가 데미지
+Damage Prevented,Damage Prevented,데미지 감소
+Power,Power,파워
+,,
+Oshi:,Oshi:,오시:
+Choose %s Cheer to Archive.,Choose %s Cheer to Archive.,아카이브로 보낼 옐을 %s장 선택하세요
+,,
+YOUR_LIFE,your Life,라이프
+Place 1 {COLOR} Cheer from {SOURCE}.,Place 1 {COLOR} Cheer from {SOURCE}.,{SOURCE}에서 {COLOR} 옐 1장을 놓는다.
+Send,Send,보낸다
+,,
+FROM_YOUR_ARCHIVE,from your Archive,아카이브에서
+FROM_YOUR_CHEER_DECK,from your Cheer Deck,옐 덱에서
+FROM_DOWNED_HOLOMEM,from downed Holomem,다운된 홀로멤에서
+FROM_HOLOMEM,from Holomem,홀로멤에서
+FROM_THIS_HOLOMEM,from this Holomem,이 홀로멤에서
+FROM_OPPONENT_HOLOMEM,from opponent's Holomem,상대 홀로멤에서
+Remove,Remove,제거한다
+,,
+{ACTION} {AMOUNT} Cheer {SOURCE}.,{ACTION} {AMOUNT} Cheer {SOURCE}.,{SOURCE} {AMOUNT} 옐을 {ACTION}.
+,,
+top,top,맨위
+the bottom,the bottom,아래
+your deck,your deck,덱
+Order these cards to place on {DIR} of {DECK},Order these cards to place on {DIR} of {DECK},이 카드들을 원하는 순서대로 {DECK} {DIR}로 되돌린다
+,,
+Choose {MIN} Holomem for:,Choose {MIN} Holomem for:,홀로멤 {MIN}명을 선택하세요
+Choose {MIN}-{MAX} Holomem for:,Choose {MIN}-{MAX} Holomem for:,홀로멤 {MIN}-{MAX}명을 선택하세요
+,,
+FROM_YOUR_HAND,from your Hand,패에서
+FROM_YOUR_DECK,from your Deck,덱에서
+FROM_YOUR_BACKSTAGE,from your Backstage,백 스테이지에서
+FROM_YOUR_CENTER,from your Center,센터에서
+FROM_YOUR_COLLAB,from your Collab,콜라보 멤버중에서
+FROM_YOUR_HOLOPOWER,from your Holopower,홀로 파워에서
+,,
+YOUR_ARCHIVE,your Archive,아카이브
+YOUR_BACKSTAGE,your Backstage,백 스테이지
+YOUR_CENTER,your Center,센터
+YOUR_CHEER_DECK,your Cheer Deck,옐 덱
+YOUR_COLLAB,your Collab,콜라보
+YOUR_DECK,your Deck,덱
+YOUR_HAND,your Hand,패
+A_HOLOMEM,a Holomem,이 홀로멤
+YOUR_HOLOPOWER,your Holopower,홀로 파워
+,,
+Archive the remaining cards,Archive the remaining cards,남은 카드는 아카이브로 보낸다
+Shuffle the remaining cards,Shuffle the remaining cards,남은 카드는 셔플한다
+Order the rest on bottom,Order the rest on bottom,남은 카드는 덱 아래로 되돌린다
+,,
+cards,cards,카드
+card,card,카드
+Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.
+,,
+(no Buzz),(no Buzz),(Buzz 없음)
+ONLY_BUZZ,Only Buzz cards,Buzz 카드만 선택 가능
+ONLY_COLOR %s,Only %s,%s만 선택 가능
+Only colors matching your %sHolomems on stage,Only colors matching your %sHolomems on stage,스테이지에 있는 당신의 %s 홀로멤만 선택 가능
+ONLY_CARD %s,Only %s,%s만 선택 가능
+ONLY_HOLOMEM,Only Holomem,홀로멤만 선택 가능
+ONLY_BLOOM,Only Bloom,Bloom 홀로멤만 선택 가능
+ONLY_DEBUT,Only Debut,Debut 홀로멤만 선택 가능
+ONLY_DEBUT_BLOOM,Only Debut/Bloom,Debut/Bloom 홀로멤만 선택 가능
+,,
+ONLY_HOLOMEM (%s),Only Holomem (%s),(%s) 홀로멤만 선택 가능
+ONLY_LIMITED,Only LIMITED,LIMITED 카드만 선택 가능
+ONLY_ITEM,Only Item,아이템 카드만 선택 가능
+ONLY_MASCOT,Only Mascot,마스코트 카드만 선택 가능
+ONLY_FAN,Only Fan,팬 카드만 선택 가능
+ONLY_TOOL,Only Tool,툴 카드만 선택 가능
+ONLY_EVENT,Only Event,이벤트 카드만 선택 가능
+ONLY_CHEER,Only Cheer,옐 카드만 선택 가능
+,,
+Place Holomem,Place Holomem,홀로멤을 놓는다
+Bloom,Bloom,Bloom
+Collab,Collab,콜라보
+Oshi Skill,Oshi Skill,오시 스킬
+Play Support,Play Support,서포트카드사용
+Baton Pass,Baton Pass,배턴 터치
+Begin Performance,Begin Performance,퍼포먼스 시작
+End Turn,End Turn,턴 종료
+Unknown Action,Unknown Action,알수없는 행동
+,,
+Collab!,Collab!,콜라보!
+{PLAYER} draws {AMOUNT},{PLAYER} draws {AMOUNT},{PLAYER} {AMOUNT}장 드로우
+Main Step,Main Step,메인 스텝
+Art: %s,Art: %s,아츠: %s
+Base Power: %s,Base Power: %s,기본 파워: %s
+Playing Support Card,Playing Support Card,서포트카드사용
+Reset Step - Choose Center,Reset Step - Choose Center,리셋 스텝 - 센터를 교체한다
+Rolled die:,Rolled die:,나온 주사위 눈:
+Shuffling Deck,Shuffling Deck,덱을 섞는다
+(RIGGED),(RIGGED),(조작됨)
+Oshi Skill:,Oshi Skill:,오시 스킬:
+Performance Step,Performance Step,퍼포먼스 스텝
+Turn Start,Turn Start,턴 시작
+Turn End,Turn End,턴 종료
+,,
+Cards in hand (%s):,Cards in hand (%s):,패에 넣을 카드 (%s)장:
+,,
+Attach card to Holomem%s.,Attach card to Holomem%s.,이 카드를 붙일 홀로멤%s 중에서.
+,,
+BACKHOLOMEM_POSION,Back Holomem,백 스테이지 홀로멤
+CENTER_POSION,Center,센터 홀로멤
+COLLAB_POSION,Collab,콜라보 홀로멤
+CEN_COL_POSION,Center or Collab,센터 또는 콜라보 홀로멤
+THIS_HOLOMEM_POSION,to this Holomem,이 홀로멤에
+ANY_HOLOMEM_POSION,any Holomem,아무 홀로멤이나
+,,
+GOING DOWN,GOING DOWN,내려갑니다
+INCOMING DAMAGE,INCOMING DAMAGE,들어오는 피해
+(Can't lose LIFE),(Can't lose LIFE),(생명력을 잃지 않음)
+Choose the next die result.,Choose the next die result.,다음 주사위 결과를 선택하세요.
+({HoloPowerAmount} Holopower),({HoloPowerAmount} Holopower),({HoloPowerAmount} 홀로파워)
+REMOVE_CHEER_ACTION_WORD,Remove,제거
+any amount of,any amount of,아무 양이나
+You may choose a Bloom card from hand to play on a Debut you played this turn.,You may choose a Bloom card from hand to play on a Debut you played this turn.,이번 턴에 플레이한 데뷔에 핸드에서 블룸 카드를 선택하여 플레이할 수 있습니다.
+Any-Color,any,아무거나
+(Bloom %s),(Bloom %s),(Bloom %s)
+Matches Oshi Color,Matches Oshi Color,오시 색상과 일치함
+Only Tag: %s,Only Tag: %s,해당 태그만: %s
+this Holomem,this Holomem,이 홀로멤에
+This Turn: %s,This Turn: %s,이번 턴: %s
+Game Log,Game Log,게임 기록
+LIMITED,LIMITED,LIMITED
 TURN,TURN,턴
 GAME,GAME,게임
-Done,Done,완료
-Select Cheer,Select Cheer,응원 선택
-End Ability,End Ability,능력 종료
-Replacement,Replacement,대체
-Oshi: [b]%s[/b]%s,Oshi: [b]%s[/b]%s,오시: [b]%s[/b]%s
+1/Turn,1/Turn,1/턴
+1/Game,1/Game,1/게임
+Deal {Amount}{Special} damage {Target}{PreventLife}.,Deal {Amount}{Special} damage {Target}{PreventLife}.,{Target}에게 {Amount}{Special} 피해를 주고 {PreventLife}를 방지합니다.

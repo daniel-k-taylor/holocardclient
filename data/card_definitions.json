@@ -4408,7 +4408,7 @@
         "rarity": "rr",
         "colors": ["blue"],
         "hp": 210,
-        "baton_cost": 1,
+        "baton_cost": 2,
         "tags": [
             "#JP",
             "#Gen0",
