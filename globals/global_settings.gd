@@ -7,7 +7,7 @@ signal settings_changed_Language
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
-const ClientVersionString : String = "241001.0130" # YYMMDD.HHMM
+const ClientVersionString : String = "241003.2230" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 const PlayfabTitleId = "57B37"
@@ -58,9 +58,9 @@ const SupportedLanguages = {
 	"kr": {
 		"name": "한국어",
 		"code": "kr",
-		"version": 1,
+		"version": 2,
 		"download_url": "https://fightingcardsstorage.blob.core.windows.net/cardpacks/kr.zip",
-		"size": 175355917
+		"size": 167517404
 	},
 }
 
@@ -172,9 +172,6 @@ func _on_card_pack_download_complete(result, response_code, _body, callback, lan
 		return
 	var download_dir = language_dir + "/" + language_code
 	var download_file = download_dir + ".zip"
-	# var file = FileAccess.open(download_file, FileAccess.WRITE)
-	# file.store_buffer(body)
-	# file.close()
 	_unpack_zip_file(download_file, download_dir)
 
 	# Write the updated details file.

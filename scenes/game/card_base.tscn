@@ -397,11 +397,12 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_y7j06")
 
 [node name="Label" type="Label" parent="OuterMargin/TargetedDamageIndicator/PanelContainer"]
+custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "INCOMING
-DAMAGE"
+text = "INCOMING DAMAGE"
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="TargetedDownIndicator" type="VBoxContainer" parent="OuterMargin"]
 layout_mode = 2
@@ -417,11 +418,12 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_y7j06")
 
 [node name="Label" type="Label" parent="OuterMargin/TargetedDownIndicator/PanelContainer"]
+custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "GOING
-DOWN"
+text = "GOING DOWN"
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]

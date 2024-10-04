@@ -156,13 +156,13 @@ func update_card_graphic():
 	if _definition_id and _definition_id != "HIDDEN":
 		var rarity = CardDatabase.get_card(_definition_id)["rarity"].to_upper()
 		var jp_path = "res://assets/cards/" + _definition_id + "_" + rarity + ".png"
-		var en_path = "res://assets/cards/en/" + _definition_id  + ".jpg"
+		var en_path = "res://assets/cards/en/" + _definition_id + "_" + rarity  + ".png"
 		var language_code = GlobalSettings.get_user_setting(GlobalSettings.Language)
 		proxy_card_loaded = false
 		if language_code == "en":
 			# Check if the en card exists.
 			var use_en_proxies = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
-			if use_en_proxies and FileAccess.file_exists(en_path):
+			if use_en_proxies and ResourceLoader.exists(en_path):
 				card_image.texture = load(en_path)
 				overlay_root.visible = false
 				proxy_card_loaded = true
