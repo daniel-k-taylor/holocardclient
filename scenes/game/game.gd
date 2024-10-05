@@ -2167,7 +2167,7 @@ func _on_mulligan_reveal_event(event_data):
 		pass
 
 func _on_perform_art_event(event_data):
-	notify_performance_step(event_data["active_player"])
+	#notify_performance_step(event_data["active_player"])
 	var active_player = get_player(event_data["active_player"])
 	var performer_id = event_data["performer_id"]
 	var art_id = event_data["art_id"]

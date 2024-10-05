@@ -3934,6 +3934,7 @@
                         "amount_min": 6,
                         "amount_max": 6,
                         "requirement": "holomem",
+                        "reveal_chosen": true,
                         "remaining_cards_action": "nothing"
                     }
                 ]
