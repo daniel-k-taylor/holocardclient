@@ -4,6 +4,7 @@ Deck Builder,Deck Builder,덱 편집
 Deck:,Deck:,사용 덱:
 Supported Cards,Supported Cards,지원되는 카드
 ,,
+,,
 Play vs AI,Play vs AI,플레이어 대 AI
 Connect to Server,Connect to Server,서버 접속
 Enter Queue,Enter Queue,대기열 참여
@@ -83,7 +84,7 @@ Show Choice,Show Choice,대상 확인
 Close,Close,닫기
 Done,Done,완료
 Select Cheer,Select Cheer,옐 선택하기
-End Ability,End Ability,End Ability
+End Ability,End Ability,효과처리종료
 ,,
 Mulligan all cards?,Mulligan all cards?,손패를 전부 멀리건 하시겠습니까?
 Debut your Center!,Debut your Center!,센터 포지션으로 데뷔!
@@ -178,7 +179,7 @@ Ganbarose for today!,Ganbarose for today!,오늘도 힘내로제!
 Secret Key,Secret Key,비밀의 합건
 Konpeko!,Konpeko!,콘페코!
 Don't miss it peko!,Don't miss it peko!,놓치면 안돼 페코!
-Ki-t-raaaa,Ki-t-raaaa,키-라아아아
+Ki-t-raaaa,Ki-t-raaaa,키t라아아아
 Rabbit girl on a white sandy beach,Rabbit girl on a white sandy beach,하얀 모래사장과 토끼 소녀
 Human Rabbitality Project,Human Rabbitality Project,전인류 토끼화 계획
 Diamond in the rough,Diamond in the rough,스타의 원석
@@ -214,7 +215,7 @@ Kon-AZKi,Kon-AZKi,콘아즈키~
 With you in a seaside town,With you in a seaside town,해변 거리에서 당신과
 I've come to such a wonderful world,I've come to such a wonderful world,이런 멋진 세게에 올 수 있었습니다!
 A new map,A new map,새로운 지도
-"Ladies and gentlemen,\nKazama Iroha de gozaru","Ladies and gentlemen,\nKazama Iroha de gozaru,모두","카자마 이로하이외다~"""
+"Ladies and gentlemen, Kazama Iroha de gozaru","Ladies and gentlemen, Kazama Iroha de gozaru","모두,카자마 이로하이외다~"
 Freshly pickled eggplant,Freshly pickled eggplant,갓 딴 가지
 Would you like one?,Would you like one?,하나 어떠시오?
 WAZZUP!!,WAZZUP!!,WAZZUP!!
@@ -374,7 +375,7 @@ Order the rest on bottom,Order the rest on bottom,남은 카드는 덱 아래로
 ,,
 cards,cards,카드
 card,card,카드
-Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.
+Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}(으)로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.
 ,,
 (no Buzz),(no Buzz),(Buzz 없음)
 ONLY_BUZZ,Only Buzz cards,Buzz 카드만 선택 가능
@@ -424,31 +425,79 @@ Cards in hand (%s):,Cards in hand (%s):,패에 넣을 카드 (%s)장:
 ,,
 Attach card to Holomem%s.,Attach card to Holomem%s.,이 카드를 붙일 홀로멤%s 중에서.
 ,,
-BACKHOLOMEM_POSION,Back Holomem,백 스테이지 홀로멤
-CENTER_POSION,Center,센터 홀로멤
-COLLAB_POSION,Collab,콜라보 홀로멤
-CEN_COL_POSION,Center or Collab,센터 또는 콜라보 홀로멤
-THIS_HOLOMEM_POSION,to this Holomem,이 홀로멤에
-ANY_HOLOMEM_POSION,any Holomem,아무 홀로멤이나
+BACKHOLOMEM_POSITION,Back Holomem,백 스테이지 홀로멤
+CENTER_POSITION,Center,센터 홀로멤
+COLLAB_POSITION,Collab,콜라보 홀로멤
+CEN_COL_POSITION,Center or Collab,센터 또는 콜라보 홀로멤
+THIS_HOLOMEM_POSITION,to this Holomem,이 홀로멤에
+ANY_HOLOMEM_POSITION,any Holomem,아무 홀로멤이나
 ,,
-GOING DOWN,GOING DOWN,내려갑니다
-INCOMING DAMAGE,INCOMING DAMAGE,들어오는 피해
-(Can't lose LIFE),(Can't lose LIFE),(생명력을 잃지 않음)
-Choose the next die result.,Choose the next die result.,다음 주사위 결과를 선택하세요.
+GOING DOWN,GOING DOWN,내립니다
+INCOMING DAMAGE,INCOMING DAMAGE,입을 데미지
+(Can't lose LIFE),(Can't lose LIFE),(라이프를 잃지 않음)
+Choose the next die result.,Choose the next die result.,다음에 던졌을 때 나올 주사위 눈을 선택하세요.
 ({HoloPowerAmount} Holopower),({HoloPowerAmount} Holopower),({HoloPowerAmount} 홀로파워)
-REMOVE_CHEER_ACTION_WORD,Remove,제거
-any amount of,any amount of,아무 양이나
-You may choose a Bloom card from hand to play on a Debut you played this turn.,You may choose a Bloom card from hand to play on a Debut you played this turn.,이번 턴에 플레이한 데뷔에 핸드에서 블룸 카드를 선택하여 플레이할 수 있습니다.
-Any-Color,any,아무거나
+REMOVE_CHEER_ACTION_WORD,Remove,제거한다
+any amount of,any amount of,일부
+You may choose a Bloom card from hand to play on a Debut you played this turn.,You may choose a Bloom card from hand to play on a Debut you played this turn.,이번 턴에 등장한 Debut 홀로멤에도 패에서 Bloom할 수 있습니다
+Any-Color,any,어떤 색이든
 (Bloom %s),(Bloom %s),(Bloom %s)
-Matches Oshi Color,Matches Oshi Color,오시 색상과 일치함
-Only Tag: %s,Only Tag: %s,해당 태그만: %s
+Matches Oshi Color,Matches Oshi Color,오시의 색과 같은
+Only Tag: %s,Only Tag: %s,해당 태그의 홀로멤만: %s
 this Holomem,this Holomem,이 홀로멤에
 This Turn: %s,This Turn: %s,이번 턴: %s
-Game Log,Game Log,게임 기록
+Game Log,Game Log,게임 로그
 LIMITED,LIMITED,LIMITED
 TURN,TURN,턴
 GAME,GAME,게임
 1/Turn,1/Turn,1/턴
 1/Game,1/Game,1/게임
-Deal {Amount}{Special} damage {Target}{PreventLife}.,Deal {Amount}{Special} damage {Target}{PreventLife}.,{Target}에게 {Amount}{Special} 피해를 주고 {PreventLife}를 방지합니다.
+Deal {Amount}{Special} damage {Target}{PreventLife}.,Deal {Amount}{Special} damage {Target}{PreventLife}.,{Target}에게 {Amount}{Special} 데미지를 주고 {PreventLife}를 방지합니다.
+,,
+Center: ,Center: ,센터: 
+Collab: ,Collab: ,콜라보: 
+This Turn: ,This Turn: ,이번 턴: 
+,,
+Center has tag %s:,Center has tag %s:,Center has tag %s:
+Is %s:,Is %s:,Is %s:
+Performer is %s:,Performer is %s:,Performer is %s:
+Performer is chosen card:,Performer is chosen card:,Performer is chosen card:
+Performer has tag %s:,Performer has tag %s:,Performer has tag %s:
+Choose a Holomem. This Turn: %s,Choose a Holomem. This Turn: %s,Choose a Holomem. This Turn: %s
+Archive %s from hand.,Archive %s from hand.,Archive %s from hand.
+Look at %s cards of your %s:,Look at %s cards of your %s:,Look at %s cards of your %s:
+Draw %s.,Draw %s.,Draw %s.
+Set next die result to %s.,Set next die result to %s.,Set next die result to %s.
++%s Power per stacked Holomem.,+%s Power per stacked Holomem.,+%s Power per stacked Holomem.
+Roll a die:,Roll a die:,Roll a die:
+Only to this Holomem.,Only to this Holomem.,Only to this Holomem.
+to Archive.,to Archive.,to Archive.
+From Center.,From Center.,From Center.
+Only from %s.,Only from %s.,Only from %s.
+Only %s Cheer.,Only %s Cheer.,Only %s Cheer.
+Update Card Images,Update Card Images,카드 이미지 업데이트
+Failed to download card pack.,Failed to download card pack.,카드 팩 다운로드 실패
+Downloading Card Pack....,Downloading Card Pack....,카드 팩 다운로드 중...
+,,
+RAIN_SHAMANISM_FULL_TEXT,When you archive Cheer with a Blue Holomem Ability/Arts: deal 20 Special damage to any of your opponent's Holomem.,When you archive Cheer with a Blue Holomem Ability/Arts: deal 20 Special damage to any of your opponent's Holomem.
+VESTIA_027_GIFT_FULL_TEXT,"1/Turn (Collab only) When a Holomem takes damage from the opponent, you may roll a die. If odd, prevent the damage.","1/Turn (Collab only) When a Holomem takes damage from the opponent, you may roll a die. If odd, prevent the damage."
+PEKORA_42_ART_FULL_TEXT,Roll a die. This art gains +10 Power times the result.,Roll a die. This art gains +10 Power times the result.
+PEKORA_43_ART_FULL_TEXT,Roll 3 dice. This art gains +10 Power times total result.,Roll 3 dice. This art gains +10 Power times total result.
+IROHA_50_ART_FULL_TEXT,Send the top card from your Cheer Deck to a #SecretSocietyholoX Holomem not Kazama Iroha.,Send the top card from your Cheer Deck to a #SecretSocietyholoX Holomem not Kazama Iroha.
+LUI_59_ART_FULL_TEXT,You may Archive 1 card from hand to: reveal a 1st Bloom holomem (excluding Buzz holomem) from your deck and put it into your hand. Then shuffle.,You may Archive 1 card from hand to: reveal a 1st Bloom holomem (excluding Buzz holomem) from your deck and put it into your hand. Then shuffle.
+LUI_61_ART_FULL_TEXT,Archive 0-5 cards from your hand. Deal 20 special damage per to your opponent's Center or Collab.,Archive 0-5 cards from your hand. Deal 20 special damage per to your opponent's Center or Collab.
+BAELZ_75_COLLAB_FULL_TEXT,Each player put their hand on the bottom of their deck in any order then draws that many cards.,Each player put their hand on the bottom of their deck in any order then draws that many cards.
+SUISEI_81_ART_FULL_TEXT,Shining Comet: 60 (+50 vs Red)\nYou may Archive 2 Blue Cheers from this Holomem to: +60 Power per Holomem under this and you can target Backstage Holomem.,Shining Comet: 60 (+50 vs Red)\nYou may Archive 2 Blue Cheers from this Holomem to: +60 Power per Holomem under this and you can target Backstage Holomem.
+SUPPORT_110_FULL_TEXT,"Roll a die. If the result is 3 or less, Archive one of your opponent's holomems' Cheer.\nIf your Oshi is Nanashi Mumei, you may instead perform the following effect: (Once per game) Archive 2 Cheer from your opponent's Center.","Roll a die. If the result is 3 or less, Archive one of your opponent's holomems' Cheer.\nIf your Oshi is Nanashi Mumei, you may instead perform the following effect: (Once per game) Archive 2 Cheer from your opponent's Center."
+OSHI_CHEER_01_FULL_TEXT,Can be used during your opponent's turn when one of your White Holomems takes damage: reduce that damage by 20.,Can be used during your opponent's turn when one of your White Holomems takes damage: reduce that damage by 20.
+OSHI_CHEER_04_FULL_TEXT,When one of your Blue Holomems deals damage to your opponent's Back Holomem: deal 50 damage to that Holomem,When one of your Blue Holomems deals damage to your opponent's Back Holomem: deal 50 damage to that Holomem
+OSHI_STARTER_02_FULL_TEXT,When you would roll a die as part of a Holomem's Ability or Arts you may set the result.,When you would roll a die as part of a Holomem's Ability or Arts you may set the result.
+OSHI_BP1_002_FULL_TEXT,Can be used during your opponent's turn when one of your Holomems with #Promise takes damage: reduce that damage by 50.,Can be used during your opponent's turn when one of your Holomems with #Promise takes damage: reduce that damage by 50.
+OSHI_BP1_004_FULL_TEXT,When your Holomem is downed on opponent's turn: Distribute all Green Cheer from that Holomem.,When your Holomem is downed on opponent's turn: Distribute all Green Cheer from that Holomem.
+OSHI_BP1_005_FULL_TEXT,When you use a Red Holomem's Ability/Arts that Archives cards from your hand: you may Archive any number them from your Holopower instead.,When you use a Red Holomem's Ability/Arts that Archives cards from your hand: you may Archive any number them from your Holopower instead.
+OSHI_BP1_006_FULL_TEXT,When your Red Holomem is downed on the opponent's turn: lose 1 less LIFE. You may take it and all stacked Holomem into your hand.,When your Red Holomem is downed on the opponent's turn: lose 1 less LIFE. You may take it and all stacked Holomem into your hand.
+OSHI_BP1_007_FULL_TEXT,When this or a Blue Holomem deals damage to your opponent's Back Holomem: deal 50 damage to that Holomem,When this or a Blue Holomem deals damage to your opponent's Back Holomem: deal 50 damage to that Holomem
+OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's Center or Collab Holomem: deal equal special damage to one of your opponent's Back Holomem,When your Blue Holomem deals damage to your opponent's Center or Collab Holomem: deal equal special damage to one of your opponent's Back Holomem
+,,
+Go first.,Go first.,먼저 하세요
+Go second.,Go second.,두 번째로 하세요

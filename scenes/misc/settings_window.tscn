@@ -85,6 +85,10 @@ size_flags_horizontal = 3
 [node name="LanguageSelect" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/LanguageBox"]
 layout_mode = 2
 
+[node name="UpdateCardImagesButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Update Card Images"
+
 [node name="ExitGameButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Exit Game"
@@ -149,4 +153,5 @@ layout_mode = 2
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/UseEnProxies" to="." method="change_setting" binds= ["UseEnProxies"]]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HideEnglishCardText" to="." method="change_setting" binds= ["HideEnglishCardText"]]
 [connection signal="item_selected" from="PanelContainer/MarginContainer/VBoxContainer/LanguageBox/LanguageSelect" to="." method="_on_language_select_item_selected"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/UpdateCardImagesButton" to="." method="_on_update_card_images_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ExitGameButton" to="." method="_on_button_pressed"]

@@ -347,6 +347,7 @@ var opponent_clock_value = 0
 var active_targeted_damage_showing = null
 var current_performance_target_card = null
 var current_clock_player_id = ""
+var sent_performance_step_notification_this_turn = false
 
 const PhaseStartTimeBuffer = 0.5
 
@@ -789,7 +790,7 @@ func _play_transient_icon_message(text : String, pos : Vector2, icon_type : Popu
 func _on_add_turn_effect(event_data):
 	var active_player = get_player(event_data["effect_player_id"])
 	var turn_effect = event_data["turn_effect"]
-	var effect_text = "This Turn: " + Strings.get_effect_text(turn_effect)
+	var effect_text = tr("This Turn:") + " " + Strings.get_effect_text(turn_effect)
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s %s" % [
 		active_player.get_name_decorated(),
 		effect_text
@@ -1142,6 +1143,9 @@ func _start_performance_step_decision():
 		var chosen_action = performance_step_actions[choice_index]
 		if chosen_action["action_type"] == Enums.GameAction_PerformanceStepEndTurn:
 			submit_performance_step_end_turn()
+			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+		elif chosen_action["action_type"] == Enums.GameAction_PerformanceStepCancel:
+			submit_performance_step_cancel()
 			_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
 		else:
 			assert(chosen_action["action_type"] == Enums.GameAction_PerformanceStepUseArt)
@@ -2163,6 +2167,7 @@ func _on_mulligan_reveal_event(event_data):
 		pass
 
 func _on_perform_art_event(event_data):
+	notify_performance_step(event_data["active_player"])
 	var active_player = get_player(event_data["active_player"])
 	var performer_id = event_data["performer_id"]
 	var art_id = event_data["art_id"]
@@ -2407,15 +2412,22 @@ func _on_oshi_skill_activation(event_data):
 		_play_popup_message(tr("Oshi Skill:") + " %s" % Strings.get_skill_string(skill_id))
 	pass
 
-func on_performance_step_start(event_data):
-	var active_player = get_player(event_data["active_player"])
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Performance Step*[/PHASE]" % active_player.get_name())
-	# TODO: Animation - performance start
-	if not active_player.is_me() or observer_mode:
-		_play_popup_message("Performance Step", true)
+func on_performance_step_start(_event_data):
+	# Do nothing, because of how players can cancel only
+	# notify the start when the first art occurs.
 	pass
 
+func notify_performance_step(player_id):
+	if not sent_performance_step_notification_this_turn:
+		sent_performance_step_notification_this_turn = true
+		var active_player = get_player(player_id)
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]*Performance Step*[/PHASE]" % active_player.get_name())
+		# TODO: Animation - performance start
+		if not active_player.is_me() or observer_mode:
+			_play_popup_message("Performance Step", true)
+
 func _on_turn_start(event_data):
+	sent_performance_step_notification_this_turn = false
 	var active_player = get_player(event_data["active_player"])
 	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [PHASE]**Turn Start**[/PHASE]" % active_player.get_name())
 	# TODO: Animation - show turn phase change
@@ -2539,6 +2551,9 @@ func submit_performance_step_use_art(performer_id, art_id, target_id):
 
 func submit_performance_step_end_turn():
 	NetworkManager.send_game_message(Enums.GameAction_PerformanceStepEndTurn, {})
+
+func submit_performance_step_cancel():
+	NetworkManager.send_game_message(Enums.GameAction_PerformanceStepCancel, {})
 
 func submit_effect_resolution_make_choice(choice_index):
 	var action = {

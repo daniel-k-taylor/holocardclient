@@ -271,11 +271,48 @@ scale = Vector2(0.45, 0.45)
 zone_name = "Archive"
 layout_style = 0
 
+[node name="ThinkingSpinner" type="TextureProgressBar" parent="."]
+offset_left = 965.0
+offset_top = 10.0
+offset_right = 1029.0
+offset_bottom = 74.0
+value = 30.0
+fill_mode = 4
+texture_progress = ExtResource("12_j6jby")
+
+[node name="MeDeckSpawn" type="MarginContainer" parent="."]
+offset_left = 1171.0
+offset_top = 601.0
+offset_right = 1211.0
+offset_bottom = 641.0
+
+[node name="SettingsButton" parent="." instance=ExtResource("14_mh1cl")]
+custom_minimum_size = Vector2(48, 48)
+offset_left = 1215.0
+offset_top = 10.0
+offset_right = 1263.0
+offset_bottom = 58.0
+texture = ExtResource("15_1fn36")
+
+[node name="LogButton" type="Button" parent="."]
+offset_left = 1181.0
+offset_top = 90.0
+offset_right = 1268.0
+offset_bottom = 121.0
+text = "Game Log"
+
+[node name="DebugPlayLastEvent" type="Button" parent="."]
+offset_left = 1105.0
+offset_top = 610.0
+offset_right = 1271.0
+offset_bottom = 641.0
+text = "Debug: Replay Event"
+
 [node name="UIOverlay" type="PanelContainer" parent="."]
 visible = false
 custom_minimum_size = Vector2(1280, 720)
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1280.0
+offset_bottom = 720.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_v0wnc")
 
@@ -316,35 +353,6 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="ThinkingSpinner" type="TextureProgressBar" parent="."]
-offset_left = 965.0
-offset_top = 10.0
-offset_right = 1029.0
-offset_bottom = 74.0
-value = 30.0
-fill_mode = 4
-texture_progress = ExtResource("12_j6jby")
-
-[node name="MeDeckSpawn" type="MarginContainer" parent="."]
-offset_left = 1171.0
-offset_top = 601.0
-offset_right = 1211.0
-offset_bottom = 641.0
-
-[node name="LogButton" type="Button" parent="."]
-offset_left = 1181.0
-offset_top = 90.0
-offset_right = 1268.0
-offset_bottom = 121.0
-text = "Game Log"
-
-[node name="DebugPlayLastEvent" type="Button" parent="."]
-offset_left = 1105.0
-offset_top = 610.0
-offset_right = 1271.0
-offset_bottom = 641.0
-text = "Debug: Replay Event"
-
 [node name="GameLog" parent="." instance=ExtResource("6_xt86y")]
 visible = false
 
@@ -381,18 +389,10 @@ visible = false
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="SettingsButton" parent="." instance=ExtResource("14_mh1cl")]
-custom_minimum_size = Vector2(48, 48)
-offset_left = 1215.0
-offset_top = 10.0
-offset_right = 1263.0
-offset_bottom = 58.0
-texture = ExtResource("15_1fn36")
-
 [connection signal="zone_pressed" from="MeArchive" to="." method="_on_me_archive_zone_pressed"]
 [connection signal="zone_pressed" from="OpponentArchive" to="." method="_on_opponent_archive_zone_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="LogButton" to="." method="_on_log_button_pressed"]
 [connection signal="pressed" from="DebugPlayLastEvent" to="." method="_on_debug_play_last_event_pressed"]
 [connection signal="save_log_pressed" from="GameLog" to="." method="_on_game_log_save_log_pressed"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
-[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
