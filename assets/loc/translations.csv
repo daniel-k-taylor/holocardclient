@@ -44,7 +44,7 @@ Cheer:,Cheer:,옐:
 Cards:,Cards:,카드:
 ,,
 Filters,Filters,필터
-Filter By Name: ,Filter By Name: ,카드명 필터: 
+Filter By Name:,Filter By Name:,카드명 필터:
 Enter partial name,Enter partial name,일부 카드명 입력
 Clear Name,Clear Name,카드명 지우기
 Holomem Card Type,Holomem Card Type,홀로멤 카드 타입
@@ -180,7 +180,7 @@ Ganbarose for today!,Ganbarose for today!,오늘도 힘내로제!
 Secret Key,Secret Key,비밀의 합건
 Konpeko!,Konpeko!,콘페코!
 Don't miss it peko!,Don't miss it peko!,놓치면 안돼 페코!
-Ki-t-raaaa,Ki-t-raaaa,키t라아아아
+Ki-t-raaaa,Ki-t-raaaa,키-라아아아
 Rabbit girl on a white sandy beach,Rabbit girl on a white sandy beach,하얀 모래사장과 토끼 소녀
 Human Rabbitality Project,Human Rabbitality Project,전인류 토끼화 계획
 Diamond in the rough,Diamond in the rough,스타의 원석
@@ -216,7 +216,7 @@ Kon-AZKi,Kon-AZKi,콘아즈키~
 With you in a seaside town,With you in a seaside town,해변 거리에서 당신과
 I've come to such a wonderful world,I've come to such a wonderful world,이런 멋진 세게에 올 수 있었습니다!
 A new map,A new map,새로운 지도
-"Ladies and gentlemen, Kazama Iroha de gozaru","Ladies and gentlemen, Kazama Iroha de gozaru","모두, 카자마 이로하이외다~"
+"Ladies and gentlemen,\nKazama Iroha de gozaru","Ladies and gentlemen,\nKazama Iroha de gozaru",모두 카자마 이로하이외다~
 Freshly pickled eggplant,Freshly pickled eggplant,갓 딴 가지
 Would you like one?,Would you like one?,하나 어떠시오?
 WAZZUP!!,WAZZUP!!,WAZZUP!!
@@ -343,9 +343,9 @@ FROM_DOWNED_HOLOMEM,from downed Holomem,다운된 홀로멤에서
 FROM_HOLOMEM,from Holomem,홀로멤에서
 FROM_THIS_HOLOMEM,from this Holomem,이 홀로멤에서
 FROM_OPPONENT_HOLOMEM,from opponent's Holomem,상대 홀로멤에서
-REMOVE_CHEER_ACTION_WORD,Remove, 
+REMOVE_CHEER_ACTION_WORD,Remove,
 any amount of,any amount of,일부
-all,all,전부 
+all,all,전부
 {ACTION} {AMOUNT} Cheer {SOURCE}.,{ACTION} {AMOUNT} Cheer {SOURCE}.,{SOURCE} 옐 {AMOUNT}장을 {ACTION}
 ,,
 top,top,맨위
@@ -449,7 +449,7 @@ THIS_HOLOMEM_POSION,to this Holomem,이 홀로멤
 ANY_HOLOMEM_POSION,any Holomem,아무 홀로멤
 ,,
 Special,Special,특수
-to,to, 
+to,to,
 opponent's,opponent's,상대의
 Back Holomem,Back Holomem,백 홀로멤
 (Can't lose life),(Can't lose life),(라이프는 줄지 않는다)
@@ -518,3 +518,6 @@ OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's 
 ,,
 Go first.,Go first.,선공하기
 Go second.,Go second.,후공하기
+,,
+the top %s,the top %s,상위 %s
+Look at {Look} cards of your {Location}:,Look at {Look} cards of your {Location}:,{Location}{Look}의 카드를 보고:

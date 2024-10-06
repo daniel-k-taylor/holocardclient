@@ -350,7 +350,7 @@ func build_place_cheer_string(source:String, color:String):
 	return tr("Place 1 {COLOR} Cheer from {SOURCE}.").format({COLOR = color_str, SOURCE = source_str})
 
 func get_card_location_string(location):
-	source_str = ""
+	var source_str = ""
 	match location:
 		"archive":
 			source_str = tr("FROM_YOUR_ARCHIVE")
@@ -361,7 +361,7 @@ func get_card_location_string(location):
 		"hand":
 			source_str = tr("FROM_YOUR_HAND")
 		"holopower":
-			from_zone_str = tr("FROM_YOUR_HOLOPOWER")
+			source_str = tr("FROM_YOUR_HOLOPOWER")
 		"holomem":
 			source_str = tr("FROM_HOLOMEM")
 		"self":
@@ -374,7 +374,7 @@ func get_card_location_string(location):
 
 func get_action_word_for_location(location):
 	var action_word = tr("Send")
-	match source:
+	match location:
 		"opponent_holomem":
 			action_word = tr("REMOVE_CHEER_ACTION_WORD")
 		_:
@@ -382,7 +382,6 @@ func get_action_word_for_location(location):
 	return action_word
 
 func build_send_cheer_string(amount_min, amount_max, source):
-	var source_str = source
 	var action_word = get_action_word_for_location(source)
 	var source_str = get_card_location_string(source)
 	var amount_str = "%s" % amount_min
@@ -796,10 +795,10 @@ func get_effect_text(effect):
 			if "look_at" in effect:
 				var look_at = effect["look_at"]
 				if look_at == -1:
-					look_at = tr("ALL_LOOKAT_CARDS")
+					look_at = tr("all")
 				else:
 					look_at = tr("the top %s") % look_at
-				text += tr("Look at %s cards of your %s:") % [look_at, get_card_location_string(effect["from"])] + " "
+				text += tr("Look at {Look} cards of your {Location}:").format({Look = look_at, Location = get_card_location_string(effect["from"])}) + " "
 				from_str = ""
 			var choose_str = build_choose_cards_string(
 				from_str,
