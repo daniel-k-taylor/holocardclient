@@ -86,7 +86,6 @@ Close,Close,닫기
 Done,Done,완료
 Select Cheer,Select Cheer,옐 선택하기
 End Ability,End Ability,효과처리종료
-Include unchooseable cards,Include unchooseable cards,선택할 수 없는 카드도 보이기
 ,,
 Mulligan all cards?,Mulligan all cards?,손패를 전부 멀리건 하시겠습니까?
 Debut your Center!,Debut your Center!,센터 포지션으로 데뷔!
@@ -440,15 +439,14 @@ Archive %s from hand.,Archive %s from hand.,패 %s장을 아카이브한다.
 this Holomem,this Holomem,이 홀로멤
 Archive {Amount}{Colors} Cheer from {Location}.,Archive {Amount}{Colors} Cheer from {Location}.,{Location}의 {Colors}옐 {Amount}장을 아카이브한다.
 Attach card to Holomem%s.,Attach card to Holomem%s.,이 카드를 붙일 홀로멤%s을(를).
-the top %s,the top %s,위에서 %s장
 Look at {Look} cards of your {Location}:,Look at {Look} cards of your {Location}:,{Location}{Look}의 카드를 보고:
 ,,
-BACKHOLOMEM_POSION,Back Holomem,백 홀로멤
-CENTER_POSION,Center,센터 홀로멤
-COLLAB_POSION,Collab,콜라보 홀로멤
-CEN_COL_POSION,Center or Collab,센터 또는 콜라보 홀로멤
-THIS_HOLOMEM_POSION,to this Holomem,이 홀로멤
-ANY_HOLOMEM_POSION,any Holomem,아무 홀로멤
+BACKHOLOMEM_POSITION,Back Holomem,백 홀로멤
+CENTER_POSITION,Center,센터 홀로멤
+COLLAB_POSITION,Collab,콜라보 홀로멤
+CEN_COL_POSITION,Center or Collab,센터 또는 콜라보 홀로멤
+THIS_HOLOMEM_POSITION,to this Holomem,이 홀로멤
+ANY_HOLOMEM_POSITION,any Holomem,아무 홀로멤
 ,,
 Special,Special,특수
 to,to,
@@ -521,5 +519,6 @@ OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's 
 Go first.,Go first.,선공하기
 Go second.,Go second.,후공하기
 ,,
-the top %s,the top %s,상위 %s
-Look at {Look} cards of your {Location}:,Look at {Look} cards of your {Location}:,{Location}{Look}의 카드를 보고:
+the top %s,the top %s,위에서 %s장
+,,
+Include unchooseable cards,Include unchooseable cards,선택할 수 없는 카드도 보이기
