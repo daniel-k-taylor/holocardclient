@@ -145,7 +145,7 @@ const SkillNameMap = {
 	"withyouinaseasidetown": "With you in a seaside town",
 	"ivecometosuchawonderfulworld": "I've come to such a wonderful world",
 	"anewmap": "A new map",
-	"ladiesandgentlemenkazamairohadegozaru": "Ladies and gentlemen,\nKazama Iroha de gozaru",
+	"ladiesandgentlemenkazamairohadegozaru": "Ladies and gentlemen, Kazama Iroha de gozaru",
 	"freshlypickledeggplant": "Freshly pickled eggplant",
 	"wouldyoulikeone": "Would you like one?",
 	"wazzup": "WAZZUP!!",
@@ -459,7 +459,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	var card_str = tr("cards")
 	if amount_min == 1 and amount_max == 1:
 		card_str = tr("card")
-	var main_text = tr("Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.").format({AMOUNT = amount_str, CARD = card_str, FROMZONE = from_zone_str, TOZONE = to_zone_str, REMAIN = remaining_cards_str})
+	var main_text = tr("Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.").format({AMOUNT = amount_str, CARD = card_str, FROMZONE = from_zone_str, TOZONE = to_zone_str, REMAIN = remaining_cards_str})
 	if "requirement" in requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
 			"buzz":
@@ -543,6 +543,8 @@ func get_action_name(action_type:String):
 			return tr("Begin Performance")
 		Enums.GameAction_MainStepEndTurn, Enums.GameAction_PerformanceStepEndTurn:
 			return tr("End Turn")
+		Enums.GameAction_PerformanceStepCancel:
+			return tr("Cancel")
 		_:
 			return "Unknown Action"
 
@@ -555,32 +557,32 @@ func get_timing_text(timing, timing_source_requirement):
 			if "timing_source_requirement" in timing_source_requirement:
 				match timing_source_requirement["timing_source_requirement"]:
 					"holomem_ability":
-						text += "After Die Roll (Holomem Ability): "
+						text += tr("After Die Roll (Holomem Ability):") + " "
 			else:
-				text += "After Die Roll: "
+				text += tr("After Die Roll:") + " "
 		"after_take_damage":
-			text += "After taking damage: "
+			text += tr("After taking damage:") + " "
 		"before_art":
-			text += "Art: "
+			text += tr("Art:") + " "
 		"before_die_roll":
 			if "timing_source_requirement":
 				match timing_source_requirement:
 					"holomem_ability":
-						text += "Before Die Roll (Holomem Ability): "
+						text += tr("Before Die Roll (Holomem Ability):") + " "
 			else:
-				text += "Before Die Roll: "
+				text += tr("Before Die Roll:") + " "
 		"check_cheer":
 			text += ""
 		"check_hp":
 			text += ""
 		"on_bloom_level_up":
-			text += "When Bloom Level increases: "
+			text += tr("When Bloom Level increases:") + " "
 		"on_take_damage":
-			text += "When Holomem takes damage: "
+			text += tr("When Holomem takes damage:") + " "
 		"on_down":
-			text += "When Holomem is downed: "
+			text += tr("When Holomem is downed:") + " "
 		"on_restore_hp":
-			text += "When Holomem HP restored: "
+			text += tr("When Holomem HP restored:") + " "
 	return text
 
 func get_condition_text(conditions):
@@ -598,7 +600,7 @@ func get_condition_text(conditions):
 				var location_str = ""
 				match condition["condition_location"]:
 					"center_or_collab":
-						location_str = "Center or Collab"
+						location_str = tr("CEN_COL_POSITION")
 				text += "Attached card's owner is %s." % location_str
 			"bloom_target_is_debut":
 				text += "From Debut: "
@@ -617,9 +619,9 @@ func get_condition_text(conditions):
 						amount_str += "%s-%s" % [amount_min, amount_max]
 				text += "Cards in hand (%s): " % [amount_str]
 			"center_has_any_tag":
-				text += "Center has tag %s: " % ["/".join(condition["condition_tags"])]
+				text += tr("Center has tag %s: ") % ["/".join(condition["condition_tags"])]
 			"center_is_color":
-				text += "Is %s: " % ["/".join(condition["condition_colors"])]
+				text += tr("Is %s: ") % ["/".join(condition["condition_colors"])]
 			"chosen_card_has_tag":
 				text += "If chosen card has tag %s: " % ["/".join(condition["condition_tags"])]
 			"collab_with":
@@ -662,15 +664,15 @@ func get_condition_text(conditions):
 			"performance_target_has_damage_over_hp":
 				text += "Damage exceeds hp by %s: " % [condition["amount"]]
 			"performer_is_center":
-				text += "Center: "
+				text += tr("Center:") + " "
 			"performer_is_collab":
-				text += "Collab: "
+				text += tr("Collab:") + " "
 			"performer_is_color":
-				text += "Performer is %s: " % ["/".join(condition["condition_colors"])]
+				text += tr("Performer is %s: ") % ["/".join(condition["condition_colors"])]
 			"performer_is_specific_id":
-				text += "Performer is chosen card: "
+				text += tr("Performer is chosen card:") + " "
 			"performer_has_any_tag":
-				text += "Performer has tag %s: " % ["/".join(condition["condition_tags"])]
+				text += tr("Performer has tag %s: ") % ["/".join(condition["condition_tags"])]
 			"played_support_this_turn":
 				text += "Played a Support card this turn: "
 			"self_has_cheer_color":
@@ -697,7 +699,7 @@ func get_effect_text(effect):
 
 	if "full_english_text" in effect:
 		# Override the text with the full text.
-		return text + effect["full_english_text"]
+		return text + tr(effect["full_english_text"])
 	if "hide_effect_text" in effect and effect["hide_effect_text"]:
 		return text
 	if "timing" in effect:
@@ -716,7 +718,7 @@ func get_effect_text(effect):
 			text += tr("This Turn: %s") % [get_effect_text(turn_effect)]
 		"add_turn_effect_for_holomem":
 			var turn_effect = effect["turn_effect"]
-			text += "Choose a Holomem. This Turn: %s" % [get_effect_text(turn_effect)]
+			text += tr("Choose a Holomem. This Turn: %s") % [get_effect_text(turn_effect)]
 		"archive_cheer_from_holomem":
 			var amount = effect["amount"]
 			var from = effect["from"]
@@ -730,7 +732,7 @@ func get_effect_text(effect):
 			text += tr("Archive {Amount}{Colors} Cheer from {Location}.").format({Amount = amount, Colors = colors_str, Location = from_str})
 		"archive_from_hand":
 			var amount = effect["amount"]
-			text += "Archive %s from hand." % amount
+			text += tr("Archive %s from hand.") % amount
 		"archive_this_attachment":
 			text += "Archive this attachment."
 		"archive_top_stacked_holomem":
@@ -777,7 +779,7 @@ func get_effect_text(effect):
 					look_at = "all"
 				else:
 					look_at = "the top %s" % look_at
-				text += "Look at %s cards of your %s: " % [look_at, effect["from"]]
+				text += tr("Look at %s cards of your %s: ") % [look_at, effect["from"]]
 				from_str = ""
 			var choose_str = build_choose_cards_string(
 				from_str,
@@ -794,31 +796,31 @@ func get_effect_text(effect):
 		"deal_damage":
 			var special_str = ""
 			if "special" in effect and effect["special"]:
-				special_str = " Special"
-			var target_str = "to "
+				special_str = " " + tr("Special")
+			var target_str = tr("to") + " "
 			if "opponent" in effect and effect["opponent"]:
-				target_str += "opponent's "
+				target_str += tr("opponent's") + " "
 			if "multiple_targets" in effect:
 				target_str += "%s " % effect["multiple_targets"]
 			match effect["target"]:
 				"backstage":
-					target_str += "Back Holomem"
+					target_str += tr("Back Holomem")
 				"center":
-					target_str += "Center"
+					target_str += tr("Center")
 				"collab":
-					target_str += "Collab"
+					target_str += tr("Collab")
 				"center_or_collab":
-					target_str += "Center or Collab"
+					target_str += tr("CEN_COL_POSITION")
 				"self":
-					target_str = "to this Holomem"
+					target_str = tr("THIS_HOLOMEM_POSITION")
 				"holomem":
-					target_str = "any Holomem"
+					target_str = tr("ANY_HOLOMEM_POSITION")
 			var prevent_life_str = ""
 			if "prevent_life_loss" in effect and effect["prevent_life_loss"]:
-				prevent_life_str = " (Can't lose life)"
+				prevent_life_str = " " + tr("(Can't lose life)")
 			var amount_str = str(effect["amount"])
-			if amount_str == "total_damage_on_backstage":
-				amount_str = "sum of damage on Backstage Holomems"
+			if amount_str == tr("total_damage_on_backstage"):
+				amount_str = tr("sum of damage on Backstage Holomems")
 			text += tr("Deal {Amount}{Special} damage {Target}{PreventLife}.").format({
 				Amount = amount_str,
 				Special = special_str,
@@ -839,11 +841,17 @@ func get_effect_text(effect):
 				prevent_life_str = " (Can't lose life)"
 			text += "Down %s Holomem%s%s." % [target_str, required_damage_str, prevent_life_str]
 		"draw":
-			text += "Draw %s." % [effect["amount"]]
+			text += tr("Draw %s.") % [effect["amount"]]
 		"force_die_result":
-			text += "Set next die result to %s." % [effect["die_result"]]
+			text += tr("Set next die result to %s.") % [effect["die_result"]]
 		"generate_holopower":
 			text += "Generate %s Holopower." % [effect["amount"]]
+		"go_first":
+			var first = effect["first"]
+			if first:
+				text += tr("Go first.")
+			else:
+				text += tr("Go second.")
 		"modify_next_life_loss":
 			var amount_str = effect["amount"]
 			if effect["amount"] > 0:
@@ -888,7 +896,7 @@ func get_effect_text(effect):
 				tag_str = "%s " % effect["has_tag"]
 			text += "+%s Power per %sHolomem." % [effect["amount"], tag_str]
 		"power_boost_per_stacked":
-			text += "+%s Power per stacked Holomem." % [effect["amount"]]
+			text += tr("+%s Power per stacked Holomem.") % [effect["amount"]]
 		"recover_downed_holomem_cards":
 			text += "Recover downed Holomem's Holomem cards."
 		"reduce_damage":
@@ -931,7 +939,7 @@ func get_effect_text(effect):
 		"reroll_die":
 			text += "Reroll."
 		"roll_die":
-			text += "Roll a die: "
+			text += tr("Roll a die:") + " "
 			var die_effects = effect["die_effects"]
 			for die_effect in die_effects:
 				var sub_effects = die_effect["effects"]
@@ -945,17 +953,17 @@ func get_effect_text(effect):
 		"send_cheer":
 			text += build_send_cheer_string(effect["amount_min"], effect["amount_max"], effect["from"])
 			if effect["to"] == "this_holomem":
-				text += " Only to this Holomem."
+				text += " " + tr("Only to this Holomem.")
 			elif effect["to"] == "archive":
-				text += " to Archive."
+				text += " " + tr("to Archive.")
 			if "from_limitation" in effect:
 				match effect["from_limitation"]:
 					"center":
-						text += " From Center."
+						text += " " + tr("From Center.")
 					"color_in":
-						text += " Only %s Cheer." % ["/".join(effect["from_limitation_colors"])]
+						text += " " + tr("Only %s Cheer.") % ["/".join(effect["from_limitation_colors"])]
 					"tag_in":
-						text += " Only from %s." % ["/".join(effect["from_limitation_tags"])]
+						text += " " + tr("Only from %s.") % ["/".join(effect["from_limitation_tags"])]
 			if "to_limitation" in effect:
 				match effect["to_limitation"]:
 					"attached_owner":
@@ -1072,7 +1080,7 @@ func build_english_card_text(definition):
 						colors.append(cost["color"])
 				var text = "%s: %s" % [get_skill_string(art["art_id"]), art["power"]]
 				if "full_english_text" in art:
-					text = art["full_english_text"]
+					text = tr(art["full_english_text"])
 				else:
 					if "target_condition" in art:
 						match art["target_condition"]:
@@ -1125,17 +1133,17 @@ func build_english_card_text(definition):
 				"text": ""
 			}
 			if "limited" in definition and definition["limited"]:
-				data.append({"colors": [], "text": "LIMITED"})
+				data.append({"colors": [], "text": tr("LIMITED")})
 			if definition["sub_type"] == "item":
-				data.append({"colors": [], "text": "Item"})
+				data.append({"colors": [], "text": tr("Item")})
 			if definition["sub_type"] == "mascot":
-				data.append({"colors": [], "text": "Mascot"})
+				data.append({"colors": [], "text": tr("Mascot")})
 			if definition["sub_type"] == "fan":
-				data.append({"colors": [], "text": "Fan"})
+				data.append({"colors": [], "text": tr("Fan")})
 			if definition["sub_type"] == "tool":
-				data.append({"colors": [], "text": "Tool"})
+				data.append({"colors": [], "text": tr("Tool")})
 			elif definition["sub_type"] == "event":
-				data.append({"colors": [], "text": "Event"})
+				data.append({"colors": [], "text": tr("Event")})
 			if "play_conditions" in definition:
 				var play_conditions = definition["play_conditions"]
 				for condition in play_conditions:

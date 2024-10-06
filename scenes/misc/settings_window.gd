@@ -12,6 +12,7 @@ signal exit_game_pressed
 @onready var bytes_downloaded_label : Label = $DownloadingPanel/CenterContainer/PanelContainer/VBox/Progress/BytesDownloaded
 @onready var total_bytes_label : Label = $DownloadingPanel/CenterContainer/PanelContainer/VBox/Progress/TotalBytes
 @onready var download_percent_label : Label = $DownloadingPanel/CenterContainer/PanelContainer/VBox/ProgressPercent/Value
+@onready var update_card_images_button : Button = $PanelContainer/MarginContainer/VBoxContainer/UpdateCardImagesButton
 
 var active_request : HTTPRequest = null
 var active_download_language_code = ""
@@ -35,7 +36,9 @@ func load_settings():
 	game_sound.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.GameSound)
 	hide_english_card_text.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
 	use_en_proxies.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
-	language_select.selected = GlobalSettings.SupportedLanguages.keys().find(GlobalSettings.get_user_setting(GlobalSettings.Language))
+	var language_code = GlobalSettings.get_user_setting(GlobalSettings.Language)
+	language_select.selected = GlobalSettings.SupportedLanguages.keys().find(language_code)
+	update_card_images_button.visible = not GlobalSettings.has_card_language_pack(language_code)
 
 func show_settings(exit_game_visible = false):
 	load_settings()
@@ -56,14 +59,21 @@ func _on_language_select_item_selected(index: int) -> void:
 	if GlobalSettings.has_card_language_pack(language_code):
 		GlobalSettings.save_user_setting(GlobalSettings.Language, language_code)
 	else:
-		downloading_panel.visible = true
-		active_download_language_code = language_code
-		active_request = GlobalSettings.download_card_pack(language_code, func(success: bool):
-			active_request = null
-			downloading_panel.visible = false
-			if success:
-				GlobalSettings.save_user_setting(GlobalSettings.Language, language_code)
-			else:
-				modal.set_text_fields("Failed to download card pack.", "", "OK")
-				language_select.selected = GlobalSettings.SupportedLanguages.keys().find(GlobalSettings.get_user_setting(GlobalSettings.Language))
-		)
+		_download_language_pack(language_code)
+
+func _download_language_pack(language_code):
+	downloading_panel.visible = true
+	active_download_language_code = language_code
+	active_request = GlobalSettings.download_card_pack(language_code, func(success: bool):
+		active_request = null
+		downloading_panel.visible = false
+		if success:
+			GlobalSettings.save_user_setting(GlobalSettings.Language, language_code)
+			update_card_images_button.visible = false
+		else:
+			modal.set_text_fields(tr("Failed to download card pack."), "", "OK")
+			language_select.selected = GlobalSettings.SupportedLanguages.keys().find(GlobalSettings.get_user_setting(GlobalSettings.Language))
+	)
+
+func _on_update_card_images_button_pressed() -> void:
+	_download_language_pack(GlobalSettings.get_user_setting(GlobalSettings.Language))

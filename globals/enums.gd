@@ -108,6 +108,8 @@ const GameAction_PerformanceStepUseArt = "performance_step_use_art"
 const GameAction_PerformanceStepEndTurn = "performance_step_end_turn"
 #
 
+const GameAction_PerformanceStepCancel = "performance_step_cancel"
+
 const GameAction_EffectResolution_MoveCheerBetweenHolomems = "effect_resolution_move_cheer_between_holomems"
 #"placements": Dict[str, str],
 
