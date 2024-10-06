@@ -225,6 +225,9 @@ class PlayerState:
 
 	func add_backstage(card : CardBase):
 		_backstage_zone.add_card(card)
+		order_backstage()
+
+	func order_backstage():
 		for back_card in _backstage_zone.get_cards_in_zone():
 			# Always order them near the front because they can't show over the hand cards.
 			_game.all_cards.move_child(back_card, 0)
@@ -292,6 +295,7 @@ class PlayerState:
 
 		bloom_card.attach_card(target_card._card_id)
 		_game.destroy_card(target_card)
+		order_backstage()
 
 	func generate_holopower(holopower_generated):
 		holopower_count += holopower_generated
