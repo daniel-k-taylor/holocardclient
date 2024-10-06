@@ -349,23 +349,42 @@ func build_place_cheer_string(source:String, color:String):
 			source_str = tr("YOUR_LIFE")
 	return tr("Place 1 {COLOR} Cheer from {SOURCE}.").format({COLOR = color_str, SOURCE = source_str})
 
-func build_send_cheer_string(amount_min, amount_max, source):
-	var source_str = source
-	var action_word = tr("Send")
-	match source:
+func get_card_location_string(location):
+	source_str = ""
+	match location:
 		"archive":
 			source_str = tr("FROM_YOUR_ARCHIVE")
 		"cheer_deck":
 			source_str = tr("FROM_YOUR_CHEER_DECK")
 		"downed_holomem":
 			source_str = tr("FROM_DOWNED_HOLOMEM")
+		"hand":
+			source_str = tr("FROM_YOUR_HAND")
+		"holopower":
+			from_zone_str = tr("FROM_YOUR_HOLOPOWER")
 		"holomem":
 			source_str = tr("FROM_HOLOMEM")
 		"self":
 			source_str = tr("FROM_THIS_HOLOMEM")
 		"opponent_holomem":
 			source_str = tr("FROM_OPPONENT_HOLOMEM")
+		_:
+			source_str = location
+	return source_str
+
+func get_action_word_for_location(location):
+	var action_word = tr("Send")
+	match source:
+		"opponent_holomem":
 			action_word = tr("REMOVE_CHEER_ACTION_WORD")
+		_:
+			action_word = tr("Send")
+	return action_word
+
+func build_send_cheer_string(amount_min, amount_max, source):
+	var source_str = source
+	var action_word = get_action_word_for_location(source)
+	var source_str = get_card_location_string(source)
 	var amount_str = "%s" % amount_min
 	if str(amount_min) != str(amount_max):
 		if str(amount_max) == "all":
@@ -373,6 +392,7 @@ func build_send_cheer_string(amount_min, amount_max, source):
 		else:
 			amount_str = "%s-%s" % [amount_min, amount_max]
 	return tr("{ACTION} {AMOUNT} Cheer {SOURCE}.").format({ACTION = action_word, AMOUNT = amount_str, SOURCE = source_str})
+
 func build_order_cards_string(to, bottom):
 	var dir_str = tr("top")
 	if bottom:
@@ -776,10 +796,10 @@ func get_effect_text(effect):
 			if "look_at" in effect:
 				var look_at = effect["look_at"]
 				if look_at == -1:
-					look_at = "all"
+					look_at = tr("ALL_LOOKAT_CARDS")
 				else:
-					look_at = "the top %s" % look_at
-				text += tr("Look at %s cards of your %s:") % [look_at, effect["from"]] + " "
+					look_at = tr("the top %s") % look_at
+				text += tr("Look at %s cards of your %s:") % [look_at, get_card_location_string(effect["from"])] + " "
 				from_str = ""
 			var choose_str = build_choose_cards_string(
 				from_str,
