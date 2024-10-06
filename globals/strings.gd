@@ -776,10 +776,10 @@ func get_effect_text(effect):
 			if "look_at" in effect:
 				var look_at = effect["look_at"]
 				if look_at == -1:
-					look_at = "all"
+					look_at = tr("all")
 				else:
-					look_at = "the top %s" % look_at
-				text += tr("Look at %s cards of your %s:") % [look_at, effect["from"]] + " "
+					look_at = tr("the top %s") % look_at
+				text += tr("Look at {Look} cards of your {Location}:").format({Look = look_at, Location = effect["from"]}) + " "
 				from_str = ""
 			var choose_str = build_choose_cards_string(
 				from_str,

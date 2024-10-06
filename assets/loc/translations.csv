@@ -86,6 +86,7 @@ Close,Close,닫기
 Done,Done,완료
 Select Cheer,Select Cheer,옐 선택하기
 End Ability,End Ability,효과처리종료
+Include unchooseable cards,Include unchooseable cards,선택할 수 없는 카드도 보이기
 ,,
 Mulligan all cards?,Mulligan all cards?,손패를 전부 멀리건 하시겠습니까?
 Debut your Center!,Debut your Center!,센터 포지션으로 데뷔!
@@ -380,7 +381,7 @@ Order the rest on bottom,Order the rest on bottom,남은 카드는 덱 아래로
 ,,
 cards,cards,카드
 card,card,카드
-Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD}{FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}(으)로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.
+Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}(으)로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.
 ,,
 (no Buzz),(no Buzz),(Buzz 이외)
 (Bloom %s),(Bloom %s),(Bloom 레벨 %s)
@@ -439,7 +440,8 @@ Archive %s from hand.,Archive %s from hand.,패 %s장을 아카이브한다.
 this Holomem,this Holomem,이 홀로멤
 Archive {Amount}{Colors} Cheer from {Location}.,Archive {Amount}{Colors} Cheer from {Location}.,{Location}의 {Colors}옐 {Amount}장을 아카이브한다.
 Attach card to Holomem%s.,Attach card to Holomem%s.,이 카드를 붙일 홀로멤%s을(를).
-Look at %s cards of your %s:,Look at %s cards of your %s:,덱을 전부 보고:
+the top %s,the top %s,위에서 %s장
+Look at {Look} cards of your {Location}:,Look at {Look} cards of your {Location}:,{Location}{Look}의 카드를 보고:
 ,,
 BACKHOLOMEM_POSION,Back Holomem,백 홀로멤
 CENTER_POSION,Center,센터 홀로멤
