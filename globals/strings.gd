@@ -619,9 +619,9 @@ func get_condition_text(conditions):
 						amount_str += "%s-%s" % [amount_min, amount_max]
 				text += "Cards in hand (%s): " % [amount_str]
 			"center_has_any_tag":
-				text += tr("Center has tag %s: ") % ["/".join(condition["condition_tags"])]
+				text += tr("Center has tag %s:") % ["/".join(condition["condition_tags"])] + " "
 			"center_is_color":
-				text += tr("Is %s: ") % ["/".join(condition["condition_colors"])]
+				text += tr("Is %s:") % ["/".join(condition["condition_colors"])] + " "
 			"chosen_card_has_tag":
 				text += "If chosen card has tag %s: " % ["/".join(condition["condition_tags"])]
 			"collab_with":
@@ -668,11 +668,11 @@ func get_condition_text(conditions):
 			"performer_is_collab":
 				text += tr("Collab:") + " "
 			"performer_is_color":
-				text += tr("Performer is %s: ") % ["/".join(condition["condition_colors"])]
+				text += tr("Performer is %s:") % ["/".join(condition["condition_colors"])] + " "
 			"performer_is_specific_id":
 				text += tr("Performer is chosen card:") + " "
 			"performer_has_any_tag":
-				text += tr("Performer has tag %s: ") % ["/".join(condition["condition_tags"])]
+				text += tr("Performer has tag %s:") % ["/".join(condition["condition_tags"])] + " "
 			"played_support_this_turn":
 				text += "Played a Support card this turn: "
 			"self_has_cheer_color":
@@ -779,7 +779,7 @@ func get_effect_text(effect):
 					look_at = "all"
 				else:
 					look_at = "the top %s" % look_at
-				text += tr("Look at %s cards of your %s: ") % [look_at, effect["from"]]
+				text += tr("Look at %s cards of your %s:") % [look_at, effect["from"]] + " "
 				from_str = ""
 			var choose_str = build_choose_cards_string(
 				from_str,
