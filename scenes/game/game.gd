@@ -2131,6 +2131,7 @@ func _on_move_attached_card_event(event_data):
 
 func _on_mulligan_decision_event(event_data):
 	var active_player = get_player(event_data["active_player"])
+	var first_player = event_data.get("first_player", "")
 	if active_player.is_me() and not observer_mode:
 		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s [DECISION]Choice: Mulligan[/DECISION]" % [
 			active_player.get_name_decorated(),
@@ -2144,7 +2145,11 @@ func _on_mulligan_decision_event(event_data):
 			"enable_check": [_allowed, _allowed]
 		}
 		_begin_make_choice([], 0, 0)
-		action_menu.show_choices(Strings.get_string(Strings.DECISION_INSTRUCTIONS_MULLIGAN), action_menu_choice_info, func(choice_index : int):
+		var mulligan_instructions = Strings.get_string(Strings.DECISION_INSTRUCTIONS_MULLIGAN)
+		if first_player:
+			var first_player_is_me = first_player == me._player_id
+			mulligan_instructions = Strings.build_mulligan_instructions(first_player_is_me)
+		action_menu.show_choices(mulligan_instructions, action_menu_choice_info, func(choice_index : int):
 			if choice_index == 0:
 				submit_mulligan_choice(true)
 			else:

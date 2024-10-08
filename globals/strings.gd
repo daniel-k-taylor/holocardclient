@@ -326,6 +326,11 @@ func get_performance_skill(performer_position, art_id, power):
 	var position_str = get_position_string(performer_position)
 	return "%s: %s (%s)" % [position_str, skill, power]
 
+func build_mulligan_instructions(is_first_player : bool):
+	if is_first_player:
+		return tr("You are first player.") + "\n" + Strings.DECISION_INSTRUCTIONS_MULLIGAN
+	return tr("You are second player.") + "\n" + Strings.DECISION_INSTRUCTIONS_MULLIGAN
+
 func build_choose_die_result_string():
 	return tr("Choose the next die result.")
 
