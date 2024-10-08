@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://djt48j2x6telk"]
+[gd_scene load_steps=5 format=3 uid="uid://djt48j2x6telk"]
 
 [ext_resource type="Script" path="res://scenes/game/game_log.gd" id="1_f32iv"]
+[ext_resource type="PackedScene" uid="uid://d2fspiqdcp0p1" path="res://scenes/game/card_base.tscn" id="2_21mjg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ta11c"]
 bg_color = Color(0.351563, 0.351563, 0.351563, 1)
@@ -23,39 +24,46 @@ layout_mode = 2
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 300
+
+[node name="PanelContainer" type="PanelContainer" parent="HBox"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ta11c")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBox/PanelContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBox/PanelContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="ShowDebugLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ShowDebugLabel" type="RichTextLabel" parent="HBox/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Show Debug"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="ShowDebugCheckbox" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ShowDebugCheckbox" type="CheckBox" parent="HBox/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="SaveLogButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="SaveLogButton" type="Button" parent="HBox/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Save Log"
 
-[node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="CloseButton" type="Button" parent="HBox/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Close"
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBox/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="PanelContainer/VBoxContainer/PanelContainer"]
+[node name="Label" type="RichTextLabel" parent="HBox/PanelContainer/VBoxContainer/PanelContainer"]
 custom_minimum_size = Vector2(700, 500)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_lv8ov")
@@ -63,7 +71,15 @@ bbcode_enabled = true
 scroll_following = true
 shortcut_keys_enabled = false
 
+[node name="BigCard" parent="." instance=ExtResource("2_21mjg")]
+visible = false
+position = Vector2(200, 280)
+scale = Vector2(1.5, 1.5)
+is_big_card = true
+
 [connection signal="pressed" from="FullButton" to="." method="_on_close_button_pressed"]
-[connection signal="toggled" from="PanelContainer/VBoxContainer/HBoxContainer/ShowDebugCheckbox" to="." method="_on_show_debug_checkbox_toggled"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/SaveLogButton" to="." method="_on_save_log_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="toggled" from="HBox/PanelContainer/VBoxContainer/HBoxContainer/ShowDebugCheckbox" to="." method="_on_show_debug_checkbox_toggled"]
+[connection signal="pressed" from="HBox/PanelContainer/VBoxContainer/HBoxContainer/SaveLogButton" to="." method="_on_save_log_button_pressed"]
+[connection signal="pressed" from="HBox/PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="meta_hover_ended" from="HBox/PanelContainer/VBoxContainer/PanelContainer/Label" to="." method="_on_label_meta_hover_ended"]
+[connection signal="meta_hover_started" from="HBox/PanelContainer/VBoxContainer/PanelContainer/Label" to="." method="_on_label_meta_hover_started"]

@@ -3,9 +3,10 @@ extends CenterContainer
 
 signal save_log_pressed
 
-@onready var label : RichTextLabel = $PanelContainer/VBoxContainer/PanelContainer/Label
+@onready var label : RichTextLabel = $HBox/PanelContainer/VBoxContainer/PanelContainer/Label
 
-@onready var debug_check = $PanelContainer/VBoxContainer/HBoxContainer/ShowDebugCheckbox
+@onready var debug_check = $HBox/PanelContainer/VBoxContainer/HBoxContainer/ShowDebugCheckbox
+@onready var big_card = $BigCard
 
 const DEFAULT_PLAYER_COLOR = "#16c2f7"
 const DEFAULT_OPPONENT_COLOR = "#ff0000"
@@ -21,6 +22,10 @@ enum GameLogLine {
 
 var full_log = []
 
+func _ready() -> void:
+	big_card.visible = false
+	big_card._update_stats()
+
 func replace_tag(text, tag, color):
 	text = text.replace("[%s]" % tag, "[color=%s]" % [color])
 	text = text.replace("[/%s]" % tag, "[/color]")
@@ -33,7 +38,14 @@ func add_to_log(log_type, text : String):
 	elif text.begins_with("Opponent"):
 		text = text.erase(0, 8)
 		text = "[color=%s]Opponent[/color]" % [DEFAULT_OPPONENT_COLOR] + text
-	text = replace_tag(text, "CARD", CARD_COLOR)
+
+	# If there is a [CARD] tag, get the text between it and [/CARD].
+	while text.find("[CARD]") != -1:
+		var start = text.find("[CARD]") + 6
+		var end = text.find("[/CARD]", start)
+		var card_id = text.substr(start, end - start)
+		text = text.replace("[CARD]%s[/CARD]" % [card_id], "[url=%s][CARDCOLORTAG]%s[/CARDCOLORTAG][/url]" % [card_id, card_id])
+	text = replace_tag(text, "CARDCOLORTAG", CARD_COLOR)
 	text = replace_tag(text, "PHASE", PHASE_COLOR)
 	text = replace_tag(text, "DECISION", DECISION_COLOR)
 	text = replace_tag(text, "SKILL", SKILL_COLOR)
@@ -69,3 +81,14 @@ func _on_show_debug_checkbox_toggled(_toggled_on: bool) -> void:
 
 func _on_save_log_button_pressed() -> void:
 	save_log_pressed.emit()
+
+func _on_label_meta_hover_started(meta: Variant) -> void:
+	if meta != "?":
+		big_card.visible = true
+		big_card._definition_id = meta
+		big_card._card_id = meta
+		big_card._definition = CardDatabase.get_card(meta, false)
+		big_card.initialize_graphics()
+
+func _on_label_meta_hover_ended(_meta: Variant) -> void:
+	big_card.visible = false
