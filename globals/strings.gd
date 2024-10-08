@@ -693,19 +693,19 @@ func get_condition_text(conditions):
 			"performer_has_any_tag":
 				text += tr("Performer has tag %s:") % ["/".join(condition["condition_tags"])] + " "
 			"played_support_this_turn":
-				text += "Played a Support card this turn: "
+				text += tr("Played a Support card this turn:") + " "
 			"self_has_cheer_color":
 				text += "" #"Has %s %s Cheer: " % [condition["amount_min"], "/".join(condition["condition_colors"])]
 			"stage_has_space":
-				text += "Room on stage: "
+				text += tr("Room on stage:") + " "
 			"target_color":
-				text += "Weak(%s): " % [condition["color_requirement"]]
+				text += tr("Weak(%s):") % [get_color_string(condition["color_requirement"])] + " "
 			"target_has_any_tag":
-				text += "Target has tag %s: " % ["/".join(condition["condition_tags"])]
+				text += tr("Target has tag %s:") % ["/".join(condition["condition_tags"])] + " "
 			"this_card_is_collab":
-				text += "Collab position: "
+				text += tr("Collab position:") + " "
 			"top_deck_card_has_any_tag":
-				text += "Top deck card has tag %s: " % ["/".join(condition["condition_tags"])]
+				text += tr("Top deck card has tag %s:") % ["/".join(condition["condition_tags"])] + " "
 	return text
 
 func get_effect_text(effect):
@@ -823,11 +823,11 @@ func get_effect_text(effect):
 				target_str += "%s " % effect["multiple_targets"]
 			match effect["target"]:
 				"backstage":
-					target_str += tr("Back Holomem")
+					target_str += tr("BACKHOLOMEM_POSITION")
 				"center":
-					target_str += tr("Center")
+					target_str += tr("CENTER_POSITION")
 				"collab":
-					target_str += tr("Collab")
+					target_str += tr("COLLAB_POSITION")
 				"center_or_collab":
 					target_str += tr("CEN_COL_POSITION")
 				"self":
@@ -927,7 +927,7 @@ func get_effect_text(effect):
 			var amount = effect["amount"]
 			text += "Archive %s less from Hand" % [amount]
 		"repeat_art":
-			text += "Repeat this Art."
+			text += tr("Repeat this Art.")
 		"restrict_targets_to_collab":
 			text += "Restrict Arts targets to this card (except Special damage)."
 		"restore_hp":
@@ -935,7 +935,7 @@ func get_effect_text(effect):
 			var target_str = ""
 			match effect["target"]:
 				"self":
-					target_str = "to this Holomem"
+					target_str = tr("THIS_HOLOMEM_POSITION")
 				"center":
 					target_str = "to Center"
 				"holomem":
@@ -954,9 +954,9 @@ func get_effect_text(effect):
 		"return_holomem_to_debut":
 			text += "Return one of your opponent's Back Holomems to a Debut Holomem\n(remove Damage, leave Cheer, the rest returns to hand)"
 		"reveal_top_deck":
-			text += "Reveal the top card of your deck."
+			text += tr("Reveal the top card of your deck.")
 		"reroll_die":
-			text += "Reroll."
+			text += tr("Reroll.")
 		"roll_die":
 			text += tr("Roll a die:") + " "
 			var die_effects = effect["die_effects"]
@@ -968,7 +968,7 @@ func get_effect_text(effect):
 					if i > 0:
 						sub_text += " "
 					sub_text += get_effect_text(sub_effect)
-				text += "%s = %s\n" % [die_effect["english_values"], sub_text]
+				text += "%s = %s\n" % [tr(die_effect["english_values"]), sub_text]
 		"send_cheer":
 			text += build_send_cheer_string(effect["amount_min"], effect["amount_max"], effect["from"])
 			if effect["to"] == "this_holomem":
@@ -986,28 +986,28 @@ func get_effect_text(effect):
 			if "to_limitation" in effect:
 				match effect["to_limitation"]:
 					"attached_owner":
-						text += " To attached Holomem."
+						text += " " + tr("To attached Holomem.")
 					"backstage":
-						text += " Only to Back members."
+						text += " " + tr("Only to Back members.")
 					"center":
-						text += " Only to Center."
+						text += " " + tr("Only to Center.")
 					"center_or_collab":
-						text += " Only to Center or Collab."
+						text += " " + tr("Only to Center or Collab.")
 					"color_in":
-						text += " Only to %s Holomem." % "/".join(effect["to_limitation_colors"])
+						text += " " + tr("Only to %s Holomem.") % "/".join(effect["to_limitation_colors"])
 					"specific_member_name":
-						text += " Only to %s." % get_names([effect["to_limitation_name"]])[0]
+						text += " " + tr("Only to %s.") % get_names([effect["to_limitation_name"]])[0]
 					"tag_in":
-						text += " Only to %s Holomem." % "/".join(effect["to_limitation_tags"])
+						text += " " + tr("Only to %s Holomem.") % "/".join(effect["to_limitation_tags"])
 			if "to_limitation_exclude_name" in effect:
-				text += " (Not %s)" % [get_names([effect["to_limitation_exclude_name"]])[0]]
+				text += " " + tr("(Not %s)") % [get_names([effect["to_limitation_exclude_name"]])[0]]
 			if "limit_one_per_member" in effect:
-				text += " (only 1 each)"
+				text += " " + tr("(only 1 each)")
 		"send_collab_back":
 			if "optional" in effect and effect["optional"]:
-				text += "May send Collab back."
+				text += tr("May send Collab back.")
 			else:
-				text += "Send Collab back."
+				text += tr("Send Collab back.")
 		"set_center_hp":
 			if "opponent" in effect and effect["opponent"]:
 				text += "Reduce opponent's Center's remaining HP to %s." % [effect["amount"]]

@@ -44,7 +44,7 @@ Cheer:,Cheer:,옐:
 Cards:,Cards:,카드:
 ,,
 Filters,Filters,필터
-Filter By Name:,Filter By Name:,카드명 필터:
+Filter By Name: ,Filter By Name: ,카드명 필터:
 Enter partial name,Enter partial name,일부 카드명 입력
 Clear Name,Clear Name,카드명 지우기
 Holomem Card Type,Holomem Card Type,홀로멤 카드 타입
@@ -86,6 +86,7 @@ Close,Close,닫기
 Done,Done,완료
 Select Cheer,Select Cheer,옐 선택하기
 End Ability,End Ability,효과처리종료
+Include unchooseable cards,Include unchooseable cards,선택할 수 없는 카드도 보이기
 ,,
 Mulligan all cards?,Mulligan all cards?,손패를 전부 멀리건 하시겠습니까?
 Debut your Center!,Debut your Center!,센터 포지션으로 데뷔!
@@ -180,7 +181,7 @@ Ganbarose for today!,Ganbarose for today!,오늘도 힘내로제!
 Secret Key,Secret Key,비밀의 합건
 Konpeko!,Konpeko!,콘페코!
 Don't miss it peko!,Don't miss it peko!,놓치면 안돼 페코!
-Ki-t-raaaa,Ki-t-raaaa,키-라아아아
+Ki-t-raaaa,Ki-t-raaaa,키t라아아아
 Rabbit girl on a white sandy beach,Rabbit girl on a white sandy beach,하얀 모래사장과 토끼 소녀
 Human Rabbitality Project,Human Rabbitality Project,전인류 토끼화 계획
 Diamond in the rough,Diamond in the rough,스타의 원석
@@ -432,13 +433,20 @@ This Turn:,This Turn:,이번 턴:
 Performer is %s:,Performer is %s:,%s 홀로멤일 때:
 Performer is chosen card:,Performer is chosen card:,대상 홀로멤:
 Performer has tag %s:,Performer has tag %s:,%s 태그를 가진 홀로멤일 때:
+Played a Support card this turn:,Played a Support card this turn:,이번 턴에 서포트 카드를 사용했을 때:
+Room on stage:,Room on stage:,스테이지가 자리가 있을 때:
+Weak(%s):,Weak(%s):,추가 데미지 속성(%s):
+Target has tag %s:,Target has tag %s:,%s 태그의 홀로멤이 아츠 대상이 되었을 때:
+Collab position:,Collab position:,콜라보 포지션 한정:
+Top deck card has tag %s:,Top deck card has tag %s:,댁 맨위의 카드가 %s 태그를 가질 때:
+,,
 This Turn: %s,This Turn: %s,이번 턴: %s
 Choose a Holomem. This Turn: %s,Choose a Holomem. This Turn: %s,선택한 홀로멤은 이번 턴 %s
-Archive %s from hand.,Archive %s from hand.,패 %s장을 아카이브한다.
-,,
 this Holomem,this Holomem,이 홀로멤
 Archive {Amount}{Colors} Cheer from {Location}.,Archive {Amount}{Colors} Cheer from {Location}.,{Location}의 {Colors}옐 {Amount}장을 아카이브한다.
+Archive %s from hand.,Archive %s from hand.,패 %s장을 아카이브한다.
 Attach card to Holomem%s.,Attach card to Holomem%s.,이 카드를 붙일 홀로멤%s을(를).
+the top %s,the top %s,위에서 %s장
 Look at {Look} cards of your {Location}:,Look at {Look} cards of your {Location}:,{Location}{Look}의 카드를 보고:
 ,,
 BACKHOLOMEM_POSITION,Back Holomem,백 홀로멤
@@ -459,13 +467,25 @@ Deal {Amount}{Special} damage {Target}{PreventLife}.,Deal {Amount}{Special} dama
 Draw %s.,Draw %s.,%s장 드로우.
 Set next die result to %s.,Set next die result to %s.,다음 주사위 눈을 %s로 취급한다.
 +%s Power per stacked Holomem.,+%s Power per stacked Holomem.,겹쳐져 있는 홀로멤 1장당 +%s 파워.
-,,
+Repeat this Art.,Repeat this Art.,이 아츠를 다시 1번 사용한다.
+Reveal the top card of your deck.,Reveal the top card of your deck.,덱 맨위를 공개한다.
+Reroll.,Reroll.,주사위를 다시 던진다.
 Roll a die:,Roll a die:,주사위 결과:
 Only to this Holomem.,Only to this Holomem.,이 홀로멤만
 to Archive.,to Archive.,아카이브로 보낸다
 From Center.,From Center.,(센터 홀로멤만 선택가능).
 Only %s Cheer.,Only %s Cheer.,(%s 옐만 선택가능).
 Only from %s.,Only from %s.,(%s 태그만 선택가능).
+To attached Holomem.,To attached Holomem.,(붙어있는 홀로멤만 선택가능)
+Only to Back members.,Only to Back members.,(백 홀로멤만 선택가능)
+Only to Center.,Only to Center.,(센터 홀로멤만 선택가능)
+Only to Center or Collab.,Only to Center or Collab.,(센터/콜라보 홀로멤만 선택가능)
+Only to %s.,Only to %s.,(%s 카드만 선택가능)
+Only to %s Holomem.,Only to %s Holomem.,(%s 홀로멤만 선택가능)
+(Not %s),(Not %s),(%s 이외)
+(only 1 each),(only 1 each),(홀로멤당 1장씩)
+May send Collab back.,May send Collab back.,이 홀로멤을 백 포지션에 이동할 수 있다.
+Send Collab back.,Send Collab back.,이 홀로멤을 백 포지션에 이동한다.
 ,,
 GOING DOWN,GOING DOWN,다운한 상태
 INCOMING DAMAGE,INCOMING DAMAGE,입을 데미지
@@ -518,7 +538,3 @@ OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's 
 ,,
 Go first.,Go first.,선공하기
 Go second.,Go second.,후공하기
-,,
-the top %s,the top %s,위에서 %s장
-,,
-Include unchooseable cards,Include unchooseable cards,선택할 수 없는 카드도 보이기
