@@ -1,7 +1,7 @@
-☐ ANY_HOLOMEM_POSITION not trasnlated
-
 Todo:
+  ☐ First player indicator so you know when mulliganing
   ☐ Show added turn effects somehow
+  ☐ Tooltip hover card in log
   ☐ Show revealed cards somehow
     - Track them in hand?
   ☐ Better text on some choose cards like archive from hand, or bloom from hand, stacked

@@ -3247,10 +3247,16 @@
                 "art_effects": [
                     {
                         "timing": "before_art",
-                        "effect_type": "move_cheer_between_holomems",
-                        "amount": 1,
-                        "to_limitation": "tag_in",
-                        "to_limitation_tags": ["#ID"]
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "move_cheer_between_holomems",
+                                "amount": 1,
+                                "to_limitation": "tag_in",
+                                "to_limitation_tags": ["#ID"]
+                            },
+                            { "effect_type": "pass" }
+                        ]
                     }
                 ]
             }
