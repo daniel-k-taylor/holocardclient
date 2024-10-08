@@ -44,7 +44,7 @@ Cheer:,Cheer:,옐:
 Cards:,Cards:,카드:
 ,,
 Filters,Filters,필터
-Filter By Name: ,Filter By Name: ,카드명 필터:
+Filter By Name: ,Filter By Name: ,카드명 필터: 
 Enter partial name,Enter partial name,일부 카드명 입력
 Clear Name,Clear Name,카드명 지우기
 Holomem Card Type,Holomem Card Type,홀로멤 카드 타입
@@ -344,7 +344,7 @@ FROM_DOWNED_HOLOMEM,from downed Holomem,다운된 홀로멤에서
 FROM_HOLOMEM,from Holomem,홀로멤에서
 FROM_THIS_HOLOMEM,from this Holomem,이 홀로멤에서
 FROM_OPPONENT_HOLOMEM,from opponent's Holomem,상대 홀로멤에서
-REMOVE_CHEER_ACTION_WORD,Remove,
+REMOVE_CHEER_ACTION_WORD,Remove,제거
 any amount of,any amount of,일부
 all,all,전부
 {ACTION} {AMOUNT} Cheer {SOURCE}.,{ACTION} {AMOUNT} Cheer {SOURCE}.,{SOURCE} 옐 {AMOUNT}장을 {ACTION}
@@ -538,3 +538,6 @@ OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's 
 ,,
 Go first.,Go first.,선공하기
 Go second.,Go second.,후공하기
+,,
+even,Even,짝수
+odd,Odd,홀수
