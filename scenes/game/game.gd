@@ -822,14 +822,25 @@ func _on_boost_stat_event(event_data):
 	var stat = event_data["stat"]
 	var amount = event_data["amount"]
 	var for_art = event_data["for_art"]
+	var source_card_id = event_data["source_card_id"] if event_data.has("source_card_id") else ""
+
 	var card_str = ""
 	if card_id:
 		card_str = "[CARD]%s[/CARD] " % _get_card_definition_id(card_id)
+
+	var skill_str = ""
+	if source_card_id:
+		skill_str = "[SKILLSOURCE]%s|%s[/SKILLSOURCE]" % [
+			_get_card_definition_id(source_card_id),
+			Strings.get_stat_string(stat)]
+	else:
+		skill_str = "[SKILL]%s[/SKILL]" % Strings.get_stat_string(stat)
+
 	# TODO: Animation - show stat boost.
-	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s+%s [SKILL]%s[/SKILL] " % [
+	game_log.add_to_log(GameLog.GameLogLine.Detail, "%s+%s %s " % [
 		card_str,
 		amount,
-		Strings.get_stat_string(stat),
+		skill_str
 	])
 
 	if for_art:

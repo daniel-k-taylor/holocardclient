@@ -45,6 +45,18 @@ func add_to_log(log_type, text : String):
 		var end = text.find("[/CARD]", start)
 		var card_id = text.substr(start, end - start)
 		text = text.replace("[CARD]%s[/CARD]" % [card_id], "[url=%s][CARDCOLORTAG]%s[/CARDCOLORTAG][/url]" % [card_id, card_id])
+
+	# Perform the same for [SKILLSOURCE] tag
+	while text.find("[SKILLSOURCE]") != -1:
+		var start = text.find("[SKILLSOURCE]") + 13
+		var end = text.find("[/SKILLSOURCE]", start)
+		var content_text = text.substr(start, end - start)
+		var content_items = Array(content_text.split("|")) # [source_card_id, stat]
+		text = text.replace(
+			"[SKILLSOURCE]%s[/SKILLSOURCE]" % content_text,
+			"[url=?][SKILL]?[/SKILL][/url]".format(content_items, "?")
+		)
+
 	text = replace_tag(text, "CARDCOLORTAG", CARD_COLOR)
 	text = replace_tag(text, "PHASE", PHASE_COLOR)
 	text = replace_tag(text, "DECISION", DECISION_COLOR)
