@@ -1960,7 +1960,7 @@
             {
                 "art_id": "letsmakeitthebestdayever",
                 "costs": [
-                    { "color": "white", "amount": 1 }
+                    { "color": "any", "amount": 1 }
                 ],
                 "power": 40,
                 "art_effects": []
