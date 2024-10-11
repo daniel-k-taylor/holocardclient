@@ -822,7 +822,7 @@ func _on_boost_stat_event(event_data):
 	var stat = event_data["stat"]
 	var amount = event_data["amount"]
 	var for_art = event_data["for_art"]
-	var source_card_id = event_data["source_card_id"] if event_data.has("source_card_id") else ""
+	var source_card_id = event_data.get("source_card_id", "")
 
 	var card_str = ""
 	if card_id:

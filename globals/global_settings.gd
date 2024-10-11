@@ -7,7 +7,7 @@ signal settings_changed_Language
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
-const ClientVersionString : String = "241007.1930" # YYMMDD.HHMM
+const ClientVersionString : String = "241010.2000" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 const PlayfabTitleId = "57B37"
