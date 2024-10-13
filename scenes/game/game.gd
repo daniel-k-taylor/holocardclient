@@ -579,6 +579,9 @@ func _is_cheer_card(card_id):
 	var card = CardDatabase.get_card(definition_id)
 	return card["card_type"] == "cheer"
 
+func get_owner_id_from_card_id(card_id : String):
+	return card_id.split("_")[0]
+
 func _get_card_colors(card_id):
 	var definition_id = _get_card_definition_id(card_id)
 	var card = CardDatabase.get_card(definition_id)
@@ -1624,7 +1627,11 @@ func _multi_source_multi_target_send_cheer_continue():
 					if multi_step_decision_info["to_zone"] == "archive":
 						for cheer_id in chosen_cheer_ids:
 							# Go ahead and move the cheer.
-							do_move_cards(me, chosen_source_mem, "archive", "", [cheer_id])
+							var card_owner = me
+							var owner_id = get_owner_id_from_card_id(cheer_id)
+							if owner_id != me._player_id:
+								card_owner = opponent
+							do_move_cards(card_owner, chosen_source_mem, "archive", "", [cheer_id])
 							# Update the placement.
 							multi_step_decision_info["placements"][cheer_id] = "archive"
 						var total_moved_count = len(multi_step_decision_info["placements"].keys())
@@ -2127,7 +2134,7 @@ func do_move_cards(player, from, to, zone_card_id, card_ids):
 					assert(false)
 
 func _on_move_attached_card_event(event_data):
-	var active_player= get_player(event_data["owning_player_id"])
+	var active_player = get_player(event_data["owning_player_id"])
 	var from_holomem_id = event_data["from_holomem_id"]
 	var to_holomem_id = event_data["to_holomem_id"]
 	var attached_id = event_data["attached_id"]

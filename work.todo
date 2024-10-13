@@ -3,9 +3,10 @@ Todo:
   ☐ Show revealed cards somehow
     - Track them in hand?
   ☐ Better text on some choose cards like archive from hand, or bloom from hand, stacked
+  ☐ Search filtering by tags - also show items that interact with those tags (so maybe a new field like searchtags)
 
 Polish:
   ☐ Hawkeye visual effect - maybe some chains around the center/collab slots?
 
 Later:
-  ☐ Consider Exceed style hover, probably still use big card just put it closer to the actual card?
+  ☐ If an effect can move your opponent's attached cheer around between members, probably need to look at the do_move_cards(me,...) logic

@@ -119,6 +119,7 @@ func load_decks():
 		deck_option_button.selected = selected_index
 		deck_option_button.text = _all_decks[selected_index]["deck_name"]
 		populate_deck_list(selected_index)
+	update_buttons()
 
 func get_decks():
 	return _all_decks
