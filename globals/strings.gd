@@ -273,6 +273,19 @@ func get_names(name_ids):
 		names.append(tr(HolomemNames[name_id]))
 	return names
 
+func get_requirement_names(effects):
+	var names = []
+	for effect in effects:
+		names.append_array(effect.get("requirement_names", []))
+	return get_names(names)
+
+func get_tags(card_definition):
+	var card_tags = []
+	card_tags.append_array(card_definition.get("tags", []))
+	for effect in card_definition.get("effects", []):
+		card_tags.append_array(effect.get("requirement_tags", []))
+	return card_tags
+
 func get_skill_string(skill_id):
 	if skill_id in SkillNameMap:
 		return tr(SkillNameMap[skill_id])
