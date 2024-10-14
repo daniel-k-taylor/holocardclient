@@ -1,10 +1,11 @@
-[gd_resource type="FontVariation" load_steps=3 format=3 uid="uid://5sykbiuh8u27"]
+[gd_resource type="FontVariation" load_steps=4 format=3 uid="uid://5sykbiuh8u27"]
 
 [ext_resource type="FontFile" uid="uid://c1r82bxdrx04i" path="res://assets/fonts/NotoSans-VariableFont_wdth,wght.ttf" id="1_gt7p6"]
 [ext_resource type="FontFile" uid="uid://cnsirtpo4bqvg" path="res://assets/fonts/kr/HYGTRE.TTF" id="2_dbqru"]
+[ext_resource type="FontVariation" uid="uid://ceud8g6r6405j" path="res://assets/fonts/jp/notosansjp_variation.tres" id="3_6ctwu"]
 
 [resource]
-fallbacks = Array[Font]([ExtResource("2_dbqru")])
+fallbacks = Array[Font]([ExtResource("2_dbqru"), ExtResource("3_6ctwu")])
 base_font = ExtResource("1_gt7p6")
 opentype_features = {
 1667329140: 0

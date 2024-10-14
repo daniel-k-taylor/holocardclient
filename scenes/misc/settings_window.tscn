@@ -65,11 +65,11 @@ text = "Game sound enabled"
 
 [node name="UseEnProxies" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Use EN Proxies when available"
+text = "Use Proxies when available"
 
 [node name="HideEnglishCardText" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Hide English Card Text"
+text = "Hide Overlay Card Text"
 
 [node name="LanguageBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

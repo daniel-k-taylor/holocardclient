@@ -62,6 +62,13 @@ const SupportedLanguages = {
 		"download_url": "https://fightingcardsstorage.blob.core.windows.net/cardpacks/kr.zip",
 		"size": 167517404
 	},
+	"jp": {
+		"name": "日本語",
+		"code": "jp",
+		"version ": 1,
+		"download_url": "",
+		"size": 0,
+	}
 }
 
 func get_client_version() -> String:
@@ -124,7 +131,7 @@ func load_persistent_settings() -> bool:  # returns success code
 	return true
 
 func has_card_language_pack(language_code) -> bool:
-	if language_code == "en":
+	if language_code in ["en", "jp"]:
 		return true
 	var expected_version = SupportedLanguages[language_code]["version"]
 	var language_details_file_path = language_dir + "/" + language_code + "/" + language_details_file

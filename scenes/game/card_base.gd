@@ -166,9 +166,6 @@ func update_card_graphic():
 				card_image.texture = load(en_path)
 				overlay_root.visible = false
 				proxy_card_loaded = true
-			else:
-				card_image.texture = load(jp_path)
-				proxy_card_loaded = false
 		else:
 			# Load the card from the card pack.
 			var image_path = "%s/%s_%s.png" % [
@@ -183,6 +180,12 @@ func update_card_graphic():
 				proxy_card_loaded = true
 			else:
 				print("File didn't exist: %s" % image_path)
+
+		if not proxy_card_loaded:
+			card_image.texture = load(jp_path)
+			if language_code == "jp":
+				overlay_root.visible = false
+				proxy_card_loaded = true
 
 		if not proxy_card_loaded:
 			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)

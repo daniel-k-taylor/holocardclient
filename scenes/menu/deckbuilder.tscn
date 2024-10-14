@@ -25,25 +25,25 @@ theme_override_font_sizes/font_size = 32
 text = "Main Menu"
 
 [node name="FiltersButton" type="Button" parent="."]
-offset_left = 386.0
+offset_left = 340.0
 offset_top = 65.0
-offset_right = 578.0
-offset_bottom = 118.0
+offset_right = 532.0
+offset_bottom = 121.0
 theme_override_font_sizes/font_size = 32
 text = "Filter"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_left = 554.0
+offset_left = 469.0
 offset_top = 11.0
 offset_right = 1263.0
-offset_bottom = 115.0
+offset_bottom = 117.0
 mouse_filter = 2
 theme_override_constants/separation = 10
 alignment = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -61,26 +61,30 @@ text = "10"
 layout_mode = 2
 text = "/10)"
 
-[node name="DecksOptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DecksOptionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 18
 text_overrun_behavior = 1
 
 [node name="SampleDecksOption" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 18
 selected = 0
 item_count = 1
 popup/item_0/text = "Load Sample Decks"
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 20
+theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 20
 columns = 2
 
@@ -187,9 +191,9 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-offset_left = 385.0
+offset_left = 340.0
 offset_top = 124.0
-offset_right = 1274.0
+offset_right = 1229.0
 offset_bottom = 713.0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
@@ -221,7 +225,7 @@ visible = false
 
 [connection signal="pressed" from="ReturnToMenuButton" to="." method="back_to_main_menu"]
 [connection signal="pressed" from="FiltersButton" to="." method="_on_filters_button_pressed"]
-[connection signal="item_selected" from="HBoxContainer/VBoxContainer/HBoxContainer/DecksOptionButton" to="." method="_on_decks_option_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/HBoxContainer2/DecksOptionButton" to="." method="_on_decks_option_button_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer/SampleDecksOption" to="." method="_on_sample_decks_option_item_selected"]
 [connection signal="pressed" from="HBoxContainer/GridContainer/LoadDeckButton" to="." method="_on_load_deck_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/GridContainer/NewDeckButton" to="." method="_on_new_deck_button_pressed"]

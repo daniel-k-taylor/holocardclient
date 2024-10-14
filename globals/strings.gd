@@ -1,41 +1,42 @@
 extends Node
 
 
-var STRING_OK = tr("OK")
-var STRING_YES = tr("Yes")
-var STRING_NO = tr("No")
-var STRING_PASS = tr("Pass")
-var STRING_CANCEL = tr("Cancel")
-var STRING_SHOW_CHOICE = tr("Show Choice")
-var STRING_CLOSE = tr("Close")
-var STRING_DONE = tr("Done")
-var STRING_SELECT_CHEER = tr("Select Cheer")
-var STRING_END_ABILITY = tr("End Ability")
+var STRING_OK = "OK"
+var STRING_YES = "Yes"
+var STRING_NO = "No"
+var STRING_PASS = "Pass"
+var STRING_CANCEL = "Cancel"
+var STRING_SHOW_CHOICE = "Show Choice"
+var STRING_CLOSE = "Close"
+var STRING_DONE = "Done"
+var STRING_SELECT_CHEER = "Select Cheer"
+var STRING_END_ABILITY = "End Ability"
 
-var DECISION_INSTRUCTIONS_MULLIGAN = tr("Mulligan all cards?")
-var DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER = tr("Debut your Center!")
-var DECISION_INSTRUCTIONS_INITIAL_CHOOSE_BACKSTAGE = tr("Select 0-5 backup members (Debut/Spot)")
+var DECISION_INSTRUCTIONS_MULLIGAN = "Mulligan all cards?"
+var DECISION_INSTRUCTIONS_INITIAL_CHOOSE_CENTER = "Debut your Center!"
+var DECISION_INSTRUCTIONS_INITIAL_CHOOSE_BACKSTAGE = "Select 0-5 backup members (Debut/Spot)"
 
-var DECISION_INSTRUCTIONS_MAIN_STEP = tr("Main Step - Choose an action")
-var DECISION_INSTRUCTIONS_PERFORMANCE_STEP = tr("Perform an art or end your turn")
-var DECISION_INSTRUCTIONS_PLACE_HOLOMEM = tr("Choose a Holomem to enter the stage")
-var DECISION_INSTRUCTIONS_CHOOSE_BLOOM = tr("Choose a Bloom card to play")
-var DECISION_INSTRUCTIONS_CHOOSE_BLOOM_TARGET = tr("Choose a Holomem to Bloom")
-var DECISION_INSTRUCTIONS_CHOOSE_BATONPASS = tr("Choose a Holomem for the Baton Pass")
-var DECISION_INSTRUCTIONS_CHOOSE_SUPPORT_CARD = tr("Choose a Support card to play")
-var DECISION_INSTRUCTIONS_COLLAB = tr("Choose a Holomem to Collab")
-var DECISION_INSTRUCTIONS_BATON_PASS = tr("Choose a Holomem to Baton Pass")
-var DECISION_INSTRUCTIONS_SEND_COLLAB_BACK = tr("Send Collab back?")
-var DECISION_INSTRUCTIONS_CHOOSE_NEW_CENTER = tr("Choose a new Center")
-var DECISION_INSTRUCTIONS_SWAP_CENTER = tr("Choose a Holomem to swap into the Center")
-var DECISION_INSTRUCTIONS_PERFORMANCE_ART_TARGET = tr("Choose a target for this Art")
-var DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM = tr("Choose a Holomem to remove Cheer from")
-var DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM = tr("Choose a Holomem to receive Cheer")
-var DECISION_INSTRUCTIONS_MAKE_CHOICE = tr("Choose one effect")
+var DECISION_INSTRUCTIONS_MAIN_STEP = "Main Step - Choose an action"
+var DECISION_INSTRUCTIONS_PERFORMANCE_STEP = "Perform an art or end your turn"
+var DECISION_INSTRUCTIONS_PLACE_HOLOMEM = "Choose a Holomem to enter the stage"
+var DECISION_INSTRUCTIONS_CHOOSE_BLOOM = "Choose a Bloom card to play"
+var DECISION_INSTRUCTIONS_CHOOSE_BLOOM_TARGET = "Choose a Holomem to Bloom"
+var DECISION_INSTRUCTIONS_CHOOSE_BATONPASS = "Choose a Holomem for the Baton Pass"
+var DECISION_INSTRUCTIONS_CHOOSE_SUPPORT_CARD = "Choose a Support card to play"
+var DECISION_INSTRUCTIONS_COLLAB = "Choose a Holomem to Collab"
+var DECISION_INSTRUCTIONS_BATON_PASS = "Choose a Holomem to Baton Pass"
+var DECISION_INSTRUCTIONS_SEND_COLLAB_BACK = "Send Collab back?"
+var DECISION_INSTRUCTIONS_CHOOSE_NEW_CENTER = "Choose a new Center"
+var DECISION_INSTRUCTIONS_SWAP_CENTER = "Choose a Holomem to swap into the Center"
+var DECISION_INSTRUCTIONS_PERFORMANCE_ART_TARGET = "Choose a target for this Art"
+var DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM = "Choose a Holomem to remove Cheer from"
+var DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM = "Choose a Holomem to receive Cheer"
+var DECISION_INSTRUCTIONS_MAKE_CHOICE = "Choose one effect"
 
-var YOUR_ARCHIVE = tr("Your Archive")
-var OPPONENT_ARCHIVE = tr("Opponent Archive")
-var ATTACHED_CARDS = tr("Attached Cards")
+var YOUR_ARCHIVE = "Your Archive"
+var OPPONENT_ARCHIVE = "Opponent Archive"
+var ATTACHED_CARDS = "Attached Cards"
+
 
 const SkillNameMap = {
 	# Oshi
@@ -264,7 +265,7 @@ const HolomemNames = {
 
 # Lazy placeholder for loc
 func get_string(str_id) -> String:
-	return str_id
+	return tr(str_id)
 
 func get_names(name_ids):
 	var names = []
@@ -328,8 +329,8 @@ func get_performance_skill(performer_position, art_id, power):
 
 func build_mulligan_instructions(is_first_player : bool):
 	if is_first_player:
-		return tr("You are first player.") + "\n" + Strings.DECISION_INSTRUCTIONS_MULLIGAN
-	return tr("You are second player.") + "\n" + Strings.DECISION_INSTRUCTIONS_MULLIGAN
+		return tr("You are first player.") + "\n" + Strings.get_string(Strings.DECISION_INSTRUCTIONS_MULLIGAN)
+	return tr("You are second player.") + "\n" + Strings.get_string(Strings.DECISION_INSTRUCTIONS_MULLIGAN)
 
 func build_choose_die_result_string():
 	return tr("Choose the next die result.")
@@ -645,7 +646,7 @@ func get_condition_text(conditions):
 			"center_has_any_tag":
 				text += tr("Center has tag %s:") % ["/".join(condition["condition_tags"])] + " "
 			"center_is_color":
-				text += tr("Is %s:") % ["/".join(condition["condition_colors"])] + " "
+				text += tr("Is %s:") % ["/".join(get_color_strings(condition["condition_colors"]))] + " "
 			"chosen_card_has_tag":
 				text += "If chosen card has tag %s: " % ["/".join(condition["condition_tags"])]
 			"collab_with":
@@ -692,7 +693,7 @@ func get_condition_text(conditions):
 			"performer_is_collab":
 				text += tr("Collab:") + " "
 			"performer_is_color":
-				text += tr("Performer is %s:") % ["/".join(condition["condition_colors"])] + " "
+				text += tr("Performer is %s:") % ["/".join(get_color_strings(condition["condition_colors"]))] + " "
 			"performer_is_specific_id":
 				text += tr("Performer is chosen card:") + " "
 			"performer_has_any_tag":
@@ -843,7 +844,7 @@ func get_effect_text(effect):
 			if "prevent_life_loss" in effect and effect["prevent_life_loss"]:
 				prevent_life_str = " " + tr("(Can't lose life)")
 			var amount_str = str(effect["amount"])
-			if amount_str == tr("total_damage_on_backstage"):
+			if amount_str == "total_damage_on_backstage":
 				amount_str = tr("sum of damage on Backstage Holomems")
 			text += tr("Deal {Amount}{Special} damage {Target}{PreventLife}.").format({
 				Amount = amount_str,
