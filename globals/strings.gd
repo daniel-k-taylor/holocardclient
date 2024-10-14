@@ -272,6 +272,12 @@ func get_names(name_ids):
 		names.append(tr(HolomemNames[name_id]))
 	return names
 
+func get_requirement_names(effects):
+	var names = []
+	for effect in effects:
+		names.append_array(effect.get("requirement_names", []))
+	return get_names(names)
+
 func get_tags(card_definition):
 	var card_tags = []
 	card_tags.append_array(card_definition.get("tags", []))

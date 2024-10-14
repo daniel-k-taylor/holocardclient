@@ -395,6 +395,11 @@ func _on_filter_options_filter_settings_changed(filter_settings: Dictionary) -> 
 
 			if check_name:
 				var names = Strings.get_names(definition["card_names"])
+				# add requirement_names to name search to fetch cards that target specific names
+				# like "First Gravity"
+				var req_names = Strings.get_requirement_names(definition.get("effects", []))
+				names.append_array(req_names)
+
 				for i in range(len(names)):
 					names[i] = names[i].to_lower()
 				var found_match = false
