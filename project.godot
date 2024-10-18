@@ -50,7 +50,7 @@ texture={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://assets/loc/translations.en.translation", "res://assets/loc/translations.kr.translation", "res://assets/loc/translations.jp.translation")
+locale/translations=PackedStringArray("res://assets/loc/translations.en.translation", "res://assets/loc/translations.kr.translation", "res://assets/loc/translations.jp.translation", "res://assets/loc/translations.es.translation")
 
 [rendering]
 

@@ -54,13 +54,26 @@ const SupportedLanguages = {
 		"version": 1,
 		"download_url": "",
 		"size": 0,
+		"cards_in_game_package": true,
+		"card_language_code": "en",
+	},
+	"es": {
+		"name": "Español",
+		"code": "es",
+		"version ": 1,
+		"download_url": "",
+		"size": 0,
+		"cards_in_game_package": true,
+		"card_language_code": "en",
 	},
 	"kr": {
 		"name": "한국어",
 		"code": "kr",
 		"version": 5,
 		"download_url": "https://fightingcardsstorage.blob.core.windows.net/cardpacks/kr.zip",
-		"size": 167517404
+		"size": 167517404,
+		"cards_in_game_package": false,
+		"card_language_code": "kr",
 	},
 	"jp": {
 		"name": "日本語",
@@ -68,7 +81,9 @@ const SupportedLanguages = {
 		"version ": 1,
 		"download_url": "",
 		"size": 0,
-	}
+		"cards_in_game_package": true,
+		"card_language_code": "jp",
+	},
 }
 
 func get_client_version() -> String:
@@ -98,6 +113,10 @@ func toggle_logging(toggle_on : bool) -> void:
 
 func get_user_setting(setting_name : String):
 	return user_settings[setting_name]
+
+func get_card_language_code() -> String:
+	var user_language = get_user_setting(Language)
+	return SupportedLanguages[user_language]["card_language_code"]
 
 func save_user_setting(setting_name : String, value):
 	user_settings[setting_name] = value
@@ -131,7 +150,7 @@ func load_persistent_settings() -> bool:  # returns success code
 	return true
 
 func has_card_language_pack(language_code) -> bool:
-	if language_code in ["en", "jp"]:
+	if SupportedLanguages[language_code]["cards_in_game_package"]:
 		return true
 	var expected_version = SupportedLanguages[language_code]["version"]
 	var language_details_file_path = language_dir + "/" + language_code + "/" + language_details_file

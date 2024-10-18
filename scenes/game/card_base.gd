@@ -157,7 +157,7 @@ func update_card_graphic():
 		var rarity = CardDatabase.get_card(_definition_id)["rarity"].to_upper()
 		var jp_path = "res://assets/cards/" + _definition_id + "_" + rarity + ".png"
 		var en_path = "res://assets/cards/en/" + _definition_id + "_" + rarity  + ".png"
-		var language_code = GlobalSettings.get_user_setting(GlobalSettings.Language)
+		var language_code = GlobalSettings.get_card_language_code()
 		proxy_card_loaded = false
 		if language_code == "en":
 			# Check if the en card exists.
