@@ -7,6 +7,7 @@ Todo:
 
 Polish:
   ☐ Hawkeye visual effect - maybe some chains around the center/collab slots?
+  ☐ observer mode - somehow you can end up with a cheer on top of the oshi?
 
 Later:
   ☐ If an effect can move your opponent's attached cheer around between members, probably need to look at the do_move_cards(me,...) logic
