@@ -159,3 +159,8 @@ func _on_clear_name_pressed() -> void:
 
 func _on_name_filter_line_edit_focus_entered() -> void:
 	name_filter.caret_column = name_filter.text.length()
+
+
+func _on_visibility_changed() -> void:
+	if visible:
+		%NameFilterLineEdit.call_deferred("grab_focus")
