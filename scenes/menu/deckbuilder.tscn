@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvhny66vw8bs"]
+[gd_scene load_steps=8 format=3 uid="uid://bvhny66vw8bs"]
 
 [ext_resource type="Script" path="res://scenes/menu/deckbuilder.gd" id="1_hiyso"]
 [ext_resource type="PackedScene" uid="uid://wfg3ofoom22s" path="res://scenes/menu/deck_card_slot.tscn" id="2_ntnpi"]
+[ext_resource type="PackedScene" uid="uid://cqnd85rwaunjt" path="res://scenes/misc/main_background.tscn" id="2_w7x6q"]
 [ext_resource type="PackedScene" uid="uid://bcr5jfstov5er" path="res://scenes/menu/cheer_box.tscn" id="3_hu4c7"]
 [ext_resource type="PackedScene" uid="uid://wmclosx28ofb" path="res://scenes/misc/modal_dialog.tscn" id="4_wbqxh"]
 [ext_resource type="PackedScene" uid="uid://d2fspiqdcp0p1" path="res://scenes/game/card_base.tscn" id="5_u0cvo"]
@@ -10,7 +11,12 @@
 [node name="Deckbuilder" type="Node2D"]
 script = ExtResource("1_hiyso")
 
+[node name="MainBackground" parent="." instance=ExtResource("2_w7x6q")]
+offset_right = 1280.0
+offset_bottom = 720.0
+
 [node name="Background" type="ColorRect" parent="."]
+visible = false
 custom_minimum_size = Vector2(1280, 720)
 offset_right = 40.0
 offset_bottom = 40.0
