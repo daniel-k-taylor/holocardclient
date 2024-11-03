@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dl8ct7vpm73vm"]
+[gd_scene load_steps=13 format=3 uid="uid://dl8ct7vpm73vm"]
 
 [ext_resource type="Theme" uid="uid://dpxwceaf3f35h" path="res://themes/menubuttontheme.tres" id="1_i5wud"]
 [ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_wc6th"]
+[ext_resource type="PackedScene" uid="uid://cqnd85rwaunjt" path="res://scenes/misc/main_background.tscn" id="2_d2trv"]
 [ext_resource type="PackedScene" uid="uid://wmclosx28ofb" path="res://scenes/misc/modal_dialog.tscn" id="3_6lbr4"]
 [ext_resource type="PackedScene" uid="uid://blev8t8g4iq0m" path="res://scenes/misc/icon_button.tscn" id="4_1cxk2"]
 [ext_resource type="Texture2D" uid="uid://bh0c0vkyounat" path="res://assets/icons/gear.png" id="5_rki3m"]
@@ -21,7 +22,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wc6th")
 
+[node name="MainBackground" parent="." instance=ExtResource("2_d2trv")]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
 [node name="Background" type="ColorRect" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
