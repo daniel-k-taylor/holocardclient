@@ -1112,6 +1112,8 @@
 			"white"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-001",
+		"alternates": ["our"],
 		"life": 5,
 		"actions": [
 			{
@@ -1206,6 +1208,8 @@
 			"white"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-002",
+		"alternates": ["our"],
 		"life": 5,
 		"actions": [
 			{
@@ -1314,6 +1318,8 @@
 			"green"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-003",
+		"alternates": ["our"],
 		"life": 5,
 		"actions": [
 			{
@@ -1404,6 +1410,8 @@
 			"green"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-004",
+		"alternates": ["our"],
 		"life": 6,
 		"actions": [
 			{
@@ -1511,6 +1519,8 @@
 			"red"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-005",
+		"alternates": ["our"],
 		"life": 5,
 		"special_hand_archive_skill_per_turn": "executivesorder",
 		"actions": [
@@ -1601,6 +1611,8 @@
 			"red"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-006",
+		"alternates": ["our"],
 		"life": 5,
 		"actions": [
 			{
@@ -1710,6 +1722,8 @@
 			"blue"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-007",
+		"alternates": ["our"],
 		"life": 5,
 		"actions": [],
 		"effects": [
@@ -1842,6 +1856,8 @@
 			"blue"
 		],
 		"rarity": "osr",
+		"alt_id": "hBP01-008",
+		"alternates": ["our"],
 		"life": 6,
 		"actions": [
 			{
@@ -2180,6 +2196,8 @@
 			"amane_kanata"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-014",
+		"alternates": ["ur"],
 		"colors": [
 			"white"
 		],
@@ -2661,6 +2679,8 @@
 			"tokino_sora"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-023",
+		"alternates": ["ur"],
 		"colors": [
 			"white"
 		],
@@ -2875,6 +2895,8 @@
 			"vestia_zeta"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-027",
+		"alternates": ["ur"],
 		"colors": [
 			"white"
 		],
@@ -3784,6 +3806,8 @@
 		],
 		"bloom_level": 2,
 		"rarity": "rr",
+		"alt_id": "hBP01-043",
+		"alternates": ["ur"],
 		"colors": [
 			"green"
 		],
@@ -4032,6 +4056,8 @@
 			"azki"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-047",
+		"alternates": ["ur"],
 		"colors": [
 			"green"
 		],
@@ -4263,6 +4289,8 @@
 			"kazama_iroha"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-051",
+		"alternates": ["ur"],
 		"colors": [
 			"green"
 		],
@@ -5186,6 +5214,8 @@
 			"takanashi_kiara"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-067",
+		"alternates": ["ur"],
 		"colors": [
 			"red"
 		],
@@ -5401,6 +5431,8 @@
 			"omaru_polka"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-071",
+		"alternates": ["ur"],
 		"colors": [
 			"red"
 		],
@@ -5983,6 +6015,8 @@
 			"hoshimachi_suisei"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-081",
+		"alternates": ["ur"],
 		"colors": [
 			"blue"
 		],
@@ -6675,6 +6709,8 @@
 			"moona_hoshinova"
 		],
 		"rarity": "rr",
+		"alt_id": "hBP01-091",
+		"alternates": ["ur"],
 		"colors": [
 			"blue"
 		],

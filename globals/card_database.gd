@@ -8,7 +8,16 @@ var sample_decks_path = "res://data/sample_decks.json"
 const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 
 func _ready():
-	card_data = load_json_file(card_definitions_path)
+	var json_data = load_json_file(card_definitions_path)
+	for card in json_data:
+		card_data.append(card)
+		for rarity  in card.get("alternates", []):
+			var alt_card = card.duplicate(true)
+			var alt_id = alt_card["alt_id"]
+			alt_card["card_id"] = alt_id + "_" + rarity.to_upper()
+			alt_card["rarity"] = rarity
+			alt_card.erase("alternates")
+			card_data.append(alt_card)
 
 func load_json_file(file_path : String):
 	if FileAccess.file_exists(file_path):

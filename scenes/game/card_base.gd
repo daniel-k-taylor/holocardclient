@@ -154,9 +154,11 @@ func set_button_visible(button_visible):
 
 func update_card_graphic():
 	if _definition_id and _definition_id != "HIDDEN":
-		var rarity = CardDatabase.get_card(_definition_id)["rarity"].to_upper()
-		var jp_path = "res://assets/cards/" + _definition_id + "_" + rarity + ".png"
-		var en_path = "res://assets/cards/en/" + _definition_id + "_" + rarity  + ".png"
+		var card = CardDatabase.get_card(_definition_id)
+		var card_id = card.get("alt_id", _definition_id)
+		var rarity = card["rarity"].to_upper()
+		var jp_path = "res://assets/cards/" + card_id + "_" + rarity + ".png"
+		var en_path = "res://assets/cards/en/" + card_id + "_" + rarity  + ".png"
 		var language_code = GlobalSettings.get_card_language_code()
 		proxy_card_loaded = false
 		if language_code == "en":
@@ -170,7 +172,7 @@ func update_card_graphic():
 			# Load the card from the card pack.
 			var image_path = "%s/%s_%s.png" % [
 				GlobalSettings.get_card_language_path(),
-				_definition_id,
+				card_id,
 				rarity
 			]
 			if FileAccess.file_exists(image_path):
