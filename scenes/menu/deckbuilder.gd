@@ -171,6 +171,7 @@ func populate_deck_list(index):
 		child.queue_free()
 		deck_card_slots.remove_child(child)
 
+	_current_deck["_alt_count"] = {}
 	var all_card_ids = _current_deck["deck"].keys()
 	all_card_ids = sort_cards(all_card_ids)
 	for card_id in all_card_ids:
@@ -182,6 +183,11 @@ func populate_deck_list(index):
 			new_slot.set_details(card, count)
 			new_slot.value_changed.connect(change_card_count)
 			new_slot.hover.connect(_on_hover_slot)
+
+			var alt_id = card.get("alt_id", "")
+			if alt_id:
+				_current_deck["_alt_count"][alt_id] = \
+					_current_deck["_alt_count"].get(alt_id, 0) + count
 		else:
 			_current_deck["deck"].erase(card_id)
 
@@ -204,22 +210,30 @@ func sort_cards(card_ids):
 func change_card_count(slot : DeckCardSlot, card_id, amount):
 	var definition_id = card_id
 	var card = CardDatabase.get_card(definition_id)
-	var max_allowed = Enums.MAX_CARD_COPIES
-	if "special_deck_limit" in card:
-		max_allowed = card["special_deck_limit"]
-	var amount_in_deck = _current_deck["deck"][card_id]
+	var max_allowed = card.get("special_deck_limit", Enums.MAX_CARD_COPIES)
+
+	var deck = _current_deck["deck"]
+	var _alt_count = _current_deck["_alt_count"]
+	var alt_id = card.get("alt_id")
+	var total_in_deck = _alt_count.get(alt_id, 0) if alt_id else deck[card_id]
+	var new_total = total_in_deck + amount
+	var amount_in_deck = deck[card_id]
 	var new_amount = amount_in_deck + amount
+
 	if new_amount == 0:
-		# Remove the card from the deck
-		_current_deck["deck"].erase(definition_id)
+		# Remove card in deck
+		deck.erase(definition_id)
+		if alt_id:
+			_alt_count[alt_id] = new_total
 		slot.visible = false
 		deck_card_slots.remove_child(slot)
 		slot.queue_free()
-	else:
-		if new_amount > max_allowed:
-			new_amount = max_allowed
-		_current_deck["deck"][definition_id] = new_amount
+	elif new_amount <= max_allowed and new_total <= max_allowed:
+		deck[definition_id] = new_amount
+		if alt_id:
+			_alt_count[alt_id] = new_total
 		slot.update_count(new_amount)
+
 	update_card_total()
 	save_decks_to_settings()
 
@@ -313,17 +327,18 @@ func _on_clicked_card(card_id, card : CardBase):
 	if definition["card_type"] == "oshi":
 		_current_deck["oshi"] = card_id
 	else:
-		# Check if this card exists in the deck or not.
-		if card_id in _current_deck["deck"]:
-			_current_deck["deck"][card_id] += 1
-			var max_allowed = Enums.MAX_CARD_COPIES
-			if "special_deck_limit" in definition:
-				max_allowed = definition["special_deck_limit"]
-			if _current_deck["deck"][card_id] > max_allowed:
-				_current_deck["deck"][card_id] = max_allowed
-				return
+		var max_allowed = definition.get("special_deck_limit", Enums.MAX_CARD_COPIES)
+		var deck = _current_deck["deck"]
+		var _alt_count = _current_deck["_alt_count"]
+		var alt_id = definition.get("alt_id")
+		var total_in_deck = _alt_count.get(alt_id, 0) if alt_id else deck.get(card_id, 0)
+
+		if total_in_deck + 1 <= max_allowed:
+			deck[card_id] = deck.get(card_id, 0) + 1
+			if alt_id:
+				_alt_count[alt_id] = _alt_count.get(alt_id, 0) + 1
 		else:
-			_current_deck["deck"][card_id] = 1
+			return
 	save_decks_to_settings()
 	populate_deck_list(_current_index)
 

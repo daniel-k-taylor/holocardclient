@@ -102,12 +102,21 @@ func load_deck_holodelta(data):
 					error_message = "Invalid format:\nCheer entry alt art not numbers"
 
 		if not error_message:
-			loaded_deck["oshi"] = oshi_info[0]
+			# Oshi
+			var oshi_id = oshi_info[0]
+			var oshi_alternate = oshi_info[1]
+			if oshi_alternate:
+				oshi_id = use_alternate_card_id(oshi_id, oshi_alternate)
+			loaded_deck["oshi"] = oshi_id
+			# Main Deck
 			for deck_entry in data["deck"]:
-				if deck_entry[0] in loaded_deck["deck"]:
-					loaded_deck["deck"][deck_entry[0]] += int(deck_entry[1])
-				else:
-					loaded_deck["deck"][deck_entry[0]] = int(deck_entry[1])
+				var card_id = deck_entry[0]
+				var card_alternate = deck_entry[2]
+				# re-format the card id to include the rarity for alternate cards
+				if card_alternate:
+					card_id = use_alternate_card_id(card_id, card_alternate)
+				loaded_deck["deck"][card_id] = int(deck_entry[1])
+			# Cheer Deck
 			for cheer_entry in data["cheerDeck"]:
 				if cheer_entry[0] in loaded_deck["cheer_deck"]:
 					loaded_deck["cheer_deck"][cheer_entry[0]] += int(cheer_entry[1])
@@ -136,12 +145,33 @@ func export_deck_holodelta(deck):
 	# }
 	var holo_delta_deck = {
 		"deckName": deck["deck_name"],
-		"oshi": [deck["oshi"], 0],
+		"oshi": [],
 		"deck": [],
 		"cheerDeck": [],
 	}
+	# Oshi
+	holo_delta_deck["oshi"] = card_export_format(deck["oshi"], 0, true)
 	for card_id in deck["deck"]:
-		holo_delta_deck["deck"].append([card_id, deck["deck"][card_id], 0])
+		holo_delta_deck["deck"].append(card_export_format(card_id, deck["deck"][card_id]))
 	for card_id in deck["cheer_deck"]:
 		holo_delta_deck["cheerDeck"].append([card_id, deck["cheer_deck"][card_id], 0])
 	return holo_delta_deck
+
+
+func card_export_format(card_id: String, count: int, is_oshi = false) -> Array:
+	var card_parts = card_id.split("_")
+	var id = card_parts[0]
+	var rarity = card_parts[1] if card_parts.size() > 1 else ""
+
+	if not rarity:
+		return [id, 0] if is_oshi else [id, count, 0]
+
+	var card = CardDatabase.get_card(id)
+	var alternates = card.get("alternates", [])
+	var rarity_index = alternates.find(rarity.to_lower()) + 1
+	return [id, rarity_index] if is_oshi else [id, count, rarity_index]
+
+
+func use_alternate_card_id(card_id: String, rarity_index: int) -> String:
+	var card = CardDatabase.get_card(card_id)
+	return card["alt_id"] + "_" + card["alternates"][rarity_index - 1].to_upper()
