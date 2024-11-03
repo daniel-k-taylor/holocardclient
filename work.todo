@@ -1,9 +1,19 @@
+Bugs:
+  ☐ Memory leak in client
+
 Todo:
   ☐ Show added turn effects somehow
   ☐ Show revealed cards somehow
     - Track them in hand?
   ☐ Better text on some choose cards like archive from hand, or bloom from hand, stacked
   ☐ Search filtering by tags - also show items that interact with those tags (so maybe a new field like searchtags)
+
+Suggestions:
+  ☐ Num fans/mascots indicators
+  ☐ Try out the performance options to the sides of the cards (and move the backstage so it doesn't hide any)
+  ☐ Emotes
+
+
 
 Polish:
   ☐ Hawkeye visual effect - maybe some chains around the center/collab slots?
