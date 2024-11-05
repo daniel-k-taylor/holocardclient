@@ -65,6 +65,9 @@ const SkillNameMap = {
 	"comeonagain": "Come on! Again!",
 	"backshot": "Back Shot",
 
+	"greenenhance": "Green Enhance",
+	"birthdaygiftgreen": "Birthday Gift ~Green~",
+
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
 	"onstage": "On stage!",
@@ -197,6 +200,8 @@ const SkillNameMap = {
 	"marinebeyondthedoor": "Marine ~Beyond the door~",
 	"elementaryisntit": "Elementary, isn't it?",
 
+	"flowerrhapsody": "flower rhapsody",
+
 
 
 
@@ -228,6 +233,8 @@ const HolomemNames = {
 	"usada_pekora": "Usada Pekora",
 	"vestia_zeta": "Vestia Zeta",
 	"watson_amelia": "Watson Amelia",
+	"pavolia_reine": "Pavolia Reine",
+	"sakura_miko": "Sakura Miko",
 
 	# Support Cards
 	"amazingpc": "Amazing PC",
