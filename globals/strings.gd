@@ -485,6 +485,19 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			to_zone_str = tr("A_HOLOMEM")
 		"holopower":
 			to_zone_str = tr("YOUR_HOLOPOWER")
+	# requirement_details is actually the effect itself
+	var to_limitation_str = ""
+	if "to_limitation" in requirement_details:
+		var effect = requirement_details
+		match requirement_details["to_limitation"]:
+			"color_in":
+				to_limitation_str = " (%s)" % "/".join(get_color_strings(effect["to_limitation_colors"]))
+			"specific_member_name":
+				to_limitation_str = " (%s)" % get_names([effect["to_limitation_name"]])[0]
+			"tag_in":
+				to_limitation_str = " (%s)" % "/".join(effect["to_limitation_tags"])
+			"backstage":
+				to_limitation_str = " (%s)" % tr("Only to Back members.")
 	var amount_str = "%s" % amount_min
 	if amount_min != amount_max:
 		amount_str = "%s-%s" % [amount_min, amount_max]
@@ -504,7 +517,9 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 	var card_str = tr("cards")
 	if amount_min == 1 and amount_max == 1:
 		card_str = tr("card")
-	var main_text = tr("Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.").format({AMOUNT = amount_str, CARD = card_str, FROMZONE = from_zone_str, TOZONE = to_zone_str, REMAIN = remaining_cards_str})
+	var main_text = tr("Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{TOLIMITATION}{REMAIN}.")\
+		.format({AMOUNT = amount_str, CARD = card_str, FROMZONE = from_zone_str, TOZONE = to_zone_str, \
+			TOLIMITATION=to_limitation_str, REMAIN = remaining_cards_str})
 	if "requirement" in requirement_details and requirement_details["requirement"]:
 		match requirement_details["requirement"]:
 			"buzz":
