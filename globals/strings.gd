@@ -293,6 +293,9 @@ func get_tags(card_definition):
 		card_tags.append_array(effect.get("requirement_tags", []))
 	return card_tags
 
+func get_tags_strings(tags: Array) -> Array:
+	return tags.map(get_string)
+
 func get_skill_string(skill_id):
 	if skill_id in SkillNameMap:
 		return tr(SkillNameMap[skill_id])
@@ -495,7 +498,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			"specific_member_name":
 				to_limitation_str = " (%s)" % get_names([effect["to_limitation_name"]])[0]
 			"tag_in":
-				to_limitation_str = " (%s)" % "/".join(effect["to_limitation_tags"])
+				to_limitation_str = " (%s)" % "/".join(get_tags_strings(effect["to_limitation_tags"]))
 			"backstage":
 				to_limitation_str = " (%s)" % tr("Only to Back members.")
 	var amount_str = "%s" % amount_min
@@ -576,7 +579,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			"cheer":
 				main_text += "\n" + tr("ONLY_CHEER")
 		if "requirement_tags" in requirement_details and len(requirement_details["requirement_tags"]) > 0:
-			main_text += "\n" + tr("Only Tag: %s") % "/".join(requirement_details["requirement_tags"])
+			main_text += "\n" + tr("Only Tag: %s") % "/".join(get_tags_strings(requirement_details["requirement_tags"]))
 		if requirement_details.get("requirement_match_oshi_color", false):
 			main_text += "\n" + tr("Matches Oshi Color")
 
@@ -679,11 +682,11 @@ func get_condition_text(conditions):
 						amount_str += "%s-%s" % [amount_min, amount_max]
 				text += "Cards in hand (%s): " % [amount_str]
 			"center_has_any_tag":
-				text += tr("Center has tag %s:") % ["/".join(condition["condition_tags"])] + " "
+				text += tr("Center has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
 			"center_is_color":
 				text += tr("Is %s:") % ["/".join(get_color_strings(condition["condition_colors"]))] + " "
 			"chosen_card_has_tag":
-				text += "If chosen card has tag %s: " % ["/".join(condition["condition_tags"])]
+				text += "If chosen card has tag %s: " % ["/".join(get_tags_strings(condition["condition_tags"]))]
 			"collab_with":
 				text += "Collab with %s: " % [get_names([condition["required_member_name"]])[0]]
 			"damage_ability_is_color":
@@ -732,7 +735,7 @@ func get_condition_text(conditions):
 			"performer_is_specific_id":
 				text += tr("Performer is chosen card:") + " "
 			"performer_has_any_tag":
-				text += tr("Performer has tag %s:") % ["/".join(condition["condition_tags"])] + " "
+				text += tr("Performer has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
 			"played_support_this_turn":
 				text += tr("Played a Support card this turn:") + " "
 			"self_has_cheer_color":
@@ -742,11 +745,11 @@ func get_condition_text(conditions):
 			"target_color":
 				text += tr("Weak(%s):") % [get_color_string(condition["color_requirement"])] + " "
 			"target_has_any_tag":
-				text += tr("Target has tag %s:") % ["/".join(condition["condition_tags"])] + " "
+				text += tr("Target has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
 			"this_card_is_collab":
 				text += tr("Collab position:") + " "
 			"top_deck_card_has_any_tag":
-				text += tr("Top deck card has tag %s:") % ["/".join(condition["condition_tags"])] + " "
+				text += tr("Top deck card has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
 	return text
 
 func get_effect_text(effect):
@@ -806,7 +809,7 @@ func get_effect_text(effect):
 					"specific_member_name":
 						limitation_str = " (%s)" % get_names([effect["to_limitation_name"]])[0]
 					"tag_in":
-						limitation_str = " (%s)" % "/".join(effect["to_limitation_tags"])
+						limitation_str = " (%s)" % "/".join(get_tags_strings(effect["to_limitation_tags"]))
 			text += tr("Attach card to Holomem%s.") % limitation_str + "\n"
 		"bonus_cheer":
 			text += "Treat as %s %s Cheer for Arts." % [effect["amount"], effect["color"]]
@@ -924,7 +927,7 @@ func get_effect_text(effect):
 			var limitation_str = ""
 			match to_limitation:
 				"tag_in":
-					limitation_str = " (Only to %s)" % "/".join(to_limitation_tags)
+					limitation_str = " (Only to %s)" % "/".join(get_tags_strings(to_limitation_tags))
 			text += "Move %s Cheer between your Holomems%s." % [amount, limitation_str]
 		"pass":
 			text += tr("Pass") + "."
@@ -1023,7 +1026,7 @@ func get_effect_text(effect):
 					"color_in":
 						text += " " + tr("Only %s Cheer.") % ["/".join(effect["from_limitation_colors"])]
 					"tag_in":
-						text += " " + tr("Only from %s.") % ["/".join(effect["from_limitation_tags"])]
+						text += " " + tr("Only from %s.") % ["/".join(get_tags_strings(effect["from_limitation_tags"]))]
 			if "to_limitation" in effect:
 				match effect["to_limitation"]:
 					"attached_owner":
@@ -1039,7 +1042,7 @@ func get_effect_text(effect):
 					"specific_member_name":
 						text += " " + tr("Only to %s.") % get_names([effect["to_limitation_name"]])[0]
 					"tag_in":
-						text += " " + tr("Only to %s Holomem.") % "/".join(effect["to_limitation_tags"])
+						text += " " + tr("Only to %s Holomem.") % "/".join(get_tags_strings(effect["to_limitation_tags"]))
 			if "to_limitation_exclude_name" in effect:
 				text += " " + tr("(Not %s)") % [get_names([effect["to_limitation_exclude_name"]])[0]]
 			if "limit_one_per_member" in effect:
@@ -1295,7 +1298,7 @@ func build_english_card_text(definition):
 	if "tags" in definition:
 		var next_entry = {
 			"colors": [],
-			"text": "%s" % " ".join(definition["tags"])
+			"text": "%s" % " ".join(get_tags_strings(definition["tags"]))
 		}
 		data.append(next_entry)
 	return data
