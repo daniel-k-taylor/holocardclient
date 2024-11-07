@@ -137,6 +137,8 @@ Quick Guard,Quick Guard,퀵 가드,クイックガード,Guardía Veloz
 "Let's do our best, everyone!","Let's do our best, everyone!",모두 힘내~!,みんな、頑張ろう！,¡Hagamos nuestro mejor esfuerzo!
 Come on! Again!,Come on! Again!,자아! 다시 한 번!,もう一回だ！,¡Vamos! ¡De nuevo!
 Back Shot,Back Shot,백샷,バックショット,Tiro a Traición
+Green Enhance,Green Enhance,그린 인핸스,グリーンエンハンス,Green Enhance
+Birthday Gift ~Green~,Birthday Gift ~Green~,Birthday Gift ~Green~,Birthday Gift ～Green～,Birthday Gift ~Green~
 ,,,,
 (๑╹ᆺ╹) nun nun,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹)눈눈,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹) nun nun
 On stage!,On stage!,온 스테이지!,On stage!,¡A Escena!
@@ -267,6 +269,7 @@ Flare ~Beyond the door~,Flare ~Beyond the door~,후레아~ 문 저편으로~,Fla
 Noel ~Beyond the door~,Noel ~Beyond the door~,노엘~ 문 저편으로~,Noel ~Beyond the door~,Noel ~Más allá de la Puerta~
 Marine ~Beyond the door~,Marine ~Beyond the door~,마린~ 문 저편으로~,Marine ~Beyond the door~,Marine ~Más allá de la Puerta~
 "Elementary, isn't it?","Elementary, isn't it?",초보적인 거잖아?,"Elementary, isn't it?","Elemental, ¿no es así?"
+flower rhapsody,flower rhapsody,flower rhapsody,flower rhapsody,flower rhapsody
 ,,,,
 Airani Iofifteen,Airani Iofifteen,아이라니 이오피프틴,アイラニ・イオフィフティーン,Airani Iofifteen
 Aki Rosenthal,Aki Rosenthal,아키 로젠탈,アキ・ローゼンタール,Aki Rosenthal
@@ -284,6 +287,8 @@ Mori Calliope,Mori Calliope,모리 칼리오페,森カリオペ,Mori Calliope
 Nanashi Mumei,Nanashi Mumei,나나시 무메이,七詩ムメイ,Nanashi Mumei
 Omaru Polka,Omaru Polka,오마루 폴카,尾丸ポルカ,Omaru Polka
 Ouro Kronii,Ouro Kronii,오로 크로니,オーロ・クロニー,Ouro Kronii
+Pavolia Reine,Pavolia Reine,파볼리아 레이네,パヴォリア・レイネ,Pavolia Reine
+Sakura Miko,Sakura Miko,사쿠라 미코,さくらみこ,Sakura Miko
 Shiranui Flare,Shiranui Flare,시라누이 후레아,不知火フレア,Shiranui Flare
 Shirogane Noel,Shirogane Noel,시로가네 노엘,白銀ノエル,Shirogane Noel
 SorAZ,SorAZ,SorAZ,SorAZ,SorAZ
@@ -381,7 +386,7 @@ Order the rest on bottom,Order the rest on bottom,남은 카드는 덱 아래로
 ,,,,
 cards,cards,카드,カード,cartas
 card,card,카드,カード,carta
-Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}(으)로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.,{AMOUNT}枚の{CARD}を{FROMZONE}から{TOZONE}に移動させてください{REMAIN}。,
+Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{TOLIMITATION}{REMAIN}.,Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{TOLIMITATION}{REMAIN}.,{FROMZONE} {TOZONE}{TOLIMITATION}(으)로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.,{AMOUNT}枚の{CARD}を{FROMZONE}から{TOZONE}{TOLIMITATION}に移動させてください{REMAIN}。,
 ,,,,
 (no Buzz),(no Buzz),(Buzz 이외),(バズなし),(no Buzz)
 (Bloom %s),(Bloom %s),(Bloom 레벨 %s),(ブルーム %s),(Bloom %s)
