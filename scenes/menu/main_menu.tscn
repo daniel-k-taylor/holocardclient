@@ -216,21 +216,6 @@ offset_right = 823.0
 offset_bottom = 103.0
 text = "A fan implementation of the Hololive card game"
 
-[node name="SupportedCardsList" type="ItemList" parent="."]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 350.0
-offset_right = 300.0
-offset_bottom = 640.0
-
-[node name="SupportedCardsLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 47.0
-offset_top = 318.0
-offset_right = 177.0
-offset_bottom = 341.0
-text = "Supported Cards"
-
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 900.0

@@ -1,4 +1,5 @@
 Bugs:
+  ☐ Mulligan log doesn't have card highlights
   ☐ Memory leak in client
 
 Todo:

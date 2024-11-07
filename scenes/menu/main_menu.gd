@@ -30,7 +30,6 @@ var oshi_azki = "hSD01-002"
 @onready var deck_controls = $DeckControls
 @onready var modal_dialog = $ModalDialog
 @onready var custom_room_entry = $MainButtons/JoinCustomBox/CustomRoomEditBox
-@onready var supported_cards_list : ItemList = $SupportedCardsList
 @onready var howtoplay = $Howtoplay
 @onready var match_list = $MatchList
 @onready var match_list_button = $HBoxContainer/ViewMatchListButton
@@ -63,12 +62,6 @@ func _ready() -> void:
 	NetworkManager.connect("join_operation_failed", _on_join_failed)
 
 	client_version.text = GlobalSettings.get_client_version()
-
-	var supported_cards = CardDatabase.get_supported_cards()
-	# Sort supported cards by alpha.
-	supported_cards.sort()
-	for card in supported_cards:
-		supported_cards_list.add_item(card)
 
 	if OS.is_debug_build():
 		test_decks = CardDatabase.get_test_decks()
