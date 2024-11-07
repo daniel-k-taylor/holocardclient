@@ -386,7 +386,7 @@ Order the rest on bottom,Order the rest on bottom,남은 카드는 덱 아래로
 ,,,,
 cards,cards,카드,カード,cartas
 card,card,카드,カード,carta
-Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{REMAIN}.,{FROMZONE} {TOZONE}(으)로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.,{AMOUNT}枚の{CARD}を{FROMZONE}から{TOZONE}に移動させてください{REMAIN}。,
+Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{TOLIMITATION}{REMAIN}.,Choose {AMOUNT} {CARD} {FROMZONE} to move to {TOZONE}{TOLIMITATION}{REMAIN}.,{FROMZONE} {TOZONE}{TOLIMITATION}(으)로 보낼 {CARD} {AMOUNT}장을 선택하세요.{REMAIN}.,{AMOUNT}枚の{CARD}を{FROMZONE}から{TOZONE}{TOLIMITATION}に移動させてください{REMAIN}。,
 ,,,,
 (no Buzz),(no Buzz),(Buzz 이외),(バズなし),(no Buzz)
 (Bloom %s),(Bloom %s),(Bloom 레벨 %s),(ブルーム %s),(Bloom %s)
