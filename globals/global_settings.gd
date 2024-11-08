@@ -23,6 +23,7 @@ const PlayfabId = "PlayfabId"
 const PlayfabSessionTicket = "PlayfabSessionTicket"
 const PlayfabUsername = "PlayfabUsername"
 const Language = "Language"
+const ClientVersion = "ClientVersion"
 
 const language_dir = "user://card_assets"
 const language_details_file = "details.json"
@@ -31,7 +32,7 @@ const user_settings_file = "user://settings.json"
 
 var user_settings = {
 	GameSound: true,
-	HideEnglishCardText: false,
+	HideEnglishCardText: true,
 	UseEnProxies: true,
 	SavedDecks: [],
 	SelectedDeckIndex: 0,
@@ -39,6 +40,7 @@ var user_settings = {
 	PlayfabSessionTicket: "",
 	PlayfabUsername: "",
 	Language: "en",
+	ClientVersion: ""
 }
 
 var setting_to_signal_map = {
@@ -219,3 +221,7 @@ func _unpack_zip_file(zip_file, destination_dir):
 		file_access.store_buffer(data)
 		file_access.close()
 	zip.close()
+
+
+func is_client_version_mismatch() -> bool:
+	return user_settings.get(ClientVersion, "") != ClientVersionString
