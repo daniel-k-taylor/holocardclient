@@ -6300,6 +6300,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_GREEN_PROXY_FULL_TEXT_1",
                 "skill_id": "greenenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6327,6 +6328,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_GREEN_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftgreen",
                 "cost": 2,
                 "limit": "once_per_game",
@@ -6380,6 +6382,8 @@
         ],
         "collab_effects": [
             {
+                "proxy_full_name": "hPR-001_PROXY_FULL_NAME_1",
+                "proxy_full_text": "hPR-001_PROXY_FULL_TEXT_1",
                 "effect_type": "choice",
                 "choice": [
                     {
@@ -6426,6 +6430,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hYS01-001_PROXY_FULL_TEXT_1",
                 "skill_id": "whitebaton",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6457,6 +6462,7 @@
         ],
         "effects": [
             {
+                "proxy_full_text": "hYS01-001_PROXY_FULL_TEXT_2",
                 "full_english_text": "OSHI_CHEER_01_FULL_TEXT",
                 "oshi_effect": "true",
                 "skill_id": "quickguard",
@@ -6502,6 +6508,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hYS01-002_PROXY_FULL_TEXT_1",
                 "skill_id": "greenbaton",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6531,6 +6538,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hYS01-002_PROXY_FULL_TEXT_2",
                 "skill_id": "letsdoourbesteveryone",
                 "cost": 1,
                 "limit": "once_per_game",
@@ -6566,6 +6574,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hYS01-003_PROXY_FULL_TEXT_1",
                 "skill_id": "redbaton",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6595,6 +6604,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hYS01-003_PROXY_FULL_TEXT_2",
                 "skill_id": "comeonagain",
                 "cost": 1,
                 "limit": "once_per_game",
@@ -6634,6 +6644,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hYS01-004_PROXY_FULL_TEXT_1",
                 "skill_id": "bluebaton",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6665,6 +6676,7 @@
         ],
         "effects": [
             {
+                "proxy_full_text": "hYS01-004_PROXY_FULL_TEXT_2",
                 "full_english_text": "OSHI_CHEER_04_FULL_TEXT",
                 "oshi_effect": "true",
                 "skill_id": "backshot",
