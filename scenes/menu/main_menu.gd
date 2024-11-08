@@ -349,7 +349,8 @@ func do_new_update_actions() -> void:
 	if not GlobalSettings.is_client_version_mismatch():
 		return
 
-	GlobalSettings.save_user_setting(GlobalSettings.ClientVersion, GlobalSettings.ClientVersionString)
-
 	# turn on `hide overlay text` setting to show the no-proxy panels for existing users
-	GlobalSettings.save_user_setting(GlobalSettings.HideEnglishCardText, true)
+	if GlobalSettings.get_user_setting(GlobalSettings.ClientVersion) == "":
+		GlobalSettings.save_user_setting(GlobalSettings.HideEnglishCardText, true)
+
+	GlobalSettings.update_user_client_version()

@@ -225,3 +225,7 @@ func _unpack_zip_file(zip_file, destination_dir):
 
 func is_client_version_mismatch() -> bool:
 	return user_settings.get(ClientVersion, "") != ClientVersionString
+
+
+func update_user_client_version() -> void:
+	save_user_setting(ClientVersion, ClientVersionString)
