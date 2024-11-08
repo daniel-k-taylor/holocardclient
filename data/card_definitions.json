@@ -167,6 +167,8 @@
         "card_type": "holomem_debut",
         "card_names": ["tokino_sora"],
         "rarity": "r",
+        "alt_id": "hSD01-004",
+        "alternates": ["p"],
         "colors": ["white"],
         "hp": 50,
         "baton_cost": 1,
@@ -186,6 +188,8 @@
         ],
         "collab_effects": [
             {
+                "proxy_full_name": "hSD01-004_PROXY_FULL_NAME_1",
+                "proxy_full_text": "hSD01-004_PROXY_FULL_TEXT_1",
                 "effect_type": "add_turn_effect",
                 "turn_effect": {
                     "timing": "before_art",
@@ -348,6 +352,8 @@
         "card_type": "holomem_debut",
         "card_names": ["azki"],
         "rarity": "r",
+        "alt_id": "hSD01-009",
+        "alternates": ["p"],
         "colors": ["green"],
         "hp": 60,
         "baton_cost": 1,
@@ -367,6 +373,8 @@
         ],
         "collab_effects": [
             {
+                "proxy_full_name": "hSD01-009_PROXY_FULL_NAME_1",
+                "proxy_full_text": "hSD01-009_PROXY_FULL_TEXT_1",
                 "effect_type": "choice",
                 "choice": [
                     {
@@ -4323,6 +4331,8 @@
         "card_names": ["hoshimachi_suisei"],
         "special_deck_limit": 50,
         "rarity": "c",
+        "alt_id": "hBP01-076",
+        "alternates": ["p"],
         "colors": ["blue"],
         "hp": 90,
         "baton_cost": 1,
@@ -4333,6 +4343,7 @@
         ],
         "arts": [
             {
+                "proxy_full_text": "hBP01-076_PROXY_FULL_TEXT_1",
                 "art_id": "diamondintherough",
                 "costs": [
                     { "color": "any", "amount": 1 }
