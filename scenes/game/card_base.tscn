@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d2fspiqdcp0p1"]
+[gd_scene load_steps=21 format=3 uid="uid://d2fspiqdcp0p1"]
 
 [ext_resource type="Script" path="res://scenes/game/card_base.gd" id="1_gln13"]
 [ext_resource type="Texture2D" uid="uid://6vtjn6xvu8je" path="res://assets/cardbacks/holo_back.png" id="2_fmpqo"]
@@ -50,6 +50,13 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m06e4"]
+bg_color = Color(0, 0, 0, 0.666667)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="CardBase" type="Node2D"]
 script = ExtResource("1_gln13")
@@ -424,6 +431,27 @@ theme_override_font_sizes/font_size = 32
 text = "GOING DOWN"
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+offset_left = -500.0
+offset_right = -130.0
+offset_bottom = 135.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m06e4")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="NoProxyPanelContent" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
 
 [connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]
