@@ -12,7 +12,8 @@ var all_cheer_ids = [
 	"hY01-001",
 	"hY02-001",
 	"hY03-001",
-	"hY04-001"
+	"hY04-001",
+	"hY05-001",
 ]
 
 func create_groups(cheer_deck):

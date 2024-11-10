@@ -65,8 +65,18 @@ const SkillNameMap = {
 	"comeonagain": "Come on! Again!",
 	"backshot": "Back Shot",
 
+	"blueenhance": "Blue Enhance",
 	"greenenhance": "Green Enhance",
+	"purpleenhance": "Purple Enhance",
+	"redenhance": "Red Enhance",
+	"whiteenhance": "White Enhance",
+	"yellowenhance": "Yellow Enhance",
+	"birthdaygiftblue": "Birthday Gift ~Blue~",
 	"birthdaygiftgreen": "Birthday Gift ~Green~",
+	"birthdaygiftpurple": "Birthday Gift ~Purple~",
+	"birthdaygiftred": "Birthday Gift ~Red~",
+	"birthdaygiftwhite": "Birthday Gift ~White~",
+	"birthdaygiftyellow": "Birthday Gift ~Yellow~",
 
 	# Arts
 	"nunnun": "(๑╹ᆺ╹) nun nun",
@@ -212,20 +222,28 @@ const HolomemNames = {
 	"aki_rosenthal": "Aki Rosenthal",
 	"amane_kanata": "Amane Kanata",
 	"azki": "AZKi",
+	"gigi_murin": "Gigi Murin",
 	"hakos_baelz": "Hakos Baelz",
 	"hakui_koyori": "Hakui Koyori",
+	"himemori_luna": "Himemori Luna",
 	"hoshimachi_suisei": "Hoshimachi Suisei",
 	"houshou_marine": "Houshou Marine",
+	"inugami_korone": "Inugami Korone",
 	"irys": "IRyS",
 	"kazama_iroha": "Kazama Iroha",
 	"kobo_kanaeru": "Kobo Kanaeru",
+	"kureiji_ollie": "Kureiji Ollie",
 	"moona_hoshinova": "Moona Hoshinova",
 	"mori_calliope": "Mori Calliope",
 	"nanashi_mumei": "Nanashi Mumei",
 	"omaru_polka": "Omaru Polka",
 	"ouro_kronii": "Ouro Kronii",
+	"pavolia_reine": "Pavolia Reine",
+	"sakura_miko": "Sakura Miko",
+	"shirakami_fubuki": "Shirakami Fubuki",
 	"shiranui_flare": "Shiranui Flare",
 	"shirogane_noel": "Shirogane Noel",
+	"shishiro_botan": "Shishiro Botan",
 	"soraz": "SorAZ",
 	"takanashi_kiara": "Takanashi Kiara",
 	"takane_lui": "Takane Lui",
@@ -233,8 +251,6 @@ const HolomemNames = {
 	"usada_pekora": "Usada Pekora",
 	"vestia_zeta": "Vestia Zeta",
 	"watson_amelia": "Watson Amelia",
-	"pavolia_reine": "Pavolia Reine",
-	"sakura_miko": "Sakura Miko",
 
 	# Support Cards
 	"amazingpc": "Amazing PC",
@@ -782,6 +798,10 @@ func get_effect_text(effect):
 		"add_turn_effect_for_holomem":
 			var turn_effect = effect["turn_effect"]
 			text += tr("Choose a Holomem. This Turn: %s") % [get_effect_text(turn_effect)]
+			var limitation = effect.get("limitation", "")
+			match limitation:
+				"color_in":
+					text += "\n" + tr("ONLY_COLOR %s") % "/".join(get_color_strings(effect["limitation_colors"]))
 		"archive_cheer_from_holomem":
 			var amount = effect["amount"]
 			var from = effect["from"]
