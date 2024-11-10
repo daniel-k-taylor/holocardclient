@@ -6286,7 +6286,7 @@
             }
         ],
 
-        "NOTE": "BP1 CARDS END"
+        "NOTE":"BP1 CARDS END"
     },
 
     {
@@ -6316,6 +6316,8 @@
                     },
                     {
                         "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["green"],
                         "conditions": [{ "condition": "color_on_stage", "condition_colors": ["green"] }],
                         "turn_effect": {
                             "timing": "before_art",
@@ -6350,6 +6352,482 @@
                         "amount_max": 1,
                         "requirement": "color_in",
                         "requirement_colors": ["green"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBD24-002",
+        "card_type": "oshi",
+        "card_names": ["shishiro_botan"],
+        "colors": ["green"],
+        "rarity": "p",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "greenenhance",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "greenenhance",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "greenenhance" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["green"],
+                        "conditions": [{ "condition": "color_on_stage", "condition_colors": ["green"] }],
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "birthdaygiftgreen",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "birthdaygiftgreen",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "birthdaygiftgreen" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["green"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBD24-003",
+        "card_type": "oshi",
+        "card_names": ["inugami_korone"],
+        "colors": ["yellow"],
+        "rarity": "p",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "yellowenhance",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "yellowenhance",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "yellowenhance" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["yellow"],
+                        "conditions": [{ "condition": "color_on_stage", "condition_colors": ["yellow"] }],
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "birthdaygiftyellow",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "birthdaygiftyellow",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "birthdaygiftyellow" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["yellow"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBD24-004",
+        "card_type": "oshi",
+        "card_names": ["shirakami_fubuki"],
+        "colors": ["white"],
+        "rarity": "p",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "whiteenhance",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "whiteenhance",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "whiteenhance" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["white"],
+                        "conditions": [{ "condition": "color_on_stage", "condition_colors": ["white"] }],
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "birthdaygiftwhite",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "birthdaygiftwhite",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "birthdaygiftwhite" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["white"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBD24-005",
+        "card_type": "oshi",
+        "card_names": ["himemori_luna"],
+        "colors": ["white"],
+        "rarity": "p",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "whiteenhance",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "whiteenhance",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "whiteenhance" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["white"],
+                        "conditions": [{ "condition": "color_on_stage", "condition_colors": ["white"] }],
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "birthdaygiftwhite",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "birthdaygiftwhite",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "birthdaygiftwhite" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["white"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBD24-006",
+        "card_type": "oshi",
+        "card_names": ["kureiji_ollie"],
+        "colors": ["purple"],
+        "rarity": "p",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "purpleenhance",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "purpleenhance",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "purpleenhance" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["purple"],
+                        "conditions": [{ "condition": "color_on_stage", "condition_colors": ["purple"] }],
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "birthdaygiftpurple",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "birthdaygiftpurple",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "birthdaygiftpurple" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["purple"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBD24-007",
+        "card_type": "oshi",
+        "card_names": ["gigi_murin"],
+        "colors": ["yellow"],
+        "rarity": "p",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "yellowenhance",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "yellowenhance",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "yellowenhance" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["yellow"],
+                        "conditions": [{ "condition": "color_on_stage", "condition_colors": ["yellow"] }],
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "birthdaygiftyellow",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "birthdaygiftyellow",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "birthdaygiftyellow" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["yellow"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBD24-008",
+        "card_type": "oshi",
+        "card_names": ["vestia_zeta"],
+        "colors": ["white"],
+        "rarity": "p",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "whiteenhance",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "whiteenhance",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "whiteenhance" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "color_in",
+                        "limitation_colors": ["white"],
+                        "conditions": [{ "condition": "color_on_stage", "condition_colors": ["white"] }],
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "birthdaygiftwhite",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "birthdaygiftwhite",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "birthdaygiftwhite" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "deck",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["white"],
                         "reveal_chosen": true,
                         "remaining_cards_action": "shuffle"
                     }
@@ -6726,9 +7204,14 @@
         "card_id": "hY04-001",
         "card_type": "cheer",
         "rarity": "c",
-        "colors": ["blue"],
+        "colors": ["blue"]
+    },
+    {
+        "card_id": "hY05-001",
+        "card_type": "cheer",
+        "rarity": "c",
+        "colors": ["purple"],
 
         "NOTE": "CHEER CARDS END"
     }
-
 ]
