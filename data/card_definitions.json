@@ -6370,6 +6370,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_GREEN_PROXY_FULL_TEXT_1",
                 "skill_id": "greenenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6399,6 +6400,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_GREEN_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftgreen",
                 "cost": 2,
                 "limit": "once_per_game",
@@ -6438,6 +6440,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_YELLOW_PROXY_FULL_TEXT_1",
                 "skill_id": "yellowenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6467,6 +6470,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_YELLOW_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftyellow",
                 "cost": 2,
                 "limit": "once_per_game",
@@ -6506,6 +6510,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_WHITE_PROXY_FULL_TEXT_1",
                 "skill_id": "whiteenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6535,6 +6540,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_WHITE_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftwhite",
                 "cost": 2,
                 "limit": "once_per_game",
@@ -6574,6 +6580,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_WHITE_PROXY_FULL_TEXT_1",
                 "skill_id": "whiteenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6603,6 +6610,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_WHITE_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftwhite",
                 "cost": 2,
                 "limit": "once_per_game",
@@ -6642,6 +6650,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_PURPLE_PROXY_FULL_TEXT_1",
                 "skill_id": "purpleenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6671,6 +6680,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_PURPLE_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftpurple",
                 "cost": 2,
                 "limit": "once_per_game",
@@ -6710,6 +6720,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_YELLOW_PROXY_FULL_TEXT_1",
                 "skill_id": "yellowenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6739,6 +6750,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_YELLOW_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftyellow",
                 "cost": 2,
                 "limit": "once_per_game",
@@ -6778,6 +6790,7 @@
         "life": 5,
         "actions": [
             {
+                "proxy_full_text": "hBD_WHITE_PROXY_FULL_TEXT_1",
                 "skill_id": "whiteenhance",
                 "cost": 2,
                 "limit": "once_per_turn",
@@ -6807,6 +6820,7 @@
                 ]
             },
             {
+                "proxy_full_text": "hBD_WHITE_PROXY_FULL_TEXT_2",
                 "skill_id": "birthdaygiftwhite",
                 "cost": 2,
                 "limit": "once_per_game",
