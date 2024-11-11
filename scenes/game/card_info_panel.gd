@@ -6,18 +6,13 @@ extends PanelContainer
 const TITLE = "proxy_full_name"
 const DESCRIPTION = "proxy_full_text"
 
-var show_panel_info = true
 
-func _ready() -> void:
-	GlobalSettings.connect("settings_changed_ShowCardPanelInfo", _set_visibility)
-
-
-func _set_visibility():
-	show_panel_info = GlobalSettings.get_user_setting(GlobalSettings.ShowPanelInfo)
+func is_show_panel() -> bool:
+	return GlobalSettings.get_user_setting(GlobalSettings.ShowPanelInfo)
 
 
 func update_content(card: CardBase) -> void:
-	visible = show_panel_info and not card.proxy_card_loaded and card._definition_id != "HIDDEN"
+	visible = is_show_panel() and not card.proxy_card_loaded and card._definition_id != "HIDDEN"
 	if not visible:
 		return
 
@@ -68,7 +63,7 @@ func _create_holomem_content(card) -> Array:
 		for cost in art.get("costs", []):
 			for i in range(cost["amount"]):
 				costs_text += _build_cheer_string(cost["color"])
-		var art_label = _create_rich_text_label("% [b][u]%s[/u]  %s[/b]" % \
+		var art_label = _create_rich_text_label("%s  [b][u]%s[/u]  %s[/b]" % \
 			[costs_text, Strings.get_skill_string(art["art_id"]), art["power"]])
 		var description_label = _create_text_label(Strings.get_string(art.get(DESCRIPTION, "")))
 		controls.append(_create_vcontainer([art_label, description_label]))

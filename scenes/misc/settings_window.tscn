@@ -80,11 +80,11 @@ layout_mode = 2
 
 [node name="ShowOverlayInfo" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "with Overlay"
+text = "┗ with Overlay"
 
 [node name="ShowPanelInfo" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "with Panel"
+text = "┗ with Panel"
 
 [node name="LanguageBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

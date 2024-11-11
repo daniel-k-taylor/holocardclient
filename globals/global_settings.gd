@@ -4,7 +4,6 @@ signal settings_loaded
 signal setting_changed_UseEnProxies
 signal settings_changed_Language
 signal settings_changed_ShowCardOverlayInfo
-signal settings_changed_ShowCardPanelInfo
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
@@ -49,8 +48,7 @@ var user_settings = {
 var setting_to_signal_map = {
 	UseEnProxies: setting_changed_UseEnProxies,
 	Language: settings_changed_Language,
-	ShowOverlayInfo: settings_changed_ShowCardOverlayInfo,
-	ShowPanelInfo: settings_changed_ShowCardPanelInfo
+	ShowOverlayInfo: settings_changed_ShowCardOverlayInfo
 }
 
 const SupportedLanguages = {
