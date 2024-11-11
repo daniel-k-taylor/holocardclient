@@ -6,9 +6,18 @@ extends PanelContainer
 const TITLE = "proxy_full_name"
 const DESCRIPTION = "proxy_full_text"
 
+var show_panel_info = true
+
+func _ready() -> void:
+	GlobalSettings.connect("settings_changed_ShowCardPanelInfo", _set_visibility)
+
+
+func _set_visibility():
+	show_panel_info = GlobalSettings.get_user_setting(GlobalSettings.ShowPanelInfo)
+
 
 func update_content(card: CardBase) -> void:
-	visible = card.show_card_info_panel
+	visible = show_panel_info and not card.proxy_card_loaded and card._definition_id != "HIDDEN"
 	if not visible:
 		return
 

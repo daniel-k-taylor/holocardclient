@@ -3,7 +3,9 @@ extends CenterContainer
 signal exit_game_pressed
 
 @onready var game_sound : CheckButton = $PanelContainer/MarginContainer/VBoxContainer/GameSound
-@onready var hide_english_card_text : CheckButton = $PanelContainer/MarginContainer/VBoxContainer/HideEnglishCardText
+@onready var show_card_info: CheckButton = $PanelContainer/MarginContainer/VBoxContainer/ShowCardInfo
+@onready var show_overlay_info: CheckButton = $PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ShowOverlayInfo
+@onready var show_panel_info: CheckButton = $PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ShowPanelInfo
 @onready var use_en_proxies : CheckButton = $PanelContainer/MarginContainer/VBoxContainer/UseEnProxies
 @onready var exit_button = $PanelContainer/MarginContainer/VBoxContainer/ExitGameButton
 @onready var language_select : OptionButton = $PanelContainer/MarginContainer/VBoxContainer/LanguageBox/LanguageSelect
@@ -23,6 +25,7 @@ func _ready():
 		language_select.add_item(GlobalSettings.SupportedLanguages[language_code]["name"], index)
 		index += 1
 
+
 func _process(_delta: float) -> void:
 	if active_request and active_download_language_code:
 		var bytes_downloaded = active_request.get_downloaded_bytes()
@@ -34,11 +37,17 @@ func _process(_delta: float) -> void:
 
 func load_settings():
 	game_sound.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.GameSound)
-	hide_english_card_text.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
 	use_en_proxies.button_pressed = GlobalSettings.get_user_setting(GlobalSettings.UseEnProxies)
 	var language_code = GlobalSettings.get_user_setting(GlobalSettings.Language)
 	language_select.selected = GlobalSettings.SupportedLanguages.keys().find(language_code)
 	update_card_images_button.visible = not GlobalSettings.has_card_language_pack(language_code)
+	# grouped settings
+	var overlay_pressed = GlobalSettings.get_user_setting(GlobalSettings.ShowOverlayInfo)
+	var panel_pressed = GlobalSettings.get_user_setting(GlobalSettings.ShowPanelInfo)
+	show_card_info.set_pressed_no_signal(overlay_pressed or panel_pressed)
+	show_overlay_info.button_pressed = overlay_pressed
+	show_panel_info.button_pressed = panel_pressed
+
 
 func show_settings(exit_game_visible = false):
 	load_settings()
@@ -50,6 +59,15 @@ func close_window():
 
 func change_setting(value, setting_name):
 	GlobalSettings.save_user_setting(setting_name, value)
+
+func change_card_info_setting(value, setting_name):
+	# setting_name is a binded argument set by the signal
+	if setting_name == "ShowCardInfo":
+		show_overlay_info.button_pressed = value
+		show_panel_info.button_pressed = value
+	else:
+		show_card_info.set_pressed_no_signal(show_overlay_info.button_pressed or show_panel_info.button_pressed)
+		change_setting(value, setting_name)
 
 func _on_button_pressed() -> void:
 	exit_game_pressed.emit()

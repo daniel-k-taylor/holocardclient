@@ -2,8 +2,9 @@ extends Node
 
 signal settings_loaded
 signal setting_changed_UseEnProxies
-signal setting_changed_HideEnglishCardText
 signal settings_changed_Language
+signal settings_changed_ShowCardOverlayInfo
+signal settings_changed_ShowCardPanelInfo
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
@@ -16,7 +17,6 @@ var LoggingEnabled : bool = true
 
 const GameSound = "GameSound"
 const UseEnProxies = "UseEnProxies"
-const HideEnglishCardText = "HideEnglishCardText"
 const SavedDecks = "SavedDecks"
 const SelectedDeckIndex = "SelectedDeckIndex"
 const PlayfabId = "PlayfabId"
@@ -24,6 +24,8 @@ const PlayfabSessionTicket = "PlayfabSessionTicket"
 const PlayfabUsername = "PlayfabUsername"
 const Language = "Language"
 const ClientVersion = "ClientVersion"
+const ShowOverlayInfo = "ShowOverlayInfo"
+const ShowPanelInfo = "ShowPanelInfo"
 
 const language_dir = "user://card_assets"
 const language_details_file = "details.json"
@@ -32,7 +34,6 @@ const user_settings_file = "user://settings.json"
 
 var user_settings = {
 	GameSound: true,
-	HideEnglishCardText: true,
 	UseEnProxies: true,
 	SavedDecks: [],
 	SelectedDeckIndex: 0,
@@ -40,13 +41,16 @@ var user_settings = {
 	PlayfabSessionTicket: "",
 	PlayfabUsername: "",
 	Language: "en",
-	ClientVersion: ""
+	ClientVersion: "",
+	ShowOverlayInfo: false,
+	ShowPanelInfo: true
 }
 
 var setting_to_signal_map = {
-	HideEnglishCardText: setting_changed_HideEnglishCardText,
 	UseEnProxies: setting_changed_UseEnProxies,
 	Language: settings_changed_Language,
+	ShowOverlayInfo: settings_changed_ShowCardOverlayInfo,
+	ShowPanelInfo: settings_changed_ShowCardPanelInfo
 }
 
 const SupportedLanguages = {
