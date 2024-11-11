@@ -34,8 +34,7 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var active_skill_name = $OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer/SkillContainer/ActiveSkillName
 @onready var targeted_damage_indicator = $OuterMargin/TargetedDamageIndicator
 @onready var targeted_down_indicator = $OuterMargin/TargetedDownIndicator
-@onready var no_proxy_panel = $PanelContainer
-@onready var no_proxy_panel_content = $PanelContainer/MarginContainer/NoProxyPanelContent
+@onready var card_info_panel = $CardInfoPanel
 
 @export var is_big_card : bool = false
 
@@ -62,7 +61,7 @@ var target_position = Vector2.ZERO
 var position_start_time = PositionTime
 var _destroy_on_move_completion = false
 var proxy_card_loaded = false
-var show_no_proxy_panel = false
+var show_card_info_panel = false
 
 func _ready():
 	info_highlight.visible = false
@@ -89,7 +88,7 @@ func _hide_english_setting_updated():
 	if _definition_id != "HIDDEN":
 		if not proxy_card_loaded:
 			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
-			show_no_proxy_panel = not overlay_root.visible
+			show_card_info_panel = not overlay_root.visible
 
 func _en_proxy_setting_updated():
 	if _definition_id != "HIDDEN":
@@ -176,7 +175,7 @@ func update_card_graphic():
 			card_image.texture = load(jp_path)
 			proxy_card_loaded = true
 			overlay_root.visible = false
-			show_no_proxy_panel = false
+			show_card_info_panel = false
 		else:
 			# Load the card from the card pack.
 			var image_path = "%s/%s_%s.png" % [
@@ -195,7 +194,7 @@ func update_card_graphic():
 		if not proxy_card_loaded:
 			card_image.texture = load(jp_path)
 			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
-			show_no_proxy_panel = not overlay_root.visible
+			show_card_info_panel = not overlay_root.visible
 
 func initialize_graphics():
 	if _definition_id == "HIDDEN":
@@ -274,8 +273,7 @@ func copy_graphics(card : CardBase):
 	_update_english_text()
 	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay_root.visible = card.overlay_root.visible
-	_update_no_proxy_panel(card)
-	no_proxy_panel.visible = card.show_no_proxy_panel
+	card_info_panel.update_content(card)
 
 func is_holomem_card():
 	return _card_type in ["holomem_debut", "holomem_bloom", "holomem_spot"]
@@ -446,104 +444,3 @@ func _on_button_mouse_exited() -> void:
 
 func _on_attachment_button_pressed() -> void:
 	view_attachments.emit(_attached_cards)
-
-func _update_no_proxy_panel(card: CardBase) -> void:
-	if not card.show_no_proxy_panel:
-		return
-
-	# clean up
-	for child in no_proxy_panel_content.get_children():
-		no_proxy_panel_content.remove_child(child)
-		child.queue_free()
-	no_proxy_panel_content.reset_size()
-
-	var card_data = card._definition
-	var card_type = card_data["card_type"]
-	if card_type == "oshi":
-		var skills = []
-		skills.append_array(card_data.get("actions", []))
-		skills.append_array(card_data.get("effects", []))
-		no_proxy_panel_content.add_child(_create_no_proxy_oshi_content(tr("Oshi Skill"), skills[0]))
-		no_proxy_panel_content.add_child(_create_no_proxy_oshi_content(tr("SP Oshi Skill"), skills[1]))
-	elif card_type.begins_with("holomem"):
-		for content in _create_no_proxy_holomem_content(card_data):
-			no_proxy_panel_content.add_child(content)
-	# TODO: Add implementation for support cards
-	else:
-		card.show_no_proxy_panel = false
-		no_proxy_panel.visible = false
-
-
-func _create_no_proxy_holomem_content(card) -> Array:
-	var controls = []
-	# process gifts, blooms, collabs
-	var specials = [
-		{ "tag": "Gift:", "data": card.get("gift_effects", []) },
-		{ "tag": "Bloom:", "data": card.get("bloom_effects", []) },
-		{ "tag": "Collab:", "data": card.get("collab_effects", []) },
-	]
-	for special in specials:
-		var tag = special["tag"]
-		for data in special["data"]:
-			var title_label = _create_rich_text_label("[u]%s  [b]%s[/b][/u]" % \
-				[tr(tag), tr(data.get("proxy_full_name", ""))])
-			var description_label = _create_text_label(Strings.get_string(data.get("proxy_full_text", "")))
-			controls.append(_create_vcontainer([title_label, description_label]))
-
-	# process arts
-	var arts = card.get("arts", [])
-	for art in arts:
-		# title
-		var costs_text = ""
-		for cost in art.get("costs", []):
-			for i in range(cost["amount"]):
-				costs_text += "[img=%s]res://assets/cheer_icons/%s.png[/img]" % [24, cost["color"]]
-		var art_label = _create_rich_text_label("%s  [b][u]%s[/u][/b]  [b]%s[/b]" % \
-			[costs_text, Strings.get_skill_string(art["art_id"]), art["power"]])
-		# description
-		var description_label = _create_text_label(Strings.get_string(art.get("proxy_full_text", "")))
-		controls.append(_create_vcontainer([art_label, description_label]))
-
-	# process tags
-	var tags_label = _create_text_label("  ".join(Strings.get_tags_strings(card["tags"])))
-	controls.append(tags_label)
-	#
-	return controls
-
-
-func _create_no_proxy_oshi_content(tag, data) -> VBoxContainer:
-	# title
-	var title_label = _create_rich_text_label(
-		"[u]%s:  [b]-%s %s[/b][/u]" % [tag, data["cost"], Strings.get_skill_string(data["skill_id"])])
-	# description
-	var description_label = _create_text_label(Strings.get_string(data.get("proxy_full_text", "")))
-	#
-	return _create_vcontainer([title_label, description_label])
-
-
-func _create_rich_text_label(text: String) -> RichTextLabel:
-	var label = RichTextLabel.new()
-	label.bbcode_enabled = true
-	label.fit_content = true
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.text = text
-	return label
-
-
-func _create_text_label(text: String) -> Label:
-	var label = Label.new()
-	label.add_theme_font_size_override("font_size", 12)
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.text = text
-	return label
-
-
-func _create_vcontainer(children: Array = []) -> VBoxContainer:
-	var container = VBoxContainer.new()
-	container.add_theme_constant_override("separation", 5)
-	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	for child in children:
-		container.add_child(child)
-	return container
