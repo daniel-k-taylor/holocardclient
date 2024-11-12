@@ -188,8 +188,6 @@
         ],
         "collab_effects": [
             {
-                "proxy_full_name": "hSD01-004_PROXY_FULL_NAME_1",
-                "proxy_full_text": "hSD01-004_PROXY_FULL_TEXT_1",
                 "effect_type": "add_turn_effect",
                 "turn_effect": {
                     "timing": "before_art",
@@ -373,8 +371,6 @@
         ],
         "collab_effects": [
             {
-                "proxy_full_name": "hSD01-009_PROXY_FULL_NAME_1",
-                "proxy_full_text": "hSD01-009_PROXY_FULL_TEXT_1",
                 "effect_type": "choice",
                 "choice": [
                     {
@@ -4343,7 +4339,6 @@
         ],
         "arts": [
             {
-                "proxy_full_text": "hBP01-076_PROXY_FULL_TEXT_1",
                 "art_id": "diamondintherough",
                 "costs": [
                     { "color": "any", "amount": 1 }
