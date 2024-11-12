@@ -34,6 +34,7 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var active_skill_name = $OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer/SkillContainer/ActiveSkillName
 @onready var targeted_damage_indicator = $OuterMargin/TargetedDamageIndicator
 @onready var targeted_down_indicator = $OuterMargin/TargetedDownIndicator
+@onready var card_info_panel = $CenterContainer/CardInfoPanel
 
 @export var is_big_card : bool = false
 
@@ -75,17 +76,18 @@ func _ready():
 	targeted_damage_indicator.visible = false
 	targeted_down_indicator.visible = false
 
-	GlobalSettings.connect("setting_changed_HideEnglishCardText", _hide_english_setting_updated)
 	GlobalSettings.connect("setting_changed_UseEnProxies", _en_proxy_setting_updated)
 	GlobalSettings.connect("settings_changed_Language", _en_proxy_setting_updated)
+	GlobalSettings.connect("settings_changed_ShowCardOverlayInfo", _show_card_overlay_info)
 
 	initialize_graphics()
 	set_button_visible(_selectable)
 
-func _hide_english_setting_updated():
-	if _definition_id != "HIDDEN":
-		if not proxy_card_loaded:
-			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
+
+func _show_card_overlay_info():
+	if _definition_id != "HIDDEN" and not proxy_card_loaded:
+		overlay_root.visible = GlobalSettings.get_user_setting(GlobalSettings.ShowOverlayInfo)
+
 
 func _en_proxy_setting_updated():
 	if _definition_id != "HIDDEN":
@@ -168,6 +170,10 @@ func update_card_graphic():
 				card_image.texture = load(en_path)
 				overlay_root.visible = false
 				proxy_card_loaded = true
+		elif language_code == "jp":
+			card_image.texture = load(jp_path)
+			proxy_card_loaded = true
+			overlay_root.visible = false
 		else:
 			# Load the card from the card pack.
 			var image_path = "%s/%s_%s.png" % [
@@ -185,12 +191,7 @@ func update_card_graphic():
 
 		if not proxy_card_loaded:
 			card_image.texture = load(jp_path)
-			if language_code == "jp":
-				overlay_root.visible = false
-				proxy_card_loaded = true
-
-		if not proxy_card_loaded:
-			overlay_root.visible = not GlobalSettings.get_user_setting(GlobalSettings.HideEnglishCardText)
+			overlay_root.visible = GlobalSettings.get_user_setting(GlobalSettings.ShowOverlayInfo)
 
 func initialize_graphics():
 	if _definition_id == "HIDDEN":
@@ -269,6 +270,7 @@ func copy_graphics(card : CardBase):
 	_update_english_text()
 	card_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay_root.visible = card.overlay_root.visible
+	card_info_panel.update_content(card)
 
 func is_holomem_card():
 	return _card_type in ["holomem_debut", "holomem_bloom", "holomem_spot"]

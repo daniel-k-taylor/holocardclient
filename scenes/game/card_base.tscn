@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d2fspiqdcp0p1"]
+[gd_scene load_steps=21 format=3 uid="uid://d2fspiqdcp0p1"]
 
 [ext_resource type="Script" path="res://scenes/game/card_base.gd" id="1_gln13"]
 [ext_resource type="Texture2D" uid="uid://6vtjn6xvu8je" path="res://assets/cardbacks/holo_back.png" id="2_fmpqo"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dogldee47qjtf" path="res://assets/highlights/arena_border_highlight_selected.png" id="5_1ualb"]
 [ext_resource type="Texture2D" uid="uid://8edpkwpdoqn6" path="res://assets/icons/crosshair062.png" id="11_x1ffy"]
 [ext_resource type="Texture2D" uid="uid://dkhi8rwbmf54j" path="res://assets/icons/musicOn.png" id="12_pe7xl"]
+[ext_resource type="PackedScene" uid="uid://88y1t8kbs4bn" path="res://scenes/game/card_info_panel.tscn" id="13_e5x1h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehge2"]
 bg_color = Color(0, 0, 0, 1)
@@ -424,6 +425,18 @@ theme_override_font_sizes/font_size = 32
 text = "GOING DOWN"
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_left = -500.0
+offset_top = -180.0
+offset_right = -130.0
+offset_bottom = 190.0
+mouse_filter = 2
+
+[node name="CardInfoPanel" parent="CenterContainer" instance=ExtResource("13_e5x1h")]
+visible = false
+custom_minimum_size = Vector2(370, 135)
+layout_mode = 2
 
 [connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]

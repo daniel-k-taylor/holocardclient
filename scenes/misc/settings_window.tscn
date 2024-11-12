@@ -67,9 +67,24 @@ text = "Game sound enabled"
 layout_mode = 2
 text = "Use Proxies when available"
 
-[node name="HideEnglishCardText" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ShowCardInfo" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Hide Overlay Card Text"
+text = "Show Card Information"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ShowOverlayInfo" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "┗ with Overlay"
+
+[node name="ShowPanelInfo" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "┗ with Panel"
 
 [node name="LanguageBox" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -151,7 +166,9 @@ layout_mode = 2
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/TitleBar/IconButton" to="." method="close_window"]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/GameSound" to="." method="change_setting" binds= ["GameSound"]]
 [connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/UseEnProxies" to="." method="change_setting" binds= ["UseEnProxies"]]
-[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/HideEnglishCardText" to="." method="change_setting" binds= ["HideEnglishCardText"]]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/ShowCardInfo" to="." method="change_card_info_setting" binds= ["ShowCardInfo"]]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ShowOverlayInfo" to="." method="change_card_info_setting" binds= ["ShowOverlayInfo"]]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ShowPanelInfo" to="." method="change_card_info_setting" binds= ["ShowPanelInfo"]]
 [connection signal="item_selected" from="PanelContainer/MarginContainer/VBoxContainer/LanguageBox/LanguageSelect" to="." method="_on_language_select_item_selected"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/UpdateCardImagesButton" to="." method="_on_update_card_images_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/ExitGameButton" to="." method="_on_button_pressed"]

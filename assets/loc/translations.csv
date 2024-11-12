@@ -586,21 +586,3 @@ You are second player.,You are second player.,당신이 후공입니다.,あな�
 #Myth,#Myth,#Myth,#Myth,#Myth
 #Gen5,#Gen5,#5기생,#5期生,#Gen5
 #Sea,#Sea,#바다,#海,#Mar
-,,,,
-hYS01-001_PROXY_FULL_TEXT_1,"(Once per turn) During this turn, if your Collab holomem is White, give their Arts +20 power.",,[ターンに１回]このターンの間、自分の白コラボホロメンのアーツ+20。,
-hYS01-001_PROXY_FULL_TEXT_2,(Once per game) Can be used during your opponent's turn when one of your White holomems is about to take damage: reduce that damage by 20.,,[ゲームに１回]相手のターンで、自分の白ホロメンが相手からダメージを受ける時に使える：そのホロメン１人が受けるダメージ-20。,
-hYS01-002_PROXY_FULL_TEXT_1,"(Once per turn) During this turn, if your Collab holomem is Green, give their Arts +20 power.",,[ターンに１回]このターンの間、自分の緑コラボホロメンのアーツ+20。,
-hYS01-002_PROXY_FULL_TEXT_2,(Once per game) Restore 20 HP to all of your Green holomems.,,[ゲームに１回]自分の緑ホロメン全員のHP20回復。,
-hYS01-003_PROXY_FULL_TEXT_1,"(Once per turn) During this turn, if your Collab holomem is Red, give their Arts +20 power.",,[ターンに１回]このターンの間、自分の赤コラボホロメンのアーツ+20。,
-hYS01-003_PROXY_FULL_TEXT_2,(Once per game) Put 1 Red holomem from your Archive to your hand.,,[ゲームに１回]自分のアーカイブの赤ホロメン１枚を手札に戻す。,
-hYS01-004_PROXY_FULL_TEXT_1,"(Once per turn) During this turn, if your Collab holomem is Blue, give their Arts +20 power.",,[ターンに１回]このターンの間、自分の青コラボホロメンのアーツ+20。,
-hYS01-004_PROXY_FULL_TEXT_2,(Once per game) Can be used when one of your Blue holomems deals damage to one of your opponent's Back holomems: deal 50 special damage to that Back holomem.,,[ゲームに１回]自分のホロメンが相手のバックホロメンにダメージを与えた時に使える：その相手のバックホロメン１人に特殊ダメージ50を与える。,
-hSD01-009_PROXY_FULL_NAME_1,Expanding Map,펼쳐지는 지도,広がる地図,
-hSD01-009_PROXY_FULL_TEXT_1,"You may roll a dice: if the result is 4 or less, send the top card of your Cheer deck to one of your Back holomems. Then, if the result is 1, you may move this holomem to the Back Position.","주사위를 1번 굴릴 수 있다 : 4 이하일 때, 자신의 옐 덱 위에서 1장을,  자신의 백 홀로맴에 보낸다. 1 일 경우, 추가로, 이 홀로맴은 백 스테이지로 이동할 수 있다.",サイコロを１回振れる：４以下の時、自分のエールデッキの上から１枚を、自分のバックホロメンに送る。１の時、さらに、このホロメンをバックポジションに移動できる。,
-hBP01-076_PROXY_FULL_TEXT_1,Deal 10 special damage to one of your opponent's Back holomems. (holomems Downed with this effect do not reduce LIFE),,相手のバックホロメン１人に特殊ダメージ10を与える（ダウンしても相手のライフは減らない）。,
-hSD01-004_PROXY_FULL_NAME_1,Let's dance!,렛츠댄스!,レッツダンス！,
-hSD01-004_PROXY_FULL_TEXT_1,"During this turn, your Center holomem's Arts gain +20 power.","이 턴 동안, 자신의 센터 홀로멤의 아츠 +20",このターンの間、自分のセンターホロメンのアーツ+20。,
-hBD_GREEN_PROXY_FULL_TEXT_1,"(Once per turn) During this turn, give one of your Green holomems' Arts +20 power.",[턴에 1회] 이 턴동안 자신의 녹색 홀로멤버 한명의 아츠 +20,[ターンに１回]このターンの間、自分の緑ホロメン１人のアーツ+20。,
-hBD_GREEN_PROXY_FULL_TEXT_2,(Once per game) Reveal 1 Green holomem from your deck and put it into your hand. Then shuffle your deck.,"[게임 중 한번] 자신의 덱에서 녹색 홀로멤 1장을 공개 후, 손패에 추가한다. 그 후 덱을 셔플한다.",[ゲームに１回]自分のデッキから、緑ホロメン１枚を公開し、手札に加える。そしてデッキをシャッフルする。,
-hPR-001_PROXY_FULL_NAME_1,If I could become someone's bud,누군가의 싹을 틔울수 있다면,誰かの芽吹きになれたら,
-hPR-001_PROXY_FULL_TEXT_1,"You may roll a dice: if the result is 1, 3, or 5, reveal a Red Cheer or Blue Cheer from your Cheer Deck and send it to one of your Back holomems. Then shuffle your Cheer Deck.","주사위를 1회 굴린다 : 주사위 눈이 1,3,5일때, 자신의 에일덱에서 적 또는 청을 하나 공개하고, 자신의 백홀로멤에 붙인다.그리고 에일덱을 셔플한다.",サイコロを１回振れる：１か３か５の時、自分のエールデッキから、[赤エールか青エール]１枚を公開し、自分のバックホロメンに送る。そしてエールデッキをシャッフルする。,

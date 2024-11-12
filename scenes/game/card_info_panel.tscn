@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://88y1t8kbs4bn"]
+
+[ext_resource type="Script" path="res://scenes/game/card_info_panel.gd" id="1_4630d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ntn4"]
+bg_color = Color(0, 0, 0, 0.666667)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="CardInfoPanel" type="PanelContainer"]
+offset_right = 370.0
+offset_bottom = 135.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5ntn4")
+script = ExtResource("1_4630d")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Content" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
