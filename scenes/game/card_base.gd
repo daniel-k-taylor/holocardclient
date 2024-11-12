@@ -34,7 +34,7 @@ const CardBaseScene = preload("res://scenes/game/card_base.tscn")
 @onready var active_skill_name = $OuterMargin/ActiveSkillIndicator/PanelContainer/HBoxContainer/SkillContainer/ActiveSkillName
 @onready var targeted_damage_indicator = $OuterMargin/TargetedDamageIndicator
 @onready var targeted_down_indicator = $OuterMargin/TargetedDownIndicator
-@onready var card_info_panel = $CardInfoPanel
+@onready var card_info_panel = $CenterContainer/CardInfoPanel
 
 @export var is_big_card : bool = false
 

@@ -426,10 +426,17 @@ text = "GOING DOWN"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="CardInfoPanel" parent="." instance=ExtResource("13_e5x1h")]
-visible = false
+[node name="CenterContainer" type="CenterContainer" parent="."]
 offset_left = -500.0
+offset_top = -180.0
 offset_right = -130.0
+offset_bottom = 190.0
+mouse_filter = 2
+
+[node name="CardInfoPanel" parent="CenterContainer" instance=ExtResource("13_e5x1h")]
+visible = false
+custom_minimum_size = Vector2(370, 135)
+layout_mode = 2
 
 [connection signal="mouse_entered" from="OuterMargin/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="OuterMargin/Button" to="." method="_on_button_mouse_exited"]
