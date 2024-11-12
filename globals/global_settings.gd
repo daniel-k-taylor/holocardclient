@@ -22,7 +22,6 @@ const PlayfabId = "PlayfabId"
 const PlayfabSessionTicket = "PlayfabSessionTicket"
 const PlayfabUsername = "PlayfabUsername"
 const Language = "Language"
-const ClientVersion = "ClientVersion"
 const ShowOverlayInfo = "ShowOverlayInfo"
 const ShowPanelInfo = "ShowPanelInfo"
 
@@ -40,7 +39,6 @@ var user_settings = {
 	PlayfabSessionTicket: "",
 	PlayfabUsername: "",
 	Language: "en",
-	ClientVersion: "",
 	ShowOverlayInfo: false,
 	ShowPanelInfo: true
 }
@@ -223,11 +221,3 @@ func _unpack_zip_file(zip_file, destination_dir):
 		file_access.store_buffer(data)
 		file_access.close()
 	zip.close()
-
-
-func is_client_version_mismatch() -> bool:
-	return user_settings.get(ClientVersion, "") != ClientVersionString
-
-
-func update_user_client_version() -> void:
-	save_user_setting(ClientVersion, ClientVersionString)

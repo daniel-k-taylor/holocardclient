@@ -149,7 +149,6 @@ func starting_game():
 			$MatchJoinedSound.play()
 
 func settings_loaded():
-	do_new_update_actions()
 	deck_builder.load_decks()
 	load_user_decks()
 
@@ -341,12 +340,3 @@ func _on_match_list_observe_match(match_index: Variant) -> void:
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()
 	NetworkManager.observe_room(match_index)
-
-
-func do_new_update_actions() -> void:
-	# this method is reserved for actions that needs to be done when the
-	# client version has been updated like forced settings update, etc.
-	if not GlobalSettings.is_client_version_mismatch():
-		return
-#
-	GlobalSettings.update_user_client_version()
