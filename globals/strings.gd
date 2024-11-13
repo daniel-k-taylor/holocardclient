@@ -1173,7 +1173,7 @@ func build_english_card_text(definition):
 				for cost in art["costs"]:
 					for i in range(cost["amount"]):
 						colors.append(cost["color"])
-				var text = "%s: %s" % [get_skill_string(art["art_id"]), art["power"]]
+				var text = "[b]%s: %s[/b]" % [get_skill_string(art["art_id"]), art["power"]]
 				if "full_english_text" in art:
 					text = tr(art["full_english_text"])
 				else:
