@@ -1367,6 +1367,35 @@
         ]
     },
     {
+        "card_id": "hSD02-012",
+        "card_type": "support",
+        "colors": [],
+        "sub_type": "event",
+        "card_names": ["iroha_nihohetto_ayafubumi"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [
+            {
+                "condition": "cards_in_hand",
+                "amount_max": 7
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem_named",
+                "requirement_names": ["shirakami_fubuki", "ookami_mio", "nakiri_ayame"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
         "card_id": "hSD02-014",
         "card_type": "support",
         "sub_type": "mascot",

@@ -298,7 +298,8 @@ const HolomemNames = {
 	"upao": "Upao",
 	"zain": "Zain",
 
-	"poyoyo": "Poyoyo"
+	"poyoyo": "Poyoyo",
+	"iroha_nihohetto_ayafubumi": "AyaFubuMi",
 }
 
 # Lazy placeholder for loc
