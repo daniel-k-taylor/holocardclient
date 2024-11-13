@@ -223,6 +223,7 @@ const SkillNameMap = {
 	"whatsinthepresent": "What's in the present?",
 	"theayainayafubumi": "The \"Aya\" in AyaFubuMi",
 	"yodayo": "Yo~ da yo",
+	"thefubuinayafubumi": "The \"Fubu\" in AyaFubuMi"
 
 }
 

@@ -1279,6 +1279,44 @@
         ]
     },
     {
+        "card_id": "hSD02-010",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["shirakami_fubuki"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 80,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen1",
+            "#Gamers",
+            "#AnimalEars",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "thefubuinayafubumi",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "archive",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 1,
+                "requirement": "mascot",
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
+    {
         "card_id": "hSD02-014",
         "card_type": "support",
         "sub_type": "mascot",
