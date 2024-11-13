@@ -64,6 +64,7 @@ const SkillNameMap = {
 	"letsdoourbesteveryone": "Let's do our best, everyone!",
 	"comeonagain": "Come on! Again!",
 	"backshot": "Back Shot",
+	"redmic": "Red Mic",
 
 	"blueenhance": "Blue Enhance",
 	"greenenhance": "Green Enhance",
@@ -209,11 +210,19 @@ const SkillNameMap = {
 	"noelbeyondthedoor": "Noel ~Beyond the door~",
 	"marinebeyondthedoor": "Marine ~Beyond the door~",
 	"elementaryisntit": "Elementary, isn't it?",
-
 	"flowerrhapsody": "flower rhapsody",
 
-
-
+	"konnakiri": "Konnakiri~",
+	"shiranui": "Shiranui",
+	"deliciousdangos": "Delicious dangos",
+	"sleepyyo": "Sleepy yo~",
+	"otsunakiri": "Otsunakiri",
+	"celebratetogether": "Celebrate together",
+	"dontmisstheshiningme": "Don't miss the shining me!!",
+	"fancybirthday": "Fancy birthday",
+	"whatsinthepresent": "What's in the present?",
+	"theayainayafubumi": "The \"Aya\" in AyaFubuMi",
+	"yodayo": "Yo~ da yo",
 
 }
 
@@ -235,6 +244,7 @@ const HolomemNames = {
 	"kureiji_ollie": "Kureiji Ollie",
 	"moona_hoshinova": "Moona Hoshinova",
 	"mori_calliope": "Mori Calliope",
+	"nakiri_ayame": "Nakiri Ayame",
 	"nanashi_mumei": "Nanashi Mumei",
 	"omaru_polka": "Omaru Polka",
 	"ouro_kronii": "Ouro Kronii",
@@ -284,6 +294,8 @@ const HolomemNames = {
 	"thestoryofthemoonandtherabbit": "Story of Moon&Rabbit",
 	"upao": "Upao",
 	"zain": "Zain",
+
+	"poyoyo": "Poyoyo"
 }
 
 # Lazy placeholder for loc

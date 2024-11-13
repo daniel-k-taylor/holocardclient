@@ -298,6 +298,7 @@ Kobo Kanaeru,Kobo Kanaeru,코보 카나에루,こぼ・かなえる,Kobo Kanaeru
 Kureiji Ollie,Kureiji Ollie,Kureiji Ollie,クレイジー・オリー,Kureiji Ollie
 Moona Hoshinova,Moona Hoshinova,무나 호시노바,ムーナ・ホシノヴァ,Moona Hoshinova
 Mori Calliope,Mori Calliope,모리 칼리오페,森カリオペ,Mori Calliope
+Nakiri Ayame,Nakiri Ayame,,百鬼あやめ,
 Nanashi Mumei,Nanashi Mumei,나나시 무메이,七詩ムメイ,Nanashi Mumei
 Omaru Polka,Omaru Polka,오마루 폴카,尾丸ポルカ,Omaru Polka
 Ouro Kronii,Ouro Kronii,오로 크로니,オーロ・クロニー,Ouro Kronii
@@ -344,6 +345,7 @@ Sub PC,Sub PC,서브 컴퓨터,サブパソコン,PC Secundaria
 Story of Moon&Rabbit,Story of Moon&Rabbit,달과 토끼의 이야기,月と兎の物語,Historia de Conejo&Luna
 Upao,Upao,우파오,うぱお,Upao
 Zain,Zain,좌원,座員,Zain
+Poyoyo,Poyoyo,,ぽよ余,
 ,,,,
 Additional Damage,Additional Damage,추가 데미지,追加ダメージ,Daño Adicional
 Damage Prevented,Damage Prevented,데미지 감소,防いだダメージ,Daño Prevenido
@@ -557,6 +559,7 @@ OSHI_BP1_005_FULL_TEXT,When you use a Red Holomem's Ability/Arts that Archives c
 OSHI_BP1_006_FULL_TEXT,When your Red Holomem is downed on the opponent's turn: lose 1 less LIFE. You may take it and all stacked Holomem into your hand.,"상대의 턴에 자신의 적색 홀로멤이 다운했을 때 사용할 수 있다: 자신의 줄어들 라이프 -1. 다시, 다운한 1명을 골라 그 홀로멤을 포함해 겹쳐져 있던 홀로멤 전부를 패로 되돌린다.",あなたの赤いホロメンが対戦相手のターン中にダウンした時: 1のライフを失う。そのホロメンとすべてのスタックされたホロメンを手札に加えることができる。,Cuando uno de tus Holomems Rojos es Derrotado en el turno oponente: pierde 1 menos de VIDA. Puedes tomarlo y todas sus cartas apiladas a tu mano.
 OSHI_BP1_007_FULL_TEXT,When this or a Blue Holomem deals damage to your opponent's Back Holomem: deal 50 damage to that Holomem,이 오시 홀로멤이나 자신의 청색 홀로멤이 상대의 백 홀로멤에게 대미지를 주었을 때 사용할 수 있다: 그 상대의 백 홀로멤 1명에게 특수 대미지 50을 준다.,このホロメンまたは青いホロメンが対戦相手のバックホロメンにダメージを与えた時: そのホロメンに50のダメージを与える。,Cuando esta o un Holomem Azul hacen daño a un holomem Trasero oponente: haz 50 daño a ese Holomem.
 OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's Center or Collab Holomem: deal equal special damage to one of your opponent's Back Holomem,자신의 청색 홀로멤이 상대의 센터 홀로멤이나 콜라보 홀로멤에게 대미지를 주었을 때 사용할 수 있다: 상대의 백 홀로멤 1명에게 그것과 같은 수치의 특수 대미지를 준다.,あなたの青いホロメンが対戦相手のセンターまたはコラボホロメンにダメージを与えた時: 対戦相手のバックホロメンの1つに等しい特別ダメージを与える。,"Lanza un dado. Si el resultado es 3 o menos, Archiva uno de los Aplausos de los holomems del oponente.\nSi tu Oshi es Nanashi Mumei, puedes activar el siguiente efecto en vez: (Una vez por juego) Archiva 2 Aplausos del Centro oponente."
+AYAME_09_ART_FULL_TEXT,Archive 0-3 cards from your hand. Deal 40 special damage per to your opponent's Center.,,,
 ,,,,
 Go first.,Go first.,선공하기,先行です。,Ir Primero
 Go second.,Go second.,후공하기,後攻です。,Ir Segundo
