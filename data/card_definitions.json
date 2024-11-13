@@ -1317,6 +1317,56 @@
         ]
     },
     {
+        "card_id": "hSD02-011",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["ookami_mio"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 50,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "themiinayafubumi",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choice",
+                "conditions": [{ "condition": "can_archive_from_hand", "amount_min": 1, "condition_source": "holomem_none" }],
+                "choice": [
+                    {
+                        "effect_type": "archive_from_hand",
+                        "ability_source": "holomem_none",
+                        "amount": 1,
+                        "and": [
+                            {
+                                "effect_type": "send_cheer",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "cheer_deck",
+                                "to": "holomem",
+                                "to_limitation": "card_type",
+                                "to_limitation_card_type": "holomem_debut"
+                            }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
         "card_id": "hSD02-014",
         "card_type": "support",
         "sub_type": "mascot",

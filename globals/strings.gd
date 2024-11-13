@@ -223,7 +223,8 @@ const SkillNameMap = {
 	"whatsinthepresent": "What's in the present?",
 	"theayainayafubumi": "The \"Aya\" in AyaFubuMi",
 	"yodayo": "Yo~ da yo",
-	"thefubuinayafubumi": "The \"Fubu\" in AyaFubuMi"
+	"thefubuinayafubumi": "The \"Fubu\" in AyaFubuMi",
+	"themiinayafubumi": "The \"Mi\" in AyaFubuMi",
 
 }
 
@@ -248,6 +249,7 @@ const HolomemNames = {
 	"nakiri_ayame": "Nakiri Ayame",
 	"nanashi_mumei": "Nanashi Mumei",
 	"omaru_polka": "Omaru Polka",
+	"ookami_mio": "Ookami Mio",
 	"ouro_kronii": "Ouro Kronii",
 	"pavolia_reine": "Pavolia Reine",
 	"sakura_miko": "Sakura Miko",
@@ -1076,6 +1078,10 @@ func get_effect_text(effect):
 						text += " " + tr("Only to %s.") % get_names([effect["to_limitation_name"]])[0]
 					"tag_in":
 						text += " " + tr("Only to %s Holomem.") % "/".join(get_tags_strings(effect["to_limitation_tags"]))
+					"card_type":
+						match effect["to_limitation_card_type"]:
+							"holomem_debut":
+								text += " " + tr("ONLY_DEBUT")
 			if "to_limitation_exclude_name" in effect:
 				text += " " + tr("(Not %s)") % [get_names([effect["to_limitation_exclude_name"]])[0]]
 			if "limit_one_per_member" in effect:
