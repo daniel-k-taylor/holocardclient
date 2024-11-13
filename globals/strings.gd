@@ -300,6 +300,7 @@ const HolomemNames = {
 
 	"poyoyo": "Poyoyo",
 	"iroha_nihohetto_ayafubumi": "AyaFubuMi",
+	"asura_rakshasa": "Asura & Rakshasa",
 }
 
 # Lazy placeholder for loc

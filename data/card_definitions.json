@@ -1396,11 +1396,35 @@
         ]
     },
     {
+        "card_id": "hSD02-013",
+        "card_type": "support",
+        "sub_type": "tool",
+        "card_names": ["asura_rakshasa"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 10
+            },
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "nakiri_ayame", "required_bloom_levels": [1,2] }
+                ],
+                "amount": 10
+            }
+        ]
+    },
+    {
         "card_id": "hSD02-014",
         "card_type": "support",
         "sub_type": "mascot",
         "card_names": ["poyoyo"],
         "rarity": "c",
+        "colors": [],
         "tags": [
             "#ShirakamiCharacter"
         ],
