@@ -692,6 +692,8 @@ func get_condition_text(conditions):
 				if len(required_bloom_levels) > 0:
 					bloom_str = " " + tr("(Bloom %s)") % "/".join(required_bloom_levels)
 				text += "If attached to %s%s: " % [get_names([condition["required_member_name"]])[0], bloom_str]
+			"attached_with":
+				text += "If attached with %s: " % get_names([condition["required_card_name"]])[0]
 			"attached_owner_is_location":
 				var location_str = ""
 				match condition["condition_location"]:
