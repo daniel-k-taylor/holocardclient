@@ -1401,6 +1401,7 @@
         "sub_type": "tool",
         "card_names": ["asura_rakshasa"],
         "rarity": "c",
+        "colors": [],
         "effects": [{ "effect_type": "attach_card_to_holomem" }],
         "attached_effects": [
             {
