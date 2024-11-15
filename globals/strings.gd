@@ -692,8 +692,6 @@ func get_condition_text(conditions):
 				if len(required_bloom_levels) > 0:
 					bloom_str = " " + tr("(Bloom %s)") % "/".join(required_bloom_levels)
 				text += "If attached to %s%s: " % [get_names([condition["required_member_name"]])[0], bloom_str]
-			"attached_with":
-				text += "If attached with %s: " % get_names([condition["required_card_name"]])[0]
 			"attached_owner_is_location":
 				var location_str = ""
 				match condition["condition_location"]:
@@ -740,6 +738,8 @@ func get_condition_text(conditions):
 				text += "Downed Holomem is %s: " % [color]
 			"effect_card_id_not_used_this_turn":
 				text += "Once per turn: "
+			"has_attached_card":
+				text += "If attached with %s: " % get_names([condition["required_card_name"]])[0]
 			"has_attachment_of_type":
 				text += "Has %s attachment: " % [condition["condition_type"]]
 			"has_stacked_holomem":

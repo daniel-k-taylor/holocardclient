@@ -1014,7 +1014,7 @@
             {
                 "effect_type": "add_turn_effect",
                 "conditions": [
-                    { "condition": "attached_with", "required_card_name": "poyoyo" }
+                    { "condition": "has_attached_card", "required_card_name": "poyoyo" }
                 ],
                 "turn_effect": {
                     "timing": "before_art",
