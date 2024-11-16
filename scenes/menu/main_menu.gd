@@ -33,6 +33,7 @@ var oshi_azki = "hSD01-002"
 @onready var howtoplay = $Howtoplay
 @onready var match_list = $MatchList
 @onready var match_list_button = $HBoxContainer/ViewMatchListButton
+@onready var change_log = $ChangeLog
 
 @onready var deck_builder : DeckBuilder = $Deckbuilder
 
@@ -149,6 +150,7 @@ func starting_game():
 			$MatchJoinedSound.play()
 
 func settings_loaded():
+	do_new_update_actions()
 	deck_builder.load_decks()
 	load_user_decks()
 
@@ -340,3 +342,16 @@ func _on_match_list_observe_match(match_index: Variant) -> void:
 	menu_state = MenuState.MenuState_Queued
 	_update_buttons()
 	NetworkManager.observe_room(match_index)
+
+func show_change_log() -> void:
+	change_log.show_logs()
+
+func do_new_update_actions() -> void:
+	# this method is reserved for actions that needs to be done when the
+	# client version has been updated.
+	if not GlobalSettings.is_client_version_mismatch():
+		return
+
+	show_change_log()
+
+	GlobalSettings.update_user_client_version()

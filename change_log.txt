@@ -1,0 +1,20 @@
+[center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
+[font_size=20][b][u]NEW![/u][/b][/font_size]
+  - [b]Added hSD02: Nakiri Ayame Starter Deck.[/b]
+  - Added a new setting that toggles the visibility of the card information overlay and panel for cards with no proxies.
+  - Added a new card information panel for cards with no proxies.
+  - Added promo cards:
+    - hBD24-001 : Pavolia Reine oshi
+    - hBD24-002 : Shishiro Botan oshi
+    - hBD24-003 : Inugami Korone oshi
+    - hBD24-004 : Shirakami Fubuki oshi
+    - hBD24-005 : Himemori Luna oshi
+    - hBD24-006 : Kureiji Ollie oshi
+    - hBD24-007 : Gigi Murin oshi
+    - hBD24-008 : Vestia Zeta
+    - hPR-001      : Sakura Miko spot
+
+[center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
+[font_size=20][b][u]HISTORY[/u][/b][/font_size]
+  - Enabled alternative art for cards.
+  - Added searching via tags in the filter section e.g. [i]#promise[/i],[i]#song[/i], etc.

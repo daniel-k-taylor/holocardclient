@@ -24,6 +24,7 @@ const PlayfabUsername = "PlayfabUsername"
 const Language = "Language"
 const ShowOverlayInfo = "ShowOverlayInfo"
 const ShowPanelInfo = "ShowPanelInfo"
+const UserClientVersion = "UserClientVersion"
 
 const language_dir = "user://card_assets"
 const language_details_file = "details.json"
@@ -40,7 +41,8 @@ var user_settings = {
 	PlayfabUsername: "",
 	Language: "en",
 	ShowOverlayInfo: false,
-	ShowPanelInfo: true
+	ShowPanelInfo: true,
+	UserClientVersion: ""
 }
 
 var setting_to_signal_map = {
@@ -221,3 +223,9 @@ func _unpack_zip_file(zip_file, destination_dir):
 		file_access.store_buffer(data)
 		file_access.close()
 	zip.close()
+
+func update_user_client_version() -> void:
+	save_user_setting(UserClientVersion, ClientVersionString)
+
+func is_client_version_mismatch() -> bool:
+	return user_settings[UserClientVersion] != ClientVersionString
