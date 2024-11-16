@@ -521,6 +521,9 @@ func get_condition_text(conditions):
 				text += tr("Target has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
 			"this_card_is_collab":
 				text += tr("Collab position:") + " "
+			"top_deck_has_any_card_type":
+				var card_types_str = "/".join(condition["condition_card_types"].map(get_string))
+				text += tr("Top deck card is %s:") % [card_types_str] + " "
 			"top_deck_card_has_any_tag":
 				text += tr("Top deck card has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
 	return text
@@ -652,6 +655,13 @@ func get_effect_text(effect):
 					target_str += tr("CENTER_POSITION")
 				"collab":
 					target_str += tr("COLLAB_POSITION")
+				"center_and_x_backstage":
+					var targets = 1
+					if "multiple_targets" in effect:
+						# remove the previously added string
+						targets = effect["multiple_targets"]
+						target_str = target_str.left(-("%s " % targets).length())
+					target_str += tr("CEN_AND_X_BACK_POSITION").format({X = targets})
 				"center_or_collab":
 					target_str += tr("CEN_COL_POSITION")
 				"self":
