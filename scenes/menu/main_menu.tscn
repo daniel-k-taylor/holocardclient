@@ -298,15 +298,6 @@ grow_vertical = 1
 visible = false
 layout_mode = 0
 
-[node name="MatchAvailableSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_myxxr")
-
-[node name="MatchJoinedSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("9_2ujf4")
-
-[node name="Deckbuilder" parent="." instance=ExtResource("10_b34kr")]
-visible = false
-
 [node name="ShowChangeLog" type="Button" parent="."]
 layout_mode = 0
 offset_left = 27.0
@@ -323,6 +314,15 @@ offset_left = 27.0
 offset_right = 1307.0
 offset_bottom = 720.0
 
+[node name="MatchAvailableSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_myxxr")
+
+[node name="MatchJoinedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_2ujf4")
+
+[node name="Deckbuilder" parent="." instance=ExtResource("10_b34kr")]
+visible = false
+
 [connection signal="pressed" from="MainButtons/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
 [connection signal="pressed" from="MainButtons/ServerConnectButton" to="." method="_on_server_connect_button_pressed"]
 [connection signal="pressed" from="MainButtons/JoinQueueButton" to="." method="_on_join_queue_button_pressed"]
@@ -337,5 +337,5 @@ offset_bottom = 720.0
 [connection signal="item_selected" from="DebugDeckSelector" to="." method="_on_debug_deck_selector_item_selected"]
 [connection signal="item_selected" from="DeckControls/HBoxContainer/DeckSelector" to="." method="_on_deck_selector_item_selected"]
 [connection signal="observe_match" from="MatchList" to="." method="_on_match_list_observe_match"]
-[connection signal="exit_deck_builder" from="Deckbuilder" to="." method="_on_deckbuilder_exit_deck_builder"]
 [connection signal="pressed" from="ShowChangeLog" to="." method="show_change_log"]
+[connection signal="exit_deck_builder" from="Deckbuilder" to="." method="_on_deckbuilder_exit_deck_builder"]
