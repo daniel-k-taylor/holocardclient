@@ -1,6 +1,6 @@
 [
     {
-        "NOTE": "STARTER DECK CARDS START",
+        "NOTE": "hSD01 CARDS START",
 
         "card_id": "hSD01-001",
         "card_type": "oshi",
@@ -860,7 +860,595 @@
             }
         ],
 
-        "NOTE": "STARTER DECK CARDS END"
+        "NOTE": "hSD01 CARDS END"
+    },
+
+    {
+        "NOTE": "hSD02 CARDS START",
+
+        "card_id": "hSD02-001",
+        "card_type": "oshi",
+        "card_names": ["nakiri_ayame"],
+        "colors": ["red"],
+        "rarity": "oc",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "redmic",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "skill_id": "redmic",
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "redmic" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [
+                                { "condition": "performer_is_center" },
+                                { "condition": "performer_is_color", "condition_colors": ["red"] }
+                            ],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "comeonagain",
+                "cost": 1,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "skill_id": "comeonagain",
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 1 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "comeonagain" }
+                        ]
+                    },
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "archive",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "color_in",
+                        "requirement_colors": ["red"],
+                        "remaining_cards_action": "nothing"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-002",
+        "card_type": "holomem_debut",
+        "card_names": ["nakiri_ayame"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["red"],
+        "hp": 90,
+        "baton_cost": 0,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "konnakiri",
+                "costs": [
+                    { "color": "red", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-003",
+        "card_type": "holomem_debut",
+        "card_names": ["nakiri_ayame"],
+        "rarity": "c",
+        "colors": ["red"],
+        "hp": 70,
+        "baton_cost": 0,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "shiranui",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "deal_damage",
+                "special": true,
+                "amount": 10,
+                "target": "collab",
+                "opponent": true
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-004",
+        "card_type": "holomem_debut",
+        "card_names": ["nakiri_ayame"],
+        "rarity": "u",
+        "colors": ["red"],
+        "hp": 60,
+        "baton_cost": 0,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "deliciousdangos",
+                "costs": [
+                    { "color": "red", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "add_turn_effect",
+                "conditions": [
+                    { "condition": "has_attached_card", "required_card_name": "poyoyo" }
+                ],
+                "turn_effect": {
+                    "timing": "before_art",
+                    "conditions": [{ "condition": "performer_is_center" }],
+                    "effect_type": "power_boost",
+                    "amount": 20
+                }
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-005",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nakiri_ayame"],
+        "rarity": "c",
+        "colors": ["red"],
+        "hp": 140,
+        "baton_cost": 0,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "sleepyyo",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            },
+            {
+                "art_id": "otsunakiri",
+                "costs": [
+                    { "color": "red", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-006",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nakiri_ayame"],
+        "rarity": "c",
+        "colors": ["red"],
+        "hp": 140,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "celebratetogether",
+                "costs": [
+                    { "color": "red", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choice",
+                "conditions": [
+                    { "condition": "can_archive_from_hand", "amount_min": 1, "condition_source": "holomem_red" }
+                ],
+                "choice": [
+                    {
+                        "effect_type": "archive_from_hand",
+                        "ability_source": "holomem_red",
+                        "amount": 1,
+                        "and": [
+                            {
+                                "effect_type": "deal_damage",
+                                "special": true,
+                                "amount": 20,
+                                "target": "center_or_collab",
+                                "opponent": true
+                            }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-007",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nakiri_ayame"],
+        "rarity": "u",
+        "colors": ["red"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "dontmisstheshiningme",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 2,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "remaining_cards_action": "archive",
+                "conditions": [
+                    { "condition": "bloom_target_is_debut" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-008",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nakiri_ayame"],
+        "rarity": "r",
+        "colors": ["red"],
+        "buzz": true,
+        "hp": 230,
+        "baton_cost": 1,
+        "down_life_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts":[
+            {
+                "art_id": "fancybirthday",
+                "costs": [
+                    { "color": "red", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40
+            },
+            {
+                "art_id": "whatsinthepresent",
+                "costs": [
+                    { "color": "red", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "choice",
+                        "conditions": [{ "condition": "can_archive_from_hand", "amount_min": 1, "condition_source": "holomem_red" }],
+                        "choice": [
+                            {
+                                "effect_type": "archive_from_hand",
+                                "ability_source": "holomem_red",
+                                "amount": 1,
+                                "and": [
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 50,
+                                        "target": "center_or_collab",
+                                        "opponent": true
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-009",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["nakiri_ayame"],
+        "rarity": "rr",
+        "colors": ["red"],
+        "hp": 180,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "theayainayafubumi",
+                "costs": [
+                    { "color": "red", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "yellow" }]
+                    }
+                ]
+            },
+            {
+                "art_id": "yodayo",
+                "costs": [
+                    { "color": "red", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "yellow" }]
+                    },
+                    {
+                        "full_english_text": "AYAME_09_ART_FULL_TEXT",
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "can_archive_from_hand", "amount_min": 1, "condition_source": "holomem_red" }],
+                        "effect_type": "generate_choice_template",
+                        "can_pass": true,
+                        "starts_at": 1,
+                        "ends_at": 3,
+                        "usage_count_restriction": "available_archive_from_hand",
+                        "ability_source": "holomem_red",
+                        "multi_value": 40,
+                        "template_choice": {
+                            "effect_type": "archive_from_hand",
+                            "ability_source": "holomem_red",
+                            "amount": "X",
+                            "and": [
+                                {
+                                    "effect_type": "deal_damage",
+                                    "special": true,
+                                    "amount": "multiX",
+                                    "target": "center",
+                                    "opponent": true
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-010",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["shirakami_fubuki"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 80,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen1",
+            "#Gamers",
+            "#AnimalEars",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "thefubuinayafubumi",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "archive",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 1,
+                "requirement": "mascot",
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-011",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["ookami_mio"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 50,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "themiinayafubumi",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choice",
+                "conditions": [{ "condition": "can_archive_from_hand", "amount_min": 1, "condition_source": "holomem_none" }],
+                "choice": [
+                    {
+                        "effect_type": "archive_from_hand",
+                        "ability_source": "holomem_none",
+                        "amount": 1,
+                        "and": [
+                            {
+                                "effect_type": "send_cheer",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "cheer_deck",
+                                "to": "holomem",
+                                "to_limitation": "card_type",
+                                "to_limitation_card_type": "holomem_debut"
+                            }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-012",
+        "card_type": "support",
+        "colors": [],
+        "sub_type": "event",
+        "card_names": ["iroha_nihohetto_ayafubumi"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [
+            {
+                "condition": "cards_in_hand",
+                "amount_max": 7
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem_named",
+                "requirement_names": ["shirakami_fubuki", "ookami_mio", "nakiri_ayame"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-013",
+        "card_type": "support",
+        "sub_type": "tool",
+        "card_names": ["asura_rakshasa"],
+        "rarity": "c",
+        "colors": [],
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 10
+            },
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "nakiri_ayame", "required_bloom_levels": [1,2] }
+                ],
+                "amount": 10
+            }
+        ]
+    },
+    {
+        "card_id": "hSD02-014",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "card_names": ["poyoyo"],
+        "rarity": "c",
+        "colors": [],
+        "tags": [
+            "#ShirakamiCharacter"
+        ],
+        "effects": [
+            { "effect_type": "attach_card_to_holomem" }
+        ],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 20
+            },
+            {
+                "timing": "on_bloom_level_up",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "nakiri_ayame" }
+                ],
+                "effect_type": "draw",
+                "amount": 1
+            }
+        ],
+
+        "NOTE": "hSD02 CARDS END"
     },
 
 
@@ -6292,7 +6880,7 @@
             }
         ],
 
-        "NOTE":"BP1 CARDS END"
+        "NOTE": "BP1 CARDS END"
     },
 
     {
@@ -7182,7 +7770,9 @@
                     { "effect_type": "pass" }
                 ]
             }
-        ]
+        ],
+
+        "NOTE": "CHEER SET OSHI CARDS END"
     },
 
 
@@ -7220,4 +7810,5 @@
 
         "NOTE": "CHEER CARDS END"
     }
+
 ]

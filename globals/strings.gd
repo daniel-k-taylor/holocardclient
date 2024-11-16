@@ -64,6 +64,7 @@ const SkillNameMap = {
 	"letsdoourbesteveryone": "Let's do our best, everyone!",
 	"comeonagain": "Come on! Again!",
 	"backshot": "Back Shot",
+	"redmic": "Red Mic",
 
 	"blueenhance": "Blue Enhance",
 	"greenenhance": "Green Enhance",
@@ -209,11 +210,21 @@ const SkillNameMap = {
 	"noelbeyondthedoor": "Noel ~Beyond the door~",
 	"marinebeyondthedoor": "Marine ~Beyond the door~",
 	"elementaryisntit": "Elementary, isn't it?",
-
 	"flowerrhapsody": "flower rhapsody",
 
-
-
+	"konnakiri": "Konnakiri~",
+	"shiranui": "Shiranui",
+	"deliciousdangos": "Delicious dangos",
+	"sleepyyo": "Sleepy yo~",
+	"otsunakiri": "Otsunakiri",
+	"celebratetogether": "Celebrate together",
+	"dontmisstheshiningme": "Don't miss the shining me!!",
+	"fancybirthday": "Fancy birthday",
+	"whatsinthepresent": "What's in the present?",
+	"theayainayafubumi": "The \"Aya\" in AyaFubuMi",
+	"yodayo": "Yo~ da yo",
+	"thefubuinayafubumi": "The \"Fubu\" in AyaFubuMi",
+	"themiinayafubumi": "The \"Mi\" in AyaFubuMi",
 
 }
 
@@ -235,8 +246,10 @@ const HolomemNames = {
 	"kureiji_ollie": "Kureiji Ollie",
 	"moona_hoshinova": "Moona Hoshinova",
 	"mori_calliope": "Mori Calliope",
+	"nakiri_ayame": "Nakiri Ayame",
 	"nanashi_mumei": "Nanashi Mumei",
 	"omaru_polka": "Omaru Polka",
+	"ookami_mio": "Ookami Mio",
 	"ouro_kronii": "Ouro Kronii",
 	"pavolia_reine": "Pavolia Reine",
 	"sakura_miko": "Sakura Miko",
@@ -284,6 +297,10 @@ const HolomemNames = {
 	"thestoryofthemoonandtherabbit": "Story of Moon&Rabbit",
 	"upao": "Upao",
 	"zain": "Zain",
+
+	"poyoyo": "Poyoyo",
+	"iroha_nihohetto_ayafubumi": "AyaFubuMi",
+	"asura_rakshasa": "Asura & Rakshasa",
 }
 
 # Lazy placeholder for loc
@@ -721,6 +738,8 @@ func get_condition_text(conditions):
 				text += "Downed Holomem is %s: " % [color]
 			"effect_card_id_not_used_this_turn":
 				text += "Once per turn: "
+			"has_attached_card":
+				text += "If attached with %s: " % get_names([condition["required_card_name"]])[0]
 			"has_attachment_of_type":
 				text += "Has %s attachment: " % [condition["condition_type"]]
 			"has_stacked_holomem":
@@ -1063,6 +1082,10 @@ func get_effect_text(effect):
 						text += " " + tr("Only to %s.") % get_names([effect["to_limitation_name"]])[0]
 					"tag_in":
 						text += " " + tr("Only to %s Holomem.") % "/".join(get_tags_strings(effect["to_limitation_tags"]))
+					"card_type":
+						match effect["to_limitation_card_type"]:
+							"holomem_debut":
+								text += " " + tr("ONLY_DEBUT")
 			if "to_limitation_exclude_name" in effect:
 				text += " " + tr("(Not %s)") % [get_names([effect["to_limitation_exclude_name"]])[0]]
 			if "limit_one_per_member" in effect:
@@ -1161,7 +1184,7 @@ func build_english_card_text(definition):
 				for cost in art["costs"]:
 					for i in range(cost["amount"]):
 						colors.append(cost["color"])
-				var text = "%s: %s" % [get_skill_string(art["art_id"]), art["power"]]
+				var text = "[b]%s: %s[/b]" % [get_skill_string(art["art_id"]), art["power"]]
 				if "full_english_text" in art:
 					text = tr(art["full_english_text"])
 				else:
