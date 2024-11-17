@@ -739,7 +739,7 @@ func get_effect_text(effect):
 		"power_boost_per_stacked":
 			text += tr("+%s Power per stacked Holomem.") % [effect["amount"]]
 		"power_boost_per_played_support":
-			var support_type = tr(effect["support_type"])
+			var support_type = tr(effect["support_sub_type"])
 			text += tr("+%s Power per %s played this turn.") % [effect["amount"]]
 		"recover_downed_holomem_cards":
 			text += "Recover downed Holomem's Holomem cards."
@@ -758,10 +758,10 @@ func get_effect_text(effect):
 		"restore_hp":
 			var amount = effect["amount"]
 			var amount_str = ""
-			if amount == "all":
+			if str(amount) == "all":
 				amount_str = tr("all_amount")
-			elif amount == "damage_dealt_floor_round_to_10s":
-				amount_str = tr("damage_dealt_floor_round_to_10s")"damage dealt (increments of 10)"
+			elif str(amount) == "damage_dealt_floor_round_to_10s":
+				amount_str = tr("damage_dealt_floor_round_to_10s")
 			else:
 				amount_str = "+%s" % amount
 			var target_str = ""
@@ -770,6 +770,8 @@ func get_effect_text(effect):
 					target_str = tr("ATTACHED_OWNER_EFFECT_STRING")
 				"self":
 					target_str = tr("THIS_HOLOMEM_POSITION")
+				"backstage":
+					target_str = tr("BACKHOLOMEM_POSITION")
 				"center":
 					target_str = "to Center"
 				"holomem":
