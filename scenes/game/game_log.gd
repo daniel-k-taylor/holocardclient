@@ -44,7 +44,10 @@ func add_to_log(log_type, text : String):
 		var start = text.find("[CARD]") + 6
 		var end = text.find("[/CARD]", start)
 		var card_id = text.substr(start, end - start)
-		text = text.replace("[CARD]%s[/CARD]" % [card_id], "[url=%s][CARDCOLORTAG]%s[/CARDCOLORTAG][/url]" % [card_id, card_id])
+		if card_id != "?":
+			text = text.replace("[CARD]%s[/CARD]" % [card_id], "[url=%s][CARDCOLORTAG]%s[/CARDCOLORTAG][/url]" % [card_id, card_id])
+		else:
+			text = text.replace("[CARD]%s[/CARD]" % [card_id], "[CARDCOLORTAG]%s[/CARDCOLORTAG]" % [card_id])
 
 	# Perform the same for [SKILLSOURCE] tag
 	while text.find("[SKILLSOURCE]") != -1:

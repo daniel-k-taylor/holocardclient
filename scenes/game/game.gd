@@ -572,7 +572,7 @@ func _get_card_definition_id(card_id):
 	for key in game_card_map:
 		if key == card_id:
 			return game_card_map[key]
-	return null
+	return "?"
 
 func _is_cheer_card(card_id):
 	var definition_id = _get_card_definition_id(card_id)
@@ -2184,8 +2184,8 @@ func _on_mulligan_reveal_event(event_data):
 	if not active_player.is_me() or observer_mode:
 		var card_def_list = []
 		for card_id in revealed_card_ids:
-			card_def_list.append(_get_card_definition_id(card_id))
-		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s mulligans revealing [%s]" % [
+			card_def_list.append("[CARD]%s[/CARD]" % _get_card_definition_id(card_id))
+		game_log.add_to_log(GameLog.GameLogLine.Detail, "%s mulligans revealing: %s" % [
 			active_player.get_name_decorated(),
 			", ".join(card_def_list)
 		])
