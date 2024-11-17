@@ -740,7 +740,7 @@ func get_effect_text(effect):
 			text += tr("+%s Power per stacked Holomem.") % [effect["amount"]]
 		"power_boost_per_played_support":
 			var support_type = tr(effect["support_sub_type"])
-			text += tr("+%s Power per %s played this turn.") % [effect["amount"]]
+			text += tr("+%s Power per %s played this turn.") % [effect["amount"], support_type]
 		"recover_downed_holomem_cards":
 			text += "Recover downed Holomem's Holomem cards."
 		"reduce_damage":
