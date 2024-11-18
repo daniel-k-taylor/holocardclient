@@ -473,7 +473,7 @@ func get_condition_text(conditions):
 			"effect_card_id_not_used_this_turn":
 				text += "Once per turn: "
 			"has_attached_card":
-				text += "If attached with %s: " % get_names([condition["required_card_name"]])[0]
+				text += "If %s is attached: " % get_names([condition["required_card_name"]])[0]
 			"has_attachment_of_type":
 				text += "Has %s attachment: " % [condition["condition_type"]]
 			"has_stacked_holomem":
