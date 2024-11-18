@@ -341,6 +341,11 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 				main_text += "\n" + tr("ONLY_TOOL")
 			"event":
 				main_text += "\n" + tr("ONLY_EVENT")
+			"support_types":
+				# convert `requirement_support_types` to already existing tr format
+				var support_types = (requirement_details.get("requirement_support_types", [])
+					.map(func(type): return tr("ONLY_" + type.to_upper())))
+				main_text += "\n" + ", ".join(support_types)
 			"cheer":
 				main_text += "\n" + tr("ONLY_CHEER")
 		if requirement_details.get("requirement_block_limited", false):
@@ -483,6 +488,8 @@ func get_condition_text(conditions):
 			"holomem_on_stage":
 				if "required_member_name" in condition:
 					text += "%s on stage: " % [get_names([condition["required_member_name"]])[0]]
+				elif "member_name_in" in condition:
+					text += "%s on stage: " % "/".join(get_names(condition["member_name_in"]))
 				elif "exclude_member_name" in condition:
 					var not_str = " (Not %s)" % [get_names([condition["exclude_member_name"]])[0]]
 					if "tag_in" in condition:
@@ -519,6 +526,8 @@ func get_condition_text(conditions):
 				text += tr("Weak(%s):") % [get_color_string(condition["color_requirement"])] + " "
 			"target_has_any_tag":
 				text += tr("Target has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
+			"this_card_is_center":
+				text += tr("Center position:") + " "
 			"this_card_is_collab":
 				text += tr("Collab position:") + " "
 			"top_deck_has_any_card_type":
@@ -694,7 +703,14 @@ func get_effect_text(effect):
 				prevent_life_str = " (Can't lose life)"
 			text += "Down %s Holomem%s%s." % [target_str, required_damage_str, prevent_life_str]
 		"draw":
-			text += tr("Draw %s.") % [effect["amount"]]
+			var amount = effect.get("amount", "")
+			var max_str = ""
+			var max_in_hand = effect.get("max_in_hand")
+			if max_in_hand:
+				if amount != "":
+					max_str += ", "
+				max_str += "until you have %s cards in hand" % max_in_hand
+			text += tr("Draw %s.") % " ".join([amount, max_str]).strip_edges()
 		"force_die_result":
 			text += tr("Set next die result to %s.") % [effect["die_result"]]
 		"generate_holopower":
