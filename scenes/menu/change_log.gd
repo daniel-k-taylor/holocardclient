@@ -2,7 +2,7 @@ extends CenterContainer
 
 @onready var content = $PanelContainer/MarginContainer/VBoxContainer/Content
 
-const change_log_file = "res://change_log.txt"
+const change_log_file = "res://data//change_log.txt"
 
 
 func show_logs() -> void:
@@ -20,6 +20,6 @@ func _load_change_log() -> String:
 		print("Unable to load settings file.")
 		visible = false
 		return ""
-		
+
 	var file = FileAccess.open(change_log_file, FileAccess.READ)
 	return file.get_as_text()
