@@ -7232,7 +7232,7 @@
                 "amount": 10
             },
             {
-                "timing": "before_art",
+                "timing": "art_cleanup",
                 "conditions": [
                     { "condition": "attached_to", "required_member_name": "takane_lui" },
                     { "condition": "performer_is_center" }

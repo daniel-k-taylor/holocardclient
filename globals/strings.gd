@@ -381,6 +381,8 @@ func get_action_name(action_type:String):
 func get_timing_text(timing, timing_source_requirement):
 	var text = ""
 	match timing:
+		"art_cleanup":
+			text += ""
 		"arts_targeting":
 			text += ""
 		"after_die_roll":
