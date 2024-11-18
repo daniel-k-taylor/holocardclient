@@ -7,7 +7,7 @@ signal settings_changed_ShowCardOverlayInfo
 
 const ReleaseLoggingEnabled = false # If true, log even on release builds.
 const UseAzureServerAlways = false # If true, always defaults to the azure server. Otherwise release=Azure, dev=local.
-const ClientVersionString : String = "241111.2200" # YYMMDD.HHMM
+const ClientVersionString : String = "241117.1430" # YYMMDD.HHMM
 const ReplayVersion = 1 # Increment this when you break replay compatibility.
 
 const PlayfabTitleId = "57B37"

@@ -164,32 +164,32 @@ text = "None"
 
 [node name="Event" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
 layout_mode = 2
-text = "Event"
+text = "event"
 expand_icon = true
 
 [node name="Fan" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
 layout_mode = 2
-text = "Fan"
+text = "fan"
 expand_icon = true
 
 [node name="Item" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
 layout_mode = 2
-text = "Item"
+text = "item"
 expand_icon = true
 
 [node name="Mascot" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
 layout_mode = 2
-text = "Mascot"
+text = "mascot"
 expand_icon = true
 
 [node name="Staff" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
 layout_mode = 2
-text = "Staff"
+text = "staff"
 expand_icon = true
 
 [node name="Tool" type="CheckButton" parent="FilterPanel/Margin/LayoutVBox/MainFilters/SupportCardTypes"]
 layout_mode = 2
-text = "Tool"
+text = "tool"
 expand_icon = true
 
 [node name="Colors" type="VBoxContainer" parent="FilterPanel/Margin/LayoutVBox/MainFilters"]

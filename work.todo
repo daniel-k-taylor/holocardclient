@@ -1,5 +1,6 @@
+
+
 Bugs:
-  ☐ Mulligan log doesn't have card highlights
   ☐ Memory leak in client
 
 Todo:
@@ -11,7 +12,7 @@ Todo:
 
 Suggestions:
   ☐ Num fans/mascots indicators
-  ☐ Try out the performance options to the sides of the cards (and move the backstage so it doesn't hide any)
+  ☐ Try out the performance attack options to the sides of the cards (and move the backstage so it doesn't hide any)
   ☐ Emotes
 
 

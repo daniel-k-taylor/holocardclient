@@ -37,272 +37,6 @@ var YOUR_ARCHIVE = "Your Archive"
 var OPPONENT_ARCHIVE = "Opponent Archive"
 var ATTACHED_CARDS = "Attached Cards"
 
-
-const SkillNameMap = {
-	# Oshi
-	"replacement": "Replacement",
-	"soyouretheenemy": "So, you're the enemy?",
-	"mapinthelefthand": "Map in the left hand",
-	"micintherighthand": "Mic in the right hand",
-	"squeezesqueeze": "Squeeze squeeze",
-	"illcrushyou": "I'll crush you",
-	"guardianofcivilization": "Guardian of Civilization",
-	"amazingdrawing": "Amazing Drawing",
-	"hawkeye": "Hawkeye",
-	"executivesorder": "Executive's Order",
-	"phoenixtail": "Phoenix Tail",
-	"risefromtheashes": "Rise from the Ashes",
-	"comet": "Comet",
-	"shootingstar": "Shooting Star",
-	"prayingforrain": "Praying for rain",
-	"rainshamanism": "Rain Shamanism",
-	"whitebaton": "White Baton",
-	"greenbaton": "Green Baton",
-	"bluebaton": "Blue Baton",
-	"redbaton": "Red Baton",
-	"quickguard": "Quick Guard",
-	"letsdoourbesteveryone": "Let's do our best, everyone!",
-	"comeonagain": "Come on! Again!",
-	"backshot": "Back Shot",
-	"redmic": "Red Mic",
-
-	"blueenhance": "Blue Enhance",
-	"greenenhance": "Green Enhance",
-	"purpleenhance": "Purple Enhance",
-	"redenhance": "Red Enhance",
-	"whiteenhance": "White Enhance",
-	"yellowenhance": "Yellow Enhance",
-	"birthdaygiftblue": "Birthday Gift ~Blue~",
-	"birthdaygiftgreen": "Birthday Gift ~Green~",
-	"birthdaygiftpurple": "Birthday Gift ~Purple~",
-	"birthdaygiftred": "Birthday Gift ~Red~",
-	"birthdaygiftwhite": "Birthday Gift ~White~",
-	"birthdaygiftyellow": "Birthday Gift ~Yellow~",
-
-	# Arts
-	"nunnun": "(๑╹ᆺ╹) nun nun",
-	"onstage": "On stage!",
-	"nunnunshiyo": "nun nun shiyo",
-	"yourheartiscloudythenclear": "Your heart is cloudy... then clear!",
-	"dreamlive": "Dream Live",
-	"sorazsympathy": "SorAZ Sympathy",
-	"embodimentofhope": "Embodiment of Hope",
-	"keepworkinghard": "Keep working hard!",
-	"wherenextwherenext": "Where next, where next!",
-	"anaimlessjourneywithyou": "An aimless journey with you",
-	"sorazgravity": "SorAZ Gravity",
-	"destinysong": "Destiny Song",
-	"ihadfundrawing": "I had fun drawing!",
-	"brighterfuture": "Brighter Future",
-	"hey": "Hey",
-	"purepurepure": "Pure Pure Pure~",
-	"relaxtime": "Relax Time",
-
-	"konkanata": "Konkanata",
-	"imoffnow": "I'm off now",
-	"pleasegivelotsofsupport": "Please give lots of support!",
-	"angelstage": "Angel Stage",
-	"jetblackwings": "Jet Black Wings",
-	"thankyouforyourcontinuedsupport": "Thank you for your continued support!",
-	"everyonetogether": "Everyone together",
-	"everyonekonsomme": "Everyone! Kon-somme!",
-	"letsmakeitthebestdayever": "Let's make it the best day ever",
-	"itwontstop": "It won't stop",
-	"survivalpower": "Survival Power",
-	"songoftheearth": "Song of the Earth",
-	"nousagis": "Nousagis~",
-	"luckyrabbit": "Lucky Rabbit",
-	"missionstart": "Mission Start!",
-	"thewholestageismine": "The whole stage is mine",
-	"accesscodeid": "Access Code: ID",
-	"illsingmybestsowatchme": "I'll sing my best so watch me!",
-	"powerofpromise": "Power of Promise",
-	"alona": "Alona!",
-	"afterparty": "Afterparty",
-	"akirosefantasy": "Akirose Fantasy",
-	"ganbarosefortoday": "Ganbarose for today!",
-	"secretkey": "Secret Key",
-	"konpeko": "Konpeko!",
-	"dontmissitpeko": "Don't miss it peko!",
-	"kitraaaa": "Ki-t-raaaa",
-	"rabbitgirlonawhitesandybeach": "Rabbit girl on a white sandy beach",
-	"humanrabbitalityproject": "Human Rabbitality Project",
-	"diamondintherough": "Diamond in the rough",
-	"suichanwaaaakyoumokawaii": "Sui-chan Waaaa~ Kyou Mo Kawaii",
-	"didiluiveyouwaiting": "Did I Luive you waiting?",
-	"lureofthejetblackwings": "Lure of the Jet Black Wings",
-	"konluilui": "Kon-luilui",
-	"otsuluilui": "Otsu-luilui",
-	"welcometotheparty": "Welcome to the party",
-	"luisparty": "Lui's Party",
-	"followmeclosely": "Follow me closely!",
-	"hawkrave": "Hawk Rave",
-	"soulguide": "Soul Guide",
-	"newcostume": "New Costume",
-	"streetsnap": "Street Snap",
-	"amomentofsunlightfilteringthroughthetrees": "A moment of sunlight filtering through the trees",
-	"thefightingmaid": "The Fighting Maid",
-	"shiningcomet": "Shining Comet",
-	"coldresponsekanataso": "Cold response Kanataso",
-	"ohhi": "Oh, Hi",
-	"goingouttogether": "Going out together",
-	"coffeebreak": "Coffee Break",
-	"piecesofmemories": "Pieces of Memories",
-	"dontdrinkonsenwater": "Don't drink onsen water",
-	"arelaxingdayattheonsen": "A relaxing day at the onsen",
-	"hirys": "HiRyS!",
-	"imaseisonephilim": "I'm a seiso nephilim!",
-	"araara": "Ara ara",
-	"mugyumugyuchat": "Mugyu Mugyu Chat",
-	"zerogravityjump": "Zero Gravity Jump!",
-	"otsupeko": "Otsupeko",
-	"konazki": "Kon-AZKi",
-	"withyouinaseasidetown": "With you in a seaside town",
-	"ivecometosuchawonderfulworld": "I've come to such a wonderful world",
-	"anewmap": "A new map",
-	"ladiesandgentlemenkazamairohadegozaru": "Ladies and gentlemen, Kazama Iroha de gozaru",
-	"freshlypickledeggplant": "Freshly pickled eggplant",
-	"wouldyoulikeone": "Would you like one?",
-	"wazzup": "WAZZUP!!",
-	"witnessme": "WITNESS ME!!",
-	"thefunbegins": "The fun begins!",
-	"disorder": "Disorder",
-	"moonmoonmoonadaiyo": "Moon Moon~ Moona Dayo!",
-	"otsumoona": "Otsumoona",
-	"lookforwardtoit": "Look forward to it!",
-	"midnightmoon": "Midnight Moon",
-	"moonnightdiva": "Moon Night Diva",
-	"kronichiwa": "Kronichiwa",
-	"kroyasumi": "Kroyasumi",
-	"oyasumikrotime": "Oyasumi Kro-Time",
-	"letsmakethisanunforgettablefes": "Let's make this an unforgettable fes",
-	"fastforward": "Fast Forward",
-	"illgiveyouallmyenergy": "I'll give you all my energy",
-	"bundleupyourcheers": "Bundle up your cheers",
-	"brillianceofthewind": "Brilliance of the Wind",
-	"selamatpagi": "Selamat Pagi!",
-	"yourbelovedalien": "Your beloved alien",
-	"imlookingforwardtoit": "I'm looking forward to it!",
-	"relationsky": "Relation Sky",
-	"kikkeriki": "Kikkeriki!",
-	"mofumofutime": "Mofu mofu Time",
-	"aufweidersehen": "auf weidersehen!",
-	"iwanttoliventhingsup": "I want to liven things up!",
-	"phoenixswordprincess": "Phoenix Sword Princess",
-	"kneel": "Kneel.",
-	"flamecoloredguidance": "Flame colored guidance",
-	"majesticphoenix": "Majestic Phoenix",
-	"polkaoruyo": "Polka Oruyo!",
-	"ohapol": "Ohapol",
-	"osopol": "Osopol",
-	"sharedconciousness": "Shared Conciousness",
-	"polkacircus": "Polka Circus",
-	"bokobokobokobo": "Bokobokobokobo",
-	"wavesswim": "Waves! Swim!",
-	"becomingacat": "Becoming a cat",
-	"perayaan": "Perayaan",
-	"raindrops": "Raindrops",
-	"onaeru": "OnAeru",
-	"rainmantra": "Rain Mantra",
-	"wavemantra": "Wave Mantra",
-	"pekorabeyondthedoor": "Pekora ~Beyond the door~",
-	"flarebeyondthedoor": "Flare ~Beyond the door~",
-	"noelbeyondthedoor": "Noel ~Beyond the door~",
-	"marinebeyondthedoor": "Marine ~Beyond the door~",
-	"elementaryisntit": "Elementary, isn't it?",
-	"flowerrhapsody": "flower rhapsody",
-
-	"konnakiri": "Konnakiri~",
-	"shiranui": "Shiranui",
-	"deliciousdangos": "Delicious dangos",
-	"sleepyyo": "Sleepy yo~",
-	"otsunakiri": "Otsunakiri",
-	"celebratetogether": "Celebrate together",
-	"dontmisstheshiningme": "Don't miss the shining me!!",
-	"fancybirthday": "Fancy birthday",
-	"whatsinthepresent": "What's in the present?",
-	"theayainayafubumi": "The \"Aya\" in AyaFubuMi",
-	"yodayo": "Yo~ da yo",
-	"thefubuinayafubumi": "The \"Fubu\" in AyaFubuMi",
-	"themiinayafubumi": "The \"Mi\" in AyaFubuMi",
-
-}
-
-const HolomemNames = {
-	"airani_iofifteen": "Airani Iofifteen",
-	"aki_rosenthal": "Aki Rosenthal",
-	"amane_kanata": "Amane Kanata",
-	"azki": "AZKi",
-	"gigi_murin": "Gigi Murin",
-	"hakos_baelz": "Hakos Baelz",
-	"hakui_koyori": "Hakui Koyori",
-	"himemori_luna": "Himemori Luna",
-	"hoshimachi_suisei": "Hoshimachi Suisei",
-	"houshou_marine": "Houshou Marine",
-	"inugami_korone": "Inugami Korone",
-	"irys": "IRyS",
-	"kazama_iroha": "Kazama Iroha",
-	"kobo_kanaeru": "Kobo Kanaeru",
-	"kureiji_ollie": "Kureiji Ollie",
-	"moona_hoshinova": "Moona Hoshinova",
-	"mori_calliope": "Mori Calliope",
-	"nakiri_ayame": "Nakiri Ayame",
-	"nanashi_mumei": "Nanashi Mumei",
-	"omaru_polka": "Omaru Polka",
-	"ookami_mio": "Ookami Mio",
-	"ouro_kronii": "Ouro Kronii",
-	"pavolia_reine": "Pavolia Reine",
-	"sakura_miko": "Sakura Miko",
-	"shirakami_fubuki": "Shirakami Fubuki",
-	"shiranui_flare": "Shiranui Flare",
-	"shirogane_noel": "Shirogane Noel",
-	"shishiro_botan": "Shishiro Botan",
-	"soraz": "SorAZ",
-	"takanashi_kiara": "Takanashi Kiara",
-	"takane_lui": "Takane Lui",
-	"tokino_sora": "Tokino Sora",
-	"usada_pekora": "Usada Pekora",
-	"vestia_zeta": "Vestia Zeta",
-	"watson_amelia": "Watson Amelia",
-
-	# Support Cards
-	"amazingpc": "Amazing PC",
-	"ankimo": "Ankimo",
-	"clubemintonothingness": "Club 'em into nothingness",
-	"encore": "Encore",
-	"excitingpranktime": "Exciting Prank Time",
-	"first_gravity": "First Gravity",
-	"friend": "Friend",
-	"gamingpc": "Gaming PC",
-	"ganmo": "Ganmo",
-	"harusaki_nodoka": "Harusaki Nodoka",
-	"holofan_circle": "Holofan Circle",
-	"hololiveid3rdgeneration": "Hololive ID 3rd Gen",
-	"hoshimachi_suiseis_mic": "Suisei's Mic",
-	"idolmic": "Idol Mic",
-	"illleaveittoyou": "I'll leave it to you",
-	"jobz": "Jobz",
-	"kfp": "KFP",
-	"kotori": "Kotori",
-	"manechan": "Mane-chan",
-	"nousagialliance": "Nousagi Alliance",
-	"penlight": "Penlight",
-	"pioneer": "Pioneer",
-	"promise": "Promise",
-	"rosetai": "Rosetai",
-	"soyouretheenemy": "So, you're the enemy?",
-	"standardpc": "Standard PC",
-	"stone_axe": "Stone Axe",
-	"subpc": "Sub PC",
-	"thestoryofthemoonandtherabbit": "Story of Moon&Rabbit",
-	"upao": "Upao",
-	"zain": "Zain",
-
-	"poyoyo": "Poyoyo",
-	"iroha_nihohetto_ayafubumi": "AyaFubuMi",
-	"asura_rakshasa": "Asura & Rakshasa",
-}
-
 # Lazy placeholder for loc
 func get_string(str_id) -> String:
 	return tr(str_id)
@@ -310,7 +44,7 @@ func get_string(str_id) -> String:
 func get_names(name_ids):
 	var names = []
 	for name_id in name_ids:
-		names.append(tr(HolomemNames[name_id]))
+		names.append(tr(name_id))
 	return names
 
 func get_requirement_names(effects):
@@ -330,9 +64,7 @@ func get_tags_strings(tags: Array) -> Array:
 	return tags.map(get_string)
 
 func get_skill_string(skill_id):
-	if skill_id in SkillNameMap:
-		return tr(SkillNameMap[skill_id])
-	return skill_id
+	return tr(skill_id)
 
 func get_position_string(position):
 	match position:
@@ -611,6 +343,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 				main_text += "\n" + tr("ONLY_EVENT")
 			"cheer":
 				main_text += "\n" + tr("ONLY_CHEER")
+		if requirement_details.get("requirement_block_limited", false):
+			main_text += "\n" + tr("NO_LIMITED_CARDS")
 		if "requirement_tags" in requirement_details and len(requirement_details["requirement_tags"]) > 0:
 			main_text += "\n" + tr("Only Tag: %s") % "/".join(get_tags_strings(requirement_details["requirement_tags"]))
 		if requirement_details.get("requirement_match_oshi_color", false):
@@ -758,7 +492,9 @@ func get_condition_text(conditions):
 			"opponent_turn":
 				text += "Opponent's turn: "
 			"oshi_is":
-				text += "Oshi is %s: " % [get_names([condition["required_member_name"]])[0]]
+				text += tr("OshiIsMemberString") % [get_names([condition["required_member_name"]])[0]] + " "
+			"oshi_is_color":
+				text += tr("OshiIsColorString") % ["/".join(get_color_strings(condition["condition_colors"]))] + " "
 			"performance_target_has_damage_over_hp":
 				text += "Damage exceeds hp by %s: " % [condition["amount"]]
 			"performer_is_center":
@@ -816,11 +552,14 @@ func get_effect_text(effect):
 			text += tr("This Turn: %s") % [get_effect_text(turn_effect)]
 		"add_turn_effect_for_holomem":
 			var turn_effect = effect["turn_effect"]
-			text += tr("Choose a Holomem. This Turn: %s") % [get_effect_text(turn_effect)]
 			var limitation = effect.get("limitation", "")
-			match limitation:
-				"color_in":
-					text += "\n" + tr("ONLY_COLOR %s") % "/".join(get_color_strings(effect["limitation_colors"]))
+			if limitation == "last_chosen_holomem":
+				text += tr("This Turn: %s") % [get_effect_text(turn_effect)]
+			else:
+				text += tr("Choose a Holomem. This Turn: %s") % [get_effect_text(turn_effect)]
+				match limitation:
+					"color_in":
+						text += "\n" + tr("ONLY_COLOR %s") % "/".join(get_color_strings(effect["limitation_colors"]))
 		"archive_cheer_from_holomem":
 			var amount = effect["amount"]
 			var from = effect["from"]
@@ -999,6 +738,9 @@ func get_effect_text(effect):
 			text += "+%s Power per %sHolomem." % [effect["amount"], tag_str]
 		"power_boost_per_stacked":
 			text += tr("+%s Power per stacked Holomem.") % [effect["amount"]]
+		"power_boost_per_played_support":
+			var support_type = tr(effect["support_sub_type"])
+			text += tr("+%s Power per %s played this turn.") % [effect["amount"], support_type]
 		"recover_downed_holomem_cards":
 			text += "Recover downed Holomem's Holomem cards."
 		"reduce_damage":
@@ -1015,10 +757,21 @@ func get_effect_text(effect):
 			text += "Restrict Arts targets to this card (except Special damage)."
 		"restore_hp":
 			var amount = effect["amount"]
+			var amount_str = ""
+			if str(amount) == "all":
+				amount_str = tr("all_amount")
+			elif str(amount) == "damage_dealt_floor_round_to_10s":
+				amount_str = tr("damage_dealt_floor_round_to_10s")
+			else:
+				amount_str = "+%s" % amount
 			var target_str = ""
 			match effect["target"]:
+				"attached_owner":
+					target_str = tr("ATTACHED_OWNER_EFFECT_STRING")
 				"self":
 					target_str = tr("THIS_HOLOMEM_POSITION")
+				"backstage":
+					target_str = tr("BACKHOLOMEM_POSITION")
 				"center":
 					target_str = "to Center"
 				"holomem":
@@ -1031,7 +784,7 @@ func get_effect_text(effect):
 				match effect["limitation"]:
 					"color_in":
 						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
-			text += "Restore %s HP %s%s" % [amount, target_str, limitation_str]
+			text += "Restore %s HP %s%s" % [amount_str, target_str, limitation_str]
 		"restore_hp_INTERNAL":
 			text += "Restore HP."
 		"return_holomem_to_debut":
@@ -1240,16 +993,7 @@ func build_english_card_text(definition):
 			}
 			if "limited" in definition and definition["limited"]:
 				data.append({"colors": [], "text": tr("LIMITED")})
-			if definition["sub_type"] == "item":
-				data.append({"colors": [], "text": tr("Item")})
-			if definition["sub_type"] == "mascot":
-				data.append({"colors": [], "text": tr("Mascot")})
-			if definition["sub_type"] == "fan":
-				data.append({"colors": [], "text": tr("Fan")})
-			if definition["sub_type"] == "tool":
-				data.append({"colors": [], "text": tr("Tool")})
-			elif definition["sub_type"] == "event":
-				data.append({"colors": [], "text": tr("Event")})
+			data.append({"colors": [], "text": tr(definition["sub_type"])})
 			if "play_conditions" in definition:
 				var play_conditions = definition["play_conditions"]
 				for condition in play_conditions:

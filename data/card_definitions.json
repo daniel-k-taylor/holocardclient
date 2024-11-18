@@ -1439,7 +1439,7 @@
                 "amount": 20
             },
             {
-                "timing": "on_bloom_level_up",
+                "timing": "on_bloom",
                 "conditions": [
                     { "condition": "attached_to", "required_member_name": "nakiri_ayame" }
                 ],
@@ -1449,6 +1449,575 @@
         ],
 
         "NOTE": "hSD02 CARDS END"
+    },
+
+
+    {
+        "NOTE": "hSD04 CARDS START",
+
+        "card_id": "hSD04-001",
+        "card_type": "oshi",
+        "card_names": ["yuzuki_choco"],
+        "colors": ["purple"],
+        "rarity": "oc",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "purplemic",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "skill_id": "purplemic",
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "purplemic" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [
+                                { "condition": "performer_is_center" },
+                                { "condition": "performer_is_color", "condition_colors": ["purple"] }
+                            ],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            },
+            {
+                "skill_id": "cardchange",
+                "cost": 1,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "skill_id": "cardchange",
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 1 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "cardchange" }
+                        ]
+                    },
+                    {
+                        "effect_type": "draw",
+                        "amount": 2
+                    },
+                    {
+                        "effect_type": "archive_from_hand",
+                        "ability_source": "oshi_purple",
+                        "amount": 1
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-002",
+        "card_type": "holomem_debut",
+        "card_names": ["yuzuki_choco"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "underworldschoolnurse",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-003",
+        "card_type": "holomem_debut",
+        "card_names": ["yuzuki_choco"],
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "mycutestudents",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "draw",
+                "conditions": [{ "condition": "oshi_is_color", "condition_colors": ["purple"] }],
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-004",
+        "card_type": "holomem_debut",
+        "card_names": ["yuzuki_choco"],
+        "rarity": "u",
+        "colors": ["purple"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "pleaseeatalot",
+                "costs": [
+                    { "color": "purple", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "full_english_text": "CHOCO_SD04_004_FULL_TEXT",
+                "effect_type": "choice",
+                "conditions": [{ "condition": "can_archive_from_hand", "amount_min": 1, "condition_source": "holomem_purple" }],
+                "choice": [
+                    {
+                        "effect_type": "archive_from_hand",
+                        "ability_source": "holomem_purple",
+                        "amount": 1,
+                        "and": [
+                            {
+                                "effect_type": "choose_cards",
+                                "from": "deck",
+                                "look_at": -1,
+                                "destination": "hand",
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "requirement": "event",
+                                "requirement_tags": ["#Food"],
+                                "reveal_chosen": true,
+                                "remaining_cards_action": "shuffle"
+                            }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-005",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["yuzuki_choco"],
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 140,
+        "baton_cost": 0,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "otsukareito",
+                "costs": [
+                    { "color": "purple", "amount": 1 }
+                ],
+                "power": 20
+            },
+            {
+                "art_id": "ohhhchu",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-006",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["yuzuki_choco"],
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 130,
+        "baton_cost": 0,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "forbiddenkiss",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30,
+                "art_effects": [
+                    {
+                        "timing": "after_deal_damage",
+                        "effect_type": "restore_hp",
+                        "target": "self",
+                        "amount": "damage_dealt_floor_round_to_10s"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-007",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["yuzuki_choco"],
+        "rarity": "u",
+        "colors": ["purple"],
+        "hp": 110,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "daisukichu",
+                "costs": [
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 30,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "restore_hp",
+                        "target": "backstage",
+                        "amount": 20
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "archive",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 1,
+                "requirement": "event",
+                "requirement_block_limited": true,
+                "reveal_chosen": true,
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-008",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["yuzuki_choco"],
+        "rarity": "r",
+        "colors": ["purple"],
+        "buzz": true,
+        "hp": 230,
+        "baton_cost": 1,
+        "down_life_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "didmybestmakingthis",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40
+            },
+            {
+                "art_id": "enjoythemeal",
+                "costs": [
+                    { "color": "purple", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "choose_cards",
+                        "from": "archive",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 0,
+                        "amount_max": 1,
+                        "requirement": "event",
+                        "requirement_tags": ["#Food"],
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "nothing",
+                        "after_choose_effect": {
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-009",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["yuzuki_choco"],
+        "rarity": "rr",
+        "colors": ["purple"],
+        "hp": 190,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2",
+            "#Cooking"
+        ],
+        "arts": [
+            {
+                "art_id": "332211",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "green" }]
+                    }
+                ]
+            },
+            {
+                "art_id": "artname_go",
+                "costs": [
+                    { "color": "purple", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "green" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost_per_played_support",
+                        "support_sub_type": "event",
+                        "amount": 40
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-010",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["oozora_subaru"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen2"
+        ],
+        "arts": [
+            {
+                "art_id": "illmakeyoudrawthehelllotto",
+                "costs": [
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choice",
+                "conditions": [{ "condition": "collab_with", "required_member_name": "yuzuki_choco"}],
+                "choice": [
+                    {
+                        "effect_type": "send_cheer",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "from": "archive",
+                        "to": "holomem"
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-011",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["himemori_luna"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen4"
+        ],
+        "arts": [
+            {
+                "art_id": "nnaaaaaaaaa",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "holopower",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "remaining_cards_action": "nothing"
+            },
+            {
+                "effect_type": "choose_cards",
+                "from": "hand",
+                "look_at": -1,
+                "destination": "holopower",
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": false,
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-012",
+        "card_type": "support",
+        "colors": [],
+        "sub_type": "event",
+        "card_names": ["subachocoluna"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [
+            {
+                "condition": "cards_in_hand",
+                "amount_max": 7
+            }
+        ],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem_named",
+                "requirement_names": ["oozora_subaru", "yuzuki_choco", "himemori_luna"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-013",
+        "card_type": "support",
+        "sub_type": "event",
+        "card_names": ["chocos_omurice"],
+        "rarity": "c",
+        "colors": [],
+        "tags": [
+            "#Food"
+        ],
+        "effects": [
+            {
+                "effect_type": "restore_hp",
+                "target": "holomem",
+                "amount": 20,
+                "and": [
+                    {
+                        "conditions": [{ "condition": "holomem_on_stage", "tag_in": ["#Cooking"]}],
+                        "effect_type": "add_turn_effect_for_holomem",
+                        "limitation": "last_chosen_holomem",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [{ "condition": "performer_is_specific_id", "required_id": "REPLACED_BY_EFFECT" }],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD04-014",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "card_names": ["chocolat"],
+        "rarity": "c",
+        "colors": [],
+        "effects": [
+            { "effect_type": "attach_card_to_holomem" }
+        ],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 20
+            },
+            {
+                "timing": "on_bloom",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "yuzuki_choco" }
+                ],
+                "effect_type": "restore_hp",
+                "target": "attached_owner",
+                "amount": 20
+            }
+        ],
+
+        "NOTE": "hSD04 CARDS END"
     },
 
 

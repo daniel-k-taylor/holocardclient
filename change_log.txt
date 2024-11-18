@@ -1,6 +1,8 @@
+
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
   - [b]Added hSD02: Nakiri Ayame Starter Deck.[/b]
+  - [b]Added hSD04: Yuzuki Choco Starter Deck.[/b]
   - Added a new setting that toggles the visibility of the card information overlay and panel for cards with no proxies.
   - Added a new card information panel for cards with no proxies.
   - Added promo cards:
