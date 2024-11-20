@@ -1580,7 +1580,16 @@
                 "conditions": [{ "condition": "center_has_any_tag", "condition_tags": ["#Gamers"] }],
                 "special": true,
                 "amount": 10,
-                "target": "center_and_x_backstage",
+                "target": "center",
+                "opponent": true,
+                "prevent_life_loss": true
+            },
+            {
+                "effect_type": "deal_damage",
+                "conditions": [{ "condition": "center_has_any_tag", "condition_tags": ["#Gamers"] }],
+                "special": true,
+                "amount": 10,
+                "target": "backstage",
                 "opponent": true,
                 "prevent_life_loss": true
             }
@@ -1716,7 +1725,14 @@
                                         "effect_type": "deal_damage",
                                         "special": true,
                                         "amount": 10,
-                                        "target": "center_and_x_backstage",
+                                        "target": "center",
+                                        "opponent": true
+                                    },
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 10,
+                                        "target": "backstage",
                                         "opponent": true
                                     }
                                 ]
@@ -1872,7 +1888,14 @@
                                         "effect_type": "deal_damage",
                                         "special": true,
                                         "amount": 30,
-                                        "target": "center_and_x_backstage",
+                                        "target": "center",
+                                        "opponent": true
+                                    },
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 30,
+                                        "target": "backstage",
                                         "opponent": true
                                     }
                                 ]
@@ -1954,7 +1977,7 @@
                         "timing": "before_art",
                         "effect_type": "draw",
                         "conditions": [{ "condition": "cards_in_hand", "amount_max": 2 }],
-                        "max_in_hand": 3
+                        "draw_to_hand_size": 3
                     }
                 ]
             }

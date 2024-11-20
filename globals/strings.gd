@@ -664,13 +664,6 @@ func get_effect_text(effect):
 					target_str += tr("CENTER_POSITION")
 				"collab":
 					target_str += tr("COLLAB_POSITION")
-				"center_and_x_backstage":
-					var targets = 1
-					if "multiple_targets" in effect:
-						# remove the previously added string
-						targets = effect["multiple_targets"]
-						target_str = target_str.left(-("%s " % targets).length())
-					target_str += tr("CEN_AND_X_BACK_POSITION").format({X = targets})
 				"center_or_collab":
 					target_str += tr("CEN_COL_POSITION")
 				"self":
@@ -704,13 +697,13 @@ func get_effect_text(effect):
 			text += "Down %s Holomem%s%s." % [target_str, required_damage_str, prevent_life_str]
 		"draw":
 			var amount = effect.get("amount", "")
-			var max_str = ""
-			var max_in_hand = effect.get("max_in_hand")
-			if max_in_hand:
+			var draw_to_hand_size_str = ""
+			var draw_to_hand_size = effect.get("draw_to_hand_size")
+			if draw_to_hand_size:
 				if amount != "":
-					max_str += ", "
-				max_str += "until you have %s cards in hand" % max_in_hand
-			text += tr("Draw %s.") % " ".join([amount, max_str]).strip_edges()
+					draw_to_hand_size_str += ", "
+				draw_to_hand_size_str += "until you have %s cards in hand" % draw_to_hand_size
+			text += tr("Draw %s.") % " ".join([amount, draw_to_hand_size_str]).strip_edges()
 		"force_die_result":
 			text += tr("Set next die result to %s.") % [effect["die_result"]]
 		"generate_holopower":
