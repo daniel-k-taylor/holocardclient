@@ -116,8 +116,8 @@ Your Archive,Your Archive,당신의 아카이브,あなたのアーカイブ,Tu 
 Opponent Archive,Opponent Archive,상대의 아카이브,相手のアーカイブ,Archivo del Oponente
 Attached Cards,Attached Cards,붙어있는 카드,付属カード,Cartas Apiladas
 ,,,,
-holomem_debut,Debut Holomem,Debut Holomem,Debut Holomem,Debut Holomem
-holomem_spot,Spot Holomem,Spot Holomem,Spot Holomem,Spot Holomem
+holomem_debut,Debut Holomem,Debut Holomem,Debutホロメン,Debut Holomem
+holomem_spot,Spot Holomem,Spot Holomem,Spotホロメン,Spot Holomem
 ,,,,
 replacement,Replacement,리플레이스먼트,交換,Reemplazo
 soyouretheenemy,"So, you're the enemy?",그럼 적이네?,じゃあ敵だね,"¿Así, que eres el enemigo?"
@@ -349,12 +349,12 @@ irys,IRyS,IRyS,IRyS,IRyS
 kazama_iroha,Kazama Iroha,카자마 이로하,風真いろは,Kazama Iroha
 kobo_kanaeru,Kobo Kanaeru,코보 카나에루,こぼ・かなえる,Kobo Kanaeru
 kureiji_ollie,Kureiji Ollie,Kureiji Ollie,クレイジー・オリー,Kureiji Ollie
-laplus_darkness,La+ Darknesss,La+ Darknesss,La+ Darknesss,La+ Darknesss
+laplus_darkness,La+ Darknesss,La+ Darknesss,ラプラス・ダークネス,La+ Darknesss
 moona_hoshinova,Moona Hoshinova,무나 호시노바,ムーナ・ホシノヴァ,Moona Hoshinova
 mori_calliope,Mori Calliope,모리 칼리오페,森カリオペ,Mori Calliope
 nakiri_ayame,Nakiri Ayame,Nakiri Ayame,百鬼あやめ,Nakiri Ayame
 nanashi_mumei,Nanashi Mumei,나나시 무메이,七詩ムメイ,Nanashi Mumei
-nekomata_okayu,Nekomata Okayu,Nekomata Okayu,Nekomata Okayu,Nekomata Okayu
+nekomata_okayu,Nekomata Okayu,Nekomata Okayu,猫又おかゆ,Nekomata Okayu
 omaru_polka,Omaru Polka,오마루 폴카,尾丸ポルカ,Omaru Polka
 ookami_mio,Ookami Mio,Ookami Mio,大神ミオ,Ookami Mio
 oozora_subaru,Oozora Subaru,Oozora Subaru,大空スバル,Oozora Subaru
@@ -380,7 +380,7 @@ ankimo,Ankimo,안키모,あん肝,Ankimo
 chocolat,Chocolat,Chocolat,しょこら,Chocolat
 chocos_omurice,Choco's Omurice,Choco's Omurice,ちょこのオムライス,Choco's Omurice
 clubemintonothingness,Club 'em into nothingness,모두 박살 내주겠어!,鈍器でぶっ叩くわよ！,Aporréalos a la Nada
-dorobo_construction,Dorobo Construction,Dorobo Construction,Dorobo Construction,Dorobo Construction
+dorobo_construction,Dorobo Construction,Dorobo Construction,泥棒建設,Dorobo Construction
 encore,Encore,앙코르,アンコール,Encore
 excitingpranktime,Exciting Prank Time,두근두근 장난 타임,わくわくいたずらタイム,Emocionante Hora de Jugar
 first_gravity,First Gravity,First Gravity,First Gravity,First Gravity
@@ -399,8 +399,8 @@ kfp,KFP,KFP,KFP,KFP
 kotori,Kotori,Kotori,Kotori,Kotori
 manechan,Mane-chan,마네짱,マネちゃん,Mane-chan
 nousagialliance,Nousagi Alliance,노우사기 동맹,野うさぎ同盟,Alianza Nousagi
-okanyan,Okanyan,Okanyan,Okanyan,Okanyan
-onigirya,Onigirya,Onigirya,Onigirya,Onigirya
+okanyan,Okanyan,Okanyan,おかにゃん,Okanyan
+onigirya,Onigirya,Onigirya,おにぎりゃー,Onigirya
 penlight,Penlight,펜라이트,ペンライト,Linterna
 pioneer,Pioneer,개척자,開拓者,Pionero
 promise,Promise,Promise,Promise,Promesa
@@ -547,7 +547,6 @@ Look at {Look} cards of your {Location}:,Look at {Look} cards of your {Location}
 BACKHOLOMEM_POSITION,Back Holomem,백 홀로멤,後列ホロメン,Holomem Trasero
 CENTER_POSITION,Center,센터 홀로멤,センター,Centro
 COLLAB_POSITION,Collab,콜라보 홀로멤,コラボ,Collab
-CEN_AND_X_BACK_POSITION,Center and {X} of Back Holomem,Center and {X} of Back Holomem,Center and {X} of Back Holomem,Center and {X} of Back Holomem
 CEN_COL_POSITION,Center or Collab,센터 또는 콜라보 홀로멤,センターまたはコラボ,Centro o Collab
 THIS_HOLOMEM_POSITION,to this Holomem,이 홀로멤,このホロメンに,a este Holomem
 ANY_HOLOMEM_POSITION,any Holomem,아무 홀로멤,任意のホロメン,a cualquier Holomem
@@ -561,6 +560,7 @@ Back Holomem,Back Holomem,백 홀로멤,後列ホロメン,Holomem Trasero
 sum of damage on Backstage Holomems,sum of damage on Backstage Holomems,백 홀로멤 전원이 받고 있는 데미지의 합계,後列ホロメンのダメージ合計,suma del daño en Holomem Traseros
 Deal {Amount}{Special} damage {Target}{PreventLife}.,Deal {Amount}{Special} damage {Target}{PreventLife}.,{Target}에게 {Special} 데미지 {Amount}을 준다{PreventLife}.,{Amount}{Special}ダメージを{Target}に与える{PreventLife}。,Haz {Amount}{Special} daño {Target}{PreventLife}
 Draw %s.,Draw %s.,%s장 드로우.,%s枚引く。,Roba %s.
+Draw until you have %s cards in hand,Draw until you have %s cards in hand,Draw until you have %s cards in hand,Draw until you have %s cards in hand,Draw until you have %s cards in hand
 Set next die result to %s.,Set next die result to %s.,다음 주사위 눈을 %s로 취급한다.,次のダイス結果を%sに設定する。,Fija el siguiente resultado del dado a %s.
 +%s Power per stacked Holomem.,+%s Power per stacked Holomem.,겹쳐져 있는 홀로멤 1장당 +%s 파워.,積まれたホロメン1体ごとに+%sパワー。,+%s Poder por Holomem apilado.
 +%s Power per %s played this turn.,+%s Power per %s played this turn.,+%s Power per %s played this turn.,+%s Power per %s played this turn.,+%s Power per %s played this turn.

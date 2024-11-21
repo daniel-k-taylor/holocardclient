@@ -696,14 +696,11 @@ func get_effect_text(effect):
 				prevent_life_str = " (Can't lose life)"
 			text += "Down %s Holomem%s%s." % [target_str, required_damage_str, prevent_life_str]
 		"draw":
-			var amount = effect.get("amount", "")
-			var draw_to_hand_size_str = ""
 			var draw_to_hand_size = effect.get("draw_to_hand_size")
 			if draw_to_hand_size:
-				if amount != "":
-					draw_to_hand_size_str += ", "
-				draw_to_hand_size_str += "until you have %s cards in hand" % draw_to_hand_size
-			text += tr("Draw %s.") % " ".join([amount, draw_to_hand_size_str]).strip_edges()
+				text += tr("Draw until you have %s cards in hand") % draw_to_hand_size
+			else:
+				text += tr("Draw %s.") % [effect["amount"]]
 		"force_die_result":
 			text += tr("Set next die result to %s.") % [effect["die_result"]]
 		"generate_holopower":
