@@ -1451,6 +1451,625 @@
         "NOTE": "hSD02 CARDS END"
     },
 
+    {
+        "NOTE": "hSD03 CARDS START",
+
+        "card_id": "hSD03-001",
+        "card_type": "oshi",
+        "card_names": ["nekomata_okayu"],
+        "colors": ["blue"],
+        "rarity": "oc",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "bluemic",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "hide_effect_text": true,
+                        "skill_id": "bluemic",
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "bluemic" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "timing": "before_art",
+                            "conditions": [
+                                { "condition": "performer_is_center" },
+                                { "condition": "performer_is_color", "condition_colors": ["blue"] }
+                            ],
+                            "effect_type": "power_boost",
+                            "amount": 20
+                        }
+                    }
+                ]
+            }
+        ],
+        "effects": [
+            {
+                "full_english_text": "OSHI_CHEER_04_FULL_TEXT",
+                "oshi_effect": "true",
+                "skill_id": "backshot",
+                "cost": 1,
+                "limit": "once_per_game",
+                "conditions": [
+                    { "condition": "not_used_once_per_game_effect", "condition_effect_id": "backshot" },
+                    { "condition": "holopower_at_least", "amount": 1 },
+                    { "condition": "damaged_holomem_is_backstage", "still_on_stage": true },
+                    { "condition": "damage_ability_is_color", "condition_color": "blue", "include_oshi_ability": false }
+                ],
+                "timing": "after_deal_damage",
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "oshi_effect": "true",
+                        "skill_id": "backshot",
+                        "cost": 1,
+                        "limit": "once_per_game",
+                        "effect_type": "deal_damage",
+                        "special": true,
+                        "amount": 50,
+                        "target": "current_damage_target",
+                        "opponent": true,
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 1 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "backshot" },
+                            { "effect_type": "oshi_activation", "limit": "once_per_game", "skill_id": "backshot" }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-002",
+        "card_type": "holomem_debut",
+        "card_names": ["nekomata_okayu"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "mogumoguokayu",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-003",
+        "card_type": "holomem_debut",
+        "card_names": ["nekomata_okayu"],
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "pleaseletmeintoyourhouse",
+                "costs": [
+                    { "color": "blue", "amount": 1 }
+                ],
+                "power": 10
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "deal_damage",
+                "conditions": [{ "condition": "center_has_any_tag", "condition_tags": ["#Gamers"] }],
+                "special": true,
+                "amount": 10,
+                "target": "center",
+                "opponent": true,
+                "prevent_life_loss": true
+            },
+            {
+                "effect_type": "deal_damage",
+                "conditions": [{ "condition": "center_has_any_tag", "condition_tags": ["#Gamers"] }],
+                "special": true,
+                "amount": 10,
+                "target": "backstage",
+                "opponent": true,
+                "prevent_life_loss": true
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-004",
+        "card_type": "holomem_debut",
+        "card_names": ["nekomata_okayu"],
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 80,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "studentcat",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choice",
+                "choice": [
+                    { 
+                        "effect_type": "reveal_top_deck",
+                        "and": [
+                            {
+                                "effect_type": "send_cheer",
+                                "conditions": [{ "condition": "top_deck_has_any_card_type", "condition_card_types": ["holomem_debut", "holomem_spot"] }],
+                                "amount_min": 1,
+                                "amount_max": 1,
+                                "from": "cheer_deck",
+                                "to": "this_holomem"
+                            },
+                            {
+                                "full_english_text": "OKAYU_004_COLLAB_PARTIAL_TEXT",
+                                "effect_type": "order_cards",
+                                "from": "deck",
+                                "destination": "deck",
+                                "bottom": true,
+                                "amount": 1
+                            }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-005",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nekomata_okayu"],
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 170,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "givemeatighthug",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            },
+            {
+                "art_id": "eheheprank",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-006",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nekomata_okayu"],
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 140,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars",
+            "#Song"
+        ],
+        "arts": [
+            {
+                "art_id": "nekokaburi",
+                "costs": [
+                    { "color": "blue", "amount": 1 }
+                ],
+                "power": 30
+            },
+            {
+                "art_id": "shaa",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "archive_cheer_from_holomem",
+                                "required_colors": ["blue"],
+                                "ability_source": "holomem_blue",
+                                "from": "self",
+                                "amount": 1,
+                                "and": [
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 10,
+                                        "target": "center",
+                                        "opponent": true
+                                    },
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 10,
+                                        "target": "backstage",
+                                        "opponent": true
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-007",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nekomata_okayu"],
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 110,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "sendingmyownsongwithallmymight",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "archive",
+                "to": "holomem",
+                "to_limitation": "tag_in",
+                "to_limitation_tags": ["#Gamers"]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-008",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nekomata_okayu"],
+        "buzz": true,
+        "rarity": "r",
+        "colors": ["blue"],
+        "hp": 240,
+        "baton_cost": 2,
+        "down_life_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "themostnoblenekomataokayu",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ],
+        "gift_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "conditions": [
+                    { "condition": "this_card_is_center" },
+                    { "condition": "performer_is_collab" },
+                    { 
+                        "condition": "holomem_on_stage",
+                        "location": "collab",
+                        "member_name_in": [
+                            "takane_lui",
+                            "ookami_mio",
+                            "shirakami_fubuki",
+                            "laplus_darkness",
+                            "inugami_korone"
+                        ]
+                    }
+                ],
+                "amount": 20
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-009",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["nekomata_okayu"],
+        "rarity": "rr",
+        "colors": ["blue"],
+        "hp": 190,
+        "baton_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "mogmog",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "white" }]
+                    }
+                ]
+            },
+            {
+                "art_id": "okayu",
+                "costs": [
+                    { "color": "blue", "amount": 2 },
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 100,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "white" }]  
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "archive_cheer_from_holomem",
+                                "required_colors": ["blue"],
+                                "ability_source": "holomem_blue",
+                                "from": "self",
+                                "amount": 2,
+                                "and": [
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 30,
+                                        "target": "center",
+                                        "opponent": true
+                                    },
+                                    {
+                                        "effect_type": "deal_damage",
+                                        "special": true,
+                                        "amount": 30,
+                                        "target": "backstage",
+                                        "opponent": true
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-010",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["inugami_korone"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gamers",
+            "#AnimalEars"
+        ],
+        "arts": [
+            {
+                "art_id": "orayo",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choose_cards",
+                "conditions": [
+                    { "condition": "holomem_on_stage", "required_member_name": "nekomata_okayu", "location": "center" }
+                ],
+                "from": "deck",
+                "destination": "hand",
+                "look_at": -1,
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "requirement": "support_types",
+                "requirement_support_types": ["fan", "mascot"],
+                "remaining_cards_action": "shuffle"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-011",
+        "card_type": "holomem_spot",
+        "bloom_blocked": true,
+        "card_names": ["laplus_darkness"],
+        "rarity": "u",
+        "colors": ["none"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#Shooter"
+        ],
+        "arts": [
+            {
+                "art_id": "doroboconstructionagriculturalminister",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 10
+            },
+            {
+                "art_id": "illdefinitelyletyoueatit",
+                "costs": [{ "color": "any", "amount": 2 }],
+                "power": 20,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "draw",
+                        "conditions": [{ "condition": "cards_in_hand", "amount_max": 2 }],
+                        "draw_to_hand_size": 3
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-012",
+        "card_type": "support",
+        "sub_type": "event",
+        "card_names": ["dorobo_construction"],
+        "rarity": "u",
+        "limited": true,
+        "colors": [],
+        "play_conditions": [{ "condition": "cards_in_hand", "amount_max": 7 }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem_named",
+                "requirement_names": ["nekomata_okayu", "takane_lui", "ookami_mio", "shirakami_fubuki", "laplus_darkness", "inugami_korone"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-013",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "card_names": ["okanyan"],
+        "rarity": "c",
+        "colors": [],
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "on_take_damage",
+                "conditions": [{ "condition": "attached_owner_is_location", "condition_location": "center_or_collab" }],
+                "effect_type": "reduce_damage",
+                "amount": 10
+            },
+            {
+                "timing": "before_archive_cheer",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "nekomata_okayu" }
+                ],
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "full_english_text": "MASCOT_HSD03_013_PARTIAL_TEXT",
+                        "effect_type": "archive_this_attachment",
+                        "and": [
+                            {
+                                "effect_type": "reduce_required_archive_count",
+                                "amount": 1
+                            }
+                        ]
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hSD03-014",
+        "card_type": "support",
+        "sub_type": "fan",
+        "card_names": ["onigirya"],
+        "rarity": "c",
+        "colors": [],
+        "play_conditions": [{ "condition": "holomem_on_stage", "required_member_name": "nekomata_okayu" }],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "nekomata_okayu"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 10
+            }
+        ],
+
+        "NOTE": "hSD03 CARDS END"
+    },
+
 
     {
         "NOTE": "hSD04 CARDS START",
