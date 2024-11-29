@@ -116,6 +116,7 @@ Your Archive,Your Archive,당신의 아카이브,あなたのアーカイブ,Tu 
 Opponent Archive,Opponent Archive,상대의 아카이브,相手のアーカイブ,Archivo del Oponente
 Attached Cards,Attached Cards,붙어있는 카드,付属カード,Cartas Apiladas
 ,,,,
+holomem,Holomem,Holomem,ホロメン,Holomem
 holomem_debut,Debut Holomem,Debut Holomem,Debutホロメン,Debut Holomem
 holomem_spot,Spot Holomem,Spot Holomem,Spotホロメン,Spot Holomem
 ,,,,
@@ -349,7 +350,7 @@ irys,IRyS,IRyS,IRyS,IRyS
 kazama_iroha,Kazama Iroha,카자마 이로하,風真いろは,Kazama Iroha
 kobo_kanaeru,Kobo Kanaeru,코보 카나에루,こぼ・かなえる,Kobo Kanaeru
 kureiji_ollie,Kureiji Ollie,Kureiji Ollie,クレイジー・オリー,Kureiji Ollie
-laplus_darkness,La+ Darknesss,La+ Darknesss,ラプラス・ダークネス,La+ Darknesss
+laplus_darkness,Laplus Darknesss,Laplus Darknesss,ラプラス・ダークネス,Laplus Darknesss
 moona_hoshinova,Moona Hoshinova,무나 호시노바,ムーナ・ホシノヴァ,Moona Hoshinova
 mori_calliope,Mori Calliope,모리 칼리오페,森カリオペ,Mori Calliope
 nakiri_ayame,Nakiri Ayame,Nakiri Ayame,百鬼あやめ,Nakiri Ayame
@@ -540,6 +541,7 @@ Choose a Holomem. This Turn: %s,Choose a Holomem. This Turn: %s,선택한 홀로
 this Holomem,this Holomem,이 홀로멤,このホロメン,este Holomem
 Archive {Amount}{Colors} Cheer from {Location}.,Archive {Amount}{Colors} Cheer from {Location}.,{Location}의 {Colors}옐 {Amount}장을 아카이브한다.,{Location}から{Amount}{Colors}のチアをアーカイブする。,Archiva {AMOUNT}{Colors} Aplausos de {Location}
 Archive %s from hand.,Archive %s from hand.,패 %s장을 아카이브한다.,手札から%sをアーカイブする。,Archiva %s de tu mano.
+Archive {Amount}{Requirement} from hand.,Archive {Amount}{Requirement} from hand.,패 {Amount}{Requirement}장을 아카이브한다.,手札から{Amount}{Requirement}をアーカイブする。,Archiva {Amount}{Requirement} de tu mano.
 Attach card to Holomem%s.,Attach card to Holomem%s.,이 카드를 붙일 홀로멤%s을(를).,カードをホロメン%sにアタッチする。,Apila carta a Holomem%s
 the top %s,the top %s,위에서 %s장,デッキトップ%s,las %s de encima
 Look at {Look} cards of your {Location}:,Look at {Look} cards of your {Location}:,{Location}{Look}의 카드를 보고:,{Location}のカードを{Look}枚見る：,Mira las {Look} cartas de tu {Location}
@@ -636,7 +638,6 @@ OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's 
 AYAME_09_ART_FULL_TEXT,Archive 0-3 cards from your hand. Deal 40 special damage per to your opponent's Center.,자신의 패 0~3장을 아카이브할 수 있다 : 상대 센터에 카드당 40의 특수 피해를 줍니다.,"自分の手札0～3枚をアーカイブする: 相手のセンターホロメンに,アーカイブしたカード1枚につき, 特殊ダメージ40を与える。",Archive 0-3 cards from your hand. Deal 40 special damage per to your opponent's Center.
 CHOCO_SD04_004_FULL_TEXT,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.
 OKAYU_004_COLLAB_PARTIAL_TEXT,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.
-MASCOT_HSD03_013_PARTIAL_TEXT,Archive this attachment instead of one Blue cheer.,Archive this attachment instead of one Blue cheer.,Archive this attachment instead of one Blue cheer.,Archive this attachment instead of one Blue cheer.
 ,,,,
 Go first.,Go first.,선공하기,先行です。,Ir Primero
 Go second.,Go second.,후공하기,後攻です。,Ir Segundo

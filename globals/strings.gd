@@ -331,21 +331,10 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 				main_text += "\n" + tr("ONLY_HOLOMEM (%s)") % "/".join(names)
 			"limited":
 				main_text += "\n" + tr("ONLY_LIMITED")
-			"item":
-				main_text += "\n" + tr("ONLY_ITEM")
-			"mascot":
-				main_text += "\n" + tr("ONLY_MASCOT")
-			"fan":
-				main_text += "\n" + tr("ONLY_FAN")
-			"tool":
-				main_text += "\n" + tr("ONLY_TOOL")
-			"event":
-				main_text += "\n" + tr("ONLY_EVENT")
-			"support_types":
-				# convert `requirement_support_types` to already existing tr format
-				var support_types = (requirement_details.get("requirement_support_types", [])
-					.map(func(type): return tr("ONLY_" + type.to_upper())))
-				main_text += "\n" + ", ".join(support_types)
+			"support":
+				var sub_types = (requirement_details.get("requirement_sub_types", [])
+					.map(func(sub_type): return tr("ONLY_" + sub_type.to_upper())))
+				main_text += "\n" + ", ".join(sub_types)
 			"cheer":
 				main_text += "\n" + tr("ONLY_CHEER")
 		if requirement_details.get("requirement_block_limited", false):
@@ -486,14 +475,24 @@ func get_condition_text(conditions):
 			"has_stacked_holomem":
 				text += ""
 			"holomem_on_stage":
-				if "required_member_name" in condition:
-					text += "%s on stage: " % [get_names([condition["required_member_name"]])[0]]
-				elif "member_name_in" in condition:
-					text += "%s on stage: " % "/".join(get_names(condition["member_name_in"]))
-				elif "exclude_member_name" in condition:
-					var not_str = " (Not %s)" % [get_names([condition["exclude_member_name"]])[0]]
+				var location_str = ""
+				match condition.get("location"):
+					"center":
+						location_str = tr("Center")
+					"collab":
+						location_str = tr("Collab")
+					_:
+						location_str = "stage"
+
+				if "required_member_name_in" in condition:
+					text += "%s on %s: " % ["/".join(get_names(condition["required_member_name_in"])), location_str]
+				elif "exclude_member_name_in" in condition:
+					var not_str = " (Not %s)" % "/".join(get_names(condition["exclude_member_name_in"]))
 					if "tag_in" in condition:
-						text += "%s Holomem on stage%s: " % ["/".join(condition["tag_in"]), not_str]
+						text += "%s Holomem on %s%s: " % ["/".join(get_tags_strings(condition["tag_in"])), location_str, not_str]
+				else:
+					if "tag_in" in condition:
+						text += "%s Holomem on %s: " % ["/".join(get_tags_strings(condition["tag_in"])), location_str]
 			"not_used_once_per_game_effect":
 				text += "Once per game: "
 			"not_used_once_per_turn_effect":
@@ -587,7 +586,8 @@ func get_effect_text(effect):
 			text += tr("Archive {Amount}{Colors} Cheer from {Location}.").format({Amount = amount, Colors = colors_str, Location = from_str})
 		"archive_from_hand":
 			var amount = effect["amount"]
-			text += tr("Archive %s from hand.") % amount
+			var requirement = (" " + tr(effect["requirement"])) if "requirement" in effect else ""
+			text += tr("Archive {Amount}{Requirement} from hand.").format({Amount = amount, Requirement = requirement})
 		"archive_this_attachment":
 			text += "Archive this attachment."
 		"archive_top_stacked_holomem":
@@ -768,7 +768,11 @@ func get_effect_text(effect):
 				text += "Reduce damage by %s." % [effect["amount"]]
 		"reduce_required_archive_count":
 			var amount = effect["amount"]
-			text += "Archive %s less from Hand" % [amount]
+			var cheer_color = effect.get("cheer_color")
+			if cheer_color:
+				text += "Archive %s less %s cheer from Holomem" % [amount, "/".join(cheer_color.map(get_color_string))]
+			else:
+				text += "Archive %s less from Hand" % [amount]
 		"repeat_art":
 			text += tr("Repeat this Art.")
 		"restrict_targets_to_collab":
