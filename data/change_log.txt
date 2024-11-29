@@ -2,13 +2,15 @@
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
   - [b]Added cards from "Quintet Spectrum"[/b]
-    - hBP02-014 to -017: [b]Shirogane Noel[/b] Holomem cards
-    - hBP02-085: [b]HOLOLIVE FANTASY[/b] Support (Event) card
-    - hBP02-086: [b]Holo Sparkling Wine[/b] Support (Tool) card
-    - hBP02-100: [b]Shirogane Dan'in[/b] Support (Fan) card
+      - hBP02-014 to -017: "Shirogane Noel" Holomem cards
+      - hBP02-061 to -064: "Ninomae Ina'nis" Holomem cards
+      - hBP02-075: "Idol Felt Pen" Support (Item) card
+      - hBP02-085: "HOLOLIVE FANTASY" Support (Event) card
+      - hBP02-086: "Holo Sparkling Wine" Support (Tool) card
+      - hBP02-100: "Shirogane Dan'in" Support (Fan) card
   - [b]Added hSD03: Nekomata Okayu Starter Deck.[/b]
-  - [b]Added hSD04: Yuzuki Choco Starter Deck.[/b]
-  - [b]Added hSD02: Nakiri Ayame Starter Deck.[/b]
+  - Added hSD04: Yuzuki Choco Starter Deck.
+  - Added hSD02: Nakiri Ayame Starter Deck.
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]HISTORY[/u][/b][/font_size]

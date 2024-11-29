@@ -478,6 +478,12 @@ func get_condition_text(conditions):
 				text += "Has %s attachment: " % [condition["condition_type"]]
 			"has_stacked_holomem":
 				text += ""
+			"holomem_in_archive":
+				var amount_str = ""
+				if "amount_min" in condition and "amount_max" not in condition:
+					amount_str += "%s or more" % condition["amount_min"]
+				var tags_str = " %s" % "/".join(get_tags_strings(condition["tag_in"])) if "tag_in" in condition else ""
+				text += "%s%s Holomem in Archive: " % [amount_str, tags_str]
 			"holomem_on_stage":
 				var location_str = ""
 				match condition.get("location"):
@@ -816,7 +822,9 @@ func get_effect_text(effect):
 			if "limitation" in effect:
 				match effect["limitation"]:
 					"color_in":
-						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
+						limitation_str = " (%s)" % "/".join(effect["limitation_colors"])
+					"tag_in":
+						limitation_str = " (%s)" % "/".join(get_tags_strings(effect["limitation_tags"]))
 			text += "Restore %s HP %s%s" % [amount_str, target_str, limitation_str]
 		"restore_hp_INTERNAL":
 			text += "Restore HP."

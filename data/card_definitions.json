@@ -4996,7 +4996,7 @@
         "card_id": "hBP01-051",
         "card_type": "holomem_bloom",
         "bloom_level": 1,
-        "buzz": "true",
+        "buzz": true,
         "card_names": ["kazama_iroha"],
         "rarity": "rr",
         "alt_id": "hBP01-051",
@@ -8177,7 +8177,7 @@
         "card_id": "hBP02-017",
         "card_type": "holomem_bloom",
         "bloom_level": 1,
-        "buzz": "true",
+        "buzz": true,
         "card_names": ["shirogane_noel"],
         "rarity": "rr",
         "colors": ["white"],
@@ -8213,6 +8213,153 @@
                         "limit": 4
                     }
                 ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-061",
+        "card_type": "holomem_debut",
+        "card_names": ["ninomae_inanis"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 140,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "wah",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 10
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-062",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["ninomae_inanis"],
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 180,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "takogramwithyou",
+                "costs": [{ "color": "purple", "amount": 2 }],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-063",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["ninomae_inanis"],
+        "rarity": "u",
+        "colors": ["purple"],
+        "hp": 140,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "letshavefun",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "restore_hp",
+                "target": "holomem",
+                "limitation": "tag_in",
+                "limitation_tags": ["#Myth"],
+                "amount": 20
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-064",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "buzz": true,
+        "card_names": ["ninomae_inanis"],
+        "rarity": "rr",
+        "colors": ["purple"],
+        "hp": 250,
+        "baton_cost": 2,
+        "down_life_cost": 2,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "archaicsmile",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "holomem_in_archive", "amount_min": 5, "tag_in": ["#Myth"] }],
+                        "effect_type": "send_cheer",
+                        "amount_min": 0,
+                        "amount_max": 1,
+                        "from": "self",
+                        "to": "holomem"
+                    },
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "holomem_in_archive", "amount_min": 10, "tag_in": ["#Myth"] }],
+                        "effect_type": "power_boost",
+                        "amount": 50
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-075",
+        "card_type": "support",
+        "sub_type": "item",
+        "colors": [],
+        "card_names": ["idol_felt_pen"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [{ "condition": "cards_in_hand", "amount_max": 7 }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem",
+                "requirement_tags": ["#Art"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
             }
         ]
     },
