@@ -270,7 +270,7 @@
                         "amount": 50,
                         "conditions": [{
                             "condition": "holomem_on_stage",
-                            "required_member_name": "azki"
+                            "required_member_name_in": ["azki"]
                         }]
                     }
                 ]
@@ -478,7 +478,7 @@
                         "to": "holomem",
                         "conditions": [{
                             "condition": "holomem_on_stage",
-                            "required_member_name": "tokino_sora"
+                            "required_member_name_in": ["tokino_sora"]
                         }]
                     }
                 ]
@@ -1349,6 +1349,7 @@
                         "effect_type": "archive_from_hand",
                         "ability_source": "holomem_none",
                         "amount": 1,
+                        "requirement": "holomem",
                         "and": [
                             {
                                 "effect_type": "send_cheer",
@@ -1815,7 +1816,7 @@
                     { 
                         "condition": "holomem_on_stage",
                         "location": "collab",
-                        "member_name_in": [
+                        "required_member_name_in": [
                             "takane_lui",
                             "ookami_mio",
                             "shirakami_fubuki",
@@ -1934,7 +1935,7 @@
             {
                 "effect_type": "choose_cards",
                 "conditions": [
-                    { "condition": "holomem_on_stage", "required_member_name": "nekomata_okayu", "location": "center" }
+                    { "condition": "holomem_on_stage", "required_member_name_in": ["nekomata_okayu"], "location": "center" }
                 ],
                 "from": "deck",
                 "destination": "hand",
@@ -1942,8 +1943,8 @@
                 "amount_min": 1,
                 "amount_max": 1,
                 "reveal_chosen": true,
-                "requirement": "support_types",
-                "requirement_support_types": ["fan", "mascot"],
+                "requirement": "support",
+                "requirement_sub_types": ["fan", "mascot"],
                 "remaining_cards_action": "shuffle"
             }
         ]
@@ -2030,12 +2031,12 @@
                 "effect_type": "choice",
                 "choice": [
                     {
-                        "full_english_text": "MASCOT_HSD03_013_PARTIAL_TEXT",
                         "effect_type": "archive_this_attachment",
                         "and": [
                             {
                                 "effect_type": "reduce_required_archive_count",
-                                "amount": 1
+                                "amount": 1,
+                                "cheer_color": ["blue"]
                             }
                         ]
                     },
@@ -2051,7 +2052,7 @@
         "card_names": ["onigirya"],
         "rarity": "c",
         "colors": [],
-        "play_conditions": [{ "condition": "holomem_on_stage", "required_member_name": "nekomata_okayu" }],
+        "play_conditions": [{ "condition": "holomem_on_stage", "required_member_name_in": ["nekomata_okayu"] }],
         "effects": [
             {
                 "effect_type": "attach_card_to_holomem",
@@ -2233,7 +2234,8 @@
                                 "destination": "hand",
                                 "amount_min": 1,
                                 "amount_max": 1,
-                                "requirement": "event",
+                                "requirement": "support",
+                                "requirement_sub_types": ["event"],
                                 "requirement_tags": ["#Food"],
                                 "reveal_chosen": true,
                                 "remaining_cards_action": "shuffle"
@@ -2349,7 +2351,8 @@
                 "destination": "hand",
                 "amount_min": 0,
                 "amount_max": 1,
-                "requirement": "event",
+                "requirement": "support",
+                "requirement_sub_types": ["event"],
                 "requirement_block_limited": true,
                 "reveal_chosen": true,
                 "remaining_cards_action": "nothing"
@@ -2397,7 +2400,8 @@
                         "destination": "hand",
                         "amount_min": 0,
                         "amount_max": 1,
-                        "requirement": "event",
+                        "requirement": "support",
+                        "requirement_sub_types": ["event"],
                         "requirement_tags": ["#Food"],
                         "reveal_chosen": true,
                         "remaining_cards_action": "nothing",
@@ -2742,7 +2746,8 @@
                         "destination": "hand",
                         "amount_min": 1,
                         "amount_max": 1,
-                        "requirement": "event",
+                        "requirement": "support",
+                        "requirement_sub_types": ["event"],
                         "reveal_chosen": true,
                         "remaining_cards_action": "shuffle"
                     }
@@ -3362,7 +3367,8 @@
                                         "destination": "holomem",
                                         "amount_min": 1,
                                         "amount_max": 1,
-                                        "requirement": "mascot",
+                                        "requirement": "support",
+                                        "requirement_sub_types": ["mascot"],
                                         "reveal_chosen": true,
                                         "remaining_cards_action": "shuffle"
                                     }
@@ -4302,7 +4308,8 @@
                 "destination": "holomem",
                 "amount_min": 0,
                 "amount_max": 1,
-                "requirement": "tool",
+                "requirement": "support",
+                "requirement_sub_types": ["tool"],
                 "reveal_chosen": true,
                 "remaining_cards_action": "nothing"
             }
@@ -5163,7 +5170,7 @@
                     },
                     {
                         "timing": "before_art",
-                        "conditions": [{ "condition": "holomem_on_stage", "tag_in": ["#ID"], "exclude_member_name": "airani_iofifteen" }],
+                        "conditions": [{ "condition": "holomem_on_stage", "tag_in": ["#ID"], "exclude_member_name_in": ["airani_iofifteen"] }],
                         "effect_type": "power_boost",
                         "amount": 50
                     }
@@ -5563,7 +5570,8 @@
                                 "destination": "hand",
                                 "amount_min": 1,
                                 "amount_max": 1,
-                                "requirement": "mascot",
+                                "requirement": "support",
+                                "requirement_sub_types": ["mascot"],
                                 "reveal_chosen": true,
                                 "remaining_cards_action": "shuffle"
                             }
@@ -5851,7 +5859,8 @@
                 "destination": "hand",
                 "amount_min": 1,
                 "amount_max": 1,
-                "requirement": "fan",
+                "requirement": "support",
+                "requirement_sub_types": ["fan"],
                 "reveal_chosen": true,
                 "remaining_cards_action": "shuffle"
             }
@@ -7253,7 +7262,8 @@
                 "destination": "hand",
                 "amount_min": 0,
                 "amount_max": 1,
-                "requirement": "item",
+                "requirement": "support",
+                "requirement_sub_types": ["item"],
                 "reveal_chosen": true,
                 "remaining_cards_action": "nothing"
             }
@@ -7899,7 +7909,7 @@
         "rarity": "c",
         "play_conditions": [
             {
-                "condition": "holomem_on_stage", "required_member_name": "aki_rosenthal"
+                "condition": "holomem_on_stage", "required_member_name_in": ["aki_rosenthal"]
             }
         ],
         "effects": [
@@ -7934,7 +7944,7 @@
         "rarity": "c",
         "play_conditions": [
             {
-                "condition": "holomem_on_stage", "required_member_name": "usada_pekora"
+                "condition": "holomem_on_stage", "required_member_name_in": ["usada_pekora"]
             }
         ],
         "effects": [
@@ -7970,7 +7980,7 @@
         "rarity": "c",
         "play_conditions": [
             {
-                "condition": "holomem_on_stage", "required_member_name": "azki"
+                "condition": "holomem_on_stage", "required_member_name_in": ["azki"]
             }
         ],
         "effects": [
@@ -8004,7 +8014,7 @@
         "rarity": "c",
         "play_conditions": [
             {
-                "condition": "holomem_on_stage", "required_member_name": "takanashi_kiara"
+                "condition": "holomem_on_stage", "required_member_name_in": ["takanashi_kiara"]
             }
         ],
         "effects": [
@@ -8044,7 +8054,7 @@
         "rarity": "c",
         "play_conditions": [
             {
-                "condition": "holomem_on_stage", "required_member_name": "omaru_polka"
+                "condition": "holomem_on_stage", "required_member_name_in": ["omaru_polka"]
             }
         ],
         "effects": [
@@ -8947,7 +8957,7 @@
                         "effect_type": "deal_damage",
                         "special": true,
                         "amount": 50,
-                        "target": "backstage",
+                        "target": "current_damage_target",
                         "opponent": true,
                         "pre_effects": [
                             { "effect_type": "spend_holopower", "amount": 1 },
