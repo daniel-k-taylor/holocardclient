@@ -1,9 +1,17 @@
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
+  - [b]Added cards from "Quintet Spectrum"[/b]
+    - hBP02-014 to -017: [b]Shirogane Noel[/b] Holomem cards
+    - hBP02-085: [b]HOLOLIVE FANTASY[/b] Support (Event) card
+    - hBP02-086: [b]Holo Sparkling Wine[/b] Support (Tool) card
+    - hBP02-100: [b]Shirogane Dan'in[/b] Support (Fan) card
   - [b]Added hSD03: Nekomata Okayu Starter Deck.[/b]
   - [b]Added hSD04: Yuzuki Choco Starter Deck.[/b]
   - [b]Added hSD02: Nakiri Ayame Starter Deck.[/b]
+
+[center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
+[font_size=20][b][u]HISTORY[/u][/b][/font_size]
   - Added a new setting that toggles the visibility of the card information overlay and panel for cards with no proxies.
   - Added a new card information panel for cards with no proxies.
   - Added promo cards:
@@ -16,8 +24,5 @@
     - hBD24-007 : Gigi Murin oshi
     - hBD24-008 : Vestia Zeta
     - hPR-001      : Sakura Miko spot
-
-[center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
-[font_size=20][b][u]HISTORY[/u][/b][/font_size]
   - Enabled alternative art for cards.
   - Added searching via tags in the filter section e.g. [i]#promise[/i],[i]#song[/i], etc.

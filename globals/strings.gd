@@ -422,6 +422,10 @@ func get_condition_text(conditions):
 				if len(required_bloom_levels) > 0:
 					bloom_str = " " + tr("(Bloom %s)") % "/".join(required_bloom_levels)
 				text += "If attached to %s%s: " % [get_names([condition["required_member_name"]])[0], bloom_str]
+			"attached_to_has_tags":
+				var inverse_str = "without" if condition.get("inverse") else "with"
+				var tags = condition["required_tags"]
+				text += "If attached to Holomem %s tags %s: " % [inverse_str, "/".join(get_tags_strings(tags))]
 			"attached_owner_is_location":
 				var location_str = ""
 				match condition["condition_location"]:
@@ -753,7 +757,14 @@ func get_effect_text(effect):
 			var tag_str = ""
 			if "has_tag" in effect:
 				tag_str = "%s " % effect["has_tag"]
-			text += "+%s Power per %sHolomem." % [effect["amount"], tag_str]
+			var exclude_str = ""
+			match effect.get("exclude"):
+				"self":
+					exclude_str = " other than this "
+			var up_to_str = ""
+			if "limit" in effect:
+				up_to_str = " (up to %sx)" % effect["limit"]
+			text += "+%s Power per %s%sHolomem%s." % [effect["amount"], tag_str, exclude_str, up_to_str]
 		"power_boost_per_stacked":
 			text += tr("+%s Power per stacked Holomem.") % [effect["amount"]]
 		"power_boost_per_played_support":

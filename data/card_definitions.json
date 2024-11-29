@@ -8082,6 +8082,213 @@
     },
 
     {
+        "NOTE": "BP2 CARDS START",
+
+        "card_id": "hBP02-014",
+        "card_type": "holomem_debut",
+        "card_names": ["shirogane_noel"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "konmuscle",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 20
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-015",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["shirogane_noel"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 180,
+        "baton_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "ohamuscle",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            },
+            {
+                "art_id": "otsumuscle",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-016",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["shirogane_noel"],
+        "rarity": "u",
+        "colors": ["white"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "burnitintoyourmemory",
+                "costs": [{ "color": "any", "amount": 2 }],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "conditions": [{ "condition": "bloom_target_is_debut" }],
+                "from": "deck",
+                "destination": "hand",
+                "look_at": -1,
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle",
+                "requirement": "holomem",
+                "requirement_bloom_levels": [1],
+                "requirement_tags": ["#Gen3"]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-017",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "buzz": "true",
+        "card_names": ["shirogane_noel"],
+        "rarity": "rr",
+        "colors": ["white"],
+        "hp": 260,
+        "baton_cost": 2,
+        "down_life_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "afluffymeatheadedknight",
+                "costs": [{ "color": "any", "amount": 2 }],
+                "power": 50
+            },
+            {
+                "art_id": "thirdgenerationpower",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "this_card_is_collab" }],
+                        "effect_type": "power_boost_per_holomem",
+                        "has_tag": "#Gen3",
+                        "exclude": "self",
+                        "amount": 20,
+                        "limit": 4
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-085",
+        "card_type": "support",
+        "sub_type": "event",
+        "colors": [],
+        "card_names": ["hololive_fantasy"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [{ "condition": "cards_in_hand", "amount_max": 7 }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem",
+                "requirement_tags": ["#Gen3"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-086",
+        "card_type": "support",
+        "sub_type": "tool",
+        "colors": [],
+        "card_names": ["holo_sparkling_wine"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 20
+            },
+            {
+                "timing": "on_take_damage",
+                "effect_type": "add_damage_taken",
+                "conditions": [{ "condition": "attached_to_has_tags", "required_tags": ["#Alcohol"], "inverse": true }],
+                "amount": 10
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-100",
+        "card_type": "support",
+        "sub_type": "fan",
+        "card_names": ["shirogane_danin"],
+        "rarity": "c",
+        "colors": [],
+        "play_conditions": [{ "condition": "holomem_on_stage", "required_member_name_in": ["shirogane_noel"] }],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "shirogane_noel"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "on_take_damage",
+                "effect_type": "reduce_damage",
+                "amount": 10
+            }
+        ],
+
+        "NOTE": "BP2 CARDS END"
+    },
+
+    {
         "NOTE": "PR CARDS START",
 
         "card_id": "hBD24-001",
