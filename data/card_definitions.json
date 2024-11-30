@@ -8523,6 +8523,42 @@
         ]
     },
     {
+        "card_id": "hBP02-076",
+        "card_type": "support",
+        "sub_type": "item",
+        "colors": [],
+        "card_names": ["custompc"],
+        "rarity": "c",
+        "play_conditions": [{ "condition": "card_type_in_hand", "condition_card_types": ["holomem_debut"] }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "hand",
+                "look_at": -1,
+                "destination": "bottom_of_deck",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem_debut",
+                "reveal_chosen": true,
+                "remaining_cards_action": "nothing",
+                "after_choose_effect": {
+                    "effect_type": "choose_cards",
+                    "from": "deck",
+                    "look_at": -1,
+                    "destination": "hand",
+                    "amount_min": 1,
+                    "amount_max": 1,
+                    "requirement": "holomem_bloom",
+                    "requirement_bloom_levels": [1],
+                    "requirement_buzz_blocked": true,
+                    "requirement_same_name_as_last_choice": true,
+                    "reveal_chosen": true,
+                    "remaining_cards_action": "shuffle"
+                }
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-085",
         "card_type": "support",
         "sub_type": "event",

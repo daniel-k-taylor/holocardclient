@@ -239,6 +239,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			to_zone_str = tr("YOUR_ARCHIVE")
 		"backstage":
 			to_zone_str = tr("YOUR_BACKSTAGE")
+		"bottom_of_deck":
+			to_zone_str = "%s of %s" % [tr("the bottom"), tr("YOUR_DECK")]
 		"center":
 			to_zone_str = tr("YOUR_CENTER")
 		"cheer_deck":
