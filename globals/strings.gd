@@ -528,7 +528,7 @@ func get_condition_text(conditions):
 			"played_support_this_turn":
 				text += tr("Played a Support card this turn:") + " "
 			"self_has_cheer_color":
-				text += "" #"Has %s %s Cheer: " % [condition["amount_min"], "/".join(condition["condition_colors"])]
+				text += "Has %s %s Cheer: " % [condition["amount_min"], "/".join(get_color_strings(condition["condition_colors"]))]
 			"stage_has_space":
 				text += tr("Room on stage:") + " "
 			"target_color":

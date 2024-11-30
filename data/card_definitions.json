@@ -8340,6 +8340,165 @@
         ]
     },
     {
+        "card_id": "hBP02-065",
+        "card_type": "holomem_debut",
+        "card_names": ["nerissa_ravencroft"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 90,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "hiyadarlings",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "conditions": [{ "condition": "self_has_cheer_color", "condition_colors": ["red"], "amount_min": 1 }],
+                        "amount": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-066",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nerissa_ravencroft"],
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 150,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "thatsoundsgood",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            },
+            {
+                "art_id": "whatisanidolsong",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-067",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nerissa_ravencroft"],
+        "rarity": "u",
+        "colors": ["purple"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "teaisbetterthancoffee",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 20
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 3,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem",
+                "requirement_tags": ["#Song"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-068",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["nerissa_ravencroft"],
+        "rarity": "r",
+        "colors": ["purple"],
+        "hp": 210,
+        "baton_cost": 2,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "loveinsong",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 80,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "yellow" }]
+                    }
+                ]
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "add_turn_effect",
+                "turn_effect": {
+                    "timing": "before_art",
+                    "effect_type": "power_boost",
+                    "amount": 30,
+                    "conditions": [
+                        { "condition": "performer_is_center" },
+                        { "condition": "performer_has_any_tag", "condition_tags": ["#Song"] }
+                    ]
+                }
+            },
+            {
+                "effect_type": "add_turn_effect",
+                "turn_effect": {
+                    "timing": "before_art",
+                    "effect_type": "power_boost",
+                    "amount": 30,
+                    "conditions": [
+                        { "condition": "performer_is_collab" },
+                        { "condition": "performer_has_any_tag", "condition_tags": ["#Song"] }
+                    ]
+                }
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-075",
         "card_type": "support",
         "sub_type": "item",

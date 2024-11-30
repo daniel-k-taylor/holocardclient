@@ -4,6 +4,7 @@
   - [b]Added cards from "Quintet Spectrum"[/b]
       - hBP02-014 to -017: "Shirogane Noel" Holomem cards
       - hBP02-061 to -064: "Ninomae Ina'nis" Holomem cards
+      - hBP02-065 to -068: "Nerissa Ravencroft" Holomem cards
       - hBP02-075: "Idol Felt Pen" Support (Item) card
       - hBP02-085: "HOLOLIVE FANTASY" Support (Event) card
       - hBP02-086: "Holo Sparkling Wine" Support (Tool) card
