@@ -239,6 +239,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			to_zone_str = tr("YOUR_ARCHIVE")
 		"backstage":
 			to_zone_str = tr("YOUR_BACKSTAGE")
+		"bottom_of_deck":
+			to_zone_str = tr("YOUR_BOTTOM_OF_DECK")
 		"center":
 			to_zone_str = tr("YOUR_CENTER")
 		"cheer_deck":
@@ -422,6 +424,14 @@ func get_condition_text(conditions):
 				if len(required_bloom_levels) > 0:
 					bloom_str = " " + tr("(Bloom %s)") % "/".join(required_bloom_levels)
 				text += "If attached to %s%s: " % [get_names([condition["required_member_name"]])[0], bloom_str]
+			"attached_to_has_tags":
+				var tags_str = "/".join(get_tags_strings(condition["required_tags"]))
+				if condition.get("inverse", false):
+					# Example: `If attached to Holomem without tags #Song/#Art: `
+					text += tr("CONDITION__ATTACHED_TO_HAS_TAGS_INVERSE").format({Tags=tags_str})
+				else:
+					# Example: `If attached to Holomem with tags #Song/#Art: `
+					text += tr("CONDITION__ATTACHED_TO_HAS_TAGS").format({Tags=tags_str})
 			"attached_owner_is_location":
 				var location_str = ""
 				match condition["condition_location"]:
@@ -474,6 +484,13 @@ func get_condition_text(conditions):
 				text += "Has %s attachment: " % [condition["condition_type"]]
 			"has_stacked_holomem":
 				text += ""
+			"holomem_in_archive":
+				var amount_str = ""
+				if "amount_min" in condition and "amount_max" not in condition:
+					amount_str += "%s+" % condition["amount_min"]
+				var tags_str = (" %s" % "/".join(get_tags_strings(condition["tag_in"]))) if "tag_in" in condition else ""
+				# Example: `1+ #Myth Holomem in Archive: `
+				text += tr("CONDITION__HOLOMEM_IN_ARCHIVE").format({Amount=amount_str, Tags=tags_str})
 			"holomem_on_stage":
 				var location_str = ""
 				match condition.get("location"):
@@ -518,7 +535,10 @@ func get_condition_text(conditions):
 			"played_support_this_turn":
 				text += tr("Played a Support card this turn:") + " "
 			"self_has_cheer_color":
-				text += "" #"Has %s %s Cheer: " % [condition["amount_min"], "/".join(condition["condition_colors"])]
+				var amount_str = condition["amount_min"]
+				var colors_str = "/".join(get_color_strings(condition["condition_colors"]))
+				# Example: `Has 1 Red/Blue Cheer: `
+				text += tr("CONDITION__SELF_HAS_CHEER_COLOR").format({Amount=amount_str, Colors=colors_str})
 			"stage_has_space":
 				text += tr("Room on stage:") + " "
 			"target_color":
@@ -753,7 +773,14 @@ func get_effect_text(effect):
 			var tag_str = ""
 			if "has_tag" in effect:
 				tag_str = "%s " % effect["has_tag"]
-			text += "+%s Power per %sHolomem." % [effect["amount"], tag_str]
+			var exclude_str = ""
+			match effect.get("exclude"):
+				"self":
+					exclude_str = " other than this "
+			var up_to_str = ""
+			if "limit" in effect:
+				up_to_str = " (up to %sx)" % effect["limit"]
+			text += "+%s Power per %s%sHolomem%s." % [effect["amount"], tag_str, exclude_str, up_to_str]
 		"power_boost_per_stacked":
 			text += tr("+%s Power per stacked Holomem.") % [effect["amount"]]
 		"power_boost_per_played_support":
@@ -805,7 +832,9 @@ func get_effect_text(effect):
 			if "limitation" in effect:
 				match effect["limitation"]:
 					"color_in":
-						limitation_str = "(%s)" % "/".join(effect["limitation_colors"])
+						limitation_str = " (%s)" % "/".join(effect["limitation_colors"])
+					"tag_in":
+						limitation_str = " (%s)" % "/".join(get_tags_strings(effect["limitation_tags"]))
 			text += "Restore %s HP %s%s" % [amount_str, target_str, limitation_str]
 		"restore_hp_INTERNAL":
 			text += "Restore HP."

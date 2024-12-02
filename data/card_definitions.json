@@ -4996,7 +4996,7 @@
         "card_id": "hBP01-051",
         "card_type": "holomem_bloom",
         "bloom_level": 1,
-        "buzz": "true",
+        "buzz": true,
         "card_names": ["kazama_iroha"],
         "rarity": "rr",
         "alt_id": "hBP01-051",
@@ -8079,6 +8079,555 @@
         ],
 
         "NOTE": "BP1 CARDS END"
+    },
+
+    {
+        "NOTE": "BP2 CARDS START",
+
+        "card_id": "hBP02-014",
+        "card_type": "holomem_debut",
+        "card_names": ["shirogane_noel"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "konmuscle",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 20
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-015",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["shirogane_noel"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 180,
+        "baton_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "ohamuscle",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            },
+            {
+                "art_id": "otsumuscle",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-016",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["shirogane_noel"],
+        "rarity": "u",
+        "colors": ["white"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "burnitintoyourmemory",
+                "costs": [{ "color": "any", "amount": 2 }],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "conditions": [{ "condition": "bloom_target_is_debut" }],
+                "from": "deck",
+                "destination": "hand",
+                "look_at": -1,
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle",
+                "requirement": "holomem",
+                "requirement_bloom_levels": [1],
+                "requirement_tags": ["#Gen3"]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-017",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "buzz": true,
+        "card_names": ["shirogane_noel"],
+        "rarity": "rr",
+        "colors": ["white"],
+        "hp": 260,
+        "baton_cost": 2,
+        "down_life_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "afluffymeatheadedknight",
+                "costs": [{ "color": "any", "amount": 2 }],
+                "power": 50
+            },
+            {
+                "art_id": "thirdgenerationpower",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "this_card_is_collab" }],
+                        "effect_type": "power_boost_per_holomem",
+                        "has_tag": "#Gen3",
+                        "exclude": "self",
+                        "amount": 20,
+                        "limit": 4
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-061",
+        "card_type": "holomem_debut",
+        "card_names": ["ninomae_inanis"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 140,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "wah",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 10
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-062",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["ninomae_inanis"],
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 180,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "takogramwithyou",
+                "costs": [{ "color": "purple", "amount": 2 }],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-063",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["ninomae_inanis"],
+        "rarity": "u",
+        "colors": ["purple"],
+        "hp": 140,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "letshavefun",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "restore_hp",
+                "target": "holomem",
+                "limitation": "tag_in",
+                "limitation_tags": ["#Myth"],
+                "amount": 20
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-064",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "buzz": true,
+        "card_names": ["ninomae_inanis"],
+        "rarity": "rr",
+        "colors": ["purple"],
+        "hp": 250,
+        "baton_cost": 2,
+        "down_life_cost": 2,
+        "tags": [
+            "#EN",
+            "#Myth",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "archaicsmile",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "holomem_in_archive", "amount_min": 5, "tag_in": ["#Myth"] }],
+                        "effect_type": "send_cheer",
+                        "amount_min": 0,
+                        "amount_max": 1,
+                        "from": "self",
+                        "to": "holomem"
+                    },
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "holomem_in_archive", "amount_min": 10, "tag_in": ["#Myth"] }],
+                        "effect_type": "power_boost",
+                        "amount": 50
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-065",
+        "card_type": "holomem_debut",
+        "card_names": ["nerissa_ravencroft"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 90,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "hiyadarlings",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "conditions": [{ "condition": "self_has_cheer_color", "condition_colors": ["red"], "amount_min": 1 }],
+                        "amount": 10
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-066",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nerissa_ravencroft"],
+        "rarity": "c",
+        "colors": ["purple"],
+        "hp": 150,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "thatsoundsgood",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            },
+            {
+                "art_id": "whatisanidolsong",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-067",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["nerissa_ravencroft"],
+        "rarity": "u",
+        "colors": ["purple"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "teaisbetterthancoffee",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 20
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 3,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem",
+                "requirement_tags": ["#Song"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-068",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["nerissa_ravencroft"],
+        "rarity": "r",
+        "colors": ["purple"],
+        "hp": 210,
+        "baton_cost": 2,
+        "tags": [
+            "#EN",
+            "#Advent",
+            "#Song",
+            "#Bird"
+        ],
+        "arts": [
+            {
+                "art_id": "loveinsong",
+                "costs": [
+                    { "color": "purple", "amount": 1 },
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 80,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "yellow" }]
+                    }
+                ]
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "add_turn_effect",
+                "turn_effect": {
+                    "timing": "before_art",
+                    "effect_type": "power_boost",
+                    "amount": 30,
+                    "conditions": [
+                        { "condition": "performer_is_center" },
+                        { "condition": "performer_has_any_tag", "condition_tags": ["#Song"] }
+                    ]
+                }
+            },
+            {
+                "effect_type": "add_turn_effect",
+                "turn_effect": {
+                    "timing": "before_art",
+                    "effect_type": "power_boost",
+                    "amount": 30,
+                    "conditions": [
+                        { "condition": "performer_is_collab" },
+                        { "condition": "performer_has_any_tag", "condition_tags": ["#Song"] }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-075",
+        "card_type": "support",
+        "sub_type": "item",
+        "colors": [],
+        "card_names": ["idol_felt_pen"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [{ "condition": "cards_in_hand", "amount_max": 7 }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem",
+                "requirement_tags": ["#Art"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-076",
+        "card_type": "support",
+        "sub_type": "item",
+        "colors": [],
+        "card_names": ["custompc"],
+        "rarity": "c",
+        "play_conditions": [{ "condition": "card_type_in_hand", "condition_card_types": ["holomem_debut"] }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "hand",
+                "look_at": -1,
+                "destination": "bottom_of_deck",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem_debut",
+                "reveal_chosen": true,
+                "remaining_cards_action": "nothing",
+                "after_choose_effect": {
+                    "effect_type": "choose_cards",
+                    "from": "deck",
+                    "look_at": -1,
+                    "destination": "hand",
+                    "amount_min": 1,
+                    "amount_max": 1,
+                    "requirement": "holomem_bloom",
+                    "requirement_bloom_levels": [1],
+                    "requirement_buzz_blocked": true,
+                    "requirement_same_name_as_last_choice": true,
+                    "reveal_chosen": true,
+                    "remaining_cards_action": "shuffle"
+                }
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-085",
+        "card_type": "support",
+        "sub_type": "event",
+        "colors": [],
+        "card_names": ["hololive_fantasy"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [{ "condition": "cards_in_hand", "amount_max": 7 }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem",
+                "requirement_tags": ["#Gen3"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-086",
+        "card_type": "support",
+        "sub_type": "tool",
+        "colors": [],
+        "card_names": ["holo_sparkling_wine"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 20
+            },
+            {
+                "timing": "on_take_damage",
+                "effect_type": "add_damage_taken",
+                "conditions": [{ "condition": "attached_to_has_tags", "required_tags": ["#Alcohol"], "inverse": true }],
+                "amount": 10
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-100",
+        "card_type": "support",
+        "sub_type": "fan",
+        "card_names": ["shirogane_danin"],
+        "rarity": "c",
+        "colors": [],
+        "play_conditions": [{ "condition": "holomem_on_stage", "required_member_name_in": ["shirogane_noel"] }],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "shirogane_noel"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "on_take_damage",
+                "effect_type": "reduce_damage",
+                "amount": 10
+            }
+        ],
+
+        "NOTE": "BP2 CARDS END"
     },
 
     {
