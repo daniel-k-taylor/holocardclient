@@ -240,7 +240,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 		"backstage":
 			to_zone_str = tr("YOUR_BACKSTAGE")
 		"bottom_of_deck":
-			to_zone_str = "%s of %s" % [tr("the bottom"), tr("YOUR_DECK")]
+			to_zone_str = tr("YOUR_BOTTOM_OF_DECK")
 		"center":
 			to_zone_str = tr("YOUR_CENTER")
 		"cheer_deck":
@@ -425,9 +425,13 @@ func get_condition_text(conditions):
 					bloom_str = " " + tr("(Bloom %s)") % "/".join(required_bloom_levels)
 				text += "If attached to %s%s: " % [get_names([condition["required_member_name"]])[0], bloom_str]
 			"attached_to_has_tags":
-				var inverse_str = "without" if condition.get("inverse") else "with"
-				var tags = condition["required_tags"]
-				text += "If attached to Holomem %s tags %s: " % [inverse_str, "/".join(get_tags_strings(tags))]
+				var tags_str = "/".join(get_tags_strings(condition["required_tags"]))
+				if condition.get("inverse", false):
+					# Example: `If attached to Holomem without tags #Song/#Art: `
+					text += tr("CONDITION__ATTACHED_TO_HAS_TAGS_INVERSE").format({Tags=tags_str})
+				else:
+					# Example: `If attached to Holomem with tags #Song/#Art: `
+					text += tr("CONDITION__ATTACHED_TO_HAS_TAGS").format({Tags=tags_str})
 			"attached_owner_is_location":
 				var location_str = ""
 				match condition["condition_location"]:
@@ -483,9 +487,10 @@ func get_condition_text(conditions):
 			"holomem_in_archive":
 				var amount_str = ""
 				if "amount_min" in condition and "amount_max" not in condition:
-					amount_str += "%s or more" % condition["amount_min"]
-				var tags_str = " %s" % "/".join(get_tags_strings(condition["tag_in"])) if "tag_in" in condition else ""
-				text += "%s%s Holomem in Archive: " % [amount_str, tags_str]
+					amount_str += "%s+" % condition["amount_min"]
+				var tags_str = (" %s" % "/".join(get_tags_strings(condition["tag_in"]))) if "tag_in" in condition else ""
+				# Example: `1+ #Myth Holomem in Archive: `
+				text += tr("CONDITION__HOLOMEM_IN_ARCHIVE").format({Amount=amount_str, Tags=tags_str})
 			"holomem_on_stage":
 				var location_str = ""
 				match condition.get("location"):
@@ -530,7 +535,10 @@ func get_condition_text(conditions):
 			"played_support_this_turn":
 				text += tr("Played a Support card this turn:") + " "
 			"self_has_cheer_color":
-				text += "Has %s %s Cheer: " % [condition["amount_min"], "/".join(get_color_strings(condition["condition_colors"]))]
+				var amount_str = condition["amount_min"]
+				var colors_str = "/".join(get_color_strings(condition["condition_colors"]))
+				# Example: `Has 1 Red/Blue Cheer: `
+				text += tr("CONDITION__SELF_HAS_CHEER_COLOR").format({Amount=amount_str, Colors=colors_str})
 			"stage_has_space":
 				text += tr("Room on stage:") + " "
 			"target_color":

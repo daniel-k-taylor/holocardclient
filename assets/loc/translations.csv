@@ -479,6 +479,7 @@ FROM_YOUR_HOLOPOWER,from your Holopower,홀로 파워에서,あなたのホロ�
 ,,,,
 YOUR_ARCHIVE,your Archive,아카이브,あなたのアーカイブ,tu Archivo
 YOUR_BACKSTAGE,your Backstage,백 스테이지,あなたのバックステージ,tus Bastidores
+YOUR_BOTTOM_OF_DECK,the bottom of your Deck,the bottom of your Deck,the bottom of your Deck,the bottom of your Deck
 YOUR_CENTER,your Center,센터,あなたのセンター,tu Centro
 YOUR_CHEER_DECK,your Cheer Deck,옐 덱,あなたのエールデッキ,tu Mazo de Aplausos
 YOUR_COLLAB,your Collab,콜라보,あなたのコラボ,tu Collab
@@ -575,6 +576,11 @@ CEN_COL_POSITION,Center or Collab,센터 또는 콜라보 홀로멤,センター
 THIS_HOLOMEM_POSITION,to this Holomem,이 홀로멤,このホロメンに,a este Holomem
 ANY_HOLOMEM_POSITION,any Holomem,아무 홀로멤,任意のホロメン,a cualquier Holomem
 ATTACHED_OWNER_EFFECT_STRING,to the Holomem with this attached,to the Holomem with this attached,to the Holomem with this attached,to the Holomem with this attached
+,,,,
+CONDITION__ATTACHED_TO_HAS_TAGS,If attached to Holomem with tags {Tags}: ,If attached to Holomem with tags {Tags}: ,If attached to Holomem with tags {Tags}: ,If attached to Holomem with tags {Tags}: 
+CONDITION__ATTACHED_TO_HAS_TAGS_INVERSE,If attached to Holomem without tags {Tags}: ,If attached to Holomem without tags {Tags}: ,If attached to Holomem without tags {Tags}: ,If attached to Holomem without tags {Tags}: 
+CONDITION__HOLOMEM_IN_ARCHIVE,{Amount}{Tags} Holomem in Archive: ,{Amount}{Tags} Holomem in Archive: ,{Amount}{Tags} Holomem in Archive: ,{Amount}{Tags} Holomem in Archive: 
+CONDITION__SELF_HAS_CHEER_COLOR,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: 
 ,,,,
 Special,Special,특수,スペシャル,Especial
 to,to, ,,a
