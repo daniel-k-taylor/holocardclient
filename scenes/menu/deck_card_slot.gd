@@ -20,6 +20,7 @@ const DeckCardIcon_support = ""
 @onready var buttons = $MarginContainer/HBoxContainer/PlusMinusButtons
 
 var _card_id
+var _card_limit
 
 func set_details(card, card_count):
 	var icon_str = ""
@@ -40,6 +41,7 @@ func set_details(card, card_count):
 		"support":
 			icon_str = DeckCardIcon_support
 	_card_id = card["card_id"]
+	_card_limit = card.get("special_deck_limit", Enums.MAX_CARD_COPIES)
 	if card.get("colors", []):
 		color_icon.texture = load("res://assets/cheer_icons/%s.png" % card["colors"][0])
 		if len(card["colors"]) == 2:
@@ -49,7 +51,7 @@ func set_details(card, card_count):
 	else:
 		color_icon.visible = false
 		color_icon2.visible = false
-	card_count_label.text = str(card_count)
+	update_count(card_count)
 	if icon_str:
 		card_icon.texture = load("res://assets/icons/%s.webp" % icon_str)
 		if "buzz" in card and card["buzz"]:
@@ -63,6 +65,10 @@ func set_details(card, card_count):
 
 func update_count(card_count):
 	card_count_label.text = str(card_count)
+	if card_count > _card_limit:
+		card_count_label.modulate = Color(1, 0, 0)
+	else:
+		card_count_label.modulate = Color(1, 1, 1)
 
 func _on_plus_button_pressed() -> void:
 	value_changed.emit(self, _card_id, 1)

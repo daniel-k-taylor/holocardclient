@@ -1622,7 +1622,7 @@
             {
                 "effect_type": "choice",
                 "choice": [
-                    { 
+                    {
                         "effect_type": "reveal_top_deck",
                         "and": [
                             {
@@ -1813,7 +1813,7 @@
                 "conditions": [
                     { "condition": "this_card_is_center" },
                     { "condition": "performer_is_collab" },
-                    { 
+                    {
                         "condition": "holomem_on_stage",
                         "location": "collab",
                         "required_member_name_in": [
@@ -1872,7 +1872,7 @@
                         "timing": "before_art",
                         "effect_type": "power_boost",
                         "amount": 50,
-                        "conditions": [{ "condition": "target_color", "color_requirement": "white" }]  
+                        "conditions": [{ "condition": "target_color", "color_requirement": "white" }]
                     },
                     {
                         "timing": "before_art",
@@ -3263,6 +3263,7 @@
         "card_id": "hBP01-010",
         "card_type": "holomem_debut",
         "card_names": ["amane_kanata"],
+        "special_deck_limit": 1,
         "rarity": "u",
         "colors": ["white"],
         "hp": 60,
@@ -3616,6 +3617,7 @@
         "card_type": "holomem_bloom",
         "bloom_level": 1,
         "card_names": ["nanashi_mumei"],
+        "special_deck_limit": 1,
         "rarity": "u",
         "colors": ["white"],
         "hp": 100,
@@ -4064,6 +4066,7 @@
         "card_type": "holomem_bloom",
         "bloom_level": 1,
         "card_names": ["irys"],
+        "special_deck_limit": 1,
         "rarity": "u",
         "colors": ["white"],
         "hp": 110,
