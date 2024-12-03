@@ -719,7 +719,7 @@ func get_effect_text(effect):
 				PreventLife = prevent_life_str
 			})
 		"deal_damage_per_stacked":
-			# Make use of the existing string builder for `deal damage`
+			# Make use of the existing string builder for `deal_damage`
 			var deal_damage_effect = effect.duplicate(true)
 			deal_damage_effect["effect_type"] = "deal_damage"
 			# Example: ` for each Holomem stacked under this Holomem`
