@@ -1,6 +1,7 @@
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
+  - Collab Debut Kanata, Bloom Mumei, and Bloom Irys now limited to 1 card in deck.
   - [b]Added more cards from "Quintet Spectrum"[/b]
       - hBP02-003: "Houshou Marine" Oshi card
       - hBP02-028 to -033: "Houshou Marine" Holomem cards

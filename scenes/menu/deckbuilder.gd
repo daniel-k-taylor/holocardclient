@@ -54,7 +54,7 @@ func _ready() -> void:
 		window.setupFileLoad(file_load_callback)
 
 	oshi_slot.hover.connect(_on_hover_slot)
-	
+
 	_load_sample_decks()
 
 func _load_sample_decks():
@@ -229,6 +229,14 @@ func change_card_count(slot : DeckCardSlot, card_id, amount):
 		deck_card_slots.remove_child(slot)
 		slot.queue_free()
 	elif new_amount <= max_allowed and new_total <= max_allowed:
+		deck[definition_id] = new_amount
+		if alt_id:
+			_alt_count[alt_id] = new_total
+		slot.update_count(new_amount)
+	elif amount < 0:
+		# Probably a stale deck and they're remoivng extra copies
+		# that aren't allowed anymore.
+		# Go ahead and let them subtract one.
 		deck[definition_id] = new_amount
 		if alt_id:
 			_alt_count[alt_id] = new_total
