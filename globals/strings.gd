@@ -710,7 +710,7 @@ func get_effect_text(effect):
 			var amount_str = str(effect["amount"])
 			if amount_str == "total_damage_on_backstage":
 				amount_str = tr("sum of damage on Backstage Holomems")
-			var per_stacked_str = effect.get("per_stacked_str", "")
+			var per_stacked_str = effect.get("client_only__per_stacked_str", "")
 			text += tr("Deal {Amount}{Special} damage{PerStacked} {Target}{PreventLife}.").format({
 				Amount = amount_str,
 				Special = special_str,
@@ -723,7 +723,7 @@ func get_effect_text(effect):
 			var deal_damage_effect = effect.duplicate(true)
 			deal_damage_effect["effect_type"] = "deal_damage"
 			# Example: ` for each Holomem stacked under this Holomem`
-			deal_damage_effect["per_stacked_str"] = tr("EFFECT__DEAL_DAMAGE_PER_STACKED_PARTIAL")
+			deal_damage_effect["client_only__per_stacked_str"] = tr("EFFECT__DEAL_DAMAGE_PER_STACKED_PARTIAL")
 			text += get_effect_text(deal_damage_effect)
 		"down_holomem":
 			var target_str = ""
