@@ -163,6 +163,8 @@ birthdaygiftred,Birthday Gift ~Red~,Birthday Gift ~Red~,Birthday Gift ~Red~,Birt
 birthdaygiftwhite,Birthday Gift ~White~,Birthday Gift ~White~,Birthday Gift ~White~,Birthday Gift ~White~
 birthdaygiftyellow,Birthday Gift ~Yellow~,Birthday Gift ~Yellow~,Birthday Gift ~Yellow~,Birthday Gift ~Yellow~
 cardchange,Card Change,카드 체인지,カード チェンジ,Card Change
+ahoy,Ahoy!,Ahoy!,Ahoy!,Ahoy!
+shukkou,Shukkou!,Shukkou!,Shukkou!,Shukkou!
 ,,,,
 nunnun,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹)눈눈,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹) nun nun
 onstage,On stage!,온 스테이지!,On stage!,¡A Escena!
@@ -349,6 +351,13 @@ thatsoundsgood,That sounds good,That sounds good,That sounds good,That sounds go
 whatisanidolsong,What is an idol song,What is an idol song,What is an idol song,What is an idol song
 teaisbetterthancoffee,Tea is better than coffee,Tea is better than coffee,Tea is better than coffee,Tea is better than coffee
 loveinsong,Love in song,Love in song,Love in song,Love in song
+captainofthepirates,"Captain of the Houshou Pirates, Houshou Marine here!","Captain of the Houshou Pirates, Houshou Marine here!","Captain of the Houshou Pirates, Houshou Marine here!","Captain of the Houshou Pirates, Houshou Marine here!"
+itscaptainmarine,It's Captain Marine to you!,It's Captain Marine to you!,It's Captain Marine to you!,It's Captain Marine to you!
+senchouwhatsgoingtohappen,"Senchou, what's going to happen?","Senchou, what's going to happen?","Senchou, what's going to happen?","Senchou, what's going to happen?"
+alreadysolewd,Already so lewd❤️,Already so lewd❤️,Already so lewd❤️,Already so lewd❤️
+letssailtogether,Let's set sail together!,Let's set sail together!,Let's set sail together!,Let's set sail together!
+yosoro,Yosoro~,Yosoro~,Yosoro~,Yosoro~
+kimitachi,Kimitachi~? Senchou kawaii?,Kimitachi~? Senchou kawaii?,Kimitachi~? Senchou kawaii?,Kimitachi~? Senchou kawaii?
 ,,,,
 airani_iofifteen,Airani Iofifteen,아이라니 이오피프틴,アイラニ・イオフィフティーン,Airani Iofifteen
 aki_rosenthal,Aki Rosenthal,아키 로젠탈,アキ・ローゼンタール,Aki Rosenthal
@@ -399,6 +408,7 @@ chocolat,Chocolat,Chocolat,しょこら,Chocolat
 chocos_omurice,Choco's Omurice,Choco's Omurice,ちょこのオムライス,Choco's Omurice
 clubemintonothingness,Club 'em into nothingness,모두 박살 내주겠어!,鈍器でぶっ叩くわよ！,Aporréalos a la Nada
 custompc,Custom PC,Custom PC,カスタムパソコン,Custom PC
+dokurokun,Dokuro-kun,Dokuro-kun,ドクロくん,Dokuro-kun
 dorobo_construction,Dorobo Construction,Dorobo Construction,泥棒建設,Dorobo Construction
 encore,Encore,앙코르,アンコール,Encore
 excitingpranktime,Exciting Prank Time,두근두근 장난 타임,わくわくいたずらタイム,Emocionante Hora de Jugar
@@ -581,6 +591,11 @@ CONDITION__ATTACHED_TO_HAS_TAGS,If attached to Holomem with tags {Tags}: ,If att
 CONDITION__ATTACHED_TO_HAS_TAGS_INVERSE,If attached to Holomem without tags {Tags}: ,If attached to Holomem without tags {Tags}: ,If attached to Holomem without tags {Tags}: ,If attached to Holomem without tags {Tags}: 
 CONDITION__HOLOMEM_IN_ARCHIVE,{Amount}{Tags} Holomem in Archive: ,{Amount}{Tags} Holomem in Archive: ,{Amount}{Tags} Holomem in Archive: ,{Amount}{Tags} Holomem in Archive: 
 CONDITION__SELF_HAS_CHEER_COLOR,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: 
+CONDITION__HAS_STACKED_HOLOMEM_AMOUNT_MIN,If this card has {Amount}+ Holomem stacked under it: ,If this card has {Amount}+ Holomem stacked under it: ,If this card has {Amount}+ Holomem stacked under it: ,If this card has {Amount}+ Holomem stacked under it: 
+CONDITION__ATTACHED_OWNER_IS_LOCATION,Attached card's owner is at {Location}: ,Attached card's owner is at {Location}: ,Attached card's owner is at {Location}: ,Attached card's owner is at {Location}: 
+,,,,
+EFFECT__BLOOM_ALREADY_BLOOMED_THIS_TURN,"Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand."
+EFFECT__DEAL_DAMAGE_PER_STACKED_PARTIAL, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem
 ,,,,
 Special,Special,특수,スペシャル,Especial
 to,to, ,,a
@@ -588,7 +603,7 @@ opponent's,opponent's,상대의,相手の,oponente
 Back Holomem,Back Holomem,백 홀로멤,後列ホロメン,Holomem Trasero
 (Can't lose life),(Can't lose life),(라이프는 줄지 않는다),（ライフを失えない）,(No puede perder VIDA)
 sum of damage on Backstage Holomems,sum of damage on Backstage Holomems,백 홀로멤 전원이 받고 있는 데미지의 합계,後列ホロメンのダメージ合計,suma del daño en Holomem Traseros
-Deal {Amount}{Special} damage {Target}{PreventLife}.,Deal {Amount}{Special} damage {Target}{PreventLife}.,{Target}에게 {Special} 데미지 {Amount}을 준다{PreventLife}.,{Amount}{Special}ダメージを{Target}に与える{PreventLife}。,Haz {Amount}{Special} daño {Target}{PreventLife}
+Deal {Amount}{Special} damage{PerStacked} {Target}{PreventLife}.,Deal {Amount}{Special} damage{PerStacked} {Target}{PreventLife}.,{Target}에게 {Special} 데미지 {Amount}{PerStacked}을 준다{PreventLife}.,{Amount}{Special}{PerStacked}ダメージを{Target}に与える{PreventLife}。,Haz {Amount}{Special} daño{PerStacked} {Target}{PreventLife}
 Draw %s.,Draw %s.,%s장 드로우.,%s枚引く。,Roba %s.
 Draw until you have %s cards in hand,Draw until you have %s cards in hand,Draw until you have %s cards in hand,Draw until you have %s cards in hand,Draw until you have %s cards in hand
 Set next die result to %s.,Set next die result to %s.,다음 주사위 눈을 %s로 취급한다.,次のダイス結果を%sに設定する。,Fija el siguiente resultado del dado a %s.

@@ -8087,6 +8087,62 @@
     {
         "NOTE": "BP2 CARDS START",
 
+        "card_id": "hBP02-003",
+        "card_type": "oshi",
+        "card_names": ["houshou_marine"],
+        "colors": ["red"],
+        "rarity": "osr",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "ahoy",
+                "cost": 3,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "ahoy",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 3 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "ahoy" }
+                        ]
+                    },
+                    {
+                        "effect_type": "bloom_already_bloomed_this_turn",
+                        "limitation": "tag_in",
+                        "limitation_tags": ["#Gen3"]
+                    }
+                ]
+            },
+            {
+                "skill_id": "shukkou",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "shukkou",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "shukkou" }
+                        ]
+                    },
+                    {
+                        "effect_type": "deal_damage_per_stacked",
+                        "conditions": [{ "condition": "holomem_on_stage", "location": "center", "required_member_name_in": ["houshou_marine"] }],
+                        "special": true,
+                        "amount": 50,
+                        "target": "center_or_collab",
+                        "opponent": true,
+                        "limitation": "center"
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-014",
         "card_type": "holomem_debut",
         "card_names": ["shirogane_noel"],
@@ -8216,6 +8272,233 @@
                         "limit": 4
                     }
                 ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-028",
+        "card_type": "holomem_debut",
+        "card_names": ["houshou_marine"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "alt_id": "hBP02-028",
+        "alternates": ["p"],
+        "colors": ["red"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "captainofthepirates",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-029",
+        "card_type": "holomem_debut",
+        "card_names": ["houshou_marine"],
+        "rarity": "u",
+        "colors": ["red"],
+        "hp": 70,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Art",
+            "#Sea",
+            "#Alcohol"
+        ],
+        "arts": [
+            {
+                "art_id": "itscaptainmarine",
+                "costs": [
+                    { "color": "red", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "deal_damage",
+                "special": true,
+                "amount": 20,
+                "target": "collab",
+                "opponent": true
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-030",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["houshou_marine"],
+        "rarity": "c",
+        "colors": ["red"],
+        "hp": 160,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "senchouwhatsgoingtohappen",
+                "costs": [{ "color": "red", "amount": 1 }],
+                "power": 40
+            },
+            {
+                "art_id": "alreadysolewd",
+                "costs": [
+                    { "color": "red", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-031",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["houshou_marine"],
+        "rarity": "u",
+        "colors": ["red"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "letssailtogether",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "deal_damage",
+                "special": true,
+                "amount": 20,
+                "target": "collab",
+                "opponent": true
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-032",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["houshou_marine"],
+        "rarity": "r",
+        "colors": ["red"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "yosoro",
+                "costs": [{ "color": "any", "amount": 2 }],
+                "power": 50
+            }
+        ],
+        "bloom_effects": [
+            {
+                "conditions": [{ "condition": "not_used_once_per_turn_effect", "condition_effect_id": "houshoupirates" }],
+                "pre_effects": [{ "effect_type": "record_used_once_per_turn_effect", "effect_id": "houshoupirates" }],
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "holomem_named",
+                "requirement_names": ["houshou_marine"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-033",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["houshou_marine"],
+        "rarity": "rr",
+        "colors": ["red"],
+        "hp": 200,
+        "baton_cost": 2,
+        "tags": [
+            "#JP",
+            "#Gen3",
+            "#Art",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "kimitachi",
+                "costs": [
+                    { "color": "red", "amount": 1 },
+                    { "color": "any", "amount": 2 }
+                ],
+                "power": 80,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "purple" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost_per_stacked",
+                        "amount": 20
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "effect_type": "choose_cards",
+                        "from": "archive",
+                        "look_at": -1,
+                        "destination": "hand",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "requirement": "holomem",
+                        "remaining_cards_action": "nothing"
+                    },
+                    { "effect_type": "pass" }
+                ]
+            },
+            {
+                "effect_type": "deal_damage",
+                "conditions": [{ "condition": "has_stacked_holomem", "amount_min": 3 }],
+                "special": true,
+                "amount": 50,
+                "target": "center_or_collab",
+                "opponent": true
             }
         ]
     },
@@ -8604,6 +8887,31 @@
                 "effect_type": "add_damage_taken",
                 "conditions": [{ "condition": "attached_to_has_tags", "required_tags": ["#Alcohol"], "inverse": true }],
                 "amount": 10
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-095",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "colors": [],
+        "card_names": ["dokurokun"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 10
+            },
+            {
+                "timing": "on_bloom",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "houshou_marine" },
+                    { "condition": "attached_owner_is_location", "condition_location": "center" }
+                ],
+                "effect_type": "draw",
+                "amount": 1
             }
         ]
     },

@@ -435,9 +435,12 @@ func get_condition_text(conditions):
 			"attached_owner_is_location":
 				var location_str = ""
 				match condition["condition_location"]:
+					"center":
+						location_str = tr("CENTER_POSITION")
 					"center_or_collab":
 						location_str = tr("CEN_COL_POSITION")
-				text += "Attached card's owner is %s." % location_str
+				# Example: `Attached card's owner is at Center or Collab: `
+				text += tr("CONDITION__ATTACHED_OWNER_IS_LOCATION").format({Location=location_str})
 			"bloom_target_is_debut":
 				text += "From Debut: "
 			"cards_in_hand":
@@ -483,7 +486,11 @@ func get_condition_text(conditions):
 			"has_attachment_of_type":
 				text += "Has %s attachment: " % [condition["condition_type"]]
 			"has_stacked_holomem":
-				text += ""
+				if "amount_min" in condition:
+					# Example: `Has 3+ stacked Holomem under it: `
+					text += tr("CONDITION__HAS_STACKED_HOLOMEM_AMOUNT_MIN").format({Amount=condition["amount_min"]})
+				else:
+					text += ""
 			"holomem_in_archive":
 				var amount_str = ""
 				if "amount_min" in condition and "amount_max" not in condition:
@@ -629,6 +636,13 @@ func get_effect_text(effect):
 			text += "+%s HP." % [effect["amount"]]
 		"block_opponent_movement":
 			text += "Block opponent's Center and Collab movement next turn."
+		"bloom_already_bloomed_this_turn":
+			var tags_str = ""
+			match effect.get("limitation"):
+				"tag_in":
+					tags_str = "%s " % "/".join(get_tags_strings(effect["limitation_tags"]))
+			# Example: `Make one of your #Gen3 Holomem who has Bloomed this turn, Bloom again using a holomem in your hand.`
+			text += tr("EFFECT__BLOOM_ALREADY_BLOOMED_THIS_TURN").format({Tags=tags_str})
 		"bloom_debut_played_this_turn_to_1st":
 			var location_str = ""
 			match effect["location"]:
@@ -696,12 +710,21 @@ func get_effect_text(effect):
 			var amount_str = str(effect["amount"])
 			if amount_str == "total_damage_on_backstage":
 				amount_str = tr("sum of damage on Backstage Holomems")
-			text += tr("Deal {Amount}{Special} damage {Target}{PreventLife}.").format({
+			var per_stacked_str = effect.get("client_only__per_stacked_str", "")
+			text += tr("Deal {Amount}{Special} damage{PerStacked} {Target}{PreventLife}.").format({
 				Amount = amount_str,
 				Special = special_str,
 				Target = target_str,
+				PerStacked = per_stacked_str,
 				PreventLife = prevent_life_str
 			})
+		"deal_damage_per_stacked":
+			# Make use of the existing string builder for `deal_damage`
+			var deal_damage_effect = effect.duplicate(true)
+			deal_damage_effect["effect_type"] = "deal_damage"
+			# Example: ` for each Holomem stacked under this Holomem`
+			deal_damage_effect["client_only__per_stacked_str"] = tr("EFFECT__DEAL_DAMAGE_PER_STACKED_PARTIAL")
+			text += get_effect_text(deal_damage_effect)
 		"down_holomem":
 			var target_str = ""
 			if "target" in effect:

@@ -2,6 +2,10 @@
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
   - Collab Debut Kanata, Bloom Mumei, and Bloom Irys now limited to 1 card in deck.
+  - [b]Added more cards from "Quintet Spectrum"[/b]
+      - hBP02-003: "Houshou Marine" Oshi card
+      - hBP02-028 to -033: "Houshou Marine" Holomem cards
+      - hBP02-095: "Dokuro-kun" Support (Mascot)card
   - [b]Added cards from "Quintet Spectrum"[/b]
       - hBP02-014 to -017: "Shirogane Noel" Holomem cards
       - hBP02-061 to -064: "Ninomae Ina'nis" Holomem cards
@@ -11,7 +15,7 @@
       - hBP02-085: "HOLOLIVE FANTASY" Support (Event) card
       - hBP02-086: "Holo Sparkling Wine" Support (Tool) card
       - hBP02-100: "Shirogane Dan'in" Support (Fan) card
-  - [b]Added hSD03: Nekomata Okayu Starter Deck.[/b]
+  - Added hSD03: Nekomata Okayu Starter Deck.
   - Added hSD04: Yuzuki Choco Starter Deck.
   - Added hSD02: Nakiri Ayame Starter Deck.
 
