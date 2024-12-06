@@ -8136,7 +8136,77 @@
                         "amount": 50,
                         "target": "center_or_collab",
                         "opponent": true,
-                        "limitation": "center"
+                        "stack_source": "center"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-004",
+        "card_type": "oshi",
+        "card_names": ["sakamata_chloe"],
+        "colors": ["blue"],
+        "rarity": "osr",
+        "life": 6,
+        "actions": [
+            {
+                "skill_id": "poepoepoe",
+                "cost": 1,
+                "limit": "once_per_turn",
+                "action_conditions": [
+                    { "condition": "holomem_on_stage", "location": "center", "required_member_name_in": ["sakamata_chloe"] }
+                ],
+                "effects": [
+                    {
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "poepoepoe",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 1 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "poepoepoe" }
+                        ]
+                    },
+                    {
+                        "effect_type": "reveal_top_deck",
+                        "amount": 3
+                    },
+                    {
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "archive_revealed_cards"
+                            },
+                            {
+                                "effect_type": "order_cards",
+                                "from": "deck",
+                                "destination": "deck",
+                                "amount": 3
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "skill_id": "liferesetbutton",
+                "cost": 3,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "liferesetbutton",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 3 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "liferesetbutton" }
+                        ]
+                    },
+                    {
+                        "effect_type": "shuffle_hand_to_deck",
+                        "and": [
+                            { "effect_type": "shuffle_archive_to_deck", "limitation": "holomem" },
+                            { "effect_type": "draw", "amount": "last_card_count" }
+                        ]
                     }
                 ]
             }
@@ -8503,6 +8573,260 @@
         ]
     },
     {
+        "card_id": "hBP02-035",
+        "card_type": "holomem_debut",
+        "card_names": ["sakamata_chloe"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 110,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "bakkubakun",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-036",
+        "card_type": "holomem_debut",
+        "card_names": ["sakamata_chloe"],
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "areality",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 3,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom",
+                "requirement": "holomem_bloom",
+                "requirement_bloom_levels": [2],
+                "requirement_tags": ["#SecretSocietyholoX"]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-037",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["sakamata_chloe"],
+        "rarity": "c",
+        "colors": ["blue"],
+        "hp": 160,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "onlytwoofus",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-038",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["sakamata_chloe"],
+        "rarity": "u",
+        "colors": ["blue"],
+        "hp": 110,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "thisiswhereienjoyit",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "cheer_deck",
+                "look_at": 3,
+                "destination": "holomem",
+                "amount_min": 1,
+                "amount_max": 1,
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-039",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["sakamata_chloe"],
+        "rarity": "r",
+        "colors": ["blue"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "holoxslots",
+                "costs": [
+                    { "color": "blue", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "reveal_top_deck",
+                                "amount": 3,
+                                "and": [
+                                    {
+                                        "effect_type": "power_boost_per_revealed_card",
+                                        "amount": 20,
+                                        "limitation": "holomem"
+                                    },
+                                    {
+                                        "effect_type": "archive_revealed_cards"
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "gift_effects": [
+            {
+                "full_english_text": "CHLOE_BP02_039_FULL_TEXT",
+                "timing": "before_archive",
+                "conditions": [
+                    { "condition": "effect_card_id_not_used_this_turn" },
+                    { "condition": "top_deck_has_any_card_type", "amount": 3, "condition_card_types": ["support"] },
+                    { "condition": "this_card_is_performing" }
+                ],
+                "effect_type": "choose_cards",
+                "from": "last_revealed_cards",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 1,
+                "requirement": "support",
+                "remaining_cards_action": "remove_choice_from_last_revealed_cards",
+                "and": [{ "effect_type": "record_effect_card_id_used_this_turn" }]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-040",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["sakamata_chloe"],
+        "rarity": "rr",
+        "colors": ["blue"],
+        "hp": 190,
+        "baton_cost": 2,
+        "tags": [
+            "#JP",
+            "#SecretSocietyholoX",
+            "#Sea"
+        ],
+        "arts": [
+            {
+                "art_id": "holoxslots",
+                "costs": [
+                    { "color": "blue", "amount": 2 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 100,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "white" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "choice",
+                        "choice": [
+                            {
+                                "effect_type": "reveal_top_deck",
+                                "amount": 3,
+                                "and": [
+                                    {
+                                        "effect_type": "power_boost_per_revealed_card",
+                                        "amount": 20,
+                                        "limitation": "holomem"
+                                    },
+                                    {
+                                        "effect_type": "archive_revealed_cards"
+                                    }
+                                ]
+                            },
+                            { "effect_type": "pass" }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "gift_effects": [
+            {
+                "full_english_text": "CHLOE_BP02_040_FULL_TEXT",
+                "timing": "after_reveal",
+                "conditions": [
+                    { "condition": "effect_card_id_not_used_this_turn" },
+                    { "condition": "revealed_cards_has_same_type", "condition_same_type": "holomem_bloom" },
+                    { "condition": "this_card_is_performing" }
+                ],
+                "effect_type": "deal_life_damage",
+                "amount": 1,
+                "opponent": true,
+                "and": [{ "effect_type": "record_effect_card_id_used_this_turn" }]
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-061",
         "card_type": "holomem_debut",
         "card_names": ["ninomae_inanis"],
@@ -8845,6 +9169,54 @@
         ]
     },
     {
+        "card_id": "hBP02-078",
+        "card_type": "support",
+        "sub_type": "event",
+        "colors": [],
+        "card_names": ["kanata_construction"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [{ "condition": "cards_in_hand", "amount_max": 7 }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem_named",
+                "requirement_names": ["amane_kanata", "azki", "sakamata_chloe"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-080",
+        "card_type": "support",
+        "sub_type": "event",
+        "colors": [],
+        "card_names": ["secret_society_holox"],
+        "rarity": "u",
+        "limited": true,
+        "play_conditions": [{ "condition": "cards_in_hand", "amount_max": 7 }],
+        "effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": 4,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 4,
+                "requirement": "holomem",
+                "requirement_tags": ["#SecretSocietyholoX"],
+                "reveal_chosen": true,
+                "remaining_cards_action": "order_on_bottom"
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-085",
         "card_type": "support",
         "sub_type": "event",
@@ -8912,6 +9284,36 @@
                 ],
                 "effect_type": "draw",
                 "amount": 1
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-096",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "colors": [],
+        "card_names": ["inu"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 10
+            },
+            {
+                "timing": "on_kill",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "sakamata_chloe" },
+                    { "condition": "downed_card_belongs_to_opponent" }
+                ],
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "archive",
+                "to": "holomem",
+                "to_limitation": "tag_in",
+                "to_limitation_tags": ["#SecretSocietyholoX"]
             }
         ]
     },

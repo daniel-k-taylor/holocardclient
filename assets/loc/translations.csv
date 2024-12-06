@@ -165,6 +165,8 @@ birthdaygiftyellow,Birthday Gift ~Yellow~,Birthday Gift ~Yellow~,Birthday Gift ~
 cardchange,Card Change,카드 체인지,カード チェンジ,Card Change
 ahoy,Ahoy!,Ahoy!,Ahoy!,Ahoy!
 shukkou,Shukkou!,Shukkou!,Shukkou!,Shukkou!
+poepoepoe,poepoepoe~,poepoepoe~,poepoepoe~,poepoepoe~
+liferesetbutton,Life Reset Button,Life Reset Button,Life Reset Button,Life Reset Button
 ,,,,
 nunnun,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹)눈눈,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹) nun nun
 onstage,On stage!,온 스테이지!,On stage!,¡A Escena!
@@ -358,6 +360,11 @@ alreadysolewd,Already so lewd❤️,Already so lewd❤️,Already so lewd❤️,
 letssailtogether,Let's set sail together!,Let's set sail together!,Let's set sail together!,Let's set sail together!
 yosoro,Yosoro~,Yosoro~,Yosoro~,Yosoro~
 kimitachi,Kimitachi~? Senchou kawaii?,Kimitachi~? Senchou kawaii?,Kimitachi~? Senchou kawaii?,Kimitachi~? Senchou kawaii?
+bakkubakun,Bakku bakku baku~n,Bakku bakku baku~n,Bakku bakku baku~n,Bakku bakku baku~n
+areality,A reality that seems to be spat out and thrown away!,A reality that seems to be spat out and thrown away!,A reality that seems to be spat out and thrown away!,A reality that seems to be spat out and thrown away!
+onlytwoofus,Only Two of Us at the Beach,Only Two of Us at the Beach,Only Two of Us at the Beach,Only Two of Us at the Beach
+thisiswhereienjoyit,(This is where I enjoy it),(This is where I enjoy it),(This is where I enjoy it),(This is where I enjoy it)
+holoxslots,holoX Slots,holoX Slots,holoX Slots,holoX Slots
 ,,,,
 airani_iofifteen,Airani Iofifteen,아이라니 이오피프틴,アイラニ・イオフィフティーン,Airani Iofifteen
 aki_rosenthal,Aki Rosenthal,아키 로젠탈,アキ・ローゼンタール,Aki Rosenthal
@@ -387,6 +394,7 @@ ookami_mio,Ookami Mio,Ookami Mio,大神ミオ,Ookami Mio
 oozora_subaru,Oozora Subaru,Oozora Subaru,大空スバル,Oozora Subaru
 ouro_kronii,Ouro Kronii,오로 크로니,オーロ・クロニー,Ouro Kronii
 pavolia_reine,Pavolia Reine,파볼리아 레이네,パヴォリア・レイネ,Pavolia Reine
+sakamata_chloe,Sakamata Chloe,Sakamata Chloe,沙花叉クロヱ,Sakamata Chloe
 sakura_miko,Sakura Miko,사쿠라 미코,さくらみこ,Sakura Miko
 shirakami_fubuki,Shirakami Fubuki,Shirakami Fubuki,白上フブキ,Shirakami Fubuki
 shiranui_flare,Shiranui Flare,시라누이 후레아,不知火フレア,Shiranui Flare
@@ -425,8 +433,10 @@ hoshimachi_suiseis_mic,Suisei's Mic,호시마치 스이세이의 마이크,星�
 idol_felt_pen,Idol Felt Pen,Idol Felt Pen,アイドルサインペン,Idol Felt Pen
 idolmic,Idol Mic,아이돌 마이크,アイドルマイク,Mic de Ídolo
 illleaveittoyou,I'll leave it to you,뒤는 맡길게!,あとは任せた！,¡Te lo encargo!
+inu,Inu,Inu,イヌ,Inu
 iroha_nihohetto_ayafubumi,AyaFubuMi,AyaFubuMi,いろはにほへっと あやふぶみ,AyaFubuMi
 jobz,Jobz,잡스,ジョブズ,Jobz
+kanata_construction,Kanata Construction,Kanata Construction,かなた建設,Kanata Construction
 kfp,KFP,KFP,KFP,KFP
 kotori,Kotori,Kotori,Kotori,Kotori
 manechan,Mane-chan,마네짱,マネちゃん,Mane-chan
@@ -438,6 +448,7 @@ pioneer,Pioneer,개척자,開拓者,Pionero
 promise,Promise,Promise,Promise,Promesa
 poyoyo,Poyoyo,Poyoyo,ぽよ余,Poyoyo
 rosetai,Rosetai,로제대,ロゼ隊,Rosetai
+secret_society_holox,Secret Society holoX,Secret Society holoX,秘密結社holoX,Secret Society holoX
 shirogane_danin,Shirogane Dan'in,Shirogane Dan'in,白銀聖騎士団,Shirogane Dan'in
 standardpc,Standard PC,보통 컴퓨터,ふつうのパソコン,PC Estándar
 stone_axe,Stone Axe,돌 도끼,石の斧,Hacha de Piedra
@@ -466,6 +477,7 @@ FROM_DOWNED_HOLOMEM,from downed Holomem,다운된 홀로멤에서,倒された�
 FROM_HOLOMEM,from Holomem,홀로멤에서,ホロメンから,de holomem
 FROM_THIS_HOLOMEM,from this Holomem,이 홀로멤에서,このホロメンから,de este holomem
 FROM_OPPONENT_HOLOMEM,from opponent's Holomem,상대 홀로멤에서,相手のホロメンから,del holomem oponente
+FROM_LAST_REVEALED_CARDS,from the last revealed cards,from the last revealed cards,from the last revealed cards,from the last revealed cards
 REMOVE_CHEER_ACTION_WORD,Remove,제거,除去,Remueve
 any amount of,any amount of,일부,任意の量,cualquier cantidad
 all,all,전부,すべて,todos
@@ -596,6 +608,11 @@ CONDITION__ATTACHED_OWNER_IS_LOCATION,Attached card's owner is at {Location}: ,A
 ,,,,
 EFFECT__BLOOM_ALREADY_BLOOMED_THIS_TURN,"Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand."
 EFFECT__DEAL_DAMAGE_PER_STACKED_PARTIAL, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem
+EFFECT__DRAW_LAST_CARD_COUNT,the same amount of cards you had before,the same amount of cards you had before,the same amount of cards you had before,the same amount of cards you had before
+EFFECT__POWER_BOOST_PER_STACKED,+{Amount} Power per revealed {Limitation}card.,+{Amount} Power per revealed {Limitation}card.,+{Amount} Power per revealed {Limitation}card.,+{Amount} Power per revealed {Limitation}card.
+EFFECT__REVEAL_TOP_DECK,Reveal the top {Amount}card of your deck.,덱 {Amount}맨위를 공개한다.,デッキのトップ{Amount}カードを公開する。,Revela la {Amount}carta de encima de tu Mazo.
+EFFECT__SHUFFLE_ARCHIVE_TO_DECK,Shuffle your archive into your deck.{Limitation},Shuffle your archive into your deck.{Limitation},Shuffle your archive into your deck.{Limitation},Shuffle your archive into your deck.{Limitation}
+EFFECT_ARCHIVE_REVEALED_CARDS,Archive the revealed cards.,Archive the revealed cards.,Archive the revealed cards.,Archive the revealed cards.
 ,,,,
 Special,Special,특수,スペシャル,Especial
 to,to, ,,a
@@ -681,6 +698,8 @@ OSHI_BP1_007_2_FULL_TEXT,When your Blue Holomem deals damage to your opponent's 
 AYAME_09_ART_FULL_TEXT,Archive 0-3 cards from your hand. Deal 40 special damage per to your opponent's Center.,자신의 패 0~3장을 아카이브할 수 있다 : 상대 센터에 카드당 40의 특수 피해를 줍니다.,"自分の手札0～3枚をアーカイブする: 相手のセンターホロメンに,アーカイブしたカード1枚につき, 特殊ダメージ40を与える。",Archive 0-3 cards from your hand. Deal 40 special damage per to your opponent's Center.
 CHOCO_SD04_004_FULL_TEXT,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.,You may Archive 1 card from your hand for the following effect: reveal an Event with #Food from your Deck and put it into your hand. Then shuffle your Deck.
 OKAYU_004_COLLAB_PARTIAL_TEXT,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.
+CHLOE_BP02_039_FULL_TEXT,"(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it."
+CHLOE_BP02_040_FULL_TEXT,"(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE."
 ,,,,
 Go first.,Go first.,선공하기,先行です。,Ir Primero
 Go second.,Go second.,후공하기,後攻です。,Ir Segundo
