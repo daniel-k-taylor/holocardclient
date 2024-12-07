@@ -8816,7 +8816,7 @@
                 "timing": "after_reveal",
                 "conditions": [
                     { "condition": "effect_card_id_not_used_this_turn" },
-                    { "condition": "revealed_cards_has_same_type", "condition_same_type": "holomem_same_bloom" },
+                    { "condition": "revealed_cards_have_same_type", "condition_same_type": "holomem_same_bloom" },
                     { "condition": "this_card_is_performing" }
                 ],
                 "effect_type": "deal_life_damage",

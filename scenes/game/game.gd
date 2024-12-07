@@ -2515,7 +2515,12 @@ func _on_life_damage_dealt(event_data):
 			life_lost,
 			target_player.get_name_decorated()
 		])
-	_play_popup_message("Deal %s life damage" % life_lost)
+	# Example: `Deal 1 life damage`
+	_play_popup_message(tr("DEAL_LIFE_DAMAGE").format({Amount=life_lost}))
+
+	var game_over = event_data["game_over"]
+	if game_over:
+		target_player.life_count -= life_lost
 
 #
 # Submit to server funcs

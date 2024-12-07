@@ -671,6 +671,7 @@ Oshi Skill:,Oshi Skill:,오시 스킬:,推しスキル:,Habilidad del Oshi
 Performance Step,Performance Step,퍼포먼스 스텝,パフォーマンスステップ,Fase de Performance
 Turn Start,Turn Start,턴 시작,ターン開始,Inicio de Turno
 Turn End,Turn End,턴 종료,ターン終了,Fin de Turno
+DEAL_LIFE_DAMAGE,Deal {Amount} LIFE damage,Deal {Amount} LIFE damage,Deal {Amount} LIFE damage,Deal {Amount} LIFE damage
 ,,,,
 Update Card Images,Update Card Images,카드 이미지 업데이트,カード画像を更新中,Actualizar Imágenes de Cartas
 Failed to download card pack.,Failed to download card pack.,이미지 팩 다운로드 실패,カードパックのダウンロードに失敗しました。,No se pudo descargar paquete de imágenes
