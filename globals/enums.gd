@@ -46,6 +46,7 @@ const EventType_RevealCards = "reveal_cards"
 const EventType_RollDie = "roll_die"
 const EventType_ShuffleDeck = "shuffle_deck"
 const EventType_TurnStart = "turn_start"
+const EventType_LifeDamageDealt = "life_damage_dealt"
 
 const DecisionEventTypes = [
 	EventType_CheerStep,

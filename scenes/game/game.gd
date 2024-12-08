@@ -553,6 +553,8 @@ func process_game_event(event_type, event_data):
 			_on_shuffle_deck_event(event_data)
 		Enums.EventType_TurnStart:
 			_on_turn_start(event_data)
+		Enums.EventType_LifeDamageDealt:
+			_on_life_damage_dealt(event_data)
 		_:
 			Logger.log_game("Unknown event type: %s" % event_type)
 			assert(false)
@@ -2498,6 +2500,27 @@ func _on_force_die_result_event(event_data):
 	else:
 		# Nothing for opponent.
 		pass
+
+func _on_life_damage_dealt(event_data):
+	var active_player = get_player(event_data["event_player_id"])
+	var target_player = get_player(event_data["target_player"])
+	var source_card_id = event_data["source_card_id"]
+	var life_lost = event_data["life_lost"]
+
+	game_log.add_to_log(
+		GameLog.GameLogLine.Detail,
+		"%s [CARD]%s[/CARD] deals %s life damage to %s" % [
+			active_player.get_name_decorated(),
+			_get_card_definition_id(source_card_id),
+			life_lost,
+			target_player.get_name_decorated()
+		])
+	# Example: `Deal 1 life damage`
+	_play_popup_message(tr("DEAL_LIFE_DAMAGE").format({Amount=life_lost}))
+
+	var game_over = event_data["game_over"]
+	if game_over:
+		target_player.life_count -= life_lost
 
 #
 # Submit to server funcs

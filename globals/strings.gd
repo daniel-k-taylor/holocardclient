@@ -194,6 +194,8 @@ func build_order_cards_string(to, bottom):
 	match to:
 		"deck":
 			to_str = tr("your deck")
+		"cheer_deck":
+			to_str = tr("YOUR_CHEER_DECK")
 		_:
 			to_str = "UNKNOWN ZONE"
 	return tr("Order these cards to place on {DIR} of {DECK}").format({DIR = dir_str, DECK = to_str})
@@ -232,6 +234,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			from_zone_str = tr("FROM_YOUR_HOLOPOWER")
 		"holomem":
 			from_zone_str = tr("FROM_THIS_HOLOMEM")
+		"last_revealed_cards":
+			from_zone_str = tr("FROM_LAST_REVEALED_CARDS")
 		"":
 			from_zone_str = ""
 	match to_zone:
@@ -280,7 +284,7 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 				remaining_cards_str = "\n" + tr("Shuffle the remaining cards")
 			"order_on_bottom":
 				remaining_cards_str = "\n" + tr("Order the rest on bottom")
-			"nothing":
+			"nothing", "remove_choice_from_last_revealed_cards":
 				remaining_cards_str = ""
 			_:
 				remaining_cards_str = "\nUNKNOWN REMAINING CARDS ACTION"
@@ -617,6 +621,8 @@ func get_effect_text(effect):
 			text += tr("Archive {Amount}{Requirement} from hand.").format({Amount = amount, Requirement = requirement})
 		"archive_this_attachment":
 			text += "Archive this attachment."
+		"archive_revealed_cards":
+			text += tr("EFFECT_ARCHIVE_REVEALED_CARDS")
 		"archive_top_stacked_holomem":
 			text += "Archive the Holomem under this one."
 		"attach_card_to_holomem", "attach_card_to_holomem_internal":
@@ -743,7 +749,11 @@ func get_effect_text(effect):
 			if draw_to_hand_size:
 				text += tr("Draw until you have %s cards in hand") % draw_to_hand_size
 			else:
-				text += tr("Draw %s.") % [effect["amount"]]
+				var amount_str = effect["amount"]
+				if str(amount_str) == "last_card_count":
+					# Example: `the same amount of cards you had before`
+					amount_str = tr("EFFECT__DRAW_LAST_CARD_COUNT")
+				text += tr("Draw %s.") % [amount_str]
 		"force_die_result":
 			text += tr("Set next die result to %s.") % [effect["die_result"]]
 		"generate_holopower":
@@ -768,6 +778,10 @@ func get_effect_text(effect):
 				"tag_in":
 					limitation_str = " (Only to %s)" % "/".join(get_tags_strings(to_limitation_tags))
 			text += "Move %s Cheer between your Holomems%s." % [amount, limitation_str]
+		"order_cards":
+			var destination = effect["destination"]
+			var bottom = effect.get("bottom", false)
+			text += build_order_cards_string(destination, bottom)
 		"pass":
 			text += tr("Pass") + "."
 		"performance_life_lost_increase":
@@ -804,6 +818,15 @@ func get_effect_text(effect):
 			if "limit" in effect:
 				up_to_str = " (up to %sx)" % effect["limit"]
 			text += "+%s Power per %s%sHolomem%s." % [effect["amount"], tag_str, exclude_str, up_to_str]
+		"power_boost_per_revealed_card":
+			var amount = effect["amount"]
+			var limitation_str = ""
+			match effect.get("limitation"):
+				"holomem":
+					# Example: `Holomem `
+					limitation_str += "%s " % tr("holomem")
+			# Example: `+20 Power per revealed Holomem card.`
+			text += tr("EFFECT__POWER_BOOST_PER_STACKED").format({Amount=amount, Limitation=limitation_str})
 		"power_boost_per_stacked":
 			text += tr("+%s Power per stacked Holomem.") % [effect["amount"]]
 		"power_boost_per_played_support":
@@ -864,7 +887,10 @@ func get_effect_text(effect):
 		"return_holomem_to_debut":
 			text += "Return one of your opponent's Back Holomems to a Debut Holomem\n(remove Damage, leave Cheer, the rest returns to hand)"
 		"reveal_top_deck":
-			text += tr("Reveal the top card of your deck.")
+			var amount = effect.get("amount")
+			var amount_str = "%s " % amount if amount else ""
+			# Example "Reveal the top 3 card of your deck."
+			text += tr("EFFECT__REVEAL_TOP_DECK").format({Amount=amount_str})
 		"reroll_die":
 			text += tr("Reroll.")
 		"roll_die":
@@ -935,6 +961,14 @@ func get_effect_text(effect):
 			if "opponent" in effect and effect["opponent"]:
 				opponent_str = "opponent's "
 			text += "Switch your %sCenter with a Back member%s." % [opponent_str, resting_str]
+		"shuffle_archive_to_deck":
+			var limitation_str = ""
+			match effect.get("limitation"):
+				"holomem":
+					#Example: ` (Only Holomem)`
+					limitation_str = " (%s)" % tr("ONLY_HOLOMEM")
+			#Example: `Shuffle your archive into your deck. (Only Holomem)`
+			text += tr("EFFECT__SHUFFLE_ARCHIVE_TO_DECK").format({Limitation=limitation_str})
 		"shuffle_hand_to_deck":
 			text += "Shuffle your hand into your deck."
 
