@@ -8213,6 +8213,62 @@
         ]
     },
     {
+        "card_id": "hBP02-008",
+        "card_type": "holomem_debut",
+        "card_names": ["shirakami_fubuki"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen1",
+            "#Gamers",
+            "#AnimalEars",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "konkonkitsune",
+                "costs": [{ "color": "any", "amount": 1 }],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-010",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["shirakami_fubuki"],
+        "rarity": "c",
+        "colors": ["white"],
+        "hp": 150,
+        "baton_cost": 1,
+        "tags": [
+            "#JP",
+            "#Gen1",
+            "#Gamers",
+            "#AnimalEars",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "sweetosmanthus",
+                "costs": [{ "color": "white", "amount": 1 }],
+                "power": 40
+            },
+            {
+                "art_id": "thankyoufriends",
+                "costs": [
+                    { "color": "white", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 60
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-014",
         "card_type": "holomem_debut",
         "card_names": ["shirogane_noel"],
@@ -9263,6 +9319,155 @@
         ]
     },
     {
+        "card_id": "hBP02-089",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "colors": [],
+        "card_names": ["oruyanke"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 20
+            },
+            {
+                "timing": "on_collab",
+                "effect_type": "draw",
+                "conditions": [{ "condition": "attached_to", "required_member_name": "shirakami_fubuki" }],
+                "amount": 1
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-090",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "colors": [],
+        "card_names": ["nejimakitsune"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 20
+            },
+            {
+                "timing": "on_down",
+                "effect_type": "send_cheer",
+                "conditions": [{ "condition": "attached_to", "required_member_name": "shirakami_fubuki" }],
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "downed_holomem",
+                "to": "holomem",
+                "multi_to": true
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-091",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "colors": [],
+        "card_names": ["fubuchun"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 20
+            },
+            {
+                "timing": "on_collab",
+                "effect_type": "choose_cards",
+                "conditions": [{ "condition": "attached_to", "required_member_name": "shirakami_fubuki" }],
+                "from": "archive",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 0,
+                "amount_max": 1,
+                "requirement": "support",
+                "requirement_sub_types": ["mascot"],
+                "remaining_cards_action": "nothing"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-092",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "colors": [],
+        "card_names": ["fubuzilla"],
+        "rarity": "u",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 20
+            }
+        ],
+        "attached_actions": [
+            {
+                "full_english_text": "FUBUKI_BP02_092_FULL_TEXT",
+                "effect_id": "fubuzilla",
+                "conditions": [
+                    { "condition": "cheer_in_play", "amount_min": 2, "amount_max": -1 },
+                    { "condition": "attached_to", "required_member_name": "shirakami_fubuki" },
+                    { "condition": "effect_card_id_not_used_this_turn" }
+                ],
+                "effects": [
+                    {
+                        "effect_type": "archive_cheer_from_holomem",
+                        "ability_source": "support_card",
+                        "from": "holomem",
+                        "amount": 2,
+                        "and": [
+                            {
+                                "effect_type": "add_turn_effect",
+                                "turn_effect": {
+                                    "timing": "before_art",
+                                    "conditions": [{ "condition": "attached_owner_is_performing" }],
+                                    "effect_type": "power_boost",
+                                    "amount": 50
+                                }
+                            },
+                            { "effect_type": "record_effect_card_id_used_this_turn" }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-093",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "colors": [],
+        "card_names": ["miteiru"],
+        "rarity": "c",
+        "effects": [{ "effect_type": "attach_card_to_holomem" }],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 20
+            },
+            {
+                "timing": "on_take_damage",
+                "effect_type": "reduce_damage",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "shirakami_fubuki" },
+                    { "condition": "attached_owner_is_location", "condition_location": "backstage" }
+                ],
+                "amount": "all"
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-095",
         "card_type": "support",
         "sub_type": "mascot",
@@ -9314,6 +9519,29 @@
                 "to": "holomem",
                 "to_limitation": "tag_in",
                 "to_limitation_tags": ["#SecretSocietyholoX"]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-099",
+        "card_type": "support",
+        "sub_type": "fan",
+        "colors": [],
+        "card_names": ["sukonbu"],
+        "rarity": "c",
+        "play_conditions": [{ "condition": "holomem_on_stage", "required_member_name_in": ["shirakami_fubuki"] }],
+        "effects": [
+            {
+                "effect_type": "attach_card_to_holomem",
+                "to_limitation": "specific_member_name",
+                "to_limitation_name": "shirakami_fubuki"
+            }
+        ],
+        "attached_effects": [
+            {
+                "timing": "check_hp",
+                "effect_type": "bonus_hp",
+                "amount": 10
             }
         ]
     },

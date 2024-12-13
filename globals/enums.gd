@@ -1,6 +1,7 @@
 extends Node
 
 const EventType_AddTurnEffect = "add_turn_effect"
+const EventType_AttachedActionActivation = "attached_action_activation"
 const EventType_Bloom = "bloom"
 const EventType_BoostStat = "boost_stat"
 const EventType_CheerStep = "cheer_step"
@@ -27,6 +28,7 @@ const EventType_GenerateHolopower = "generate_holopower"
 const EventType_InitialPlacementBegin = "initial_placement_begin"
 const EventType_InitialPlacementPlaced = "initial_placement_placed"
 const EventType_InitialPlacementReveal = "initial_placement_reveal"
+const EventType_LifeDamageDealt = "life_damage_dealt"
 const EventType_MainStepStart = "main_step_start"
 const EventType_ModifyHP = "modify_hp"
 const EventType_MoveCard = "move_card"
@@ -46,7 +48,6 @@ const EventType_RevealCards = "reveal_cards"
 const EventType_RollDie = "roll_die"
 const EventType_ShuffleDeck = "shuffle_deck"
 const EventType_TurnStart = "turn_start"
-const EventType_LifeDamageDealt = "life_damage_dealt"
 
 const DecisionEventTypes = [
 	EventType_CheerStep,
@@ -75,6 +76,10 @@ const GameAction_ChooseNewCenter = "choose_new_center"
 
 const GameAction_PlaceCheer = "place_cheer"
 #"placements": Dict[str, str],
+
+const GameAction_MainStepAttachedAction = "mainstep_attached_action"
+#"effect_id": str,
+#"support_id": str,
 
 const GameAction_MainStepPlaceHolomem = "mainstep_place_holomem"
 #"card_id": str,
