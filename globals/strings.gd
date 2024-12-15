@@ -154,6 +154,8 @@ func get_card_location_string(location):
 	match location:
 		"archive":
 			source_str = tr("FROM_YOUR_ARCHIVE")
+		"attached_support":
+			source_str = tr("FROM_YOUR_ATTACHED_SUPPORT")
 		"cheer_deck":
 			source_str = tr("FROM_YOUR_CHEER_DECK")
 		"downed_holomem":
@@ -228,6 +230,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			from_zone_str = tr("FROM_YOUR_DECK")
 		"archive":
 			from_zone_str = tr("FROM_YOUR_ARCHIVE")
+		"attached_support":
+			from_zone_str = tr("FROM_YOUR_ATTACHED_SUPPORT")
 		"backstage":
 			from_zone_str = tr("FROM_YOUR_BACKSTAGE")
 		"center":
@@ -554,6 +558,10 @@ func get_condition_text(conditions):
 				text += tr("Performer is chosen card:") + " "
 			"performer_has_any_tag":
 				text += tr("Performer has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
+			"performer_has_attachment_of_type":
+				var type = condition["condition_type"]
+				#Example: `Performer is attached with Mascot: `
+				text += tr("CONDITION__PERFORMER_HAS_ATTACHMENT_OF_TYPE").format({Type=tr(type)}) + " "
 			"played_support_this_turn":
 				text += tr("Played a Support card this turn:") + " "
 			"self_has_cheer_color":
@@ -808,6 +816,9 @@ func get_effect_text(effect):
 			text += "+%s Power%s." % [effect["amount"], multiplier_str]
 		"power_boost_per_all_fans":
 			text += "+%s Power per each Fan attached to your Holomems." % [effect["amount"]]
+		"power_boost_per_all_mascots":
+			#Example: `+20 Power per each Mascot attached to your Holomems.`
+			text += tr("EFFECT__POWER_BOOST_PER_ALL_MASCOTS").format({Amount=effect["amount"]})
 		"power_boost_per_archived_holomem":
 			text += "+%s Power per archived Holomem." % [effect["amount"]]
 		"power_boost_per_attached_cheer":
@@ -1048,6 +1059,20 @@ func build_english_card_text(definition):
 				var next_entry = {
 					"colors": [],
 					"text": bloom_text
+				}
+				data.append(next_entry)
+			if "mascot_count_limit" in definition:
+				var mascot_text = "[b]Gift[/b]: "
+				#Example: `This Holomem may have 2 Mascots attached`
+				mascot_text += tr("EFFECT__MASCOT_COUNT_LIMIT").format({Amount=definition["mascot_count_limit"]})
+				if "mascot_count_requirement" in definition:
+					match definition["mascot_count_requirement"]:
+						"unique_name":
+							#Example: ` with different names.`
+							mascot_text += tr("EFFECT__MASCOT_COUNT_REQUIREMENT_UNIQUE_NAME")
+				var next_entry = {
+					"colors": [],
+					"text": mascot_text
 				}
 				data.append(next_entry)
 			var arts = definition["arts"]
