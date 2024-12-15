@@ -1,13 +1,21 @@
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
-  - [b]Collab Debut Kanata, Bloom Mumei, and Bloom Irys now limited to 1 card in deck.[/b]
+  - [b]Restricted List:[/b] (One per deck)
+    - Collab Debut Kanata
+    - Bloom Mumei
+    - Bloom Irys
+
   - [b]Added more cards from "Quintet Spectrum"[/b]
+      - hBP02-001: "Shirakami Fubuki" Oshi card
       - hBP02-004: "Sakamata Chloe" Oshi card
+      - hBP02-008 to -013: "Shirakami Fubuki" Holomem cards
       - hBP02-035 to -040: "Sakamata Chloe" Holomem cards
       - hBP02-078: "Kanata Construction" Support (Event) card
       - hBP02-080: "Secret Society holoX" Support (Event) card
+      - hBP02-089 to -093: Fubuki Support (Mascot) cards
       - hBP02-096: "Inu" Support (Mascot) card
+      - hBP02-099: "Sukonbu" Support (Fan) card
   - [b]Added cards from "Quintet Spectrum"[/b]
       - hBP02-003: "Houshou Marine" Oshi card
       - hBP02-028 to -033: "Houshou Marine" Holomem cards
@@ -20,12 +28,12 @@
       - hBP02-085: "HOLOLIVE FANTASY" Support (Event) card
       - hBP02-086: "Holo Sparkling Wine" Support (Tool) card
       - hBP02-100: "Shirogane Dan'in" Support (Fan) card
-  - Added hSD03: Nekomata Okayu Starter Deck.
-  - Added hSD04: Yuzuki Choco Starter Deck.
-  - Added hSD02: Nakiri Ayame Starter Deck.
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]HISTORY[/u][/b][/font_size]
+  - Added hSD03: Nekomata Okayu Starter Deck.
+  - Added hSD04: Yuzuki Choco Starter Deck.
+  - Added hSD02: Nakiri Ayame Starter Deck.
   - Added a new setting that toggles the visibility of the card information overlay and panel for cards with no proxies.
   - Added a new card information panel for cards with no proxies.
   - Added promo cards:
