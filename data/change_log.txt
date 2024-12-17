@@ -1,12 +1,17 @@
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
-  - Collab Debut Kanata, Bloom Mumei, and Bloom Irys now limited to 1 card in deck.
+  - [b]Collab Debut Kanata, Bloom Mumei, and Bloom Irys now limited to 1 card in deck.[/b]
   - [b]Added more cards from "Quintet Spectrum"[/b]
+      - hBP02-004: "Sakamata Chloe" Oshi card
+      - hBP02-035 to -040: "Sakamata Chloe" Holomem cards
+      - hBP02-078: "Kanata Construction" Support (Event) card
+      - hBP02-080: "Secret Society holoX" Support (Event) card
+      - hBP02-096: "Inu" Support (Mascot) card
+  - [b]Added cards from "Quintet Spectrum"[/b]
       - hBP02-003: "Houshou Marine" Oshi card
       - hBP02-028 to -033: "Houshou Marine" Holomem cards
-      - hBP02-095: "Dokuro-kun" Support (Mascot)card
-  - [b]Added cards from "Quintet Spectrum"[/b]
+      - hBP02-095: "Dokuro-kun" Support (Mascot) card
       - hBP02-014 to -017: "Shirogane Noel" Holomem cards
       - hBP02-061 to -064: "Ninomae Ina'nis" Holomem cards
       - hBP02-065 to -068: "Nerissa Ravencroft" Holomem cards
