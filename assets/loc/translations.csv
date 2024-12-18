@@ -481,7 +481,7 @@ Power,Power,파워,パワー,Poder
 Incoming {SpecialStr}Damage: {Amount}{PreventStr},Incoming {SpecialStr}Damage: {Amount}{PreventStr},Incoming {SpecialStr}Damage: {Amount}{PreventStr},受ける{SpecialStr}ダメージ: {Amount}{PreventStr},Entrante {SpecialStr}Daño: {Amount}{PreventStr}
 Choose the next die result.,Choose the next die result.,다음에 던졌을 때 나올 주사위 눈을 선택하세요.,次のサイコロの結果を選んでください。,Elije el siguiente resultado del dado:
 Oshi:,Oshi:,오시:,推し:,Oshi:
-ACTION_MENU__SUPPORT,Support:,서포트:,サポート:,Apoyo:
+ACTION_MENU__SPECIAL,Special:,특수:,スペシャル:,Especial:
 Choose %s Cheer to Archive.,Choose %s Cheer to Archive.,아카이브로 보낼 옐을 %s장 선택하세요,%s エールをアーカイブに送ってください。,Elije %s Aplausos a Archivar
 YOUR_LIFE,your Life,라이프,あなたのライフ,Tu vida
 Place 1 {COLOR} Cheer from {SOURCE}.,Place 1 {COLOR} Cheer from {SOURCE}.,{SOURCE}에서 {COLOR} 옐 1장을 놓는다.,{SOURCE}から{COLOR}エールを1つ置いてください。,Elije 1 {COLOR} Aplauso de {SOURCE}

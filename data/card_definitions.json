@@ -8174,7 +8174,7 @@
                         "and": [
                             {
                                 "effect_type": "deal_life_damage",
-                                "conditions": [{ "condition": "last_die_rolls", "roll_results": "one_odd" }],
+                                "conditions": [{ "condition": "last_die_rolls", "roll_results": "any_odd" }],
                                 "amount": 1,
                                 "opponent": true
                             }
@@ -9689,7 +9689,7 @@
                 "amount": 20
             }
         ],
-        "attached_actions": [
+        "special_actions": [
             {
                 "full_english_text": "FUBUKI_BP02_092_FULL_TEXT",
                 "effect_id": "fubuzilla",

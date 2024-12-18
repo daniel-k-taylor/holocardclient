@@ -465,8 +465,6 @@ func process_game_event(event_type, event_data):
 	match event_type:
 		Enums.EventType_AddTurnEffect:
 			_on_add_turn_effect(event_data)
-		Enums.EventType_AttachedActionActivation:
-			_on_attached_action_activation(event_data)
 		Enums.EventType_Bloom:
 			_on_bloom_event(event_data)
 		Enums.EventType_BoostStat:
@@ -555,6 +553,8 @@ func process_game_event(event_type, event_data):
 			_on_roll_die_event(event_data)
 		Enums.EventType_ShuffleDeck:
 			_on_shuffle_deck_event(event_data)
+		Enums.EventType_SpecialActionActivation:
+			_on_special_action_activation(event_data)
 		Enums.EventType_TurnStart:
 			_on_turn_start(event_data)
 		_:
@@ -1101,9 +1101,9 @@ func _on_main_step_decision(event_data):
 				action_menu_choice_info["enable_check"].append(_allowed)
 				action_menu_choice_info["action_type"].append(action["action_type"])
 				action_menu_choice_info["actions_in_menu"].append(action)
-			elif action["action_type"] == Enums.GameAction_MainStepAttachedAction:
+			elif action["action_type"] == Enums.GameAction_MainStepSpecialAction:
 				# List each unique attached action by effect id
-				var action_string = Strings.build_use_attached_action_string(action["effect_id"])
+				var action_string = Strings.build_use_special_action_string(action["effect_id"])
 				if action_string in action_menu_choice_info["strings"]:
 					# There's no other available marker that can be used to distinguish different
 					# attached action effects, so we have to be content on using the string instead.
@@ -1326,21 +1326,22 @@ func _on_main_step_action_chosen(choice_index):
 	var chosen_action_type = chosen_action["action_type"]
 	var valid_actions = _get_main_step_actions_of_type(chosen_action_type)
 	match chosen_action_type:
-		Enums.GameAction_MainStepAttachedAction:
+		Enums.GameAction_MainStepSpecialAction:
 			# filter the valid_actions for effect ids, then map it to the owning holomem
 			var filtered_actions = (valid_actions
 				.filter(func(action): return action["effect_id"] == chosen_action["effect_id"]))
 			var valid_card_ids = (filtered_actions
-				.map(func(action): return action["owning_holomem_id"]))
+				.map(func(action): return action["owning_card_id"]))
 
 			_show_click_cards_action_menu(
 				valid_card_ids,
 				(func(selected_card_id):
 					for action in filtered_actions:
-						if action["owning_holomem_id"] == selected_card_id:
-							submit_main_step_attached_action(action["effect_id"], action["support_id"])
-							_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)),
-				Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_ATTACHED_ACTION),
+						if action["owning_card_id"] == selected_card_id:
+							submit_main_step_special_action(action["effect_id"], action["card_id"])
+							_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+							break),
+				Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_SPECIAL_ACTION),
 				_cancel_to_main_step
 			)
 		Enums.GameAction_MainStepPlaceHolomem:
@@ -2552,18 +2553,18 @@ func _on_life_damage_dealt(event_data):
 	if event_data["game_over"]:
 		target_player.life_count -= life_lost
 
-func _on_attached_action_activation(event_data):
+func _on_special_action_activation(event_data):
 	var active_player = get_player(event_data["event_player_id"])
 	var effect_id = event_data["effect_id"]
-	var support_id = event_data["support_id"]
-	var logline = "%s Support Card Effect [SKILL]%s[/SKILL] activated: [CARD]%s[/CARD]" % [
+	var card_id = event_data["card_id"]
+	var logline = "%s Special Effect [SKILL]%s[/SKILL] activated: [CARD]%s[/CARD]" % [
 		active_player.get_name_decorated(),
 		tr(effect_id),
-		_get_card_definition_id(support_id)
+		_get_card_definition_id(card_id)
 	]
 	game_log.add_to_log(GameLog.GameLogLine.Detail, logline)
-	# #Example: `Support: Fubuzilla`
-	var popout_msg = "%s %s" % [tr("ACTION_MENU__SUPPORT"), tr(effect_id)]
+	# #Example: `Special: Fubuzilla`
+	var popout_msg = "%s %s" % [tr("ACTION_MENU__SPECIAL"), tr(effect_id)]
 	_play_popup_message(popout_msg)
 
 #
@@ -2589,12 +2590,12 @@ func submit_place_cheer(placements):
 	}
 	NetworkManager.send_game_message(Enums.GameAction_PlaceCheer, action)
 
-func submit_main_step_attached_action(effect_id, support_id):
+func submit_main_step_special_action(effect_id, card_id):
 	var action =  {
 		"effect_id": effect_id,
-		"support_id": support_id
+		"card_id": card_id
 	}
-	NetworkManager.send_game_message(Enums.GameAction_MainStepAttachedAction, action)
+	NetworkManager.send_game_message(Enums.GameAction_MainStepSpecialAction, action)
 
 func submit_main_step_place_holomem(card_id):
 	var action = {

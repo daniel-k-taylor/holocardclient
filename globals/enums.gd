@@ -1,7 +1,6 @@
 extends Node
 
 const EventType_AddTurnEffect = "add_turn_effect"
-const EventType_AttachedActionActivation = "attached_action_activation"
 const EventType_Bloom = "bloom"
 const EventType_BoostStat = "boost_stat"
 const EventType_CheerStep = "cheer_step"
@@ -47,6 +46,7 @@ const EventType_RestoreHP = "restore_hp"
 const EventType_RevealCards = "reveal_cards"
 const EventType_RollDie = "roll_die"
 const EventType_ShuffleDeck = "shuffle_deck"
+const EventType_SpecialActionActivation = "special_action_activation"
 const EventType_TurnStart = "turn_start"
 
 const DecisionEventTypes = [
@@ -77,10 +77,6 @@ const GameAction_ChooseNewCenter = "choose_new_center"
 const GameAction_PlaceCheer = "place_cheer"
 #"placements": Dict[str, str],
 
-const GameAction_MainStepAttachedAction = "mainstep_attached_action"
-#"effect_id": str,
-#"support_id": str,
-
 const GameAction_MainStepPlaceHolomem = "mainstep_place_holomem"
 #"card_id": str,
 
@@ -93,6 +89,10 @@ const GameAction_MainStepCollab = "mainstep_collab"
 
 const GameAction_MainStepOshiSkill = "mainstep_oshi_skill"
 #"skill_id": str,
+
+const GameAction_MainStepSpecialAction = "mainstep_special_action"
+#"effect_id": str,
+#"card_id": str,
 
 const GameAction_MainStepPlaySupport = "mainstep_play_support"
 #"card_id": str,

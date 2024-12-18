@@ -32,7 +32,7 @@ var DECISION_INSTRUCTIONS_PERFORMANCE_ART_TARGET = "Choose a target for this Art
 var DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM = "Choose a Holomem to remove Cheer from"
 var DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM = "Choose a Holomem to receive Cheer"
 var DECISION_INSTRUCTIONS_MAKE_CHOICE = "Choose one effect"
-var DECISION_INSTRUCTIONS_CHOOSE_ATTACHED_ACTION = "Choose a Holomem with an attached effect to activate"
+var DECISION_INSTRUCTIONS_CHOOSE_SPECIAL_ACTION = "Choose a Holomem with a special effect to activate"
 
 var YOUR_ARCHIVE = "Your Archive"
 var OPPONENT_ARCHIVE = "Opponent Archive"
@@ -131,10 +131,10 @@ func build_use_oshi_skill_string(skill_id, cost):
 		cost_str = " " + tr("({HoloPowerAmount} Holopower)").format({HoloPowerAmount = cost})
 	return tr("Oshi:") + "[b]%s[/b]%s" % [skill_name, cost_str]
 
-func build_use_attached_action_string(effect_id: String) -> String:
+func build_use_special_action_string(effect_id: String) -> String:
 	var effect_str = tr(effect_id)
-	# Example: `Support: Fubuzilla`
-	return "%s [b]%s[/b]" % [tr("ACTION_MENU__SUPPORT"), effect_str]
+	# Example: `Special: Fubuzilla`
+	return "%s [b]%s[/b]" % [tr("ACTION_MENU__SPECIAL"), effect_str]
 
 func build_archive_cheer_string(count):
 	return tr("Choose %s Cheer to Archive.") % count
@@ -1131,9 +1131,9 @@ func build_english_card_text(definition):
 			var attached_effects = []
 			if "attached_effects" in definition:
 				attached_effects = definition["attached_effects"]
-			var attached_actions = []
-			if "attached_actions" in definition:
-				attached_actions = definition["attached_actions"]
+			var special_actions = []
+			if "special_actions" in definition:
+				special_actions = definition["special_actions"]
 			var next_entry = {
 				"colors": [],
 				"text": ""
@@ -1195,7 +1195,7 @@ func build_english_card_text(definition):
 					next_entry["text"] += " "
 				next_entry["text"] += get_effect_text(effect)
 
-			for action in attached_actions:
+			for action in special_actions:
 				# TODO: Handle the effect properly and not rely on full_english_text
 				# Right now we only have hBP02-092 as an example of a support item adding/providing
 				# the player an additional action separate from the normal procedures
