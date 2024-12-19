@@ -167,6 +167,8 @@ ahoy,Ahoy!,Ahoy!,Ahoy!,Ahoy!
 shukkou,Shukkou!,Shukkou!,Shukkou!,Shukkou!
 poepoepoe,poepoepoe~,poepoepoe~,poepoepoe~,poepoepoe~
 liferesetbutton,Life Reset Button,Life Reset Button,Life Reset Button,Life Reset Button
+mascotcreation,Mascot creation,Mascot creation,マスコット創造,Mascot creation
+fubukingdom,Fubukingdom,Fubukingdom,フブキングダム,Fubukingdom
 ,,,,
 nunnun,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹)눈눈,(๑╹ᆺ╹) nun nun,(๑╹ᆺ╹) nun nun
 onstage,On stage!,온 스테이지!,On stage!,¡A Escena!
@@ -365,6 +367,13 @@ areality,A reality that seems to be spat out and thrown away!,A reality that see
 onlytwoofus,Only Two of Us at the Beach,Only Two of Us at the Beach,Only Two of Us at the Beach,Only Two of Us at the Beach
 thisiswhereienjoyit,(This is where I enjoy it),(This is where I enjoy it),(This is where I enjoy it),(This is where I enjoy it)
 holoxslots,holoX Slots,holoX Slots,holoX Slots,holoX Slots
+konkonkitsune,Kon kon kitsune!,Kon kon kitsune!,Kon kon kitsune!,Kon kon kitsune!
+sweetosmanthus,Sweet osmanthus flower Fubuki,Sweet osmanthus flower Fubuki,Sweet osmanthus flower Fubuki,Sweet osmanthus flower Fubuki
+thankyoufriends,Thank You Friends❤️,Thank You Friends❤️,Thank You Friends❤️,Thank You Friends❤️
+otsukon,Otsu-kon-deshita,Otsu-kon-deshita,おつこーんでしたー,Otsu-kon-deshita
+damedesuyo,Damedesu yo!,Damedesu yo!,ダメですよっ！,Damedesu yo!
+pleaseuseyourstrength,Please use your strength,Please use your strength,力をかしてくださいね,Please use your strength
+acornucopia,A cornucopia of mascots,A cornucopia of mascots,マスコットたちの饗宴,A cornucopia of mascots
 ,,,,
 airani_iofifteen,Airani Iofifteen,아이라니 이오피프틴,アイラニ・イオフィフティーン,Airani Iofifteen
 aki_rosenthal,Aki Rosenthal,아키 로젠탈,アキ・ローゼンタール,Aki Rosenthal
@@ -422,6 +431,8 @@ encore,Encore,앙코르,アンコール,Encore
 excitingpranktime,Exciting Prank Time,두근두근 장난 타임,わくわくいたずらタイム,Emocionante Hora de Jugar
 first_gravity,First Gravity,First Gravity,First Gravity,First Gravity
 friend,Friend,프렌드,フレンド,Amigo
+fubuchun,Fubuchun,Fubuchun,フブチュン,Fubuchun
+fubuzilla,Fubuzilla,Fubuzilla,フブラ,Fubuzilla
 gamingpc,Gaming PC,게이밍 컴퓨터,ゲーミングパソコン,PC Gamer
 ganmo,Ganmo,간모,がんも,Ganmo
 harusaki_nodoka,Harusaki Nodoka,하루사키 노도카,春先のどか,Harusaki Nodoka
@@ -440,9 +451,12 @@ kanata_construction,Kanata Construction,Kanata Construction,かなた建設,Kana
 kfp,KFP,KFP,KFP,KFP
 kotori,Kotori,Kotori,Kotori,Kotori
 manechan,Mane-chan,마네짱,マネちゃん,Mane-chan
+miteiru,Miteiru,Miteiru,ミテイル,Miteiru
+nejimakitsune,Nejimakitsune,Nejimakitsune,ネジマキツネ,Nejimakitsune
 nousagialliance,Nousagi Alliance,노우사기 동맹,野うさぎ同盟,Alianza Nousagi
 okanyan,Okanyan,Okanyan,おかにゃん,Okanyan
 onigirya,Onigirya,Onigirya,おにぎりゃー,Onigirya
+oruyanke,Oruyanke,Oruyanke,おるやんけ,Oruyanke
 penlight,Penlight,펜라이트,ペンライト,Linterna
 pioneer,Pioneer,개척자,開拓者,Pionero
 promise,Promise,Promise,Promise,Promesa
@@ -454,6 +468,7 @@ standardpc,Standard PC,보통 컴퓨터,ふつうのパソコン,PC Estándar
 stone_axe,Stone Axe,돌 도끼,石の斧,Hacha de Piedra
 subachocoluna,SubaChocoLuna,SubaChocoLuna,スバちょこルーナ,SubaChocoLuna
 subpc,Sub PC,서브 컴퓨터,サブパソコン,PC Secundaria
+sukonbu,Sukonbu,Sukonbu,すこん部,Sukonbu
 thestoryofthemoonandtherabbit,Story of Moon&Rabbit,달과 토끼의 이야기,月と兎の物語,Historia de Conejo&Luna
 upao,Upao,우파오,うぱお,Upao
 zain,Zain,좌원,座員,Zain
@@ -466,12 +481,14 @@ Power,Power,파워,パワー,Poder
 Incoming {SpecialStr}Damage: {Amount}{PreventStr},Incoming {SpecialStr}Damage: {Amount}{PreventStr},Incoming {SpecialStr}Damage: {Amount}{PreventStr},受ける{SpecialStr}ダメージ: {Amount}{PreventStr},Entrante {SpecialStr}Daño: {Amount}{PreventStr}
 Choose the next die result.,Choose the next die result.,다음에 던졌을 때 나올 주사위 눈을 선택하세요.,次のサイコロの結果を選んでください。,Elije el siguiente resultado del dado:
 Oshi:,Oshi:,오시:,推し:,Oshi:
+ACTION_MENU__SPECIAL,Special:,특수:,スペシャル:,Especial:
 Choose %s Cheer to Archive.,Choose %s Cheer to Archive.,아카이브로 보낼 옐을 %s장 선택하세요,%s エールをアーカイブに送ってください。,Elije %s Aplausos a Archivar
 YOUR_LIFE,your Life,라이프,あなたのライフ,Tu vida
 Place 1 {COLOR} Cheer from {SOURCE}.,Place 1 {COLOR} Cheer from {SOURCE}.,{SOURCE}에서 {COLOR} 옐 1장을 놓는다.,{SOURCE}から{COLOR}エールを1つ置いてください。,Elije 1 {COLOR} Aplauso de {SOURCE}
 Send,Send,보낸다,送信,Envía
 ,,,,
 FROM_YOUR_ARCHIVE,from your Archive,아카이브에서,あなたのアーカイブから,de tu Archivo
+FROM_YOUR_ATTACHED_SUPPORT,from your attached support cards,from your attached support cards,from your attached support cards,from your attached support cards
 FROM_YOUR_CHEER_DECK,from your Cheer Deck,옐 덱에서,エールデッキから,de tu Mazo de Aplausos
 FROM_DOWNED_HOLOMEM,from downed Holomem,다운된 홀로멤에서,倒されたホロメンから,de holomem Derrotado
 FROM_HOLOMEM,from Holomem,홀로멤에서,ホロメンから,de holomem
@@ -605,6 +622,7 @@ CONDITION__HOLOMEM_IN_ARCHIVE,{Amount}{Tags} Holomem in Archive: ,{Amount}{Tags}
 CONDITION__SELF_HAS_CHEER_COLOR,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: ,Has {Amount} {Colors} Cheer: 
 CONDITION__HAS_STACKED_HOLOMEM_AMOUNT_MIN,If this card has {Amount}+ Holomem stacked under it: ,If this card has {Amount}+ Holomem stacked under it: ,If this card has {Amount}+ Holomem stacked under it: ,If this card has {Amount}+ Holomem stacked under it: 
 CONDITION__ATTACHED_OWNER_IS_LOCATION,Attached card's owner is at {Location}: ,Attached card's owner is at {Location}: ,Attached card's owner is at {Location}: ,Attached card's owner is at {Location}: 
+CONDITION__PERFORMER_HAS_ATTACHMENT_OF_TYPE,Performer is attached with {Type}:,Performer is attached with {Type}:,Performer is attached with {Type}:,Performer is attached with {Type}:
 ,,,,
 EFFECT__BLOOM_ALREADY_BLOOMED_THIS_TURN,"Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand.","Make one of your {Tags}Holomem who has Bloomed this turn, Bloom again using a Holomem in your hand."
 EFFECT__DEAL_DAMAGE_PER_STACKED_PARTIAL, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem, for each Holomem stacked under that Holomem
@@ -613,6 +631,11 @@ EFFECT__POWER_BOOST_PER_STACKED,+{Amount} Power per revealed {Limitation}card.,+
 EFFECT__REVEAL_TOP_DECK,Reveal the top {Amount}card of your deck.,덱 {Amount}맨위를 공개한다.,デッキのトップ{Amount}カードを公開する。,Revela la {Amount}carta de encima de tu Mazo.
 EFFECT__SHUFFLE_ARCHIVE_TO_DECK,Shuffle your archive into your deck.{Limitation},Shuffle your archive into your deck.{Limitation},Shuffle your archive into your deck.{Limitation},Shuffle your archive into your deck.{Limitation}
 EFFECT_ARCHIVE_REVEALED_CARDS,Archive the revealed cards.,Archive the revealed cards.,Archive the revealed cards.,Archive the revealed cards.
+EFFECT__POWER_BOOST_PER_ALL_MASCOTS,+{Amount} Power per each Mascot attached to your Holomems.,+{Amount} Power per each Mascot attached to your Holomems.,+{Amount} Power per each Mascot attached to your Holomems.,+{Amount} Power per each Mascot attached to your Holomems.
+EFFECT__MASCOT_COUNT_LIMIT,This Holomem may have {Amount} Mascots attached,This Holomem may have {Amount} Mascots attached,This Holomem may have {Amount} Mascots attached,This Holomem may have {Amount} Mascots attached
+EFFECT__MASCOT_COUNT_REQUIREMENT_UNIQUE_NAME, with different names., with different names., with different names., with different names.
+,,,,
+TIMING__ON_COLLAB,When Holomem collabs:,When Holomem collabs:,When Holomem collabs:,When Holomem collabs:
 ,,,,
 Special,Special,특수,スペシャル,Especial
 to,to, ,,a
@@ -701,6 +724,8 @@ CHOCO_SD04_004_FULL_TEXT,You may Archive 1 card from your hand for the following
 OKAYU_004_COLLAB_PARTIAL_TEXT,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.,Then put the revealed card on the bottom of your deck.
 CHLOE_BP02_039_FULL_TEXT,"(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", you may put 1 of them that is a Support card into your hand instead of Archiving it."
 CHLOE_BP02_040_FULL_TEXT,"(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE.","(Once per turn) When you reveal cards with this holomem's Art ""holoX Slots"", if the three revealed cards are all holomems with the same Bloom level, your opponent loses 1 LIFE."
+FUBUKI_BP02_092_FULL_TEXT,"If this is attached to Shirakami Fubuki, it gains the following effect: (Once per turn) during your Main Step, you may Archive any 2 Cheers from your holomems for the following effect: the Arts of the holomem with this Mascot attached gain +50 power until the end of this turn.","If this is attached to Shirakami Fubuki, it gains the following effect: (Once per turn) during your Main Step, you may Archive any 2 Cheers from your holomems for the following effect: the Arts of the holomem with this Mascot attached gain +50 power until the end of this turn.","If this is attached to Shirakami Fubuki, it gains the following effect: (Once per turn) during your Main Step, you may Archive any 2 Cheers from your holomems for the following effect: the Arts of the holomem with this Mascot attached gain +50 power until the end of this turn.","If this is attached to Shirakami Fubuki, it gains the following effect: (Once per turn) during your Main Step, you may Archive any 2 Cheers from your holomems for the following effect: the Arts of the holomem with this Mascot attached gain +50 power until the end of this turn."
+FUBUKI_BP02_001_FULL_TEXT,"(Once per game) Can be used when any of your White holomems Downs an opponent's holomem: you may roll one dice for each 2 Mascots attached to your holomems: if you roll one or more odd numbers, your opponent loses 1 LIFE.","(Once per game) Can be used when any of your White holomems Downs an opponent's holomem: you may roll one dice for each 2 Mascots attached to your holomems: if you roll one or more odd numbers, your opponent loses 1 LIFE.",[ゲームに1回]自分の白ホロメンが相手のホロメンをダウンさせた時、自分のステージのマスコット2枚につき、サイコロを1回振れる：奇数が1回以上出たなら、相手のライフ-1。,"(Once per game) Can be used when any of your White holomems Downs an opponent's holomem: you may roll one dice for each 2 Mascots attached to your holomems: if you roll one or more odd numbers, your opponent loses 1 LIFE."
 ,,,,
 Go first.,Go first.,선공하기,先行です。,Ir Primero
 Go second.,Go second.,후공하기,後攻です。,Ir Segundo

@@ -517,6 +517,8 @@ func process_game_event(event_type, event_data):
 			_on_initial_placement_placed(event_data)
 		Enums.EventType_InitialPlacementReveal:
 			_on_initial_placement_revealed(event_data)
+		Enums.EventType_LifeDamageDealt:
+			_on_life_damage_dealt(event_data)
 		Enums.EventType_MainStepStart:
 			_on_main_step_start(event_data)
 		Enums.EventType_ModifyHP:
@@ -551,10 +553,10 @@ func process_game_event(event_type, event_data):
 			_on_roll_die_event(event_data)
 		Enums.EventType_ShuffleDeck:
 			_on_shuffle_deck_event(event_data)
+		Enums.EventType_SpecialActionActivation:
+			_on_special_action_activation(event_data)
 		Enums.EventType_TurnStart:
 			_on_turn_start(event_data)
-		Enums.EventType_LifeDamageDealt:
-			_on_life_damage_dealt(event_data)
 		_:
 			Logger.log_game("Unknown event type: %s" % event_type)
 			assert(false)
@@ -1099,6 +1101,18 @@ func _on_main_step_decision(event_data):
 				action_menu_choice_info["enable_check"].append(_allowed)
 				action_menu_choice_info["action_type"].append(action["action_type"])
 				action_menu_choice_info["actions_in_menu"].append(action)
+			elif action["action_type"] == Enums.GameAction_MainStepSpecialAction:
+				# List each unique attached action by effect id
+				var action_string = Strings.build_use_special_action_string(action["effect_id"])
+				if action_string in action_menu_choice_info["strings"]:
+					# There's no other available marker that can be used to distinguish different
+					# attached action effects, so we have to be content on using the string instead.
+					continue
+				action_menu_choice_info["strings"].append(action_string)
+				action_menu_choice_info["enabled"].append(true)
+				action_menu_choice_info["enable_check"].append(_allowed)
+				action_menu_choice_info["action_type"].append(action["action_type"])
+				action_menu_choice_info["actions_in_menu"].append(action)
 			elif action["action_type"] not in action_menu_choice_info["action_type"]:
 				# These are batched actions where there are multiple in the list of available actions
 				# But we only want 1 UI item to show up.
@@ -1312,6 +1326,24 @@ func _on_main_step_action_chosen(choice_index):
 	var chosen_action_type = chosen_action["action_type"]
 	var valid_actions = _get_main_step_actions_of_type(chosen_action_type)
 	match chosen_action_type:
+		Enums.GameAction_MainStepSpecialAction:
+			# filter the valid_actions for effect ids, then map it to the owning holomem
+			var filtered_actions = (valid_actions
+				.filter(func(action): return action["effect_id"] == chosen_action["effect_id"]))
+			var valid_card_ids = (filtered_actions
+				.map(func(action): return action["owning_card_id"]))
+
+			_show_click_cards_action_menu(
+				valid_card_ids,
+				(func(selected_card_id):
+					for action in filtered_actions:
+						if action["owning_card_id"] == selected_card_id:
+							submit_main_step_special_action(action["effect_id"], action["card_id"])
+							_change_ui_phase(UIPhase.UIPhase_WaitingOnServer)
+							break),
+				Strings.get_string(Strings.DECISION_INSTRUCTIONS_CHOOSE_SPECIAL_ACTION),
+				_cancel_to_main_step
+			)
 		Enums.GameAction_MainStepPlaceHolomem:
 			# The valid actions have all holomems that are selectable to place.
 			var valid_card_ids = []
@@ -2518,9 +2550,22 @@ func _on_life_damage_dealt(event_data):
 	# Example: `Deal 1 life damage`
 	_play_popup_message(tr("DEAL_LIFE_DAMAGE").format({Amount=life_lost}))
 
-	var game_over = event_data["game_over"]
-	if game_over:
+	if event_data["game_over"]:
 		target_player.life_count -= life_lost
+
+func _on_special_action_activation(event_data):
+	var active_player = get_player(event_data["event_player_id"])
+	var effect_id = event_data["effect_id"]
+	var card_id = event_data["card_id"]
+	var logline = "%s Special Effect [SKILL]%s[/SKILL] activated: [CARD]%s[/CARD]" % [
+		active_player.get_name_decorated(),
+		tr(effect_id),
+		_get_card_definition_id(card_id)
+	]
+	game_log.add_to_log(GameLog.GameLogLine.Detail, logline)
+	# #Example: `Special: Fubuzilla`
+	var popout_msg = "%s %s" % [tr("ACTION_MENU__SPECIAL"), tr(effect_id)]
+	_play_popup_message(popout_msg)
 
 #
 # Submit to server funcs
@@ -2544,6 +2589,13 @@ func submit_place_cheer(placements):
 		"placements": placements
 	}
 	NetworkManager.send_game_message(Enums.GameAction_PlaceCheer, action)
+
+func submit_main_step_special_action(effect_id, card_id):
+	var action =  {
+		"effect_id": effect_id,
+		"card_id": card_id
+	}
+	NetworkManager.send_game_message(Enums.GameAction_MainStepSpecialAction, action)
 
 func submit_main_step_place_holomem(card_id):
 	var action = {

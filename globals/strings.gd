@@ -32,6 +32,7 @@ var DECISION_INSTRUCTIONS_PERFORMANCE_ART_TARGET = "Choose a target for this Art
 var DECISION_INSTRUCTIONS_CHOOSE_CHEER_SOURCE_HOLOMEM = "Choose a Holomem to remove Cheer from"
 var DECISION_INSTRUCTIONS_CHOOSE_CHEER_TARGET_HOLOMEM = "Choose a Holomem to receive Cheer"
 var DECISION_INSTRUCTIONS_MAKE_CHOICE = "Choose one effect"
+var DECISION_INSTRUCTIONS_CHOOSE_SPECIAL_ACTION = "Choose a Holomem with a special effect to activate"
 
 var YOUR_ARCHIVE = "Your Archive"
 var OPPONENT_ARCHIVE = "Opponent Archive"
@@ -130,6 +131,11 @@ func build_use_oshi_skill_string(skill_id, cost):
 		cost_str = " " + tr("({HoloPowerAmount} Holopower)").format({HoloPowerAmount = cost})
 	return tr("Oshi:") + "[b]%s[/b]%s" % [skill_name, cost_str]
 
+func build_use_special_action_string(effect_id: String) -> String:
+	var effect_str = tr(effect_id)
+	# Example: `Special: Fubuzilla`
+	return "%s [b]%s[/b]" % [tr("ACTION_MENU__SPECIAL"), effect_str]
+
 func build_archive_cheer_string(count):
 	return tr("Choose %s Cheer to Archive.") % count
 
@@ -148,6 +154,8 @@ func get_card_location_string(location):
 	match location:
 		"archive":
 			source_str = tr("FROM_YOUR_ARCHIVE")
+		"attached_support":
+			source_str = tr("FROM_YOUR_ATTACHED_SUPPORT")
 		"cheer_deck":
 			source_str = tr("FROM_YOUR_CHEER_DECK")
 		"downed_holomem":
@@ -222,6 +230,8 @@ func build_choose_cards_string(from_zone, to_zone, amount_min, amount_max,
 			from_zone_str = tr("FROM_YOUR_DECK")
 		"archive":
 			from_zone_str = tr("FROM_YOUR_ARCHIVE")
+		"attached_support":
+			from_zone_str = tr("FROM_YOUR_ATTACHED_SUPPORT")
 		"backstage":
 			from_zone_str = tr("FROM_YOUR_BACKSTAGE")
 		"center":
@@ -409,6 +419,9 @@ func get_timing_text(timing, timing_source_requirement):
 			text += ""
 		"on_bloom_level_up":
 			text += tr("When Bloom Level increases:") + " "
+		"on_collab":
+			#Example: `When Holomem collabs:`
+			text += tr("TIMING__ON_COLLAB") + " "
 		"on_take_damage":
 			text += tr("When Holomem takes damage:") + " "
 		"on_down":
@@ -443,6 +456,8 @@ func get_condition_text(conditions):
 						location_str = tr("CENTER_POSITION")
 					"center_or_collab":
 						location_str = tr("CEN_COL_POSITION")
+					"backstage":
+						location_str = tr("BACKHOLOMEM_POSITION")
 				# Example: `Attached card's owner is at Center or Collab: `
 				text += tr("CONDITION__ATTACHED_OWNER_IS_LOCATION").format({Location=location_str})
 			"bloom_target_is_debut":
@@ -543,6 +558,10 @@ func get_condition_text(conditions):
 				text += tr("Performer is chosen card:") + " "
 			"performer_has_any_tag":
 				text += tr("Performer has tag %s:") % ["/".join(get_tags_strings(condition["condition_tags"]))] + " "
+			"performer_has_attachment_of_type":
+				var type = condition["condition_type"]
+				#Example: `Performer is attached with Mascot: `
+				text += tr("CONDITION__PERFORMER_HAS_ATTACHMENT_OF_TYPE").format({Type=tr(type)}) + " "
 			"played_support_this_turn":
 				text += tr("Played a Support card this turn:") + " "
 			"self_has_cheer_color":
@@ -797,6 +816,9 @@ func get_effect_text(effect):
 			text += "+%s Power%s." % [effect["amount"], multiplier_str]
 		"power_boost_per_all_fans":
 			text += "+%s Power per each Fan attached to your Holomems." % [effect["amount"]]
+		"power_boost_per_all_mascots":
+			#Example: `+20 Power per each Mascot attached to your Holomems.`
+			text += tr("EFFECT__POWER_BOOST_PER_ALL_MASCOTS").format({Amount=effect["amount"]})
 		"power_boost_per_archived_holomem":
 			text += "+%s Power per archived Holomem." % [effect["amount"]]
 		"power_boost_per_attached_cheer":
@@ -1039,6 +1061,20 @@ func build_english_card_text(definition):
 					"text": bloom_text
 				}
 				data.append(next_entry)
+			if "mascot_count_limit" in definition:
+				var mascot_text = "[b]Gift[/b]: "
+				#Example: `This Holomem may have 2 Mascots attached`
+				mascot_text += tr("EFFECT__MASCOT_COUNT_LIMIT").format({Amount=definition["mascot_count_limit"]})
+				if "mascot_count_requirement" in definition:
+					match definition["mascot_count_requirement"]:
+						"unique_name":
+							#Example: ` with different names.`
+							mascot_text += tr("EFFECT__MASCOT_COUNT_REQUIREMENT_UNIQUE_NAME")
+				var next_entry = {
+					"colors": [],
+					"text": mascot_text
+				}
+				data.append(next_entry)
 			var arts = definition["arts"]
 			for art in arts:
 				var colors = []
@@ -1095,6 +1131,9 @@ func build_english_card_text(definition):
 			var attached_effects = []
 			if "attached_effects" in definition:
 				attached_effects = definition["attached_effects"]
+			var special_actions = []
+			if "special_actions" in definition:
+				special_actions = definition["special_actions"]
 			var next_entry = {
 				"colors": [],
 				"text": ""
@@ -1155,6 +1194,12 @@ func build_english_card_text(definition):
 				if i > 0:
 					next_entry["text"] += " "
 				next_entry["text"] += get_effect_text(effect)
+
+			for action in special_actions:
+				# TODO: Handle the effect properly and not rely on full_english_text
+				# Right now we only have hBP02-092 as an example of a support item adding/providing
+				# the player an additional action separate from the normal procedures
+				next_entry["text"] += " " + get_effect_text(action)
 
 			data.append(next_entry)
 		"oshi":

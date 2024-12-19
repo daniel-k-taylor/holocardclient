@@ -27,6 +27,7 @@ const EventType_GenerateHolopower = "generate_holopower"
 const EventType_InitialPlacementBegin = "initial_placement_begin"
 const EventType_InitialPlacementPlaced = "initial_placement_placed"
 const EventType_InitialPlacementReveal = "initial_placement_reveal"
+const EventType_LifeDamageDealt = "life_damage_dealt"
 const EventType_MainStepStart = "main_step_start"
 const EventType_ModifyHP = "modify_hp"
 const EventType_MoveCard = "move_card"
@@ -45,8 +46,8 @@ const EventType_RestoreHP = "restore_hp"
 const EventType_RevealCards = "reveal_cards"
 const EventType_RollDie = "roll_die"
 const EventType_ShuffleDeck = "shuffle_deck"
+const EventType_SpecialActionActivation = "special_action_activation"
 const EventType_TurnStart = "turn_start"
-const EventType_LifeDamageDealt = "life_damage_dealt"
 
 const DecisionEventTypes = [
 	EventType_CheerStep,
@@ -88,6 +89,10 @@ const GameAction_MainStepCollab = "mainstep_collab"
 
 const GameAction_MainStepOshiSkill = "mainstep_oshi_skill"
 #"skill_id": str,
+
+const GameAction_MainStepSpecialAction = "mainstep_special_action"
+#"effect_id": str,
+#"card_id": str,
 
 const GameAction_MainStepPlaySupport = "mainstep_play_support"
 #"card_id": str,
