@@ -1,7 +1,13 @@
 
 
 Bugs:
+  ☐ Reported on itch: You can stunlock the game by using the debut Mio and activate her effect, when you dont have a Holomember to discard.
   ☐ Memory leak in client
+  Marine bug:
+    When you Bloom 2nd Marine(hBP02-033) and salvage a Holomem from the archive, if the salvaged Holomem is a damaged and archived Holomem, it is brought by hand with a damage marker attached.
+    Also, after placing the salvaged Holome, it moves between the archive and the field if there is a change in the field, such as placing or collaborating with another Holomem.
+    This is not a bug that appears when you play Marine, It's a bug that only appears if your opponent plays Marine.
+    This means that the user who plays Marine doesn't know if the bug happened.
 
 Todo:
   ☐ Show added turn effects somehow
