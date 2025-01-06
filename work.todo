@@ -1,14 +1,7 @@
 
 
-Bugs:
-  Marine bug:
-    When you Bloom 2nd Marine(hBP02-033) and salvage a Holomem from the archive, if the salvaged Holomem is a damaged and archived Holomem, it is brought by hand with a damage marker attached.
-    Also, after placing the salvaged Holome, it moves between the archive and the field if there is a change in the field, such as placing or collaborating with another Holomem.
-    This is not a bug that appears when you play Marine, It's a bug that only appears if your opponent plays Marine.
-    This means that the user who plays Marine doesn't know if the bug happened.
+Important Client Bugs:
 
-  Other bugs:
-    ☐ Memory leak in client
 
 Todo:
   ☐ Show added turn effects somehow
@@ -30,3 +23,5 @@ Polish:
 
 Later:
   ☐ If an effect can move your opponent's attached cheer around between members, probably need to look at the do_move_cards(me,...) logic
+  Other bugs:
+    ☐ Memory leak in client

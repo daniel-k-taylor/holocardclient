@@ -1343,7 +1343,14 @@
         "collab_effects": [
             {
                 "effect_type": "choice",
-                "conditions": [{ "condition": "can_archive_from_hand", "amount_min": 1, "condition_source": "holomem_none" }],
+                "conditions": [
+                    {
+                        "condition": "can_archive_from_hand",
+                        "amount_min": 1,
+                        "condition_source": "holomem_none",
+                        "requirement": "holomem"
+                    }
+                ],
                 "choice": [
                     {
                         "effect_type": "archive_from_hand",
@@ -8888,7 +8895,8 @@
                         "amount_min": 1,
                         "amount_max": 1,
                         "requirement": "holomem",
-                        "remaining_cards_action": "nothing"
+                        "remaining_cards_action": "nothing",
+                        "reveal_chosen": true
                     },
                     { "effect_type": "pass" }
                 ]
@@ -9148,6 +9156,7 @@
                 "conditions": [
                     { "condition": "effect_card_id_not_used_this_turn" },
                     { "condition": "revealed_cards_have_same_type", "condition_same_type": "holomem_same_bloom" },
+                    { "condition": "revealed_cards_count", "amount_min": 3 },
                     { "condition": "this_card_is_performing" }
                 ],
                 "effect_type": "deal_life_damage",
