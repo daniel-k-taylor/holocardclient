@@ -1,5 +1,5 @@
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
-[font_size=20][b][u]NEW! modified by willson[/u][/b][/font_size]
+[font_size=20][b][u]NEW![/u][/b][/font_size]
   - [b]Added cards from "Quintet Spectrum"[/b]
 	  - hBP02-034: "Nakiri Ayame" Holomem card
 	  - hBP02-084: "mikkorone24" Support (Event) cards
