@@ -1,38 +1,39 @@
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW! modified by willson[/u][/b][/font_size]
   - [b]Added cards from "Quintet Spectrum"[/b]
-      - hBP02-034: "nakiri_ayame" Holomem card
-      - hBP02-084: "mikkorone24" Support (Event) cards
+	  - hBP02-034: "Nakiri Ayame" Holomem card
+	  - hBP02-084: "mikkorone24" Support (Event) cards
+	  - hBP02-024 to -027: "Ookami Mio" Holomem card
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]HISTORY[/u][/b][/font_size]
   - [b]Restricted List:[/b] (One per deck)
-    - Collab Debut Kanata
-    - Bloom Mumei
-    - Bloom Irys
+	- Collab Debut Kanata
+	- Bloom Mumei
+	- Bloom Irys
 
   - [b]Added more cards from "Quintet Spectrum"[/b]
-      - hBP02-001: "Shirakami Fubuki" Oshi card
-      - hBP02-004: "Sakamata Chloe" Oshi card
-      - hBP02-008 to -013: "Shirakami Fubuki" Holomem cards
-      - hBP02-035 to -040: "Sakamata Chloe" Holomem cards
-      - hBP02-078: "Kanata Construction" Support (Event) card
-      - hBP02-080: "Secret Society holoX" Support (Event) card
-      - hBP02-089 to -093: Fubuki Support (Mascot) cards
-      - hBP02-096: "Inu" Support (Mascot) card
-      - hBP02-099: "Sukonbu" Support (Fan) card
+	  - hBP02-001: "Shirakami Fubuki" Oshi card
+	  - hBP02-004: "Sakamata Chloe" Oshi card
+	  - hBP02-008 to -013: "Shirakami Fubuki" Holomem cards
+	  - hBP02-035 to -040: "Sakamata Chloe" Holomem cards
+	  - hBP02-078: "Kanata Construction" Support (Event) card
+	  - hBP02-080: "Secret Society holoX" Support (Event) card
+	  - hBP02-089 to -093: Fubuki Support (Mascot) cards
+	  - hBP02-096: "Inu" Support (Mascot) card
+	  - hBP02-099: "Sukonbu" Support (Fan) card
   - [b]Added cards from "Quintet Spectrum"[/b]
-      - hBP02-003: "Houshou Marine" Oshi card
-      - hBP02-028 to -033: "Houshou Marine" Holomem cards
-      - hBP02-095: "Dokuro-kun" Support (Mascot) card
-      - hBP02-014 to -017: "Shirogane Noel" Holomem cards
-      - hBP02-061 to -064: "Ninomae Ina'nis" Holomem cards
-      - hBP02-065 to -068: "Nerissa Ravencroft" Holomem cards
-      - hBP02-075: "Idol Felt Pen" Support (Item) card
-      - hBP02-076: "Custom PC" Support (Item) card
-      - hBP02-085: "HOLOLIVE FANTASY" Support (Event) card
-      - hBP02-086: "Holo Sparkling Wine" Support (Tool) card
-      - hBP02-100: "Shirogane Dan'in" Support (Fan) card
+	  - hBP02-003: "Houshou Marine" Oshi card
+	  - hBP02-028 to -033: "Houshou Marine" Holomem cards
+	  - hBP02-095: "Dokuro-kun" Support (Mascot) card
+	  - hBP02-014 to -017: "Shirogane Noel" Holomem cards
+	  - hBP02-061 to -064: "Ninomae Ina'nis" Holomem cards
+	  - hBP02-065 to -068: "Nerissa Ravencroft" Holomem cards
+	  - hBP02-075: "Idol Felt Pen" Support (Item) card
+	  - hBP02-076: "Custom PC" Support (Item) card
+	  - hBP02-085: "HOLOLIVE FANTASY" Support (Event) card
+	  - hBP02-086: "Holo Sparkling Wine" Support (Tool) card
+	  - hBP02-100: "Shirogane Dan'in" Support (Fan) card
 
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]HISTORY[/u][/b][/font_size]
@@ -42,14 +43,14 @@
   - Added a new setting that toggles the visibility of the card information overlay and panel for cards with no proxies.
   - Added a new card information panel for cards with no proxies.
   - Added promo cards:
-    - hBD24-001 : Pavolia Reine oshi
-    - hBD24-002 : Shishiro Botan oshi
-    - hBD24-003 : Inugami Korone oshi
-    - hBD24-004 : Shirakami Fubuki oshi
-    - hBD24-005 : Himemori Luna oshi
-    - hBD24-006 : Kureiji Ollie oshi
-    - hBD24-007 : Gigi Murin oshi
-    - hBD24-008 : Vestia Zeta
-    - hPR-001      : Sakura Miko spot
+	- hBD24-001 : Pavolia Reine oshi
+	- hBD24-002 : Shishiro Botan oshi
+	- hBD24-003 : Inugami Korone oshi
+	- hBD24-004 : Shirakami Fubuki oshi
+	- hBD24-005 : Himemori Luna oshi
+	- hBD24-006 : Kureiji Ollie oshi
+	- hBD24-007 : Gigi Murin oshi
+	- hBD24-008 : Vestia Zeta
+	- hPR-001      : Sakura Miko spot
   - Enabled alternative art for cards.
   - Added searching via tags in the filter section e.g. [i]#promise[/i],[i]#song[/i], etc.
