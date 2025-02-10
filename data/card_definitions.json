@@ -8683,6 +8683,187 @@
             }
         ]
     },
+	{
+		"card_id": "hBP02-024",
+		"card_type": "holomem_debut",
+		"card_names": ["ookami_mio"],
+		"special_deck_limit": 50,
+		"rarity": "c",
+		"colors": ["green"],
+		"hp": 90,
+		"baton_cost": 2,
+		"tags": [
+			"#JP",
+			"#Gamers",
+			"#AnimalEars",
+			"#Cooking"
+		],
+		"arts": [
+			{
+				"art_id": "uchiuchiuchidayoookamiodayo",
+				"costs": [
+					{"color": "any", "amount": 1}
+				],
+				"power": 10,
+				"art_effects": [
+					{
+						"effect_type": "choice",
+						"choice": [
+							{
+								"effect_type": "move_cheer_between_holomems",
+								"amount": 1,
+								"to_limitation": "tag_in",
+								"to_limitation_tags": ["#JP"]
+							},
+							{"effect_type": "pass"}
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"card_id": "hBP02-025",
+		"card_type": "holomem_bloom",
+		"bloom_level": 1,
+		"card_names": ["ookami_mio"],
+		"rarity": "c",
+		"colors": ["green"],
+		"hp": 160,
+		"baton_cost": 1,
+		"tags": [
+			"#JP",
+			"#Gamers",
+			"#AnimalEars",
+			"#Cooking"
+		],
+		"arts": [
+			{
+				"art_id": "ohamionn",
+				"costs": [
+					{
+						"color": "any",
+						"amount": 1
+					}
+				],
+				"power": 30
+			},
+			{
+				"art_id": "otsumionn",
+				"costs": [
+					{
+						"color": "green",
+						"amount": 1
+					},
+					{"color": "any", "amount": 1}
+				],
+				"power": 50
+			}
+		]
+	},
+	{
+		"card_id": "hBP02-026",
+		"card_type": "holomem_bloom",
+		"bloom_level": 1,
+		"card_names": ["ookami_mio"],
+		"rarity": "u",
+		"colors": ["green"],
+		"hp": 100,
+		"baton_cost": 1,
+		"tags": [
+			"#JP",
+			"#Gamers",
+			"#AnimalEars",
+			"#Cooking"
+		],
+		"arts": [
+			{
+				"art_id": "kondoshimomimamottetene",
+				"costs": [
+					{"color": "any", "amount": 1}
+				],
+				"power": 20
+			}
+		],
+		"bloom_effects": [
+			{
+				"effect_type": "choice",
+				"choice": [
+					{
+						"effect_type": "choose_cards",
+						"from": "cheer_deck",
+						"look_at": -1,
+						"destination": "holomem",
+						"amount_min": 1,
+						"amount_max": 1,
+						"requirement": "color_matches_holomems",
+						"requirement_only_holomems_with_any_tag": ["#Gamers"],
+						"to_limitation": "tag_in",
+						"to_limitation_tags": ["#Gamers"],
+						"reveal_chosen": true,
+						"remaining_cards_action": "shuffle"
+					},
+					{"effect_type": "pass"}
+				]
+			}
+		]
+	},
+	{
+		"card_id": "hBP02-027",
+		"card_type": "holomem_bloom",
+		"bloom_level": 1,
+		"buzz": true,
+		"card_names": ["ookami_mio"],
+		"rarity": "rr",
+		"colors": ["green"],
+		"hp": 240,
+		"baton_cost": 2,
+		"down_life_cost": 2,
+		"tags": [
+			"#JP",
+			"#Gamers",
+			"#AnimalEars",
+			"#Cooking"
+		],
+		"arts": [
+			{
+				"art_id": "tarottonomichibiki",
+				"costs": [
+					{"color": "green", "amount": 1},
+					{"color": "any", "amount": 1}
+				],
+				"power": 60,
+				"art_effects": [
+					{
+						"timing": "before_art",
+						"effect_type": "choice",
+						"choice": [
+							{
+								"effect_type": "reveal_top_deck",
+								"amount": 1,
+								"and": [
+									{
+										"effect_type": "power_boost_per_revealed_card",
+										"amount": 20,
+										"limitation": "holomem"
+									},
+									{
+										"effect_type": "power_boost_per_revealed_card",
+										"amount": 50,
+										"limitation": "support"
+									},
+									{
+										"effect_type": "archive_revealed_cards"
+									}
+								]
+							},
+							{"effect_type": "pass"}
+						]
+					}
+				]
+			}
+		]
+	},
     {
         "card_id": "hBP02-028",
         "card_type": "holomem_debut",
@@ -8911,6 +9092,57 @@
             }
         ]
     },
+	{
+		"card_id": "hBP02-034",
+		"card_type": "holomem_bloom",
+		"bloom_level": 1,
+		"buzz": true,
+		"card_names": ["nakiri_ayame"],
+		"rarity": "rr",
+		"colors": ["red"],
+		"hp": 250,
+		"baton_cost": 2,
+		"down_life_cost": 2,
+		"tags": [
+			"#JP",
+			"#Gen2",
+			"#Shooter"
+		],
+		"arts": [
+			{
+				"art_id": "imgrass",
+				"costs": [
+					{"color": "red", "amount": 1},
+					{"color": "any", "amount": 1}
+				],
+				"power": 50
+			},
+			{
+				"art_id": "organicshot",
+				"costs": [
+					{"color": "red", "amount": 1},
+					{"color": "any", "amount": 2}
+				],
+				"power": 80,
+				"art_effects": [
+					{
+						"timing": "before_art",
+						"conditions": [
+							{
+								"condition": "has_attachment_of_types_any",
+								"condition_types": [
+									"tool",
+									"mascot"
+								]
+							}
+						],
+						"effect_type": "power_boost",
+						"amount": 30
+					}
+				]
+			}
+		]
+	},
     {
         "card_id": "hBP02-035",
         "card_type": "holomem_debut",
@@ -9556,6 +9788,48 @@
             }
         ]
     },
+	{
+		"card_id": "hBP02-084",
+		"card_type": "support",
+		"colors": [],
+		"sub_type": "event",
+		"card_names": ["mikkorone24"],
+		"rarity": "u",
+		"limited": true,
+		"effects": [
+			{"effect_type": "draw", "amount": 2},
+			{
+				"effect_type": "roll_die",
+				"source": "holomem_ability",
+				"die_effects": [
+					{
+						"english_values": "3,5,6",
+						"activate_on_values": [3, 5, 6],
+						"effects": [
+							{
+								"effect_type": "choose_cards",
+								"from": "deck",
+								"look_at": -1,
+								"destination": "hand",
+								"amount_min": 1,
+								"amount_max": 1,
+								"requirement": "holomem_debut",
+								"reveal_chosen": true,
+								"remaining_cards_action": "shuffle"
+							}
+						]
+					},
+					{
+						"english_values": "2,4",
+						"activate_on_values": [2, 4],
+						"effects": [
+							{"effect_type": "draw", "amount": 1}
+						]
+					}
+				]
+			}
+		]
+	},
     {
         "card_id": "hBP02-085",
         "card_type": "support",
