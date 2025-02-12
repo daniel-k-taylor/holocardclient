@@ -8710,6 +8710,7 @@
 						"effect_type": "choice",
 						"choice": [
 							{
+								"timing": "before_art",
 								"effect_type": "move_cheer_between_holomems",
 								"amount": 1,
 								"to_limitation": "tag_in",
@@ -8787,24 +8788,18 @@
 		],
 		"bloom_effects": [
 			{
-				"effect_type": "choice",
-				"choice": [
-					{
-						"effect_type": "choose_cards",
-						"from": "cheer_deck",
-						"look_at": -1,
-						"destination": "holomem",
-						"amount_min": 1,
-						"amount_max": 1,
-						"requirement": "color_matches_holomems",
-						"requirement_only_holomems_with_any_tag": ["#Gamers"],
-						"to_limitation": "tag_in",
-						"to_limitation_tags": ["#Gamers"],
-						"reveal_chosen": true,
-						"remaining_cards_action": "shuffle"
-					},
-					{"effect_type": "pass"}
-				]
+				"effect_type": "choose_cards",
+				"from": "cheer_deck",
+				"look_at": -1,
+				"destination": "holomem",
+				"amount_min": 1,
+				"amount_max": 1,
+				"requirement": "color_matches_holomems",
+				"requirement_only_holomems_with_any_tag": ["#Gamers"],
+				"to_limitation": "tag_in",
+				"to_limitation_tags": ["#Gamers"],
+				"reveal_chosen": true,
+				"remaining_cards_action": "shuffle"
 			}
 		]
 	},
