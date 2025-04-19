@@ -2,6 +2,13 @@
 [center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
 [font_size=20][b][u]NEW![/u][/b][/font_size]
   - [b]Added cards from "Quintet Spectrum"[/b]
+      - hBP02-018 to -023: "Pavolia Reine" Holomem cards
+      - hBP02-079: "bakuhatsunomahou" Support (Event) card
+      - hBP02-094: "tatang" Support (Mascot) card
+
+[center]∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙[/center]
+[font_size=20][b][u]NEW![/u][/b][/font_size]
+  - [b]Added cards from "Quintet Spectrum"[/b]
       - hBP02-034: "Nakiri Ayame" Holomem cards
       - hBP02-084: "Mikkorone24" Support (Event) card
       - hBP02-024 to -027: "Ookami Mio" Holomem cards

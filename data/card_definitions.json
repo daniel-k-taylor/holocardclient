@@ -8683,6 +8683,234 @@
             }
         ]
     },
+    {
+        "card_id": "hBP02-018",
+        "card_type": "holomem_debut",
+        "card_names": ["pavolia_reine"],
+        "special_deck_limit": 50,
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 100,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen2",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "peruhatelian",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 30
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-019",
+        "card_type": "holomem_debut",
+        "card_names": ["pavolia_reine"],
+        "rarity": "u",
+        "colors": ["green"],
+        "hp": 60,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen2",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "veryeasy",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20
+            }
+        ],
+        "collab_effects": [
+            {
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "archive",
+                "to": "holomem"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-020",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["pavolia_reine"],
+        "rarity": "c",
+        "colors": ["green"],
+        "hp": 160,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen2",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "royalhalusleepover",
+                "costs": [
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 50
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-021",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["pavolia_reine"],
+        "rarity": "u",
+        "colors": ["green"],
+        "hp": 120,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen2",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "dakaramiteteneutatteodorimasu",
+                "costs": [
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 20,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "send_cheer",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "from": "archive",
+                        "to": "holomem"
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choice",
+                "choice": [
+                    {
+                        "effect_type": "restore_hp",
+                        "target": "holomem",
+                        "amount": "restore_hp_per_cheer_color_types_10s"
+                    },
+                    { "effect_type": "pass" }
+                ]
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-022",
+        "card_type": "holomem_bloom",
+        "bloom_level": 1,
+        "card_names": ["pavolia_reine"],
+        "rarity": "r",
+        "colors": ["green"],
+        "hp": 130,
+        "baton_cost": 1,
+        "tags": [
+            "#ID",
+            "#IDGen2",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "spicynight",
+                "costs": [
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 1 }
+                ],
+                "power": 40,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "conditions": [{ "condition": "self_stage_has_cheer_color_types", "amount_min": 2 }],
+                        "effect_type": "power_boost",
+                        "amount": 20
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "choose_cards",
+                "from": "deck",
+                "look_at": -1,
+                "destination": "hand",
+                "amount_min": 1,
+                "amount_max": 1,
+                "requirement": "specific_card",
+                "requirement_id": "hBP02-094",
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-023",
+        "card_type": "holomem_bloom",
+        "bloom_level": 2,
+        "card_names": ["pavolia_reine"],
+        "rarity": "rr",
+        "colors": ["green"],
+        "hp": 190,
+        "baton_cost": 2,
+        "tags": [
+            "#ID",
+            "#IDGen2",
+            "#Bird",
+            "#Art"
+        ],
+        "arts": [
+            {
+                "art_id": "kujakunodansu",
+                "costs": [
+                    { "color": "green", "amount": 1 },
+                    { "color": "any", "amount": 3 }
+                ],
+                "power": 100,
+                "art_effects": [
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost",
+                        "amount": 50,
+                        "conditions": [{ "condition": "target_color", "color_requirement": "white" }]
+                    },
+                    {
+                        "timing": "before_art",
+                        "effect_type": "power_boost_per_all_cheer_color_types",
+                        "amount": 20
+                    }
+                ]
+            }
+        ],
+        "bloom_effects": [
+            {
+                "effect_type": "send_cheer",
+                "amount_min": 1,
+                "amount_max": 1,
+                "from": "cheer_deck",
+                "to": "holomem"
+            }
+        ]
+    },
 	{
 		"card_id": "hBP02-024",
 		"card_type": "holomem_debut",
@@ -9760,6 +9988,26 @@
         ]
     },
     {
+        "card_id": "hBP02-079",
+        "card_type": "support",
+        "colors": [],
+        "sub_type": "event",
+        "card_names": ["bakuhatsunomahou"],
+        "rarity": "u",
+        "magic_limited": true,
+        "tags":["#Magic"],
+        "effects": [
+            {
+                "effect_type": "deal_damage",
+                "special": true,
+                "amount": 20,
+                "target": "center_or_collab",
+                "opponent": true,
+                "prevent_life_loss": true
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-080",
         "card_type": "support",
         "sub_type": "event",
@@ -10022,6 +10270,32 @@
                     { "condition": "attached_owner_is_location", "condition_location": "backstage" }
                 ],
                 "amount": "all"
+            }
+        ]
+    },
+    {
+        "card_id": "hBP02-094",
+        "card_type": "support",
+        "sub_type": "mascot",
+        "card_names": ["tatang"],
+        "rarity": "c",
+        "colors": [],
+        "effects": [
+            { "effect_type": "attach_card_to_holomem" }
+        ],
+        "attached_effects": [
+            {
+                "timing": "before_art",
+                "effect_type": "power_boost",
+                "amount": 10
+            },
+            {
+                "timing": "check_hp",
+                "conditions": [
+                    { "condition": "attached_to", "required_member_name": "pavolia_reine" }
+                ],
+                "effect_type": "bonus_hp",
+                "amount": 30
             }
         ]
     },
