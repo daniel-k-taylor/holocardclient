@@ -1,8 +1,8 @@
 @echo off
 setlocal
 
-set "DirectoryPath=D:\Projects\godot\holocardclient\export"
-set "BulterPath=D:\Projects\butler"
+set "DirectoryPath=E:\Projects\godot\holocardclient\export"
+set "BulterPath=E:\Projects\butler"
 set "ProjectName=holoduel"
 
 REM Delete the existing game.zip if it exists
