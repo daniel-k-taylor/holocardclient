@@ -8193,6 +8193,74 @@
         ]
     },
     {
+        "card_id": "hBP02-002",
+        "card_type": "oshi",
+        "card_names": ["pavolia_reine"],
+        "colors": ["green"],
+        "rarity": "osr",
+        "life": 5,
+        "actions": [
+            {
+                "skill_id": "halu",
+                "cost": 2,
+                "limit": "once_per_turn",
+                "effects": [
+                    {
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_turn",
+                        "skill_id": "halu",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_turn_effect", "effect_id": "halu" }
+                        ]
+                    },
+                    {
+                        "effect_type": "archive_cheer_from_holomem",
+                        "required_colors": ["green"],
+                        "ability_source": "oshi_green",
+                        "from": "holomem",
+                        "amount": 1
+                    }, 
+                    { 
+                        "effect_type": "choose_cards",
+                        "from": "cheer_deck",
+                        "look_at": -1,
+                        "destination": "holomem",
+                        "amount_min": 1,
+                        "amount_max": 1,
+                        "reveal_chosen": true,
+                        "remaining_cards_action": "shuffle"
+                    }
+                ]
+            },
+            {
+                "skill_id": "acolorfulfeast",
+                "cost": 2,
+                "limit": "once_per_game",
+                "effects": [
+                    {
+                        "effect_type": "oshi_activation",
+                        "limit": "once_per_game",
+                        "skill_id": "acolorfulfeast",
+                        "pre_effects": [
+                            { "effect_type": "spend_holopower", "amount": 2 },
+                            { "effect_type": "record_used_once_per_game_effect", "effect_id": "acolorfulfeast" }
+                        ]
+                    },
+                    {
+                        "effect_type": "add_turn_effect",
+                        "turn_effect": {
+                            "conditions": [{ "condition": "performer_has_any_tag", "condition_tags": ["#IDGen2"]}],
+                            "timing": "before_art",
+                            "effect_type": "power_boost_per_cheer_color_types",
+                            "amount": 20
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "card_id": "hBP02-003",
         "card_type": "oshi",
         "card_names": ["houshou_marine"],
@@ -8903,11 +8971,14 @@
         ],
         "bloom_effects": [
             {
-                "effect_type": "send_cheer",
+                "effect_type": "choose_cards",
+                "from": "cheer_deck",
+                "look_at": -1,
+                "destination": "holomem",
                 "amount_min": 1,
                 "amount_max": 1,
-                "from": "cheer_deck",
-                "to": "holomem"
+                "reveal_chosen": true,
+                "remaining_cards_action": "shuffle"
             }
         ]
     },
